@@ -1,0 +1,46 @@
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@keyframes scroll-right {
+  from {
+    transform: translateX(-80%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* Slow animation - Increase duration */
+.animate-scroll-right {
+  animation: scroll-right 25s linear infinite;
+}
+.box {
+  border-left: 35px solid black;
+  border-right: 35px solid black;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+
+/* Handle */
+
+.shraddha {
+    width: 100%;
+    height: auto;
+}
+

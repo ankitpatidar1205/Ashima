@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packaging Design Workflow Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="small"></script>
+</head>
+<body class="bg-gray-50 font-['Inter']">
+    <div class="min-h-screen flex">
+        <aside id="sidebar" class="w-72 bg-white border-r border-gray-200 h-screen flex flex-col fixed transition-all duration-300 ease-in-out">
+            <div class="h-16 flex items-center px-4 border-b border-gray-200">
+                <img src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png" alt="Logo" class="h-8 w-8">
+                <!-- <h1 class="ml-3 text-lg font-semibold text-gray-900">Design Workflow</h1> -->
+                <button id="collapse-btn" class="ml-auto text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto py-4">
+                <div class="space-y-1 px-3">
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button bg-custom bg-opacity-10 text-custom">
+                        <i class="fas fa-chart-line w-5 h-5 mr-3"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-users w-5 h-5 mr-3"></i>
+                        <span>Client Management</span>
+                    </a>
+
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-calculator w-5 h-5 mr-3"></i>
+                        <span>Cost Estimates</span>
+                    </a>
+
+                    <div class="space-y-1">
+                        <button class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                            <i class="fas fa-file-invoice w-5 h-5 mr-3"></i>
+                            <span>Purchase Orders</span>
+                            <i class="fas fa-chevron-down ml-auto"></i>
+                        </button>
+                        <div class="pl-11 space-y-1">
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">Receivable POs</a>
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">Issuable POs</a>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <button class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                            <i class="fas fa-project-diagram w-5 h-5 mr-3"></i>
+                            <span>Projects & Jobs</span>
+                            <i class="fas fa-chevron-down ml-auto"></i>
+                        </button>
+                        <div class="pl-11 space-y-1">
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">Project List</a>
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">Job Assignments</a>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <button class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                            <i class="fas fa-tasks w-5 h-5 mr-3"></i>
+                            <span>Production Manager</span>
+                            <i class="fas fa-chevron-down ml-auto"></i>
+                        </button>
+                        <div class="pl-11 space-y-1">
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">New Jobs</a>
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">In Progress</a>
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">Completed Jobs</a>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <button class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                            <i class="fas fa-palette w-5 h-5 mr-3"></i>
+                            <span>Designer Panel</span>
+                            <i class="fas fa-chevron-down ml-auto"></i>
+                        </button>
+                        <div class="pl-11 space-y-1">
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">My Jobs</a>
+                            <a href="#" class="block px-3 py-2 text-sm font-medium rounded-button text-gray-600 hover:bg-gray-50">Time Logs</a>
+                        </div>
+                    </div>
+
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-file-invoice-dollar w-5 h-5 mr-3"></i>
+                        <span>Invoicing & Billing</span>
+                    </a>
+
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-clock w-5 h-5 mr-3"></i>
+                        <span>Timesheet & Worklog</span>
+                    </a>
+
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-bell w-5 h-5 mr-3"></i>
+                        <span>Notifications</span>
+                    </a>
+
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-chart-bar w-5 h-5 mr-3"></i>
+                        <span>Reports & Analytics</span>
+                    </a>
+
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-user-shield w-5 h-5 mr-3"></i>
+                        <span>User Roles & Permissions</span>
+                    </a>
+
+                    <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-button text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-cog w-5 h-5 mr-3"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="border-t border-gray-200 p-4">
+                <div class="flex items-center">
+                    <img class="h-8 w-8 rounded-full" src="https://creatie.ai/ai/api/search-image?query=A professional headshot of a person with a friendly smile, wearing business attire, on a neutral background&width=100&height=100&orientation=squarish&flag=bb39f2bc-b075-4d1a-98cc-cb7ff9287aca" alt="User">
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-700">John Smith</p>
+                        <p class="text-xs text-gray-500">Senior Designer</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 ml-72">
+            <div class="py-6">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+                </div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <div class="py-4">
+                        <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('collapse-btn').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('main');
+            
+            if(sidebar.classList.contains('collapsed')) {
+                sidebar.classList.remove('collapsed');
+                sidebar.style.width = '18rem';
+                main.style.marginLeft = '18rem';
+                this.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            } else {
+                sidebar.classList.add('collapsed');
+                sidebar.style.width = '4rem';
+                main.style.marginLeft = '4rem';
+                this.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            }
+        });
+
+        document.querySelectorAll('button').forEach(button => {
+            if(button.nextElementSibling && button.nextElementSibling.classList.contains('pl-11')) {
+                button.addEventListener('click', function() {
+                    const submenu = this.nextElementSibling;
+                    const icon = this.querySelector('.fa-chevron-down');
+                    
+                    if(submenu.style.display === 'none') {
+                        submenu.style.display = 'block';
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        submenu.style.display = 'none';
+                        icon.style.transform = 'rotate(-90deg)';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

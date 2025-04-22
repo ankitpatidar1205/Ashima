@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply m-0 p-0 overflow-x-auto;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
+ol,
+ul {
+  padding-left: 0rem !important;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    margin-left: 0 !important;
+  }
+}
