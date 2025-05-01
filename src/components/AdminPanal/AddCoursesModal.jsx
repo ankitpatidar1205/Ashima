@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInstructors } from "../../Redux/slices/InstructorSlice/InstructorSlice";
 import { createCourse, fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
+import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 
 const AddCoursesModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
-  const { instructors } = useSelector((state) => state?.instructors);
+ 
 
   const [formData, setFormData] = useState({
     course_title: "",
@@ -26,8 +27,13 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     dispatch(getInstructors());
+    dispatch(fetchCategories());
   }, [dispatch]);
-
+  const { instructors } = useSelector((state) => state?.instructors);
+  const { categories } = useSelector((state) => state?.categories
+);
+  console.log("instructors", instructors);
+  console.log("categories", categories);
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
@@ -55,11 +61,6 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
       data.append("test_video", formData.test_video);
     }
 
-    // Log FormData content to the console
-    console.log("Form Data Content:");
-    for (let [key, value] of data.entries()) {
-      console.log(`${key}:`, value);
-    }
 
     try {
       await dispatch(createCourse(data));
@@ -157,11 +158,13 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
               value={formData.category_id}
               onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
               className="border p-2 rounded w-full"
-            >
-              <option value="">Select Category</option>
-              <option value="Technology">Technology</option>
-              <option value="Business">Business</option>
-              <option value="Arts">Arts</option>
+            >{
+              categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.category_name}
+                </option>
+              ))
+            }
             </select>
           </div>
 
