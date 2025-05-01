@@ -7,16 +7,17 @@ import { deleteCourse, fetchCourses } from "../../Redux/slices/CourseSlice/Cours
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
+
 const ManageCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const { courses } = useSelector((state) => state.courses);
-
+   console.log("courses", courses);
   useEffect(() => {
     dispatch(fetchCourses());
-  }, [dispatch]);
-
+  }, [dispatch]); 
+   const state = useSelector((state) => state);
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -37,6 +38,7 @@ const ManageCourses = () => {
   const filteredCourses = courses?.filter((course) =>
     course?.title?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
+  // console.log(filteredCourses);
 
   return (
     <DashboardLayout>
@@ -85,46 +87,46 @@ const ManageCourses = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredCourses?.map((course, index) => (
-                  <tr className="border-b" key={course.id}>
+                {courses?.map((course, index) => (
+                  <tr className="border-b" key={course?.id}>
                     <td className="p-2">{index + 1}</td>
                     <td className="p-2">
                       <img
-                        src={course.image[0]}
-                        alt={course.title}
+                        src={course?.course_image}
+                        alt={course?.course_title}
                         className="w-16 h-16 object-cover rounded"
                       />
                     </td>
                     <td className="p-2">
                       <div className="flex flex-col">
                         <Link
-                          to={`/course/${course.id}`}
+                          to={`/course/${course?.id}`}
                           className="font-semibold text-teal-700"
                         >
-                          {course.title}
+                          {course?.course_title}
                         </Link>
                         <span className="text-xs text-gray-500">
-                          Created {new Date(course.created_at).toLocaleDateString()}
+                          Created {new Date(course?.created_at).toLocaleDateString()}
                         </span>
                       </div>
                     </td>
-                    <td className="p-2">{course.instructor.full_name}</td>
+                    <td className="p-2">{course?.instructor?.full_name}</td>
                     <td className="p-2">
-                      {parseFloat(course.price).toFixed(2)}
+                       {course?.course_price}
                     </td>
                     <td className="p-2">
                       <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
-                        {course.course_type}
+                        {course?.course_type}
                       </span>
                     </td>
                     <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">
-                      <Link to={`/course/${course.id}`} className="text-gray-600">
+                      <Link to={`/course/${course?.id}`} className="text-gray-600">
                         <FaEye />
                       </Link>
                       <button>
                         <FaEdit />
                       </button>
-                      <button onClick={() => handleDelete(course.id)}>
+                      <button onClick={() => handleDelete(course?.id)}>
                         <FaTrash />
                       </button>
                     </td>
@@ -136,7 +138,7 @@ const ManageCourses = () => {
 
           {/* Pagination Section */}
           <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
-            <div>Showing 1 to 10 of {filteredCourses?.length || 0} entries</div>
+            <div>Showing 1 to 10 of {courses?.length || 0} entries</div>
             <div className="flex gap-2">
               <button className="border px-2 py-1 rounded">Previous</button>
               <button className="bg-[#047670] text-white px-2 py-1 rounded">1</button>

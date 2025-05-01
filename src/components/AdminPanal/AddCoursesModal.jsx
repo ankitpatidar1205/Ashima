@@ -13,7 +13,7 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
     course_description: "",
     course_type: "",
     instructor_id: "",
-    price: "",
+    course_price: "",
     course_image: null,
   });
 
