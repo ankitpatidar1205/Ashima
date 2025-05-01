@@ -13,7 +13,7 @@ const ManageCourses = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const { courses } = useSelector((state) => state.courses);
-   console.log("courses", courses);
+  //  console.log("courses", courses);
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]); 

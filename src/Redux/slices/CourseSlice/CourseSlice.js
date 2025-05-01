@@ -6,6 +6,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 export const createCourse = createAsyncThunk(
   "courses/createCourse",
   async (formData, { rejectWithValue }) => {
+    console.log("formData", formData);
     try {
       const res = await axiosInstance.post("/course", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -37,7 +38,7 @@ export const deleteCourse = createAsyncThunk(
   "courses/deleteCourse",
   async (id, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/course/${id}`);
+      await axiosInstance.delete(`/deletecourse/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error deleting course");

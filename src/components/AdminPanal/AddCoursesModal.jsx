@@ -4,48 +4,92 @@ import { getInstructors } from "../../Redux/slices/InstructorSlice/InstructorSli
 import { createCourse, fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
 
 const AddCoursesModal = ({ isOpen, onClose }) => {
-  const [isAdmin, setIsAdmin] = useState("");
   const dispatch = useDispatch();
-  const { instructors } = useSelector((state) => state.instructors);
+  const { instructors } = useSelector((state) => state?.instructors);
 
   const [formData, setFormData] = useState({
     course_title: "",
     course_description: "",
-    course_type: "",
-    instructor_id: "",
+    course_type: "1",
+    instructor_id: "1",
     course_price: "",
     course_image: null,
+    category_id: "",
+    course_content_video_link: "",
+    test_video: null,
+    status: "0",
   });
+
+  // Initialize course_syllabus with an array of objects
+  const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: "" }]);
+  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
 
   useEffect(() => {
     dispatch(getInstructors());
   }, [dispatch]);
 
-  useEffect(() => {
-    const admin_id = localStorage.getItem("is_role_id");
-    if (admin_id) {
-      setIsAdmin(admin_id);
-    }
-  }, []);
-
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const data = new FormData();
-    data.append("title", formData.title);
-    data.append("description", formData.description);
+    data.append("course_title", formData.course_title);
+    data.append("course_description", formData.course_description);
     data.append("course_type", formData.course_type);
     data.append("instructor_id", formData.instructor_id);
-    data.append("price", formData.price);
-    data.append("admin_id", isAdmin);
-    if (formData.image) {
-      data.append("image", formData.image);
+    data.append("course_price", formData.course_price);
+    data.append("category_id", formData.category_id);
+    data.append("course_content_video_link", formData.course_content_video_link);
+    data.append("status", formData.status);
+    // Append course_syllabus as an array of objects
+    data.append("course_syllabus", JSON.stringify(course_syllabus));
+
+    // Append FAQs as an array of objects
+    data.append("faqs", JSON.stringify(faqs));
+
+    if (formData.course_image) {
+      data.append("course_image", formData.course_image);
+    }
+    if (formData.test_video) {
+      data.append("test_video", formData.test_video);
     }
 
-     await  dispatch(createCourse(data));
-   await dispatch(fetchCourses());
-    onClose(); // Close modal after submit
+    // Log FormData content to the console
+    console.log("Form Data Content:");
+    for (let [key, value] of data.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    try {
+      await dispatch(createCourse(data));
+      await dispatch(fetchCourses());
+      onClose(); // Close modal after submit
+    } catch (error) {
+      console.error("Error submitting course:", error);
+    }
+  };
+
+  // Handle dynamic course_syllabus changes
+  const handleCourseSyllabusChange = (index, e) => {
+    const newCourseSyllabus = [...course_syllabus];
+    newCourseSyllabus[index][e.target.name] = e.target.value;
+    setCourseSyllabus(newCourseSyllabus);
+  };
+
+  const handleAddModule = () => {
+    setCourseSyllabus([...course_syllabus, { module_title: "", module_syllabus: "" }]);
+  };
+
+  // Handle dynamic FAQ changes
+  const handleFaqChange = (index, e) => {
+    const newFaqs = [...faqs];
+    newFaqs[index][e.target.name] = e.target.value;
+    setFaqs(newFaqs);
+  };
+
+  const handleAddFaq = () => {
+    setFaqs([...faqs, { question: "", answer: "" }]);
   };
 
   return (
@@ -62,8 +106,8 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
             <input
               id="courseTitle"
               type="text"
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              value={formData.course_title}
+              onChange={(e) => setFormData({ ...formData, course_title: e.target.value })}
               placeholder="Enter course title"
               className="border p-2 rounded w-full"
             />
@@ -76,8 +120,8 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
             </label>
             <textarea
               id="courseDescription"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              value={formData.course_description}
+              onChange={(e) => setFormData({ ...formData, course_description: e.target.value })}
               placeholder="Enter course description"
               className="border p-2 rounded w-full"
               rows="3"
@@ -94,16 +138,34 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
                 Drag and drop your image here or <b>browse files</b>
               </p>
               <input
-                id="courseImage"
+                id="course_image"
                 type="file"
                 accept="image/*"
-                onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })}
+                onChange={(e) => setFormData({ ...formData, course_image: e.target.files[0] })}
                 className="block mt-2"
               />
             </div>
           </div>
 
-          {/* Type, Instructor, Price */}
+          {/* Category */}
+          <div>
+            <label htmlFor="courseCategory" className="text-sm font-medium mb-1 block">
+              Select Category
+            </label>
+            <select
+              id="courseCategory"
+              value={formData.category_id}
+              onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+              className="border p-2 rounded w-full"
+            >
+              <option value="">Select Category</option>
+              <option value="Technology">Technology</option>
+              <option value="Business">Business</option>
+              <option value="Arts">Arts</option>
+            </select>
+          </div>
+
+          {/* Course Type and Instructor */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
               <label htmlFor="courseType" className="text-sm font-medium mb-1 block">
@@ -133,30 +195,124 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
                 className="border p-2 rounded w-full"
               >
                 <option>Select Instructor</option>
-                {instructors?.map((instructor) => (
-                  <option key={instructor.id} value={instructor.id}>
-                    {instructor.full_name}
+                {instructors?.data?.map((instructor) => (
+                  <option key={instructor?.id} value={instructor.id}>
+                    {instructor?.full_name}
                   </option>
                 ))}
               </select>
             </div>
 
-            <div className="md:col-span-2">
+            <div>
               <label htmlFor="price" className="text-sm font-medium mb-1 block">
                 Course Price
               </label>
               <input
-                id="price"
+                id="course_price"
                 type="text"
-                value={formData.price}
-                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                value={formData.course_price}
+                onChange={(e) => setFormData({ ...formData, course_price: e.target.value })}
                 placeholder="Enter price"
                 className="border p-2 rounded w-full"
               />
             </div>
           </div>
 
-          {/* Buttons */}
+          {/* course_syllabus */}
+          <div>
+            <label className="text-sm font-medium mb-1 block">Course Syllabus</label>
+            {course_syllabus.map((module, index) => (
+              <div key={index} className="border p-3 rounded space-y-2 mb-3">
+                <input
+                  type="text"
+                  name="module_title"
+                  value={module.module_title}
+                  onChange={(e) => handleCourseSyllabusChange(index, e)}
+                  placeholder="Module Title"
+                  className="border p-2 rounded w-full"
+                />
+                <textarea
+                  name="module_syllabus"
+                  value={module.module_syllabus}
+                  onChange={(e) => handleCourseSyllabusChange(index, e)}
+                  placeholder="Module description"
+                  className="border p-2 rounded w-full"
+                  rows="2"
+                ></textarea>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={handleAddModule}
+              className="text-sm text-teal-700 mt-2"
+            >
+              + Add Module
+            </button>
+          </div>
+
+          {/* Video Link */}
+          <div>
+            <label className="text-sm font-medium mb-1 block">
+              Course Content - Video Link
+            </label>
+            <input
+              type="text"
+              placeholder="Enter video URL"
+              className="border p-2 rounded w-full"
+              value={formData.course_content_video_link}
+              onChange={(e) => setFormData({ ...formData, course_content_video_link: e.target.value })}
+            />
+          </div>
+
+          {/* Test Video Upload */}
+          <div>
+            <label className="text-sm font-medium mb-1 block">Test Video</label>
+            <div className="border border-dashed p-5 rounded text-center">
+              <p className="text-sm mb-1">
+                Upload a test video <b>browse files</b>
+              </p>
+              <input
+                type="file"
+                accept="video/*"
+                onChange={(e) => setFormData({ ...formData, test_video: e.target.files[0] })}
+                className="block mt-2"
+              />
+            </div>
+          </div>
+
+          {/* FAQs */}
+          <div>
+            <label className="text-sm font-medium mb-1 block">FAQs</label>
+            {faqs.map((faq, index) => (
+              <div key={index} className="border p-3 rounded space-y-2 mb-3">
+                <input
+                  type="text"
+                  name="question"
+                  value={faq.question}
+                  onChange={(e) => handleFaqChange(index, e)}
+                  placeholder="Question"
+                  className="border p-2 rounded w-full"
+                />
+                <input
+                  type="text"
+                  name="answer"
+                  value={faq.answer}
+                  onChange={(e) => handleFaqChange(index, e)}
+                  placeholder="Answer"
+                  className="border p-2 rounded w-full"
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={handleAddFaq}
+              className="text-sm text-teal-700 mt-2"
+            >
+              + Add FAQ
+            </button>
+          </div>
+
+          {/* Submit and Cancel Buttons */}
           <div className="flex justify-end gap-2">
             <button
               type="button"
