@@ -3,49 +3,64 @@ import axios from "axios"; // Don't forget to import axios
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import BASE_URL from "../utils/baseURL";
-
+import { decryptToken } from "../utils/DecodedToken";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-
+    e.preventDefault();
+  
     if (!email || !password) {
       alert("Please fill in all fields.");
       return;
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/user/login`, {
-        email,
-        password,
+
+      const response = await axios.post(`${BASE_URL}/login`, { email, password }, { withCredentials: true });
+      // Step 2: Get the encoded access token from the login response
+      const encodedaccessToken = response.data.data.encodedaccessToken;
+      console.log("Encoded Token", encodedaccessToken);
+  
+      // Step 3: Decrypt the token if necessary (you might want to skip this step if your backend uses JWTs directly)
+      const decryptedToken = decryptToken(encodedaccessToken);
+      console.log("Decrypted Token:", decryptedToken);
+  
+      // Step 4: If decrypted, you can parse it (only if required)
+      const parsedToken = decryptedToken ? JSON.parse(decryptedToken) : null;
+      console.log("Parsed Token:", parsedToken);
+  
+      // Step 5: Fetch user data using the token
+      const meResponse = await axios.get(`${BASE_URL}/me`, {
+        headers: {
+          Authorization: `Bearer ${parsedToken}`, // Send the encoded token in the Authorization header
+        },
+        withCredentials: true, // Ensure cookies are sent if required
       });
 
-      // console.log("Login Response:", response.data); 
-      localStorage.setItem("token", response.data.data.token);
-      localStorage.setItem("is_role_id", response.data.data.id);
-      // Debugging response
-
-      // Check the status from the API response and display accordingly
-      if (response.data.status === "true") {
-        // Assuming the response contains user data and role
+      console.log("Me API Response:", meResponse.data);
+  
+      // Step 6: Check if the response is successful and extract user data
+      if (meResponse.data.success) {
         const userData = {
-          email,
-          role: response.data.data.role, 
-          name: response.data.data.name || "User",
+          id: meResponse.data.data.id,
+          email: meResponse.data.data.email,
+          role: meResponse.data.data.role,
         };
+  
+        // Save the user data in localStorage
         localStorage.setItem("user", JSON.stringify(userData));
-
-        // Success alert
+        localStorage.setItem("token", encodedaccessToken);
+        // Step 7: Show success message
         Swal.fire({
           icon: "success",
           title: "Login Successful!",
           text: `Welcome, ${userData.role}!`,
         });
-
-        // Navigate to the respective dashboard based on the role
+  
+        // Step 8: Navigate to the appropriate dashboard based on the user's role
         if (userData.role === "admin") {
           navigate(`/admin-dashboard`);
         } else if (userData.role === "student") {
@@ -56,15 +71,16 @@ const Login = () => {
           navigate(`/default-dashboard`);
         }
       } else {
+        // If the API response isn't successful, show an error message
         Swal.fire({
           icon: "error",
           title: "Login Failed",
-          text: "Invalid credentials or something went wrong.",
+          text: meResponse.data.message || "Something went wrong, please try again.",
         });
       }
     } catch (error) {
       console.error("Login Error:", error);
-      // Error handling with a Swal alert
+      // If there's an error, show a generic error message
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -72,6 +88,10 @@ const Login = () => {
       });
     }
   };
+  
+  
+  
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#FAF9F7] px-4">
@@ -93,6 +113,7 @@ const Login = () => {
               htmlFor="email"
               className="block text-[13px] sm:text-[14px] font-semibold mb-1"
             >
+              {" "}
               EMAIL
             </label>
             <input
@@ -134,7 +155,8 @@ const Login = () => {
             to="/forgot-password"
             className="text-[#047670] hover:underline"
           >
-            Forget Password?
+            {" "}
+            Forget Password?{" "}
           </Link>
         </div>
 
@@ -144,7 +166,8 @@ const Login = () => {
             to="/signup"
             className="text-[#047670] font-semibold hover:underline"
           >
-            Sign Up
+            {" "}
+            Sign Up{" "}
           </Link>
         </p>
       </div>

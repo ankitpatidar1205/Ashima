@@ -1,3 +1,3 @@
-const BASE_URL = "https://k08qjj0h-6002.inc1.devtunnels.ms/api"
+const BASE_URL = "http://192.168.1.2:3000/api"
 
 export default BASE_URL
