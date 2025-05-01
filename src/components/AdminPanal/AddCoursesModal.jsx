@@ -9,12 +9,12 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
   const { instructors } = useSelector((state) => state.instructors);
 
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
+    course_title: "",
+    course_description: "",
     course_type: "",
     instructor_id: "",
     price: "",
-    image: null,
+    course_image: null,
   });
 
   useEffect(() => {
