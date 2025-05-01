@@ -68,6 +68,7 @@ import RolePermission from "./components/AdminPanal/RolePermission";
 
 import ViewReportedIssues from "./components/AdminPanal/ReportedIssues";
 import ForgotPassword from "./Auth/ForgotPassword";
+import CourseCategory from "./components/AdminPanal/CourseCategory";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -159,13 +160,11 @@ const App = () => {
           element={<ManageInstructors></ManageInstructors>}
         ></Route>
         <Route path="/instructor/:id" element={<InstructorDetails />} />
-        <Route
-          path="/manage-courses"
-          element={<ManageCourses></ManageCourses>}
+        <Route path="/manage-courses" element={<ManageCourses></ManageCourses>}
         ></Route>
         <Route path="/course/:id" element={<CoursesDetails />} />
-        <Route path="/blog-articles"
-          element={<Blogs_article></Blogs_article>}></Route>
+        <Route path="/course-category" element={<CourseCategory />} />
+        <Route path="/blog-articles"  element={<Blogs_article></Blogs_article>}></Route>
         <Route
           path="/community-discussion"
           element={<ManageComm_Discu></ManageComm_Discu>}
@@ -201,7 +200,7 @@ const App = () => {
           path="/ReporteIssues"
           element={<ViewReportedIssues></ViewReportedIssues>}
         ></Route>
-        <Route path="/student-details" element={<StudentDetails/>} />
+        <Route path="/student-details/:id" element={<StudentDetails/>} />
         <Route path="/qasection" element={<QA></QA>}></Route>
         <Route path="/assignment" element={<Assignments></Assignments>}></Route>
         <Route path="/earning" element={<Earning></Earning>}></Route>
