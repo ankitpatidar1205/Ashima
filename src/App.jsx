@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import axios from 'axios'
 import ScrollToTop from "./Auth/ScrollToTop";
 import Courses from "./components/Courses/AllCourses"; // Capitalized component name
 import Login from "./Auth/Login";
@@ -67,6 +68,7 @@ import RolePermission from "./components/AdminPanal/RolePermission";
 
 import ViewReportedIssues from "./components/AdminPanal/ReportedIssues";
 import ForgotPassword from "./Auth/ForgotPassword";
+axios.defaults.withCredentials = true;
 
 const App = () => {
   return (

@@ -117,7 +117,7 @@ const courseOptions = courses?.map((course) => ({
       {passwordError && (
         <p className="text-sm text-red-600 mt-1">{passwordError}</p>
       )}
-    </div>
+    </div>     
 
     {/* Course Select */}
     <div>
