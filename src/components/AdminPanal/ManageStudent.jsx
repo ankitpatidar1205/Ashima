@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddStudentModal from "./AddStudent";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteStudent, getStudents } from "../../Redux/slices/StudentSlice/StudentSlice";
 import Swal from "sweetalert2";
@@ -14,7 +14,7 @@ const ManageStudents = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const { Student } = useSelector((state) => state.Student);
- 
+   console.log(Student)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,8 +29,7 @@ const ManageStudents = () => {
   };
 
   const handleViewStudent = (studentId) => {
-    localStorage.setItem("studentId", studentId);
-    navigate("/student-details");
+    navigate(`/student-details/${studentId}`);
   };
 
   const handleDeleteStudent = (id) => {
@@ -42,26 +41,34 @@ const ManageStudents = () => {
       confirmButtonColor: "#047670",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        dispatch(deleteStudent(id)); // Uncomment when ready
-        Swal.fire("Deleted!", "Student has been deleted.", "success");
+        try {
+          const res = await dispatch(deleteStudent(id)).unwrap();
+          Swal.fire("Deleted!", res.message, "success")
+          dispatch(getStudents());
+  
+        } catch (error) {
+          Swal.fire("Failed!", error || "Failed to delete student", "error");
+        }
       }
     });
   };
   
+  
   const filteredStudents = Student?.filter((student) => {
     const matchesSearch =
-      student.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      student.email?.toLowerCase().includes(searchTerm.toLowerCase())
-
+      student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.email?.toLowerCase().includes(searchTerm.toLowerCase());
+  
     const matchesStatus =
       statusFilter === "All" ||
-      (statusFilter === "1" && student.status === "1") ||
-      (statusFilter === "0" && student.status === "0");
-
+      (statusFilter === "1" && student.is_active === 1) ||
+      (statusFilter === "0" && student.is_active === 0);
+  
     return matchesSearch && matchesStatus;
   });
+  
 
   return (
     <DashboardLayout>
@@ -119,26 +126,19 @@ const ManageStudents = () => {
                     <tr key={student.id} className="border-b">
                       <td className="p-2">{index + 1}</td>
                       <td className="p-2">
-                        <Link to={`/student-details/${student.id}`}>
-                          <strong className="cursor-pointer text-[#047670]">
-                            {student.full_name}
-                          </strong>
-                        </Link>
+                          <strong className="cursor-pointer text-[#047670]"> {student.name} </strong>
                       </td>
                       <td className="p-2">{student.email}</td>
-                      <td className="p-2">{student.mobile_number}</td>
+                      <td className="p-2">{student.mobile}</td>
                       <td className="p-2">{student.course_id}</td>
                       <td className="p-2">
-                        <span
-                          className={`text-xs px-2 py-1 rounded ${
-                            student.status === "1"
-                              ? "bg-green-100 text-green-600"
-                              : "bg-red-100 text-red-600"
-                          }`}
-                        >
-                          {student.status === "1" ? "Active" : "Inactive"}
-                        </span>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                            student.is_active === 1
+                            ? "bg-green-100 text-green-600"
+                           : "bg-red-100 text-red-600" }`}>
+                       {student.is_active === 1 ? "Active" : "Inactive"}</span>
                       </td>
+
                       <td className="p-2 flex gap-2 justify-center items-center text-gray-600 text-base">
                         <button onClick={() => handleViewStudent(student.id)}>
                           <FaEye />

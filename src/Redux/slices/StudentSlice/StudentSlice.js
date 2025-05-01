@@ -6,7 +6,7 @@ export const createStudent = createAsyncThunk(
   'students/create',
   async (studentData, thunkAPI) => {
     try {
-      const response = await axiosInstance.post('/student/createStudent', studentData);
+      const response = await axiosInstance.post('/student', studentData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -21,7 +21,7 @@ export const getStudents = createAsyncThunk(
   'students/getAll',
   async (_, thunkAPI) => {
     try {
-      const response = await axiosInstance.get('/student/getAllStudents');
+      const response = await axiosInstance.get('/student');
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -36,7 +36,7 @@ export const deleteStudent = createAsyncThunk(
   'students/delete',
   async (id, thunkAPI) => {
     try {
-      const response = await axiosInstance.delete(`/student/deleteStudent/${id}`);
+      const response = await axiosInstance.delete(`/deletestudent/${id}`);
       return { id, message: response.data.message };
     } catch (error) {
       return thunkAPI.rejectWithValue(

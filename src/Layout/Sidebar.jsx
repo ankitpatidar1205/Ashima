@@ -340,7 +340,11 @@ const RoleBasedSidebar = ({
             label: "Manage Instructors",
             path: "/manage-instructors",
           },
-
+          {
+            icon: <FaChalkboardTeacher />,
+            label: "Course Category",
+            path: "/course-category",
+          },
           {
             icon: <FaBook />,
             label: "Manage Courses",
@@ -384,7 +388,7 @@ const RoleBasedSidebar = ({
 
           { icon: <FaUserCog />, label: "Admin Roles", path: "/admin-role" },
 
-          // { icon: <FaCog />, label: "Settings", path: "/settings" },
+        
 
           {
             icon: <FaMoneyBillWave />,
@@ -409,12 +413,6 @@ const RoleBasedSidebar = ({
         return [
           { icon: <FaHome />, label: "Dashboard", path: "/student-dashboard" },
           { icon: <FaBook />, label: "My Courses", path: "/student-courses" },
-          // {
-          //   icon: <FaClipboardCheck />,
-          //   label: "Assignments",
-          //   path: "/assignments",
-          // },
-          // { icon: <FaUsers />, label: "Classmates", path: "/classmates" },
           { icon: <FaUsers />, label: "Certificate", path: "/certificate" },
 
           {
@@ -442,15 +440,7 @@ const RoleBasedSidebar = ({
             label: "Dashboard",
             path: "/instructor-dashboard",
           },
-          // {
-          //   icon: <FaBookOpen />,
-          //   label: "My Courses",
-          //   dropdown: true,
-          //   children: [
-          //     { label: "Web Development", path: "/web-dev" },
-          //     { label: "UI/UX Design", path: "/ui-ux" },
-          //   ],
-          // },
+       
           {
             icon: <FaBox />,
             label: "My Courses",
@@ -463,22 +453,13 @@ const RoleBasedSidebar = ({
           },
           { icon: <FaComments />, label: "Messages", path: "/conversation" },
           { icon: <FaComments />, label: "Comments", path: "/coursecomments" },
-          // { icon: <FaComments />, label: "Earnings", path: "/earning" },
-          // { icon: <FaComments />, label: "Calender", path: "/calender" },
-          // { icon: <FaComments />, label: "Profile", path: "/profile" },
-          // { icon: <FaCog />, label: "Settings", path: "/setting" },
+         
 
           { icon: <FaMoneyBill />, label: "Earnings", path: "/earning" },
           { icon: <FaCalendarAlt />, label: "Calendar", path: "/calender" },
           { icon: <FaUserCircle />, label: "Profile", path: "/profile" },
           { icon: <FaCog />, label: "Settings", path: "/setting" },
 
-          // { icon: <FaPlus />, label: "Create New Course", path: "/newCourse" },
-          //           // { icon: <FaComments />, label: "Messages" },
-          //           // { icon: <FaChartLine />, label: "Analytics" },
-          //           // { icon: <FaCog />, label: "Settings" },
-
-          //           // { icon: <FaUsers />, label: "Students", path: "/students" },
         ];
       default:
         return [];

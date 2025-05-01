@@ -16,6 +16,7 @@ const AddStudentModal = ({ isOpen, onClose }) => {
   const [isadmin, setIsAdmin] = useState("");
   const dispatch = useDispatch();
   const { courses } = useSelector((state) => state.courses);
+  console.log(courses)
 // Map courses to Select-compatible format
 const courseOptions = courses?.map((course) => ({
   value: course.id,
@@ -50,7 +51,7 @@ const courseOptions = courses?.map((course) => ({
       mobile_number,
       password,
       course_id: selectedCourses.map((course) => course.value),
-      status: active === "active" ? 1 : 0,
+     
     };
 
     dispatch(createStudent(formData));
@@ -132,18 +133,7 @@ const courseOptions = courses?.map((course) => ({
       />
     </div>
 
-    {/* Active Toggle */}
-    <div className="flex items-center gap-2 mt-2">
-      <input
-        type="checkbox"
-        checked={active === "active"}
-        onChange={() => {
-          setIsActive(active === "active" ? "inactive" : "active");
-        }}
-      />
-      <label className="font-medium">Active</label>
-    </div>
-
+  
     {/* Buttons */}
     <div className="flex justify-end gap-2 mt-4">
       <button onClick={onClose} className="border px-4 py-2 rounded">

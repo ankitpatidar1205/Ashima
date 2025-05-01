@@ -42,13 +42,13 @@ const ManageInstructors = () => {
     });
   };
 
-  const filteredInstructors = instructors?.filter((instructor) => {
-    const matchesSearch = instructor.full_name?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus =
-      statusFilter === "All" || instructor.status === statusFilter;
+  // const filteredInstructors = instructors?.filter((instructor) => {
+  //   const matchesSearch = instructor.full_name?.toLowerCase().includes(searchQuery.toLowerCase());
+  //   const matchesStatus =
+  //     statusFilter === "All" || instructor.status === statusFilter;
   
-    return matchesSearch && matchesStatus;
-  });
+  //   return matchesSearch && matchesStatus;
+  // });
   
 
   return (
@@ -109,8 +109,8 @@ const ManageInstructors = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredInstructors && filteredInstructors.length > 0 ? (
-                  filteredInstructors.map((instructor) => (
+                {instructors && instructors.length > 0 ? (
+                  instructors.map((instructor) => (
                     <tr className="border-b" key={instructor.id}>
                       <td className="p-2">
                         <input type="checkbox" />
@@ -165,7 +165,7 @@ const ManageInstructors = () => {
           </div>
 
           <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
-            <div>Showing 1 to 10 of {filteredInstructors?.length || 0} results</div>
+            <div>Showing 1 to 10 of {instructors?.length || 0} results</div>
             <div className="flex gap-2">
               <button className="border px-2 py-1 rounded">Previous</button>
               <button className="bg-[#047670] text-white px-2 py-1 rounded">
