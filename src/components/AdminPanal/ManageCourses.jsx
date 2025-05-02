@@ -3,24 +3,22 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddCoursesModal from "./AddCoursesModal";
 import { Link } from "react-router-dom";
-import { deleteCourse, fetchCourses, updateCourseStatus } from "../../Redux/slices/CourseSlice/CourseSlice";
+import { deleteCourse, fetchCourses,publishCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 const ManageCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [courseId, setCourseId] = useState(null);
+   const [courseId, setCourseId] = useState(null);
   const dispatch = useDispatch();
   const { courses } = useSelector((state) => state.courses);
-
   useEffect(() => {
     dispatch(fetchCourses());
-  }, [dispatch]);
-
-  const { instructors } = useSelector((state) => state?.instructors);
-
-  const handleDelete = (id) => {
+  }, [dispatch]); 
+     
+    const { instructors } = useSelector((state) => state?.instructors);
+         const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won’t be able to revert this!",
@@ -31,37 +29,30 @@ const ManageCourses = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteCourse(id));
+        dispatch(deleteCourse(id))
         Swal.fire("Deleted!", "The course has been deleted.", "success");
       }
     });
   };
 
   const handleEdit = (id) => {
-    setCourseId(id);
-    setIsModalOpen(true);
-  };
-
-  const changeStatus = (id, currentStatus) => {
-    const updatedStatus = currentStatus === "1" ? "0" : "1"; // Toggle between 1 (Published) and 0 (Draft)
+    setCourseId(id)
+    setIsModalOpen(true)
     
-    // Optimistically update the UI (before the API response)
+  };  
+  const changeStatus = (id)=>{
+    const updatedStatus = currentStatus === "1" ? "0" : "1";
     const updatedCourses = courses.map((course) =>
       course.id === id ? { ...course, status: updatedStatus } : course
     );
-    dispatch(fetchCourses()); // Re-fetch to make sure data is correct
-    dispatch(updateCourseStatus({ id, status: updatedStatus }));
-  };
+    dispatch(fetchCourses());
+    dispatch(publishCourse({id,status:"1"}))
+      
+  }
 
   const filteredCourses = courses?.filter((course) =>
     course?.title?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
-
-  const onClose = () => {
-    setCourseId(null);
-    setIsModalOpen(false);
-  };
-
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
@@ -78,7 +69,7 @@ const ManageCourses = () => {
 
         <AddCoursesModal
           isOpen={isModalOpen}
-          onClose={onClose}
+          onClose={() => setIsModalOpen(false)}
           courseId={courseId}
           setCourseId={setCourseId}
         />
@@ -112,7 +103,7 @@ const ManageCourses = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredCourses?.map((course, index) => (
+                {courses?.map((course, index) => (
                   <tr className="border-b" key={course?.id}>
                     <td className="p-2">{index + 1}</td>
                     <td className="p-2">
@@ -136,7 +127,9 @@ const ManageCourses = () => {
                       </div>
                     </td>
                     <td className="p-2">{instructors?.find((instructor) => instructor?.id == course?.instructor_id)?.full_name}</td>
-                    <td className="p-2">{course?.course_price}</td>
+                    <td className="p-2">
+                       {course?.course_price}
+                    </td>
                     <td className="p-2">
                       <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
                         {course?.course_type}
@@ -145,17 +138,14 @@ const ManageCourses = () => {
                     <td className="p-2">
                       <span
                         className={`${
-                          course.status === "1"
+                          course.status =="1"  
                             ? "bg-green-100 text-green-600"
                             : "bg-yellow-100 text-yellow-600"
                         } text-xs px-2 py-1 rounded`}
-                      >
-                        <button
-                          onClick={() => changeStatus(course?.id, course?.status)}
-                          disabled={course?.status === "1"}
-                        >
-                          {course?.status === "0" ? "Draft" : "Published"}
-                        </button>
+                      > <button onClick={() => changeStatus(course?.id)} disabled={course?.status =="1"}>
+                        {course?.status==0?"Draft":"Published"}
+                      </button>
+                        
                       </span>
                     </td>
                     <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">
