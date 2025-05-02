@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import axiosInstance from "../../../utils/axiosInstance";
+
+// 📥 Add Instructor
 export const addInstructor = createAsyncThunk(
   "instructors/addInstructor",
   async (formData, thunkAPI) => {
@@ -17,7 +18,6 @@ export const addInstructor = createAsyncThunk(
   }
 );
 
-
 // 📥 Get All Instructors
 export const getInstructors = createAsyncThunk(
   "instructors/getInstructors",
@@ -27,6 +27,19 @@ export const getInstructors = createAsyncThunk(
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+// 📥 Get Instructor by ID
+export const getInstructorById = createAsyncThunk(
+  "instructors/getInstructorById",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(`/instructor/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -49,13 +62,14 @@ const instructorSlice = createSlice({
   name: "instructors",
   initialState: {
     instructors: [],
+    selectedInstructor: null, // Store selected instructor for detail view
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // 🔄 Add
+      // 🔄 Add Instructor
       .addCase(addInstructor.pending, (state) => {
         state.loading = true;
       })
@@ -67,8 +81,8 @@ const instructorSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
- 
-      // 📥 Get
+
+      // 📥 Get All Instructors
       .addCase(getInstructors.pending, (state) => {
         state.loading = true;
       })
@@ -81,7 +95,20 @@ const instructorSlice = createSlice({
         state.error = action.payload;
       })
 
-      // 🗑 Delete
+      // 📥 Get Instructor by ID
+      .addCase(getInstructorById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getInstructorById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedInstructor = action.payload; // Store selected instructor data
+      })
+      .addCase(getInstructorById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // 🗑 Delete Instructor
       .addCase(deleteInstructor.pending, (state) => {
         state.loading = true;
       })

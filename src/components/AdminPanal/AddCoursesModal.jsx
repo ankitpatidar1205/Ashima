@@ -11,8 +11,8 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     course_title: "",
     course_description: "",
-    course_type: "1",
-    instructor_id: "1",
+    course_type: "",
+    instructor_id: "",
     course_price: "",
     course_image: null,
     category_id: "",
@@ -30,10 +30,8 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
     dispatch(fetchCategories());
   }, [dispatch]);
   const { instructors } = useSelector((state) => state?.instructors);
-  const { categories } = useSelector((state) => state?.categories
-);
-  console.log("instructors", instructors);
-  console.log("categories", categories);
+  const { categories } = useSelector((state) => state?.categories);
+  
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
@@ -69,6 +67,20 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
     } catch (error) {
       console.error("Error submitting course:", error);
     }
+    setFormData({
+      course_title: "",
+      course_description: "",
+      course_type: "",
+      instructor_id: "",
+      course_price: "",
+      course_image: null,
+      category_id: "",
+      course_content_video_link: "",
+      test_video: null,
+      status: "0",
+    });
+    setCourseSyllabus([{ module_title: "", module_syllabus: "" }]);
+    setFaqs([{ question: "", answer: "" }]);
   };
 
   // Handle dynamic course_syllabus changes
@@ -158,7 +170,8 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
               value={formData.category_id}
               onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
               className="border p-2 rounded w-full"
-            >{
+            ><option>Select category</option>
+              {
               categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.category_name}

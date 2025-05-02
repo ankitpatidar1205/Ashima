@@ -22,15 +22,15 @@ const Login = () => {
       const response = await axios.post(`${BASE_URL}/login`, { email, password }, { withCredentials: true });
       // Step 2: Get the encoded access token from the login response
       const encodedaccessToken = response.data.data.encodedaccessToken;
-      console.log("Encoded Token", encodedaccessToken);
+      // console.log("Encoded Token", encodedaccessToken);
   
       // Step 3: Decrypt the token if necessary (you might want to skip this step if your backend uses JWTs directly)
       const decryptedToken = decryptToken(encodedaccessToken);
-      console.log("Decrypted Token:", decryptedToken);
+      // console.log("Decrypted Token:", decryptedToken);
   
       // Step 4: If decrypted, you can parse it (only if required)
       const parsedToken = decryptedToken ? JSON.parse(decryptedToken) : null;
-      console.log("Parsed Token:", parsedToken);
+      // console.log("Parsed Token:", parsedToken);
   
       // Step 5: Fetch user data using the token
       const meResponse = await axios.get(`${BASE_URL}/me`, {

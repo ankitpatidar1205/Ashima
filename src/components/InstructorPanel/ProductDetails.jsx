@@ -9,8 +9,8 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams(); 
   const products = useSelector((state) => state.products);
-  console.log("URL ID:", id);
-  console.log("Products Data:", products?.data);
+  // console.log("URL ID:", id);
+  // console.log("Products Data:", products?.data);
 
   useEffect(() => {
     dispatch(getAllDigitalProducts()); 

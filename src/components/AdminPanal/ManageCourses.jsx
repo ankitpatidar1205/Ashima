@@ -11,13 +11,15 @@ import Swal from "sweetalert2";
 const ManageCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+   const [courseId, setCourseId] = useState(null);
   const dispatch = useDispatch();
   const { courses } = useSelector((state) => state.courses);
-  //  console.log("courses", courses);
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]); 
-   const state = useSelector((state) => state);
+     
+    const { instructors } = useSelector((state) => state?.instructors);
+     
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -34,12 +36,15 @@ const ManageCourses = () => {
       }
     });
   };
+  const handleEdit = (id) => {
+    setCourseId(id)
+    setIsModalOpen(true)
+    
+  };  
 
   const filteredCourses = courses?.filter((course) =>
     course?.title?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
-  // console.log(filteredCourses);
-
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
@@ -57,6 +62,8 @@ const ManageCourses = () => {
         <AddCoursesModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+          courseId={courseId}
+          setCourseId={setCourseId}
         />
 
         {/* Filter Section */}
@@ -110,7 +117,7 @@ const ManageCourses = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="p-2">{course?.instructor?.full_name}</td>
+                    <td className="p-2">{instructors?.data?.find((instructor) => instructor?.id == course?.instructor_id)?.full_name}</td>
                     <td className="p-2">
                        {course?.course_price}
                     </td>
@@ -123,7 +130,7 @@ const ManageCourses = () => {
                       <Link to={`/course/${course?.id}`} className="text-gray-600">
                         <FaEye />
                       </Link>
-                      <button>
+                      <button onClick={() => handleEdit(course?.id)}>
                         <FaEdit />
                       </button>
                       <button onClick={() => handleDelete(course?.id)}>

@@ -6,7 +6,7 @@ export const decryptToken = (token) => {
   try {
     const decryptedBytes = CryptoJS.AES.decrypt(token, secretKey);
     const decryptedData = decryptedBytes.toString(CryptoJS.enc.Utf8);
-    console.log("decryptedData",decryptedData)
+    // console.log("decryptedData",decryptedData)
     return decryptedData;
   } catch (error) {
     console.error('Failed to decrypt token:', error);

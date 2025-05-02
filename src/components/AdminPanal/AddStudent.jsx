@@ -16,8 +16,7 @@ const AddStudentModal = ({ isOpen, onClose }) => {
   const [isadmin, setIsAdmin] = useState("");
   const dispatch = useDispatch();
   const { courses } = useSelector((state) => state.courses);
-  console.log(courses)
-// Map courses to Select-compatible format
+   
 const courseOptions = courses?.map((course) => ({
   value: course.id,
   label: course.title,
