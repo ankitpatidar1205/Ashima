@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { deleteCourse, fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-
+import { publishCourse} from "../../Redux/slices/CourseSlice/CourseSlice";
 
 const ManageCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,8 +19,7 @@ const ManageCourses = () => {
   }, [dispatch]); 
      
     const { instructors } = useSelector((state) => state?.instructors);
-     
-  const handleDelete = (id) => {
+         const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won’t be able to revert this!",
@@ -41,6 +40,10 @@ const ManageCourses = () => {
     setIsModalOpen(true)
     
   };  
+  const changeStatus = (id)=>{
+    dispatch(publishCourse({id,status:"1"}))
+      
+  }
 
   const filteredCourses = courses?.filter((course) =>
     course?.title?.toLowerCase()?.includes(searchTerm.toLowerCase())
@@ -134,8 +137,10 @@ const ManageCourses = () => {
                             ? "bg-green-100 text-green-600"
                             : "bg-yellow-100 text-yellow-600"
                         } text-xs px-2 py-1 rounded`}
-                      >
+                      > <button onClick={() => changeStatus(course?.id)} disabled={course?.status =="1"}>
                         {course?.status==0?"Draft":"Published"}
+                      </button>
+                        
                       </span>
                     </td>
                     <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">

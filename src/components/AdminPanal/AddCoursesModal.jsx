@@ -363,14 +363,15 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
             </button>
           </div>
           {/* Status */}
-          <div className="flex items-center gap-2">
+          {courseId==null && <div className="flex items-center gap-2">
           <input
               type="checkbox"
               checked={formData.status === "1"}
               onChange={handleCheckboxChange} // Handle checkbox change
             />
             <label className="text-sm">Active</label>
-          </div>
+          </div>}
+          
 
           {/* Submit and Cancel Buttons */}
           <div className="flex justify-end gap-2">

@@ -18,7 +18,7 @@ const CoursesDetails = () => {
   const instructor = instructors?.find(
     (instructor) => instructor?.id == course1?.instructor_id
   );
-
+  
   const course = {
     title: "Introduction to Web Development",
     category: "Development",
