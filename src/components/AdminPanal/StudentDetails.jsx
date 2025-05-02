@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
@@ -18,7 +18,6 @@ const StudentDetails = () => {
 
   // Find student by id
   const student = Student.filter((item) => item.id == id);
-
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">

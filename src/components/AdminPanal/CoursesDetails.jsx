@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { FaArrowLeft } from "react-icons/fa";
+import { fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CoursesDetails = () => {
   const { id } = useParams();
+  console.log("id", id);
   const navigate = useNavigate();
-  // Dummy Static Data (Dynamic later by API)
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, []);
+  const courses = useSelector((state) => state?.courses?.courses);
+  const course1 = courses?.find((course) => course?.id == id);
+  const { instructors } = useSelector((state) => state?.instructors);
+  const instructor = instructors?.data?.find(
+    (instructor) => instructor?.id == course1?.instructor_id
+  );
+
   const course = {
     title: "Introduction to Web Development",
     category: "Development",
@@ -59,40 +72,57 @@ const CoursesDetails = () => {
           <div className="md:col-span-2 space-y-4">
             {/* Info Box */}
             <div className="bg-white p-4 rounded shadow">
-              <h3 className="font-bold text-lg">{course.title}</h3>
+              <h3 className="font-bold text-lg">{course1.course_title}</h3>
 
               <div className="flex flex-wrap justify-between text-sm mt-2">
                 <div>
                   Category: <b>{course.category}</b>
                 </div>
                 <div>
-                  Course Mode: <b>{course.mode}</b>
+                  Course Mode: <b>{course1?.course_type}</b>
                 </div>
                 <div>
-                  Price: <b>{course.price}</b>
+                  Price: <b>{course1?.course_price}</b>
                 </div>
                 <div>
                   Enrolled Students: <b>{course.students}</b>
                 </div>
               </div>
 
-              <p className="mt-4">{course.description}</p>
+              <p className="mt-4">{course1?.course_description}</p>
             </div>
 
             {/* Course Content */}
             <div className="bg-white p-4 rounded shadow">
               <h4 className="font-semibold mb-3">Course Content</h4>
               <div className="bg-gray-300 h-52 mb-4 flex justify-center items-center">
-                Image
+                <img
+                  src={course1?.course_image}
+                  alt="Course Content"
+                  className="h-52"
+                />
               </div>
 
-              {course.syllabus.map((module, index) => (
+              {/* {course.syllabus.map((module, index) => (
                 <div key={index} className="border p-3 mb-2 rounded">
                   <h5 className="font-semibold mb-2">{module.title}</h5>
                   <ul className="text-sm list-disc ml-5">
                     {module.points.map((point, idx) => (
                       <li key={idx}>{point}</li>
                     ))}
+                  </ul>
+                </div>
+              ))} */}
+              {JSON.parse(course1.course_syllabus).map((module, index) => (
+                <div key={index} className="border p-3 mb-2 rounded">
+                  <h5 className="font-semibold mb-2">{module?.module_title}</h5>
+                  <h7 className="font-semibold mb-2">
+                    {module?.module_syllabus}
+                  </h7>
+                  <ul className="text-sm list-disc ml-5">
+                    {/* {module.points.map((point, idx) => (
+                      <li key={idx}>{point}</li>
+                    ))} */}
                   </ul>
                 </div>
               ))}
@@ -105,11 +135,11 @@ const CoursesDetails = () => {
             <div className="bg-white p-4 rounded shadow">
               <div className="flex items-center gap-3">
                 <div className="bg-gray-200 w-12 h-12 rounded-full flex justify-center items-center">
-                  Image
+                  <img src={instructor?.profile_image} alt="Instructor" />
                 </div>
                 <div>
-                  <p className="font-bold">{course.instructor.name}</p>
-                  <p className="text-sm">{course.instructor.role}</p>
+                  <p className="font-bold">{instructor?.full_name}</p>
+                  <p className="text-sm">{instructor?.role}</p>
                   <p className="text-yellow-500 text-sm">
                     ⭐ {course.instructor.rating}
                   </p>

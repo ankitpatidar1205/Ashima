@@ -18,12 +18,12 @@ axiosInstance.interceptors.request.use(
 
     if (token) {
       const decryptedToken = decryptToken(token);
-      console.log("Decrypted Token:", decryptedToken);
+      // console.log("Decrypted Token:", decryptedToken);
 
       // If token contains JSON string, parse it — otherwise directly attach
       try {
         const parsedToken = decryptedToken ? JSON.parse(decryptedToken) : null;
-        console.log("Parsed Token:", parsedToken);
+        // console.log("Parsed Token:", parsedToken);
 
         if (parsedToken) {
           config.headers.Authorization = `Bearer ${parsedToken}`;

@@ -1,16 +1,17 @@
-// src/Redux/slices/courseSlice.js
+ // src/Redux/slices/courseSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../utils/axiosInstance";
 
 // ✅ Create a Course (with formData)
-export const createCourse = createAsyncThunk(
+export const createCourse = createAsyncThunk(  
   "courses/createCourse",
   async (formData, { rejectWithValue }) => {
+    console.log("formData", formData);
     try {
       const res = await axiosInstance.post("/course", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(res.data.data)
+      console.log(res.data.data);
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error creating course");
@@ -24,7 +25,7 @@ export const fetchCourses = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axiosInstance.get("/course");
-      console.log("Get All Courses",res.data.data)
+      console.log("Get All Courses", res.data.data);
       return res.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error fetching courses");
@@ -37,10 +38,28 @@ export const deleteCourse = createAsyncThunk(
   "courses/deleteCourse",
   async (id, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/course/${id}`);
+      await axiosInstance.delete(`/deletecourse/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error deleting course");
+    }
+  }
+);
+
+// ✅ Update Course
+export const updateCourse = createAsyncThunk(
+  "courses/updateCourse",
+  async ({ id, formData }, { rejectWithValue }) => {
+    console.log("formData");
+    console.log("id", id);
+    try {
+      const res = await axiosInstance.put(`/editcourse/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log("Updated Course:", res.data);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Error updating course");
     }
   }
 );
@@ -56,7 +75,6 @@ const courseSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-
       // Create
       .addCase(createCourse.pending, (state) => {
         state.isLoading = true;
@@ -95,6 +113,24 @@ const courseSlice = createSlice({
         state.courses = state.courses.filter((c) => c.id !== action.payload);
       })
       .addCase(deleteCourse.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Update
+      .addCase(updateCourse.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateCourse.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Update the course in the array
+        const index = state.courses.findIndex((course) => course.id === action.payload.id);
+        if (index !== -1) {
+          state.courses[index] = action.payload;
+        }
+      })
+      .addCase(updateCourse.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
