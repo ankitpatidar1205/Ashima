@@ -24,7 +24,8 @@ export const getInstructors = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await axiosInstance.get(`/instructor`);
-      return res.data;
+      // console.log(res.data.data)
+      return res.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
@@ -36,10 +37,31 @@ export const deleteInstructor = createAsyncThunk(
   "instructors/deleteInstructor",
   async (id, thunkAPI) => {
     try {
-      await axiosInstance.delete(`instructor/${id}`);
+      await axiosInstance.delete(`deleteinstructor/${id}`);
       return id;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+// 🔥 Update Instructor
+export const updateInstructor = createAsyncThunk(
+  "instructors/updateInstructor",
+  async (updatedInstructor, thunkAPI) => {
+    try {
+      const response = await axiosInstance.put(
+        `/editinstructor/${updatedInstructor.id}`,
+        updatedInstructor,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Adjust if needed
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -61,7 +83,7 @@ const instructorSlice = createSlice({
       })
       .addCase(addInstructor.fulfilled, (state, action) => {
         state.loading = false;
-        state.instructors.push(action.payload);
+        state.instructors.push(action.payload); // ✅ this works fine now
       })
       .addCase(addInstructor.rejected, (state, action) => {
         state.loading = false;
@@ -88,10 +110,25 @@ const instructorSlice = createSlice({
       .addCase(deleteInstructor.fulfilled, (state, action) => {
         state.loading = false;
         state.instructors = state.instructors.filter(
-          (instructor) => instructor.id !== action.payload
+          (instructor) => instructor.id !== action.payload.id
         );
       })
       .addCase(deleteInstructor.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+       // 🔄 Update Instructor
+       .addCase(updateInstructor.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateInstructor.fulfilled, (state, action) => {
+        state.loading = false;
+        state.instructors = state.instructors.map((instructor) =>
+          instructor.id === action.payload.id ? action.payload : instructor
+        );
+      })
+      .addCase(updateInstructor.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

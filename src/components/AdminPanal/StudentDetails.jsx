@@ -18,7 +18,7 @@ const StudentDetails = () => {
 
   // Find student by id
   const student = Student.filter((item) => item.id == id);
-    console.log(student)
+
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
@@ -32,41 +32,88 @@ const StudentDetails = () => {
           </button>
         </div>
 
-        {student ? (
-  <div className="bg-white p-6 rounded shadow flex gap-6">
-    <div className="flex flex-col items-center gap-2">
-     
-      <h3 className="font-semibold">{student[0].name}</h3>
-      <span
-        className={`text-xs px-2 py-1 rounded ${
-          student.is_active === 1
-            ? "bg-green-100 text-green-600"
-            : "bg-red-100 text-red-600"
-        }`}
-      >
-        {student.is_active === 1 ? "Active" : "Inactive"}
-      </span>
-    </div>
+        {student.length > 0 ? (
+          <div className="bg-white p-6 rounded shadow flex flex-col gap-6">
+            {/* Basic Info */}
+            <div className="flex flex-col items-center gap-2">
+              <h3 className="font-semibold">{student[0].student_name}</h3>
+            </div>
 
-    <div className="w-full grid grid-cols-2 gap-4 text-sm">
-      <p>
-        <strong>Email Address</strong>
-        <br />
-        {student[0].email}
-      </p>
-      <p>
-        <strong>Mobile Number</strong>
-        <br />
-        {student[0].mobile}
-      </p>
-     
-      {/* You can add placeholders for enrolled_courses, certificates, recent_activity etc. if needed */}
-    </div>
-  </div>
-) : (
-  <p className="text-gray-500 text-center mt-10">Student not found.</p>
-)}
+            <div className="w-full grid grid-cols-2 gap-4 text-sm">
+              <p>
+                <strong>Email Address:</strong>
+                <br />
+                {student[0].email}
+              </p>
+              <p>
+                <strong>Mobile Number:</strong>
+                <br />
+                {student[0].mobile}
+              </p>
+            </div>
 
+            {/* Enrolled Courses */}
+            {student[0]?.courses?.length > 0 ? (
+              <div className="mt-6">
+                <h4 className="font-semibold mb-3">Enrolled Courses</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {student[0].courses.map((course, index) => (
+                    <div
+                      key={index}
+                      className="border p-4 rounded shadow bg-gray-50"
+                    >
+                      <img
+                        src={course.course_image}
+                        alt={course.course_title}
+                        className="w-full h-40 object-cover rounded mb-3"
+                      />
+                      <h5 className="font-semibold">{course.course_title}</h5>
+                      <p className="text-sm text-gray-600 mb-1">
+                        <strong>Type:</strong> {course.course_type}
+                      </p>
+                      <p className="text-sm text-gray-600 mb-1">
+                        <strong>Price:</strong> {course.course_price}
+                      </p>
+                      <p className="text-sm text-gray-600 mb-1">
+                        <strong>Category:</strong> {course.category_id}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <strong>Status:</strong>{" "}
+                        {course.status === "1" ? (
+                          <span className="text-green-600">Active</span>
+                        ) : (
+                          <span className="text-red-600">Inactive</span>
+                        )}
+                      </p>
+
+                      {/* FAQs */}
+                      <div className="mt-4">
+                        <h6 className="font-semibold mb-2">FAQs</h6>
+                        {course.faqs && course.faqs.length > 0 ? (
+                          <ul className="list-disc ps-4 text-sm text-gray-700">
+                            {course.faqs.map((faq, i) => (
+                              <li key={i} className="mb-1">
+                                <strong>Q:</strong> {faq.question}
+                                <br />
+                                <strong>A:</strong> {faq.answer}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-500 text-sm">No FAQs available.</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <p className="text-gray-500 mt-6">No courses enrolled.</p>
+            )}
+          </div>
+        ) : (
+          <p className="text-gray-500 text-center mt-10">Student not found.</p>
+        )}
       </div>
     </DashboardLayout>
   );

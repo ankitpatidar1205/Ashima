@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaEye, FaEdit, FaBan, FaTrash } from "react-icons/fa";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddInstructorModal from "./AddInstructorModal";
 import { Link } from "react-router-dom";
@@ -12,13 +12,16 @@ const ManageInstructors = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
 
+  // Redux state
   const { instructors } = useSelector((state) => state.instructors);
   const dispatch = useDispatch();
 
+  // Fetch instructors on mount
   useEffect(() => {
     dispatch(getInstructors());
   }, [dispatch]);
 
+  // Delete instructor handler
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -38,33 +41,27 @@ const ManageInstructors = () => {
           .catch(() => {
             Swal.fire("Error!", "Something went wrong.", "error");
           });
+          dispatch(getInstructors())
       }
     });
   };
 
-  // const filteredInstructors = instructors?.filter((instructor) => {
-  //   const matchesSearch = instructor.full_name?.toLowerCase().includes(searchQuery.toLowerCase());
-  //   const matchesStatus =
-  //     statusFilter === "All" || instructor.status === statusFilter;
-  
-  //   return matchesSearch && matchesStatus;
-  // });
-  
+  // ✅ Filtered instructors based on search query and status
+  const filteredInstructors = instructors?.filter((instructor) => {
+    const matchesSearch = instructor?.full_name?.toLowerCase()?.includes(searchQuery.toLowerCase());
+    const matchesStatus = statusFilter === "All" || instructor.is_active === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Manage Instructors</h2>
-          <button  className="bg-[#047670] text-white px-4 py-2 rounded"
-            onClick={() => setIsModalOpen(true)}
-          >
+          <button className="bg-[#047670] text-white px-4 py-2 rounded" onClick={() => setIsModalOpen(true)}>
             Add Instructor
           </button>
-          <AddInstructorModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          />
+          <AddInstructorModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
 
         <div className="bg-white p-4 rounded shadow">
@@ -85,68 +82,48 @@ const ManageInstructors = () => {
               <option value="1">Active</option>
               <option value="0">Inactive</option>
             </select>
-            <select className="border px-3 py-2 rounded">
-              <option>All Courses</option>
-            </select>
-            <button className="border px-3 py-2 rounded flex items-center gap-2">
-              <span>Export</span>
-            </button>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-center text-nowrap">
               <thead className="bg-gray-50">
                 <tr className="text-gray-500">
-                  <th className="p-2">
-                    <input type="checkbox" />
-                  </th>
-                  <th className="p-2">Instructor</th>
+                  <th className="p-2">SL</th>
+                  <th className="p-2">Name</th>
                   <th className="p-2">Email</th>
                   <th className="p-2">Mobile</th>
-                  <th className="p-2">Courses</th>
+                  <th className="p-2">Expertise</th>
                   <th className="p-2">Status</th>
                   <th className="p-2">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {instructors && instructors.length > 0 ? (
-                  instructors.map((instructor) => (
+                {filteredInstructors && filteredInstructors.length > 0 ? (
+                  filteredInstructors?.map((instructor, index) => (
                     <tr className="border-b" key={instructor.id}>
+                      <td className="p-2">{index + 1}</td>
                       <td className="p-2">
-                        <input type="checkbox" />
-                      </td>
-                      <td className="p-2">
-                        <Link
-                          to={`/instructor/${instructor.id}`}
-                          className="text-teal-700 hover:underline"
-                        >
+                        <Link to={`/instructor-detail/${instructor.id}`} className="text-teal-700 hover:underline">
                           <strong>{instructor.full_name}</strong>
-                          <div className="text-xs text-gray-500">
-                            {instructor.expertise}
-                          </div>
                         </Link>
                       </td>
                       <td className="p-2">{instructor.email}</td>
                       <td className="p-2">{instructor.mobile_number}</td>
-                      <td className="p-2">{instructor.course_id}</td>
+                      <td className="p-2">{instructor.expertise}</td>
                       <td className="p-2">
-                        <span
-                          className={`${
-                            instructor.status === "1"
+                        <span className={`${
+                            instructor.is_active === "1"
                               ? "bg-green-100 text-green-600"
                               : "bg-red-100 text-red-600"
-                          } text-xs px-2 py-1 rounded`}
-                        >
-                          {instructor.status === "1" ? "Active" : "Inactive"}
+                               } text-xs px-2 py-1 rounded`}>
+                          {instructor.is_active === "1" ? "Active" : "Inactive"}
                         </span>
                       </td>
-                      <td className="p-2 mt-2 flex gap-2 text-gray-600 text-base justify-center">
-                        <Link to={`/instructor/${instructor.id}`}>
+                      <td className="p-2 flex gap-2 text-gray-600 text-base justify-center">
+                        <Link to={`/instructor-detail/${instructor.id}`}>
                           <FaEye />
                         </Link>
-                        <button>
-                          <FaEdit />
-                        </button>
+                        <Link to={`/edit-instruction/${instructor.id}`}><FaEdit /></Link>
                         <button onClick={() => handleDelete(instructor.id)}>
                           <FaTrash />
                         </button>
@@ -164,13 +141,12 @@ const ManageInstructors = () => {
             </table>
           </div>
 
+          {/* Pagination buttons */}
           <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
-            <div>Showing 1 to 10 of {instructors?.length || 0} results</div>
+            <div>Showing 1 to 10 of {filteredInstructors?.length || 0} results</div>
             <div className="flex gap-2">
               <button className="border px-2 py-1 rounded">Previous</button>
-              <button className="bg-[#047670] text-white px-2 py-1 rounded">
-                1
-              </button>
+              <button className="bg-[#047670] text-white px-2 py-1 rounded">1</button>
               <button className="border px-2 py-1 rounded">2</button>
               <button className="border px-2 py-1 rounded">3</button>
               <button className="border px-2 py-1 rounded">Next</button>

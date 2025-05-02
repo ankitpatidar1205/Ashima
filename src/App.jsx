@@ -69,6 +69,7 @@ import RolePermission from "./components/AdminPanal/RolePermission";
 import ViewReportedIssues from "./components/AdminPanal/ReportedIssues";
 import ForgotPassword from "./Auth/ForgotPassword";
 import CourseCategory from "./components/AdminPanal/CourseCategory";
+import EditInstruction from "./components/AdminPanal/EditInstruction";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -159,9 +160,9 @@ const App = () => {
           path="/manage-instructors"
           element={<ManageInstructors></ManageInstructors>}
         ></Route>
-        <Route path="/instructor/:id" element={<InstructorDetails />} />
-        <Route path="/manage-courses" element={<ManageCourses></ManageCourses>}
-        ></Route>
+        <Route path="/instructor-detail/:id" element={<InstructorDetails />} />
+        <Route path="/manage-courses" element={<ManageCourses></ManageCourses>}></Route>
+        <Route path="/edit-instruction/:id" element={<EditInstruction></EditInstruction>}></Route>
         <Route path="/course/:id" element={<CoursesDetails />} />
         <Route path="/course-category" element={<CourseCategory />} />
         <Route path="/blog-articles"  element={<Blogs_article></Blogs_article>}></Route>

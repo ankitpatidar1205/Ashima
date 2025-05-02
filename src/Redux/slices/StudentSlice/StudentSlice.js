@@ -7,7 +7,8 @@ export const createStudent = createAsyncThunk(
   async (studentData, thunkAPI) => {
     try {
       const response = await axiosInstance.post('/student', studentData);
-      return response.data;
+      // console.log(response.data.data)
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || 'Failed to create student'
@@ -22,6 +23,7 @@ export const getStudents = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axiosInstance.get('/student');
+      // console.log(response.data.data)
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(

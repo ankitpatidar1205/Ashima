@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddStudentModal from "./AddStudent";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteStudent, getStudents } from "../../Redux/slices/StudentSlice/StudentSlice";
 import Swal from "sweetalert2";
-
 
 const ManageStudents = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,13 +13,12 @@ const ManageStudents = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const { Student } = useSelector((state) => state.Student);
-   console.log(Student)
+    console.log("ALLSTU",Student)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getStudents());
-  
   }, [dispatch]);
 
   const handleUpdateStudent = (student) => {
@@ -45,30 +43,27 @@ const ManageStudents = () => {
       if (result.isConfirmed) {
         try {
           const res = await dispatch(deleteStudent(id)).unwrap();
-          Swal.fire("Deleted!", res.message, "success")
+          Swal.fire("Deleted!", res.message, "success");
           dispatch(getStudents());
-  
         } catch (error) {
           Swal.fire("Failed!", error || "Failed to delete student", "error");
         }
       }
     });
   };
-  
-  
+
   const filteredStudents = Student?.filter((student) => {
     const matchesSearch =
-      student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.student_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.email?.toLowerCase().includes(searchTerm.toLowerCase());
-  
+
     const matchesStatus =
       statusFilter === "All" ||
-      (statusFilter === "1" && student.is_active === 1) ||
-      (statusFilter === "0" && student.is_active === 0);
-  
+      (statusFilter === "1" && student.is_active === "1") ||
+      (statusFilter === "0" && student.is_active === "0");
+
     return matchesSearch && matchesStatus;
   });
-  
 
   return (
     <DashboardLayout>
@@ -123,22 +118,29 @@ const ManageStudents = () => {
               <tbody>
                 {filteredStudents && filteredStudents.length > 0 ? (
                   filteredStudents.map((student, index) => (
-                    <tr key={student.id} className="border-b">
+                    <tr key={student.id || index} className="border-b">
                       <td className="p-2">{index + 1}</td>
                       <td className="p-2">
-                          <strong className="cursor-pointer text-[#047670]"> {student.name} </strong>
+                        <strong className="cursor-pointer text-[#047670]">
+                          {student.student_name || "-"}
+                        </strong>
                       </td>
-                      <td className="p-2">{student.email}</td>
-                      <td className="p-2">{student.mobile}</td>
-                      <td className="p-2">{student.course_id}</td>
+                      <td className="p-2">{student.email || "-"}</td>
+                      <td className="p-2">{student.mobile || "-"}</td>
                       <td className="p-2">
-                    <span className={`text-xs px-2 py-1 rounded ${
-                            student.is_active === 1
-                            ? "bg-green-100 text-green-600"
-                           : "bg-red-100 text-red-600" }`}>
-                       {student.is_active === 1 ? "Active" : "Inactive"}</span>
+                        {student?.courses?.[0]?.course_title || "-"}
                       </td>
-
+                      <td className="p-2">
+                        <span
+                          className={`text-xs px-2 py-1 rounded ${
+                            student.is_active === "1"
+                              ? "bg-green-100 text-green-600"
+                              : "bg-red-100 text-red-600"
+                          }`}
+                        >
+                          {student.is_active === "1" ? "Active" : "Inactive"}
+                        </span>
+                      </td>
                       <td className="p-2 flex gap-2 justify-center items-center text-gray-600 text-base">
                         <button onClick={() => handleViewStudent(student.id)}>
                           <FaEye />
@@ -165,12 +167,12 @@ const ManageStudents = () => {
 
           {/* Pagination Placeholder */}
           <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
-            <div>Showing 1 to 10 of {filteredStudents?.length || 0} entries</div>
+            <div>
+              Showing {filteredStudents?.length || 0} of {Student?.length || 0} entries
+            </div>
             <div className="flex gap-2">
               <button className="border px-2 py-1 rounded">Previous</button>
-              <button className="bg-[#047670] text-white px-2 py-1 rounded">
-                1
-              </button>
+              <button className="bg-[#047670] text-white px-2 py-1 rounded">1</button>
               <button className="border px-2 py-1 rounded">2</button>
               <button className="border px-2 py-1 rounded">3</button>
               <button className="border px-2 py-1 rounded">Next</button>
