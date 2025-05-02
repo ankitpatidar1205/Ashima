@@ -3,10 +3,9 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddCoursesModal from "./AddCoursesModal";
 import { Link } from "react-router-dom";
-import { deleteCourse, fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
+import { deleteCourse, fetchCourses,publishCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-
 
 const ManageCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,8 +18,7 @@ const ManageCourses = () => {
   }, [dispatch]); 
      
     const { instructors } = useSelector((state) => state?.instructors);
-     
-  const handleDelete = (id) => {
+         const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won’t be able to revert this!",
@@ -36,11 +34,21 @@ const ManageCourses = () => {
       }
     });
   };
+
   const handleEdit = (id) => {
     setCourseId(id)
     setIsModalOpen(true)
     
   };  
+  const changeStatus = (id)=>{
+    const updatedStatus = currentStatus === "1" ? "0" : "1";
+    const updatedCourses = courses.map((course) =>
+      course.id === id ? { ...course, status: updatedStatus } : course
+    );
+    dispatch(fetchCourses());
+    dispatch(publishCourse({id,status:"1"}))
+      
+  }
 
   const filteredCourses = courses?.filter((course) =>
     course?.title?.toLowerCase()?.includes(searchTerm.toLowerCase())
@@ -90,6 +98,7 @@ const ManageCourses = () => {
                   <th className="p-2">Instructor</th>
                   <th className="p-2">Price</th>
                   <th className="p-2">Mode</th>
+                  <th className="p-2">Status</th>
                   <th className="p-2">Actions</th>
                 </tr>
               </thead>
@@ -117,13 +126,26 @@ const ManageCourses = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="p-2">{instructors?.data?.find((instructor) => instructor?.id == course?.instructor_id)?.full_name}</td>
+                    <td className="p-2">{instructors?.find((instructor) => instructor?.id == course?.instructor_id)?.full_name}</td>
                     <td className="p-2">
                        {course?.course_price}
                     </td>
                     <td className="p-2">
                       <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
                         {course?.course_type}
+                      </span>
+                    </td>
+                    <td className="p-2">
+                      <span
+                        className={`${
+                          course.status =="1"  
+                            ? "bg-green-100 text-green-600"
+                            : "bg-yellow-100 text-yellow-600"
+                        } text-xs px-2 py-1 rounded`}
+                      > <button onClick={() => changeStatus(course?.id)} disabled={course?.status =="1"}>
+                        {course?.status==0?"Draft":"Published"}
+                      </button>
+                        
                       </span>
                     </td>
                     <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">

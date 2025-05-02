@@ -1,9 +1,8 @@
- // src/Redux/slices/courseSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../utils/axiosInstance";
 
 // ✅ Create a Course (with formData)
-export const createCourse = createAsyncThunk(  
+export const createCourse = createAsyncThunk(
   "courses/createCourse",
   async (formData, { rejectWithValue }) => {
     console.log("formData", formData);
@@ -46,7 +45,7 @@ export const deleteCourse = createAsyncThunk(
   }
 );
 
-// ✅ Update Course
+// ✅ Update Course (full update)
 export const updateCourse = createAsyncThunk(
   "courses/updateCourse",
   async ({ id, formData }, { rejectWithValue }) => {
@@ -64,6 +63,27 @@ export const updateCourse = createAsyncThunk(
   }
 );
 
+// ✅ Update Course Status (PATCH method to update only status)
+export const publishCourse = createAsyncThunk(
+  "courses/publishCourse",
+  async ({ id, status }, { rejectWithValue }) => {
+    try {
+      // Make PATCH request to update only the status
+      const res = await axiosInstance.patch(
+        `/publishCourse/${id}`,
+        { status }, // Send only the status field
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      console.log("Updated Course Status:", res.data);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Error updating course status");
+    }
+  }
+);
+
 const courseSlice = createSlice({
   name: "courses",
   initialState: {
@@ -72,7 +92,6 @@ const courseSlice = createSlice({
     error: null,
   },
   reducers: {},
-
   extraReducers: (builder) => {
     builder
       // Create
@@ -117,7 +136,7 @@ const courseSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Update
+      // Update (full course update)
       .addCase(updateCourse.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -131,6 +150,24 @@ const courseSlice = createSlice({
         }
       })
       .addCase(updateCourse.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Update Course Status (only the status field)
+      .addCase(publishCourse.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(publishCourse.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Find the course and update only its status
+        const index = state.courses.findIndex((course) => course.id === action.payload.id);
+        if (index !== -1) {
+          state.courses[index] = action.payload;
+        }
+      })
+      .addCase(publishCourse.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

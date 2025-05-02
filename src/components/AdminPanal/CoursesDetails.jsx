@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const CoursesDetails = () => {
   const { id } = useParams();
-  console.log("id", id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -16,10 +15,10 @@ const CoursesDetails = () => {
   const courses = useSelector((state) => state?.courses?.courses);
   const course1 = courses?.find((course) => course?.id == id);
   const { instructors } = useSelector((state) => state?.instructors);
-  const instructor = instructors?.data?.find(
+  const instructor = instructors?.find(
     (instructor) => instructor?.id == course1?.instructor_id
   );
-
+  
   const course = {
     title: "Introduction to Web Development",
     category: "Development",
