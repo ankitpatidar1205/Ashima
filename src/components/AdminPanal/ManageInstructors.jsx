@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddInstructorModal from "./AddInstructorModal";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getInstructors, deleteInstructor } from "../../Redux/slices/InstructorSlice/InstructorSlice";
+import { getInstructors, deleteInstructor, updateInstructorStatus } from "../../Redux/slices/InstructorSlice/InstructorSlice";
 import Swal from "sweetalert2";
 
 const ManageInstructors = () => {
@@ -52,7 +52,32 @@ const ManageInstructors = () => {
     const matchesStatus = statusFilter === "All" || instructor.is_active === statusFilter;
     return matchesSearch && matchesStatus;
   });
-
+  const handleStatusToggle = (id, currentStatus) => {
+    const newStatus = currentStatus === "1" ? "0" : "1";
+  
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Change status to ${newStatus === "1" ? "Active" : "Inactive"}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#047670",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, change it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(updateInstructorStatus({ id, status: newStatus }))
+          .unwrap()
+          .then(() => {
+            Swal.fire("Success!", "Instructor status updated.", "success");
+            dispatch(getInstructors());
+          })
+          .catch(() => {
+            Swal.fire("Error!", "Failed to update status.", "error");
+          });
+      }
+    });
+  };
+  
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
@@ -111,13 +136,10 @@ const ManageInstructors = () => {
                       <td className="p-2">{instructor.mobile_number}</td>
                       <td className="p-2">{instructor.expertise}</td>
                       <td className="p-2">
-                        <span className={`${
-                            instructor.is_active === "1"
-                              ? "bg-green-100 text-green-600"
-                              : "bg-red-100 text-red-600"
-                               } text-xs px-2 py-1 rounded`}>
-                          {instructor.is_active === "1" ? "Active" : "Inactive"}
-                        </span>
+                      <button onClick={() => handleStatusToggle(instructor.id, instructor.is_active)} className="text-sm">
+  {instructor.is_active === "0" ? "Deactivate" : "Active"}
+</button>
+
                       </td>
                       <td className="p-2 flex gap-2 text-gray-600 text-base justify-center">
                         <Link to={`/instructor-detail/${instructor.id}`}>

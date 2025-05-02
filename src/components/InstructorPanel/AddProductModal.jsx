@@ -1,37 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCourses } from '../../Redux/slices/CourseSlice/CourseSlice';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { addDigitalProduct, getAllDigitalProducts } from '../../Redux/slices/DigitalProductSlice/DigitalProductSlice';
+import {
+  addDigitalProduct,
+  getAllDigitalProducts,
+} from "../../Redux/slices/DigitalProductSlice/DigitalProductSlice";
+import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 
 const AddProductModal = ({ onClose }) => {
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState("");
+  const [productTitle, setProductTitle] = useState("");
   const [description, setDescription] = useState("");
   const [regularPrice, setRegularPrice] = useState("");
   const [salePrice, setSalePrice] = useState("");
-  const [status, setStatus] = useState("Draft");
-  const [image, setImage] = useState(null);
-  const [selectedCourse, setSelectedCourse] = useState(null); // single course
-  const [instructor_id, setInstructorId] = useState("");
+  const [status, setStatus] = useState(0); // 0 for Draft, 1 for Published
+  const [productImage, setProductImage] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const { courses } = useSelector((state) => state.courses);
+  const { categories } = useSelector((state) => state.categories);
+
   useEffect(() => {
-    dispatch(fetchCourses());
-    const instructorid = localStorage.getItem("is_role_id");
-    if (instructorid) {
-      setInstructorId(instructorid);
-    }
+    dispatch(fetchCategories());
   }, [dispatch]);
 
-  const courseOptions = courses?.map((course) => ({
-    value: course.id,
-    label: course.title,
+  const categoryOptions = categories?.map((cat) => ({
+    value: cat.id,
+    label: cat.category_name,
   }));
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    setProductImage(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -39,21 +38,20 @@ const AddProductModal = ({ onClose }) => {
     console.log("Submitting product...");
 
     const formData = new FormData();
-    formData.append("title", title);
+    formData.append("product_title", productTitle);
     formData.append("description", description);
     formData.append("regular_price", regularPrice);
     formData.append("sale_price", salePrice);
     formData.append("status", status);
-    formData.append("instructor_id", instructor_id);
-    if (image) {
-      formData.append("image", image);
+    if (productImage) {
+      formData.append("product_images", productImage);
     }
-    if (selectedCourse) {
-      formData.append("courses", selectedCourse.value); 
+    if (selectedCategory) {
+      formData.append("category_id", selectedCategory.value);
     }
 
-   await dispatch(addDigitalProduct(formData));
-   await dispatch(getAllDigitalProducts());
+    await dispatch(addDigitalProduct(formData));
+    await dispatch(getAllDigitalProducts());
     console.log("Product dispatched!");
     onClose();
   };
@@ -69,19 +67,19 @@ const AddProductModal = ({ onClose }) => {
               <label className="text-sm">Product Title</label>
               <input
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={productTitle}
+                onChange={(e) => setProductTitle(e.target.value)}
                 className="border px-3 py-2 w-full rounded mt-1"
               />
             </div>
 
             <div>
-              <label className="text-sm">Course</label>
+              <label className="text-sm">Category</label>
               <Select
-                name="course"
-                options={courseOptions}
-                value={selectedCourse}
-                onChange={setSelectedCourse}
+                name="category"
+                options={categoryOptions}
+                value={selectedCategory}
+                onChange={setSelectedCategory}
                 className="w-full mt-1"
               />
             </div>
@@ -122,14 +120,14 @@ const AddProductModal = ({ onClose }) => {
                 onChange={(e) => setStatus(e.target.value)}
                 className="border px-3 py-2 w-full rounded mt-1"
               >
-                <option>Draft</option>
-                <option>Published</option>
+                <option value={0}>Draft</option>
+                <option value={1}>Published</option>
               </select>
             </div>
           </div>
 
           <div className="border border-dashed rounded mt-6 p-6 text-center">
-            <p className="text-sm">Upload Product Images</p>
+            <p className="text-sm">Upload Product Image</p>
             <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
             <input
               type="file"

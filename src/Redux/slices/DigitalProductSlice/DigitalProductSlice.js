@@ -6,7 +6,7 @@ export const addDigitalProduct = createAsyncThunk(
     "digitalProduct/addDigitalProduct",
     async (formData, thunkAPI) => {
       try {
-        const response = await axiosInstance.post("/digitalProduct", formData, 
+        const response = await axiosInstance.post("/product", formData, 
           {
             headers: {
               'Content-Type': 'multipart/form-data', 
@@ -26,9 +26,9 @@ export const getAllDigitalProducts = createAsyncThunk(
   "digitalProduct/getAllDigitalProducts",
   async (_, thunkAPI) => {
     try {
-      const response = await axiosInstance.get("/digitalProduct");
-    //    console.log(response.data)
-      return response.data;
+      const response = await axiosInstance.get("/product");
+      //  console.log(response.data.data)
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
@@ -40,13 +40,29 @@ export const deleteDigitalProduct = createAsyncThunk(
   "digitalProduct/deleteDigitalProduct",
   async (productId, thunkAPI) => {
     try {
-      await axiosInstance.delete(`/digitalProduct/${productId}`);
+      await axiosInstance.delete(`/deleteproduct/${productId}`);
       return productId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+export const updateDigitalProduct = createAsyncThunk(
+  "digitalProduct/updateProduct",
+  async ({ id, formData }, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.put(`editproduct/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 
 // ========== Slice ==========
 const productSlice = createSlice({

@@ -78,7 +78,18 @@ export const updateInstructor = createAsyncThunk(
     }
   }
 );
-
+// ✅ Update Instructor Status
+export const updateInstructorStatus = createAsyncThunk(
+  "instructors/updateInstructorStatus",
+  async ({ id, status }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.patch(`instructorStatus`, { is_active: status });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 // 🔥 Slice
 const instructorSlice = createSlice({
   name: "instructors",
@@ -158,7 +169,18 @@ const instructorSlice = createSlice({
       .addCase(updateInstructor.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+
+        // ✅ updateInstructorStatus
+        .addCase(updateInstructorStatus.fulfilled, (state, action) => {
+          const updatedInstructor = action.payload;
+          const index = state.instructors.findIndex(
+            (instructor) => instructor.id === updatedInstructor.id
+          );
+          if (index !== -1) {
+            state.instructors[index] = updatedInstructor;
+          }
+        });
   },
 });
 

@@ -70,6 +70,7 @@ import ViewReportedIssues from "./components/AdminPanal/ReportedIssues";
 import ForgotPassword from "./Auth/ForgotPassword";
 import CourseCategory from "./components/AdminPanal/CourseCategory";
 import EditInstruction from "./components/AdminPanal/EditInstruction";
+import EditDigitalProduct from "./components/InstructorPanel/EditDigitalProduct";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -85,12 +86,10 @@ const App = () => {
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
+        <Route  path="/digitalproduct"   element={<DigitalProducts></DigitalProducts>}  ></Route>
+        <Route  path="/edit-digital-product/:id"   element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
         <Route
-          path="/digitalproduct"
-          element={<DigitalProducts></DigitalProducts>}
-        ></Route>
-        <Route
-          path="/product/:id"
+          path="/product-detail/:id"
           element={<ProductDetails></ProductDetails>}
         ></Route>
         <Route
@@ -141,7 +140,6 @@ const App = () => {
           element={<DiscussionMostLike></DiscussionMostLike>}
         ></Route>
         <Route
-          path="/reviewrating"
           element={<ReviewsRating></ReviewsRating>}
         ></Route>
         <Route
