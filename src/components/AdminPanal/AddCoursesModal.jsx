@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInstructors } from "../../Redux/slices/InstructorSlice/InstructorSlice";
-import { createCourse, fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
+import { createCourse, fetchCourses, updateCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 
-const AddCoursesModal = ({ isOpen, onClose }) => {
+const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
   const dispatch = useDispatch();
- 
-
   const [formData, setFormData] = useState({
     course_title: "",
     course_description: "",
@@ -20,7 +18,6 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
     test_video: null,
     status: "0",
   });
-
   // Initialize course_syllabus with an array of objects
   const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: "" }]);
   const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
@@ -29,9 +26,33 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
     dispatch(getInstructors());
     dispatch(fetchCategories());
   }, [dispatch]);
+
   const { instructors } = useSelector((state) => state?.instructors);
   const { categories } = useSelector((state) => state?.categories);
-  
+  const { courses } = useSelector((state) => state?.courses);
+
+  useEffect(() => {
+    if (courseId) {
+      // If we are editing, fetch the course data
+      const courseToEdit = courses.find(course => course.id === courseId);
+      if (courseToEdit) {
+        setFormData({
+          course_title: courseToEdit.course_title,
+          course_description: courseToEdit.course_description,
+          course_type: courseToEdit.course_type,
+          instructor_id: courseToEdit.instructor_id,
+          course_price: courseToEdit.course_price,
+          category_id: courseToEdit.category_id,
+          course_content_video_link: courseToEdit.course_content_video_link,
+          test_video: courseToEdit.test_video,
+          status: courseToEdit.status,
+        });
+        setCourseSyllabus(JSON.parse(courseToEdit.course_syllabus) || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
+        setFaqs(JSON.parse(courseToEdit.faqs) || [{ question: "", answer: "" }]); // Parse the JSON string into an array of objectscourseToEdit.faqs);
+      }
+    }
+  }, [courseId, courses]);
+
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
@@ -52,21 +73,29 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
     // Append FAQs as an array of objects
     data.append("faqs", JSON.stringify(faqs));
 
-    if (formData.course_image) {
+     
       data.append("course_image", formData.course_image);
-    }
-    if (formData.test_video) {
+    
+     
       data.append("test_video", formData.test_video);
-    }
-
+    
 
     try {
-      await dispatch(createCourse(data));
+      if (courseId) {
+        // Update course if we are in "update" mode
+        await dispatch(updateCourse({id: courseId, formData: data }));
+          setCourseId(null)
+      } else {
+        // Create new course if we are in "add" mode
+        await dispatch(createCourse(data));
+      }
       await dispatch(fetchCourses());
       onClose(); // Close modal after submit
     } catch (error) {
       console.error("Error submitting course:", error);
     }
+
+    // Reset form fields
     setFormData({
       course_title: "",
       course_description: "",
@@ -108,7 +137,7 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white w-[95%] md:w-[70%] lg:w-[50%] max-h-[90vh] overflow-y-auto p-5 rounded shadow relative">
-        <h3 className="text-xl font-bold mb-4">Add New Course</h3>
+        <h3 className="text-xl font-bold mb-4">{courseId ? "Update Course" : "Add New Course"}</h3>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           {/* Course Title */}
@@ -170,14 +199,13 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
               value={formData.category_id}
               onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
               className="border p-2 rounded w-full"
-            ><option>Select category</option>
-              {
-              categories.map((category) => (
+            >
+              <option>Select category</option>
+              {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.category_name}
                 </option>
-              ))
-            }
+              ))}
             </select>
           </div>
 
@@ -234,22 +262,22 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* course_syllabus */}
+          {/* Course Syllabus */}
           <div>
             <label className="text-sm font-medium mb-1 block">Course Syllabus</label>
-            {course_syllabus.map((module, index) => (
+            {course_syllabus?.map((module, index) => (
               <div key={index} className="border p-3 rounded space-y-2 mb-3">
                 <input
                   type="text"
                   name="module_title"
-                  value={module.module_title}
+                  value={module?.module_title }
                   onChange={(e) => handleCourseSyllabusChange(index, e)}
                   placeholder="Module Title"
                   className="border p-2 rounded w-full"
                 />
                 <textarea
                   name="module_syllabus"
-                  value={module.module_syllabus}
+                  value={module?.module_syllabus}
                   onChange={(e) => handleCourseSyllabusChange(index, e)}
                   placeholder="Module description"
                   className="border p-2 rounded w-full"
@@ -338,7 +366,7 @@ const AddCoursesModal = ({ isOpen, onClose }) => {
               Cancel
             </button>
             <button type="submit" className="bg-teal-700 text-white px-4 py-2 rounded">
-              Save Course
+              {courseId ? "Update Course" : "Save Course"}
             </button>
           </div>
         </form>

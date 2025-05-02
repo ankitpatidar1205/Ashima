@@ -18,7 +18,6 @@ const StudentDetails = () => {
 
   // Find student by id
   const student = Student.filter((item) => item.id == id);
-    // console.log(student)
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
