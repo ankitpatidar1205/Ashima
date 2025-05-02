@@ -45,7 +45,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
           category_id: courseToEdit.category_id,
           course_content_video_link: courseToEdit.course_content_video_link,
           test_video: courseToEdit.test_video,
-          status: courseToEdit.status,
+          status:courseToEdit.status.toString(),
         });
         setCourseSyllabus(JSON.parse(courseToEdit.course_syllabus) || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
         setFaqs(JSON.parse(courseToEdit.faqs) || [{ question: "", answer: "" }]); // Parse the JSON string into an array of objectscourseToEdit.faqs);
@@ -108,6 +108,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
       test_video: null,
       status: "0",
     });
+    setCourseId(null)
     setCourseSyllabus([{ module_title: "", module_syllabus: "" }]);
     setFaqs([{ question: "", answer: "" }]);
   };
@@ -132,6 +133,12 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
 
   const handleAddFaq = () => {
     setFaqs([...faqs, { question: "", answer: "" }]);
+  };
+  const handleCheckboxChange = (e) => {
+    setFormData({
+      ...formData,
+      status: e.target.checked ? "1" : "0", // If checked, set to "1", else "0"
+    });
   };
 
   return (
@@ -239,7 +246,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
                 className="border p-2 rounded w-full"
               >
                 <option>Select Instructor</option>
-                {instructors?.data?.map((instructor) => (
+                {instructors?.map((instructor) => (
                   <option key={instructor?.id} value={instructor.id}>
                     {instructor?.full_name}
                   </option>
@@ -354,6 +361,15 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
             >
               + Add FAQ
             </button>
+          </div>
+          {/* Status */}
+          <div className="flex items-center gap-2">
+          <input
+              type="checkbox"
+              checked={formData.status === "1"}
+              onChange={handleCheckboxChange} // Handle checkbox change
+            />
+            <label className="text-sm">Active</label>
           </div>
 
           {/* Submit and Cancel Buttons */}

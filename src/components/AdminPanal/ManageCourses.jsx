@@ -90,6 +90,7 @@ const ManageCourses = () => {
                   <th className="p-2">Instructor</th>
                   <th className="p-2">Price</th>
                   <th className="p-2">Mode</th>
+                  <th className="p-2">Status</th>
                   <th className="p-2">Actions</th>
                 </tr>
               </thead>
@@ -117,13 +118,24 @@ const ManageCourses = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="p-2">{instructors?.data?.find((instructor) => instructor?.id == course?.instructor_id)?.full_name}</td>
+                    <td className="p-2">{instructors?.find((instructor) => instructor?.id == course?.instructor_id)?.full_name}</td>
                     <td className="p-2">
                        {course?.course_price}
                     </td>
                     <td className="p-2">
                       <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
                         {course?.course_type}
+                      </span>
+                    </td>
+                    <td className="p-2">
+                      <span
+                        className={`${
+                          course.status =="1"  
+                            ? "bg-green-100 text-green-600"
+                            : "bg-yellow-100 text-yellow-600"
+                        } text-xs px-2 py-1 rounded`}
+                      >
+                        {course?.status==0?"Draft":"Published"}
                       </span>
                     </td>
                     <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">
