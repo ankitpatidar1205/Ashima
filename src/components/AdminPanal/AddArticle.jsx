@@ -1,90 +1,77 @@
-// import React from "react";
-
-// const AddNewArticle = () => {
-//   return (
-//     <div className="min-h-screen bg-gray-100 p-6">
-//       <div className="max-w-2xl mx-auto bg-white shadow-sm rounded p-6">
-//         <div className="flex justify-between items-center mb-6">
-//           <h1 className="text-2xl font-semibold">Add New Article</h1>
-//           <button className="text-gray-500 text-sm">Cancel</button>
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block mb-1 text-sm font-medium">Blog Title</label>
-//           <input
-//             type="text"
-//             placeholder="Enter blog title..."
-//             className="w-full border rounded px-3 py-2 text-sm focus:outline-none"
-//           />
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block mb-1 text-sm font-medium">Category</label>
-//           <select className="w-full border rounded px-3 py-2 text-sm focus:outline-none">
-//             <option>Select category</option>
-//           </select>
-//         </div>
-
-//         <div className="mb-4 border-dashed border-2 border-gray-300 rounded flex items-center justify-center h-40 text-center text-gray-500 text-sm">
-//           <div>
-//             <p className="mb-2">Drag and drop your image here or</p>
-//             <span className="text-blue-600 cursor-pointer">browse files</span>
-//           </div>
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block mb-1 text-sm font-medium">Blog Content</label>
-//           <div className="border rounded p-2 mb-2 flex items-center gap-2">
-//             <button className="font-bold text-sm">B</button>
-//             <button className="italic text-sm">I</button>
-//             <button className="underline text-sm">U</button>
-//             <button className="text-sm">•</button>
-//             <button className="text-sm">🔗</button>
-//           </div>
-//           <textarea
-//             placeholder="Write your blog content here..."
-//             className="w-full border rounded px-3 py-2 text-sm focus:outline-none min-h-[150px]"
-//           ></textarea>
-//         </div>
-
-//         <div className="mb-4">
-//           <label className="block mb-1 text-sm font-medium">Tags</label>
-//           <input
-//             type="text"
-//             placeholder="Add tags separated by commas..."
-//             className="w-full border rounded px-3 py-2 text-sm focus:outline-none"
-//           />
-//         </div>
-
-//         <div className="flex items-center mb-4">
-//           <input type="checkbox" className="mr-2" />
-//           <label className="text-sm">Publish immediately</label>
-//         </div>
-
-//         <div className="flex justify-end gap-3">
-//           <button className="px-4 py-2 text-sm border rounded text-gray-700">
-//             Save as Draft
-//           </button>
-//           <button className="px-4 py-2 text-sm bg-black text-white rounded">
-//             Publish Article
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AddNewArticle;
-
-
-
-
-
-
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch , useSelector} from "react-redux";
+import { createArticle, fetchArticles } from "../../Redux/slices/articleSlice/articleSlice";
+import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 
 const AddArticleModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    title: "",
+    category_id: "",
+    content: "",
+    tags: "",
+     article: null,
+    status: "0", // Default status (0 = draft, 1 = published)
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("category_id", formData.category_id);
+    data.append("content", formData.content);
+    data.append("tags", formData.tags);
+    data.append(" article", formData. article);
+    data.append("status", formData.status); // Status is "0" for draft or "1" for published
+
+    try {
+      await dispatch(createArticle(data));
+      dispatch(fetchArticles());
+      onClose(); // Close modal after submit
+    } catch (error) {
+      console.error("Error submitting article:", error);
+    }
+
+    // Reset form fields after submission
+    setFormData({
+      title: "",
+      category_id: "",
+      content: "",
+      tags: "",
+      article: null,
+      status: "0",
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prevState) => ({
+      ...prevState,
+       article: file,
+    }));
+  };
+
+  const handlePublishChange = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      status: prevState.status === "1" ? "0" : "1", // Toggle between draft and publish
+    }));
+  };
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+  const  categories  = useSelector((state) => state?.categories?.categories);
+  console.log("cate",categories);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -97,74 +84,104 @@ const AddArticleModal = ({ isOpen, onClose }) => {
         </button>
 
         <h2 className="text-2xl font-semibold mb-1">Add New Article</h2>
-        <p className="text-sm text-gray-500 mb-4">
-          Create and publish a new blog post
-        </p>
+        <p className="text-sm text-gray-500 mb-4">Create and publish a new blog post</p>
 
-        <div className="mb-3">
-          <label className="text-sm font-medium">Blog Title</label>
-          <input
-            type="text"
-            placeholder="Enter blog title..."
-            className="w-full border border-gray-300 p-2 rounded mt-1"
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="text-sm font-medium">Blog Title</label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Enter blog title..."
+              className="w-full border border-gray-300 p-2 rounded mt-1"
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="text-sm font-medium">Category</label>
-          <select className="w-full border border-gray-300 p-2 rounded mt-1">
-            <option>Select category</option>
-          </select>
-        </div>
+          <div className="mb-3">
+            <label className="text-sm font-medium">Category</label>
+            <select
+              name="category_id"
+              value={formData.category_id}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 rounded mt-1"
+            >
+              <option value="">Select category</option>
+              {/* Replace with dynamic categories or leave as static */}
+              {
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.category_name}
+                  </option>
+                ))
+              }
+            </select>
+          </div>
 
-        <div className="mb-3 border border-dashed border-gray-300 rounded p-6 text-center text-gray-500">
-          <p>
-            Drag and drop your image here or{" "}
-            <span className="text-blue-600 cursor-pointer">browse files</span>
-          </p>
-        </div>
+          <div className="mb-3 border border-dashed border-gray-300 rounded p-6 text-center text-gray-500">
+            <input
+              type="file"
+              name=" article"
+              onChange={handleFileChange}
+              className="hidden"
+              id=" article"
+            />
+            <label htmlFor=" article" className="text-blue-600 cursor-pointer">
+              Browse files
+            </label>
+          </div>
 
-        <div className="mb-3">
-          <label className="text-sm font-medium">Blog Content</label>
-          <div className="border border-gray-300 rounded mt-1 p-2">
-            <div className="flex gap-2 mb-2 text-gray-500 text-lg">
-              <b>B</b>
-              <i>I</i>
-              <u>U</u>
-              <span>•</span>
-              <span>link</span>
-            </div>
+          <div className="mb-3">
+            <label className="text-sm font-medium">Blog Content</label>
             <textarea
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
               placeholder="Write your blog content here..."
               className="w-full border border-gray-300 p-2 rounded h-32"
             ></textarea>
           </div>
-        </div>
 
-        <div className="mb-3">
-          <label className="text-sm font-medium">Tags</label>
-          <input
-            type="text"
-            placeholder="Add tags separated by commas..."
-            className="w-full border border-gray-300 p-2 rounded mt-1"
-          />
-        </div>
-
-        <div className="flex justify-between items-center mt-4">
-          <div className="flex items-center gap-2">
-            <input type="checkbox" />
-            <span className="text-sm">Publish immediately</span>
+          <div className="mb-3">
+            <label className="text-sm font-medium">Tags</label>
+            <input
+              type="text"
+              name="tags"
+              value={formData.tags}
+              onChange={handleChange}
+              placeholder="Add tags separated by commas..."
+              className="w-full border border-gray-300 p-2 rounded mt-1"
+            />
           </div>
 
-          <div className="flex gap-2">
-            <button className="bg-gray-200 px-4 py-2 rounded text-sm">
-              Save as Draft
-            </button>
-            <button className="bg-[#047670] text-white px-4 py-2 rounded text-sm">
-              Publish Article
-            </button>
+          <div className="flex justify-between items-center mt-4">
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={formData.status === "1"}
+                onChange={handlePublishChange}
+              />
+              <span className="text-sm">Publish immediately</span>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className="bg-gray-200 px-4 py-2 rounded text-sm"
+                onClick={() => setFormData((prevState) => ({ ...prevState, status: "0" }))}
+              >
+                Save as Draft
+              </button>
+              <button
+                type="submit"
+                className="bg-[#047670] text-white px-4 py-2 rounded text-sm"
+              >
+                {formData.status === "1" ? "Publish Article" : "Save as Draft"}
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

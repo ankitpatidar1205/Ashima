@@ -4,12 +4,14 @@ import instructorReducer from './slices/InstructorSlice/InstructorSlice';
 import courseReducer from './slices/CourseSlice/CourseSlice';
 import productReducer from './slices/DigitalProductSlice/DigitalProductSlice';
 import categorySlice from './slices/categorySlice/categorySlice'
+import articleSliceREducer from './slices/articleSlice/articleSlice';
 export const store = configureStore({
   reducer: {
     Student:StudentReducer,
     instructors:instructorReducer,
     courses:courseReducer,
     products:productReducer,
-    categories:categorySlice
+    categories:categorySlice,
+    articles:articleSliceREducer
   },
 })
