@@ -52,9 +52,10 @@ const ManageInstructors = () => {
     const matchesStatus = statusFilter === "All" || instructor.is_active === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+// Toggle between active and inactive
   const handleStatusToggle = (id, currentStatus) => {
-    const newStatus = currentStatus === "1" ? "0" : "1";
-  
+    const newStatus = currentStatus === "1" ? "0" : "1"; 
     Swal.fire({
       title: "Are you sure?",
       text: `Change status to ${newStatus === "1" ? "Active" : "Inactive"}?`,
@@ -65,11 +66,11 @@ const ManageInstructors = () => {
       confirmButtonText: "Yes, change it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(updateInstructorStatus({ id, status: newStatus }))
+        dispatch(updateInstructorStatus({ id, status: newStatus })) 
           .unwrap()
           .then(() => {
             Swal.fire("Success!", "Instructor status updated.", "success");
-            dispatch(getInstructors());
+            dispatch(getInstructors()); // Refresh the instructors list
           })
           .catch(() => {
             Swal.fire("Error!", "Failed to update status.", "error");
@@ -77,6 +78,7 @@ const ManageInstructors = () => {
       }
     });
   };
+  
   
   return (
     <DashboardLayout>
@@ -136,11 +138,12 @@ const ManageInstructors = () => {
                       <td className="p-2">{instructor.mobile_number}</td>
                       <td className="p-2">{instructor.expertise}</td>
                       <td className="p-2">
-                      <button onClick={() => handleStatusToggle(instructor.id, instructor.is_active)} className="text-sm">
-  {instructor.is_active === "0" ? "Deactivate" : "Active"}
-</button>
-
-                      </td>
+                     <button onClick={() => handleStatusToggle(instructor.id, instructor.is_active)} className={`${
+                     instructor.is_active === "1"
+                     ? "bg-green-100 text-green-600"
+                    : "bg-red-100 text-red-600" } text-xs px-2 py-1 rounded`} >
+                  {instructor.is_active === "1" ? "Active" : "Inactive"} </button>
+                </td>
                       <td className="p-2 flex gap-2 text-gray-600 text-base justify-center">
                         <Link to={`/instructor-detail/${instructor.id}`}>
                           <FaEye />

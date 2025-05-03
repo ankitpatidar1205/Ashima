@@ -83,13 +83,18 @@ export const updateInstructorStatus = createAsyncThunk(
   "instructors/updateInstructorStatus",
   async ({ id, status }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.patch(`instructorStatus`, { is_active: status });
+    
+      const response = await axiosInstance.patch(
+        `instructorStatus/${id}`,
+        { is_active: status } 
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+
 // 🔥 Slice
 const instructorSlice = createSlice({
   name: "instructors",

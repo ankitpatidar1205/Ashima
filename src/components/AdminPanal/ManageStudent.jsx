@@ -4,7 +4,7 @@ import DashboardLayout from "../../Layout/DashboardLayout";
 import AddStudentModal from "./AddStudent";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteStudent, getStudents } from "../../Redux/slices/StudentSlice/StudentSlice";
+import { deleteStudent, getStudents, updateStudentStatus } from "../../Redux/slices/StudentSlice/StudentSlice";
 import Swal from "sweetalert2";
 
 const ManageStudents = () => {
@@ -12,8 +12,8 @@ const ManageStudents = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { Student } = useSelector((state) => state.Student);
-    console.log("ALLSTU",Student)
+   const { Student } = useSelector((state) => state.Student);
+   // console.log("Student",Student)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,9 +21,8 @@ const ManageStudents = () => {
     dispatch(getStudents());
   }, [dispatch]);
 
-  const handleUpdateStudent = (student) => {
-    localStorage.setItem("student", JSON.stringify(student));
-    setIsModalOpen(true);
+  const handleUpdateStudent = (id) => {
+    navigate(`/edit-student/${id}`);
   };
 
   const handleViewStudent = (studentId) => {
@@ -64,22 +63,41 @@ const ManageStudents = () => {
 
     return matchesSearch && matchesStatus;
   });
-
+  const handleStatusToggle = (studentId, currentStatus) => {
+    const newStatus = currentStatus === "1" ? "0" : "1"; // Toggling between Active/Inactive
+    
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Change status to ${newStatus === "1" ? "Active" : "Inactive"}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#047670",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, change it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(updateStudentStatus({ id: studentId, status: newStatus }))
+          .unwrap()
+          .then(() => {
+            Swal.fire("Success!", "Student status updated.", "success");
+            dispatch(getStudents()); // Refresh the student list after updating
+          })
+          .catch(() => {
+            Swal.fire("Error!", "Failed to update status.", "error");
+          });
+      }
+    });
+  };
+  
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Manage Students</h2>
-          <button
-            className="bg-[#047670] text-white px-4 py-2 rounded"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Add Student
-          </button>
+          <button className="bg-[#047670] text-white px-4 py-2 rounded"
+            onClick={() => setIsModalOpen(true)}> Add Student </button>
           <AddStudentModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          />
+            isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
         </div>
 
         <div className="bg-white p-4 rounded shadow">
@@ -131,21 +149,15 @@ const ManageStudents = () => {
                         {student?.courses?.[0]?.course_title || "-"}
                       </td>
                       <td className="p-2">
-                        <span
-                          className={`text-xs px-2 py-1 rounded ${
-                            student.is_active === "1"
-                              ? "bg-green-100 text-green-600"
-                              : "bg-red-100 text-red-600"
-                          }`}
-                        >
-                          {student.is_active === "1" ? "Active" : "Inactive"}
-                        </span>
-                      </td>
+                 <button   onClick={() => handleStatusToggle(student.id, student.is_active)} className={`text-xs px-2 py-1 rounded ${
+                        student.is_active === "1"? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}> {student.is_active === "1" ? "Active" : "Inactive"}
+                  </button></td>
+
                       <td className="p-2 flex gap-2 justify-center items-center text-gray-600 text-base">
                         <button onClick={() => handleViewStudent(student.id)}>
                           <FaEye />
                         </button>
-                        <button onClick={() => handleUpdateStudent(student)}>
+                        <button onClick={() => handleUpdateStudent(student.id)}>
                           <FaEdit />
                         </button>
                         <button onClick={() => handleDeleteStudent(student.id)}>

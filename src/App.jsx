@@ -71,6 +71,7 @@ import ForgotPassword from "./Auth/ForgotPassword";
 import CourseCategory from "./components/AdminPanal/CourseCategory";
 import EditInstruction from "./components/AdminPanal/EditInstruction";
 import EditDigitalProduct from "./components/InstructorPanel/EditDigitalProduct";
+import EditStudent from "./components/AdminPanal/EditStudent";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -88,10 +89,7 @@ const App = () => {
         <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
         <Route  path="/digitalproduct"   element={<DigitalProducts></DigitalProducts>}  ></Route>
         <Route  path="/edit-digital-product/:id"   element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
-        <Route
-          path="/product-detail/:id"
-          element={<ProductDetails></ProductDetails>}
-        ></Route>
+        <Route  path="/product-detail/:id"  element={<ProductDetails></ProductDetails>}></Route>
         <Route
           path="/PaymentAnalytics"
           element={<PaymentAnalytics></PaymentAnalytics>}
@@ -150,10 +148,8 @@ const App = () => {
           path="/student-settings"
           element={<Student_Setting></Student_Setting>}
         ></Route>
-        <Route
-          path="/manage-student"
-          element={<ManageStudent></ManageStudent>}
-        ></Route>
+        <Route path="/manage-student" element={<ManageStudent></ManageStudent>} ></Route>
+        <Route path="/edit-student/:id" element={<EditStudent></EditStudent>} ></Route>
         <Route
           path="/manage-instructors"
           element={<ManageInstructors></ManageInstructors>}

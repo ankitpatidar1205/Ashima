@@ -26,9 +26,8 @@ const EditInstruction = () => {
 
   // Check if instructors data is loaded
   useEffect(() => {
-    console.log(instructors); // Ensure instructors is populated
     const instructor = instructors.find((instructor) => instructor.id == Number(id));
-    console.log("filter",instructor)
+    // console.log("filter",instructor)
     if (instructor) {
       setFullName(instructor.full_name);
       setEmail(instructor.email);

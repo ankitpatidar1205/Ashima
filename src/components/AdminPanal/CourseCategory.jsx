@@ -3,14 +3,14 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { createCategory, deleteCategory, fetchCategories, editCategory,
-} from "../../Redux/slices/categorySlice/categorySlice";
+import { createCategory, deleteCategory, fetchCategories, editCategory,} from "../../Redux/slices/categorySlice/categorySlice";
 
 const CourseCategory = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [editCategoryId, setEditCategoryId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
@@ -104,6 +104,11 @@ const CourseCategory = () => {
         </div>
 
         <div className="bg-white p-4 rounded shadow">
+          <div className="flex flex-wrap gap-2 mb-4">
+          <input type="text" placeholder="Search Categories..." value={searchTerm}
+             onChange={(e) => setSearchTerm(e.target.value)}
+             className="border px-3 py-2 rounded w-full md:w-auto"/>    
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-center text-nowrap">
               <thead className="bg-gray-50">
@@ -114,32 +119,52 @@ const CourseCategory = () => {
                 </tr>
               </thead>
               <tbody>
-                {categories && categories.length > 0 ? (
-                  categories.map((category, index) => (
-                    <tr key={category._id} className="border-b">
-                      <td className="p-2">{index + 1}</td>
-                      <td className="p-2">{category.category_name}</td>
-                      <td className="p-2 flex gap-2 justify-center items-center text-gray-600 text-base">
-                        <button onClick={() => openEditModal(category)}>
-                          <FaEdit />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteCategory(category.id)}
-                        >
-                          <FaTrash />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="3" className="text-center py-4 text-gray-500">
-                      No category found.
-                    </td>
-                  </tr>
-                )}
+              {categories && categories.length > 0 ? (
+  categories
+    .filter((category) =>
+      category.category_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+    .map((category, index) => (
+      <tr key={category.id} className="border-b">
+        <td className="p-2">{index + 1}</td>
+        <td className="p-2">{category.category_name}</td>
+        <td className="p-2 flex gap-2 justify-center items-center text-gray-600 text-base">
+          <button onClick={() => openEditModal(category)}>
+            <FaEdit />
+          </button>
+          <button
+            onClick={() => handleDeleteCategory(category.id)}
+          >
+            <FaTrash />
+          </button>
+        </td>
+      </tr>
+    ))
+) : (
+  <tr>
+    <td colSpan="3" className="text-center py-4 text-gray-500">
+      No category found.
+    </td>
+  </tr>
+)}
+
               </tbody>
             </table>
+          </div>
+             {/* Pagination Placeholder */}
+             <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
+            <div>
+              Showing  entries
+            </div>
+            <div className="flex gap-2">
+              <button className="border px-2 py-1 rounded">Previous</button>
+              <button className="bg-[#047670] text-white px-2 py-1 rounded">1</button>
+              <button className="border px-2 py-1 rounded">2</button>
+              <button className="border px-2 py-1 rounded">3</button>
+              <button className="border px-2 py-1 rounded">Next</button>
+            </div>
           </div>
         </div>
 

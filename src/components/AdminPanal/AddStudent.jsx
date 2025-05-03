@@ -45,8 +45,8 @@ const AddStudentModal = ({ isOpen, onClose }) => {
       course_id: JSON.stringify(selectedCourses.map((course) => course.value)),
     };
 
-    dispatch(createStudent(formData));
-    dispatch(getStudents());
+  await  dispatch(createStudent(formData));
+  await  dispatch(getStudents());
     onClose();
   };
 

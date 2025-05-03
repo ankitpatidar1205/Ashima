@@ -16,33 +16,34 @@ const Login = () => {
       alert("Please fill in all fields.");
       return;
     }
-
+  
     try {
-
       const response = await axios.post(`${BASE_URL}/login`, { email, password }, { withCredentials: true });
-      // Step 2: Get the encoded access token from the login response
+
+      console.log(response.data.message);
+      
+      // Check if status is 201 — show message if available
+      if (response.status === 201) {
+        await Swal.fire({
+          icon: "error",
+          title: "false",
+          text: response.data.message,
+        });
+      }
+      
+  
+      // Proceed to get token & call me API
       const encodedaccessToken = response.data.data.encodedaccessToken;
-      // console.log("Encoded Token", encodedaccessToken);
-  
-      // Step 3: Decrypt the token if necessary (you might want to skip this step if your backend uses JWTs directly)
       const decryptedToken = decryptToken(encodedaccessToken);
-      // console.log("Decrypted Token:", decryptedToken);
-  
-      // Step 4: If decrypted, you can parse it (only if required)
       const parsedToken = decryptedToken ? JSON.parse(decryptedToken) : null;
-      // console.log("Parsed Token:", parsedToken);
   
-      // Step 5: Fetch user data using the token
       const meResponse = await axios.get(`${BASE_URL}/me`, {
         headers: {
-          Authorization: `Bearer ${parsedToken}`, // Send the encoded token in the Authorization header
+          Authorization: `Bearer ${parsedToken}`,
         },
-        withCredentials: true, // Ensure cookies are sent if required
+        withCredentials: true,
       });
-
-      console.log("Me API Response:", meResponse.data);
   
-      // Step 6: Check if the response is successful and extract user data
       if (meResponse.data.success) {
         const userData = {
           id: meResponse.data.data.id,
@@ -50,17 +51,15 @@ const Login = () => {
           role: meResponse.data.data.role,
         };
   
-        // Save the user data in localStorage
         localStorage.setItem("user", JSON.stringify(userData));
         localStorage.setItem("token", encodedaccessToken);
-        // Step 7: Show success message
+  
         Swal.fire({
           icon: "success",
           title: "Login Successful!",
           text: `Welcome, ${userData.role}!`,
         });
   
-        // Step 8: Navigate to the appropriate dashboard based on the user's role
         if (userData.role === "admin") {
           navigate(`/admin-dashboard`);
         } else if (userData.role === "student") {
@@ -71,7 +70,6 @@ const Login = () => {
           navigate(`/default-dashboard`);
         }
       } else {
-        // If the API response isn't successful, show an error message
         Swal.fire({
           icon: "error",
           title: "Login Failed",
@@ -80,11 +78,10 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Login Error:", error);
-      // If there's an error, show a generic error message
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Something went wrong, please try again.",
+        text: error?.response?.data?.message || "Something went wrong, please try again.",
       });
     }
   };

@@ -47,7 +47,34 @@ export const deleteStudent = createAsyncThunk(
     }
   }
 );
+// Update student status
+export const updateStudentStatus = createAsyncThunk(
+  "students/updateStudentStatus",
+  async ({ id, status }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.patch(`studentStatus/${id}`, {
+        is_active: status,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
+// Update Student Details
+export const updateStudent = createAsyncThunk(
+  "students/updateStudent",
+  async (updatedStudent, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/editstudent/${updatedStudent.id}`,
+        updateStudent);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 // Slice
 const StudentSlice = createSlice({
   name: 'students',
@@ -105,7 +132,36 @@ const StudentSlice = createSlice({
       .addCase(deleteStudent.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+
+      .addCase(updateStudentStatus.fulfilled, (state, action) => {
+        state.Student = state.Student.map((student) =>
+          student.id === action.payload.id
+            ? { ...student, is_active: action.payload.is_active }
+            : student
+        );
+      })
+      .addCase(updateStudentStatus.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+
+      // Update Student
+      .addCase(updateStudent.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateStudent.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedIndex = state.students.findIndex(
+          (student) => student.id === action.payload.data.id
+        );
+        if (updatedIndex !== -1) {
+          state.Student[updatedIndex] = action.payload.data;
+        }
+      })
+      .addCase(updateStudent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 
