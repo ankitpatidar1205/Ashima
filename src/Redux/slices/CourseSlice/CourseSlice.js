@@ -24,7 +24,7 @@ export const fetchCourses = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axiosInstance.get("/course");
-      console.log("Get All Courses", res.data.data);
+      // console.log("Get All Courses", res.data.data);
       return res.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error fetching courses");

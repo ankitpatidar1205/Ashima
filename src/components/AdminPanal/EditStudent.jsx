@@ -10,7 +10,6 @@ const EditStudent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [studentData, setStudentData] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,10 +22,12 @@ const EditStudent = () => {
     label: course.course_title,
   }));
 
+  // Fetch available courses
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]);
-  // Get student details by ID
+
+  // Fetch student data by ID
   useEffect(() => {
     const fetchStudent = async () => {
       try {
@@ -40,35 +41,40 @@ const EditStudent = () => {
     fetchStudent();
   }, [id]);
 
-  // Set form values from API
+  // Set form values from API data
   useEffect(() => {
     if (studentData) {
+      console.log("Student Courses: ", studentData.courses); // ✅ check what you get
       setName(studentData.student_name);
       setEmail(studentData.email);
       setMobile(studentData.mobile);
-      setSelectedCourses(
-        studentData?.courses?.map((course) => ({
+
+      // Set selected courses from studentData
+      const mappedCourses = studentData?.courses
+        ?.filter((course) => course.course_id) // only if course_id exists
+        .map((course) => ({
           label: course.course_title,
-          value: course.id,
-        }))
-      );
+          value: course.course_id,
+        }));
+
+      setSelectedCourses(mappedCourses || []);
     }
   }, [studentData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const updatedStudent = {
       id: studentData.id,
       student_name: name,
       email,
       mobile,
-      courses: selectedCourses?.map((course) => course.course_title),
+      course_id: JSON.stringify(selectedCourses.map((course) => course.value)),
     };
-
+    console.log("Submitting: ", updatedStudent);
     await dispatch(updateStudent(updatedStudent));
-    navigate("/manage-student");  // navigate after update
+    navigate("/manage-student");
   };
+  
 
   const handleCancel = () => {
     navigate("/manage-student");
@@ -88,12 +94,8 @@ const EditStudent = () => {
             <div className="space-y-4">
               <div>
                 <label className="block mb-1 font-medium">Full Name</label>
-                <input
-                  type="text"
-                  className="w-full border px-3 py-2 rounded"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                <input type="text" className="w-full border px-3 py-2 rounded"
+                  value={name}  onChange={(e) => setName(e.target.value)} />
               </div>
 
               <div>
@@ -108,12 +110,10 @@ const EditStudent = () => {
 
               <div>
                 <label className="block mb-1 font-medium">Mobile Number</label>
-                <input
-                  type="text"
+                <input  type="text"
                   className="w-full border px-3 py-2 rounded"
                   value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                />
+                  onChange={(e) => setMobile(e.target.value)}/>
               </div>
 
               <div>

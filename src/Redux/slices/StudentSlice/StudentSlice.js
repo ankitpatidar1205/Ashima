@@ -62,19 +62,26 @@ export const updateStudentStatus = createAsyncThunk(
   }
 );
 
-// Update Student Details
 export const updateStudent = createAsyncThunk(
   "students/updateStudent",
   async (updatedStudent, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`/editstudent/${updatedStudent.id}`,
-        updateStudent);
+      const response = await axiosInstance.put(
+        `/editstudent/${updatedStudent.id}`,
+        updatedStudent,
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+
 // Slice
 const StudentSlice = createSlice({
   name: 'students',

@@ -42,10 +42,12 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
           course_type: courseToEdit.course_type,
           instructor_id: courseToEdit.instructor_id,
           course_price: courseToEdit.course_price,
+          course_image: courseToEdit.course_image,
           category_id: courseToEdit.category_id,
           course_content_video_link: courseToEdit.course_content_video_link,
           test_video: courseToEdit.test_video,
           status:courseToEdit.status.toString(),
+
         });
         setCourseSyllabus(JSON.parse(courseToEdit.course_syllabus) || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
         setFaqs(JSON.parse(courseToEdit.faqs) || [{ question: "", answer: "" }]); // Parse the JSON string into an array of objectscourseToEdit.faqs);

@@ -42,6 +42,22 @@ export const deleteTemplate = createAsyncThunk(
   }
 );
 
+export const updateTemplate = createAsyncThunk(
+  "template/updateTemplate",
+  async ({ id, formData }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/editcertificate/${id}`, formData,{
+        headers:{
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 // Slice
 const templateSlice = createSlice({
   name: "template",

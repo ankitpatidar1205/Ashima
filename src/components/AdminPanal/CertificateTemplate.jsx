@@ -5,9 +5,11 @@ import AddTemplateModal from "./AddTemplate";
 import { fetchTemplates, deleteTemplate } from "../../Redux/slices/templateSlice/templateSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CertificateTemplates = () => {
   const dispatch = useDispatch();
+    const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -86,27 +88,21 @@ const CertificateTemplates = () => {
                   <div className="p-3">
                     <h3 className="font-semibold mb-1">{item.template_name}</h3>
 
-                    <p className="text-xs text-gray-500 mb-1">Category: {item.category_name || "Uncategorized"}</p>
+                    <p className="text-xs text-gray-500 mb-1">Category: {item.category_name }</p>
                     <p className="text-xs text-gray-500 mb-1">Size: {item.template_size}</p>
                     <p className="text-xs text-gray-500 mb-1">Border: {item.border_style}</p>
                     <p className="text-xs text-gray-500 mb-3">Status: {item.status === "1" ? "Issued" : "Pending"}</p>
 
                     {/* Action Buttons */}
                     <div className="flex gap-2 mb-2">
-                      <button
-                        onClick={() => console.log("edit", item.id)}
-                        className="border p-2 rounded text-gray-600 hover:bg-gray-100"
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteTemplate(item.id)}
-                        className="border p-2 rounded text-gray-600 hover:bg-gray-100"
-                      >
+                    <button onClick={() => navigate(`/edit-template/${item.id}`)}
+                      className="border p-2 rounded text-gray-600 hover:bg-gray-100"><FaEdit />
+                    </button>
+                      <button  onClick={() => handleDeleteTemplate(item.id)}
+                        className="border p-2 rounded text-gray-600 hover:bg-gray-100">
                         <FaTrash />
                       </button>
                     </div>
-
                     <button className="border px-4 py-2 w-full flex justify-center items-center gap-2 text-sm rounded">
                       <FaDownload /> Download PDF
                     </button>

@@ -18,7 +18,7 @@ const ManageCourses = () => {
   }, [dispatch]); 
      
     const { instructors } = useSelector((state) => state?.instructors);
-         const handleDelete = (id) => {
+     const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won’t be able to revert this!",
@@ -31,6 +31,7 @@ const ManageCourses = () => {
       if (result.isConfirmed) {
         dispatch(deleteCourse(id))
         Swal.fire("Deleted!", "The course has been deleted.", "success");
+        dispatch(fetchCourses());
       }
     });
   };
@@ -41,9 +42,9 @@ const ManageCourses = () => {
     
   };  
   const changeStatus = (id)=>{
-    const updatedStatus = currentStatus === "1" ? "0" : "1";
+    // const updatedStatus = currentStatus === "1" ? "0" : "1";
     const updatedCourses = courses.map((course) =>
-      course.id === id ? { ...course, status: updatedStatus } : course
+      course.id === id ? { ...course, status: "1" } : course
     );
     dispatch(fetchCourses());
     dispatch(publishCourse({id,status:"1"}))
@@ -142,7 +143,7 @@ const ManageCourses = () => {
                             ? "bg-green-100 text-green-600"
                             : "bg-yellow-100 text-yellow-600"
                         } text-xs px-2 py-1 rounded`}
-                      > <button onClick={() => changeStatus(course?.id)} disabled={course?.status =="1"}>
+                      > <button onClick={() => changeStatus(course?.id,"1")} disabled={course?.status =="1"}>
                         {course?.status==0?"Draft":"Published"}
                       </button>
                         

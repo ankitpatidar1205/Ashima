@@ -14,9 +14,14 @@ const AddProductModal = ({ onClose }) => {
   const [description, setDescription] = useState("");
   const [regularPrice, setRegularPrice] = useState("");
   const [salePrice, setSalePrice] = useState("");
-  const [status, setStatus] = useState(0); // 0 for Draft, 1 for Published
+  const [status, setStatus] = useState(0);
   const [productImage, setProductImage] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // New fields
+  const [author, setAuthor] = useState("");
+  const [productType, setProductType] = useState("");
+  const [publishDate, setPublishDate] = useState("");
 
   const { categories } = useSelector((state) => state.categories);
 
@@ -35,7 +40,6 @@ const AddProductModal = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting product...");
 
     const formData = new FormData();
     formData.append("product_title", productTitle);
@@ -50,9 +54,13 @@ const AddProductModal = ({ onClose }) => {
       formData.append("category_id", selectedCategory.value);
     }
 
+    // New fields append
+    formData.append("author", author);
+    formData.append("product_type", productType);
+    formData.append("publish_date", publishDate);
+
     await dispatch(addDigitalProduct(formData));
     await dispatch(getAllDigitalProducts());
-    console.log("Product dispatched!");
     onClose();
   };
 
@@ -65,8 +73,7 @@ const AddProductModal = ({ onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="text-sm">Product Title</label>
-              <input
-                type="text"
+              <input type="text"
                 value={productTitle}
                 onChange={(e) => setProductTitle(e.target.value)}
                 className="border px-3 py-2 w-full rounded mt-1"
@@ -123,6 +130,37 @@ const AddProductModal = ({ onClose }) => {
                 <option value={0}>Draft</option>
                 <option value={1}>Published</option>
               </select>
+            </div>
+
+            {/* New Fields */}
+            <div>
+              <label className="text-sm">Author</label>
+              <input
+                type="text"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                className="border px-3 py-2 w-full rounded mt-1"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm">Product Type</label>
+              <input
+                type="text"
+                value={productType}
+                onChange={(e) => setProductType(e.target.value)}
+                className="border px-3 py-2 w-full rounded mt-1"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm">Publish Date</label>
+              <input
+                type="date"
+                value={publishDate}
+                onChange={(e) => setPublishDate(e.target.value)}
+                className="border px-3 py-2 w-full rounded mt-1"
+              />
             </div>
           </div>
 

@@ -1,27 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addTemplate, fetchTemplates } from "../../Redux/slices/templateSlice/templateSlice";
-import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axiosInstance from "../../utils/axiosInstance";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
+import { updateTemplate } from "../../Redux/slices/templateSlice/templateSlice";
 
-const AddTemplateModal = ({ isOpen, onClose }) => {
+const EditCertificateTemplates = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+    const { categories } = useSelector((state) => state.categories);
+  
+  // form states
   const [templateName, setTemplateName] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [templateSize, setTemplateSize] = useState("A4 Portrait");
   const [borderStyle, setBorderStyle] = useState("Classic");
   const [certificateContent, setCertificateContent] = useState("");
-  const [certificateImage, setCertificateImage] = useState(null);
   const [status, setStatus] = useState("0");
+  const [certificateImage, setCertificateImage] = useState(null);
 
-  const { categories } = useSelector((state) => state.categories);
+  const fetchTemplateData = async () => {
+    try {
+      const response = await axiosInstance.get(`/certificate?id=${id}`);
+      const data = response.data.data[0];
+      if (data) {
+        setTemplateName(data.template_name);
+        setCategoryId(data.category_id);
+        setTemplateSize(data.template_size);
+        setBorderStyle(data.border_style);
+        setCertificateContent(data.certificate_content);
+        setStatus(data.status);
+      }
+    } catch (error) {
+      console.error("Error fetching certificate template:", error);
+    }
+  };
 
   useEffect(() => {
+    fetchTemplateData();
     dispatch(fetchCategories());
-  }, [dispatch]);
+  }, [id]);
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -36,32 +56,29 @@ const AddTemplateModal = ({ isOpen, onClose }) => {
     }
   
     try {
-      await dispatch(addTemplate(formData)).unwrap();
+      await dispatch(updateTemplate({ id, formData })).unwrap();
       Swal.fire({
         icon: "success",
-        title: "Template Created!",
-        text: "Your certificate template has been successfully created.",
-        confirmButtonColor: "#047670"
+        title: "Template Updated!",
+        text: "Your certificate template has been successfully updated.",
+        confirmButtonColor: "#047670",
       }).then(() => {
-        dispatch(fetchTemplates());   // fetch updated list on success ✅
-        onClose();                     // close the modal
         navigate("/CertificateTemplate");
       });
     } catch (error) {
-      console.error("Error adding template:", error);
+      console.error("Error updating template:", error);
       Swal.fire({
         icon: "error",
         title: "Oops!",
-        text: "Something went wrong while creating the template."
+        text: "Something went wrong while updating the template.",
       });
     }
   };
   
+
   const handleCancel = () => {
-   onClose()
+    navigate("/CertificateTemplate");
   };
-  
-  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -72,8 +89,11 @@ const AddTemplateModal = ({ isOpen, onClose }) => {
         >
           ← Back
         </button>
-        <h2 className="text-2xl font-semibold mb-4 text-center">Add New Template</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">
+          Edit Certificate Template
+        </h2>
 
+        {/* Form fields with states */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="text-sm font-medium">Template Name</label>
@@ -85,7 +105,6 @@ const AddTemplateModal = ({ isOpen, onClose }) => {
               className="w-full border border-gray-300 p-2 rounded mt-1"
             />
           </div>
-
           <div>
             <label className="text-sm font-medium">Category</label>
             <select
@@ -117,7 +136,6 @@ const AddTemplateModal = ({ isOpen, onClose }) => {
               <option>Letter</option>
             </select>
           </div>
-
           <div>
             <label className="text-sm font-medium">Border Style</label>
             <select
@@ -156,11 +174,7 @@ const AddTemplateModal = ({ isOpen, onClose }) => {
             {certificateImage ? (
               certificateImage.name
             ) : (
-              <>
-                Click to upload or drag and drop
-                <br />
-                <span className="text-xs">PNG, JPG up to 10MB</span>
-              </>
+              <>Click to upload or drag and drop<br /><span className="text-xs">PNG, JPG up to 10MB</span></>
             )}
           </label>
         </div>
@@ -186,7 +200,7 @@ const AddTemplateModal = ({ isOpen, onClose }) => {
             onClick={handleSubmit}
             className="bg-[#047670] text-white text-sm px-4 py-2 rounded"
           >
-            Create Template
+            Update Template
           </button>
         </div>
       </div>
@@ -194,4 +208,4 @@ const AddTemplateModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default AddTemplateModal;
+export default EditCertificateTemplates;

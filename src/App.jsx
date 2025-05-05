@@ -72,6 +72,7 @@ import CourseCategory from "./components/AdminPanal/CourseCategory";
 import EditInstruction from "./components/AdminPanal/EditInstruction";
 import EditDigitalProduct from "./components/InstructorPanel/EditDigitalProduct";
 import EditStudent from "./components/AdminPanal/EditStudent";
+import EditCertificateTemplates from "./components/AdminPanal/EditCertificateTemplates";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -87,56 +88,24 @@ const App = () => {
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
-        <Route  path="/digitalproduct"   element={<DigitalProducts></DigitalProducts>}  ></Route>
-        <Route  path="/edit-digital-product/:id"   element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
-        <Route  path="/product-detail/:id"  element={<ProductDetails></ProductDetails>}></Route>
-        <Route
-          path="/PaymentAnalytics"
-          element={<PaymentAnalytics></PaymentAnalytics>}
-        ></Route>
-        <Route
-          path="/viewTranscation"
-          element={<ManageTransaction></ManageTransaction>}
-        ></Route>
-        <Route
-          path="/RefundProcess"
-          element={<RefundProcess></RefundProcess>}
-        ></Route>
+        <Route  path="/digitalproduct" element={<DigitalProducts></DigitalProducts>}></Route>
+        <Route  path="/edit-digital-product/:id" element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
+        <Route  path="/product-detail/:id" element={<ProductDetails></ProductDetails>}></Route>
+        <Route path="/PaymentAnalytics" element={<PaymentAnalytics></PaymentAnalytics>}></Route>
+        <Route  path="/viewTranscation" element={<ManageTransaction></ManageTransaction>}></Route>
+        <Route path="/RefundProcess" element={<RefundProcess></RefundProcess>}></Route>
         <Route path="/newCourse" element={<NewCourse></NewCourse>}></Route>
-        <Route
-          path="/createnewpage"
-          element={<CreateNewPage></CreateNewPage>}
-        ></Route>
+        <Route  path="/createnewpage"  element={<CreateNewPage></CreateNewPage>}></Route>
         <Route path="/mycourse" element={<MyCourses></MyCourses>}></Route>
         <Route path="/courses/:id" element={<CourseDetails />} />
-        <Route
-          path="/conversation"
-          element={<Conversation></Conversation>}
-        ></Route>
-        <Route
-          path="/coursecomments"
-          element={<CourseComments></CourseComments>}
-        ></Route>
-        <Route
-          path="/certificate"
-          element={<CertificatesPage></CertificatesPage>}
-        ></Route>
-        <Route
-          path="/descussiontrending"
-          element={<Descussiontrending></Descussiontrending>}
-        ></Route>
-        <Route
-          path="/descussionnew"
-          element={<DescussionNew></DescussionNew>}
-        ></Route>
-        <Route
-          path="/descussionunanswered"
-          element={<Dis_unanswered></Dis_unanswered>}
-        ></Route>
-        <Route
-          path="/descussionmostlike"
-          element={<DiscussionMostLike></DiscussionMostLike>}
-        ></Route>
+        <Route  path="/conversation"  element={<Conversation></Conversation>}></Route>
+        <Route path="/coursecomments"  element={<CourseComments></CourseComments>} ></Route>
+        <Route  path="/certificate"  element={<CertificatesPage></CertificatesPage>}></Route>
+        <Route path="/edit-template/:id"  element={<EditCertificateTemplates></EditCertificateTemplates>}></Route>
+        <Route path="/descussiontrending"   element={<Descussiontrending></Descussiontrending>} ></Route>
+        <Route  path="/descussionnew"  element={<DescussionNew></DescussionNew>}></Route>
+        <Route path="/descussionunanswered" element={<Dis_unanswered></Dis_unanswered>}></Route>
+        <Route path="/descussionmostlike" element={<DiscussionMostLike></DiscussionMostLike>} ></Route>
         <Route
           element={<ReviewsRating></ReviewsRating>}
         ></Route>

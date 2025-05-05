@@ -1,10 +1,14 @@
 
-import React from "react";
+import React,{useEffect} from "react";
 import { FaSearch, FaDownload, FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import  { useState } from "react";
 import AddArticleModal from "./AddArticle";
-
+import { fetchArticles, deleteArticle } from "../../Redux/slices/articleSlice/articleSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { format } from 'date-fns'; 
+import {fetchCategories} from "../../Redux/slices/categorySlice/categorySlice"
+import Swal from "sweetalert2";
 
 
 const Blogs_article = () => {
@@ -20,7 +24,40 @@ const Blogs_article = () => {
       status: "Published",
     },
   ];
+  
+   
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchArticles());
+    dispatch(fetchCategories());
+  },[])
+  const handleDelete = (id) => {
+    console.log(id)
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteArticle(id))
+        .unwrap()
+        .then(() => {
+          Swal.fire("Deleted!", "Blog has been deleted.", "success");
+        })
+        .catch(() => {
+          Swal.fire("Error!", "Something went wrong.", "error");
+        });
+      }
+    });
+  }
+  const { articles } = useSelector((state) => state.articles);
+  const  categories  = useSelector((state) => state?.categories?.categories);
+  
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-100 min-h-screen">
@@ -100,25 +137,28 @@ const Blogs_article = () => {
               </tr>
             </thead>
             <tbody>
-              {blogData.map((item, idx) => (
+              {articles?.map((item, idx) => (
+                 
                 <tr key={idx} className="border-b">
-                  <td className="px-4 py-3">{item.id}</td>
+                  <td className="px-4 py-3">{item?.id}</td>
                   <td className="px-4 py-3">
-                    <p className="font-medium">{item.title}</p>
+                    <p className="font-medium">{item?.title}</p>
                     <p className="text-xs text-gray-500">{item.subtitle}</p>
                   </td>
-                  <td className="px-4 py-3">{item.category}</td>
-                  <td className="px-4 py-3">{item.author}</td>
-                  <td className="px-4 py-3">{item.published_date}</td>
+                  <td className="px-4 py-3">{item?.category_name}</td>
+                  <td className="px-4 py-3">{item?.author}</td>
+                  <td className="px-4 py-3">
+                    {format(item?.created_at, 'yyyy-MM-dd')}
+                  </td>
                   <td className="px-4 py-3">
                     <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-600">
-                      {item.status}
+                      {item?.status}
                     </span>
                   </td>
                   <td className="px-4 py-3 flex gap-3 items-center">
                     <FaEye className="text-blue-600 cursor-pointer" />
                     <FaEdit className="text-gray-600 cursor-pointer" />
-                    <FaTrash className="text-red-600 cursor-pointer" />
+                    <FaTrash className="text-red-600 cursor-pointer" onClick={() => handleDelete(item?.id)} />
                   </td>
                 </tr>
               ))}

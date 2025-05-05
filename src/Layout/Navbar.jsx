@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useDispatch , useSelector} from "react-redux";
+import { fetchCategories } from "../Redux/slices/categorySlice/categorySlice";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,7 +22,15 @@ const Navbar = () => {
     "BUSSINESS AND LEADERSHIP",
     "MARKETING & SALES",
   ];
+  const dispatch = useDispatch();
+   useEffect(() => {
+    dispatch(fetchCategories())
+   },[])
 
+  
+  const { categories } = useSelector((state) => state?.categories);
+  // const
+  // console.log("categories", categories);
   return (
     <header className="fixed z-50 w-full bg-white shadow-md">
       <div className="max-w-[1410px] mx-auto h-[80px] flex items-center justify-between px-4 md:px-6 lg:px-8">
@@ -45,14 +55,14 @@ const Navbar = () => {
 
             {coursesDropdownOpen && (
               <div className="absolute left-0 top-11 w-[260px] bg-[#ffffff] shadow-lg rounded-md z-50 max-h-[300px] overflow-y-auto">
-                {trendingCourses.map((course, idx) => (
+                {categories.map((course, idx) => (
                   <Link
                     key={idx}
                     to="/courses"
                     className="block px-4 py-2 text-[16px] text-[#000000] hover:bg-[#f0f0f0]"
                     onClick={() => setCoursesDropdownOpen(false)}
                   >
-                    {course}
+                    {course?.category_name}
                   </Link>
                 ))}
               </div>

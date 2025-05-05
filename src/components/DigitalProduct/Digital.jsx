@@ -1,30 +1,34 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import digitalproductsection from "../../assets/digitalproductsection.png";
-import digitalproduct2 from "../../assets/digitalproduct2.png";
-import digitalproduct3 from "../../assets/digitalproduct3.png";
-import digitalproduct1 from "../../assets/digitalproduct1.png";
-import digitalproduct4 from "../../assets/digitalproduct4.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StartLearning from "../Home/StartLearning";
 import Footer from "../../Layout/Footer";
 import Reviewcarrd from "../Home/ReviewCards";
 import { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllDigitalProducts } from "../../Redux/slices/DigitalProductSlice/DigitalProductSlice";
 
 function DigitalProductsSection() {
   const productSectionRef = useRef(null);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const scrollToProducts = () => {
     if (productSectionRef.current) {
       productSectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
   const [openIndex, setOpenIndex] = useState(null);
-
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+    const products = useSelector((state) => state.products);
+  
+    useEffect(() => {
+      dispatch(getAllDigitalProducts());
+    }, [dispatch]);
+  
   const faqData = [
     {
       question: "WHAT TYPES OF DIGITAL PRODUCTS ARE AVAILABLE ON AISKILLS?",
@@ -69,121 +73,6 @@ function DigitalProductsSection() {
     },
   ];
 
-  const products = [
-    {
-      img: digitalproduct1,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct2,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct3,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct4,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct4,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct1,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct2,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct3,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct4,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct4,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct1,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct2,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct3,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct4,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct4,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-    {
-      img: digitalproduct4,
-      title: "Premium Glow Up Akademi Metodu (%50 Özel İndirim)",
-      author: "Glow Up Academy",
-      price: "Try 129",
-      fileCount: "1 File",
-    },
-  ];
-
   return (
     <>
       {/* HERO SECTION */}
@@ -200,10 +89,8 @@ function DigitalProductsSection() {
             </p>
 
             <div className="flex justify-center lg:justify-start">
-              <button
-                onClick={scrollToProducts}
-                className="inline-block mt-4 h-[50px] w-[162px] bg-[#FF757A] text-white px-6 py-2 rounded-[12px] shadow-lg font-roboto text-[18px] text-center"
-              >
+              <button onClick={scrollToProducts}
+                className="inline-block mt-4 h-[50px] w-[162px] bg-[#FF757A] text-white px-6 py-2 rounded-[12px] shadow-lg font-roboto text-[18px] text-center">
                 Shop Now
               </button>
             </div>
@@ -211,27 +98,21 @@ function DigitalProductsSection() {
 
           {/* Right Side Image */}
           <div className="w-full lg:w-auto">
-            <img
-              src={digitalproductsection}
-              alt="Shopping carts digital"
-              className="w-full max-w-[700px] h-auto rounded-[8px] shadow-lg"
-            />
+            <img src={digitalproductsection}  alt="Shopping carts digital"
+             className="w-full max-w-[700px] h-auto rounded-[8px] shadow-lg" />
           </div>
         </div>
       </div>
 
-      {/* PRODUCT COUNT */}
       {/* Top Text Row */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between px-4 md:px-10 pt-8 pb-4 gap-2">
         {/* Left Side Text */}
         <div>
           <p className="text-[14px] text-[#000000] font-medium mb-1">
-            1070 PRODUCTS
+            {products.data.length} PRODUCTS
           </p>
-          <h2
-            ref={productSectionRef}
-            className="text-[28px] md:text-[32px] font-impact uppercase text-[#000000] mt-4"
-          >
+          <h2 ref={productSectionRef}
+            className="text-[28px] md:text-[32px] font-impact uppercase text-[#000000] mt-4">
             All Digital Products
           </h2>
         </div>
@@ -253,75 +134,24 @@ function DigitalProductsSection() {
         </div>
       </div>
 
-      {/* PRODUCT GRID RESPONSIVE */}
-      {/* <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 px-4 md:px-10">
-        {products.map((item, index) => (
-          <div
-            key={index}
-            className="border w-full max-w-[350px] h-[425px] rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition mx-auto"
-          >
-            <img
-              src={item.img}
-              alt="Product Cover"
-              className="object-cover shraddha w-[310px] h-[234px] mx-auto"
-            />
-            <div className="p-3">
-              <Link to="/marketProduct">
-                <p className="text-[14px] text-[#000000] w-[45px] h-[20px]">
-                  e Book
-                </p>
-              </Link>
-              <h3 className="font-impact text-[20px] leading-[25px] w-[272px] h-[50px]">
-                {item.title}
-              </h3>
-              <p className="text-[12px] text-[#1E1E1E] w-[123px] h-[14px] font-jost">
-                By {item.author}
-              </p>
-              <div className="flex items-center gap-2 mt-1">
-                <p className="text-[#047670] font-impact text-[22px] leading-[25px]">
-                  {item.price}
-                </p>
-                <p className="text-[#1e1e1e] text-[14px]">{item.fileCount}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div> */}
 
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10 px-4 md:px-10">
-        {products.map((item, index) => (
-          <Link
-            to="/marketProduct"
-            key={index}
-            className="block group relative"
-          >
+        {products?.data?.map((item, index) => (
+          <Link to="/marketProduct" key={index} className="block group relative">
             <div className="border w-full max-w-[350px] h-[425px] rounded-lg shadow-sm overflow-hidden transition-all duration-300 mx-auto bg-white group-hover:bg-[#fffaf1] group-hover:shadow-lg">
               <div className="overflow-hidden">
-                <img
-                  src={item.img}
-                  alt="Product Cover"
-                  className="object-cover w-[310px] h-[234px] mx-auto transition-transform duration-300 group-hover:scale-105"
-                />
+             <img src={  JSON.parse(item.product_images)?.[0] ||  "https://via.placeholder.com/150"}
+               alt={item.product_title}  className="object-cover w-[310px] h-[234px] mx-auto transition-transform duration-300 group-hover:scale-105" />            
               </div>
-
               <div className="p-3">
-                <p className="text-[15px] text-[#000000] w-[45px] h-[20px]">
-                  eBook
-                </p>
-
-                <h3 className="font-impact text-[20px] leading-[25px] w-[272px] h-[50px] text-black">
-                  {item.title}
-                </h3>
-
-                <p className="text-[14px] text-nowrap text-[#1E1E1E] w-[123px] h-[14px] font-jost">
-                  By {item.author}
-                </p>
-
+                <p className="text-[15px] text-[#000000] w-[45px] h-[20px]"> {item.product_type}</p>
+                <h3 className="font-impact text-[20px] leading-[25px] w-[272px] h-[50px] text-black">  {item.product_title} </h3>
+                <p className="text-[14px] text-nowrap text-[#1E1E1E] w-[123px] h-[14px] font-jost"> By {item.author} </p>
                 <div className="flex items-center gap-2 mt-1">
                   <p className="text-[#047670] font-impact text-[22px] leading-[25px]">
-                    {item.price}
+                   Try {item.sale_price}
                   </p>
-                  <p className="text-[#1e1e1e] text-[14px]">{item.fileCount}</p>
+                  <p className="text-[#1e1e1e] text-[14px]">1 File</p>
                 </div>
               </div>
             </div>
@@ -341,15 +171,12 @@ function DigitalProductsSection() {
               REAL-WORLD PROJECTS TO PROMPTS.
             </p>
           </div>
-
           {/* Right Section - FAQ List */}
           <div className="w-full">
             {faqData.map((faq, index) => (
-              <div
-                key={index}
+              <div  key={index}
                 className="border-b border-[#ffffff] py-4 hover:cursor-pointer font-roboto transition-all duration-300"
-                onClick={() => toggleFAQ(index)}
-              >
+                onClick={() => toggleFAQ(index)}>
                 <div className="flex justify-between items-center text-[#ffffff] font-roboto text-[24px]">
                   <span>{faq.question}</span>
                   {openIndex === index ? (
