@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { messaging, getToken, onMessage } from "./firebase.config";
+import { messaging } from "./firebase.config";
+import { onMessage } from "firebase/messaging";
 import { useEffect } from "react";
 import axios from 'axios'
 import ScrollToTop from "./Auth/ScrollToTop";
@@ -83,29 +84,39 @@ axios.defaults.withCredentials = true;
 const App = () => {
   //----------------------------------------------------------------------------------
   // firebase notification  
+
   useEffect(() => {
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        getToken(messaging, {
-          vapidKey: "BBjIAf4Boh0eKMGte_vq4AjsThPq97dzE_JiasEcLTzbXXvHJT28e5ib9QENEtZEpIciDKfYo0HmLwpFvIVXQOs",
-        })
-          .then((currentToken) => {
-            console.log("FCM Token:", currentToken);
-            localStorage.setItem("fcmToken", currentToken)
-          })
-          .catch((err) => console.log("Token Error: ", err));
+    if ('Notification' in window) {
+      console.log("✅ Notifications are supported in this browser.");
+  
+      if (Notification.permission !== "granted") {
+        Notification.requestPermission().then((permission) => {
+          console.log("Notification permission:", permission);
+        });
+      }
+    } else {
+      console.log("❌ Notifications are not supported in this browser.");
+      return;
+    }
+  
+    onMessage(messaging, (payload) => {
+      console.log("Foreground message received: ", payload);
+      const { title, body, icon } = payload.notification;
+  
+      if (Notification.permission === "granted") {
+        new Notification(title, {
+          body,
+          icon: icon || "/default-icon.png",
+        });
       }
     });
-
-    onMessage(messaging, (payload) => {
-      console.log("Notification Received:", payload);
-      alert(`${payload.notification.title}: ${payload.notification.body}`);
-    });
   }, []);
+  
 
   //-----------------------------------------------------------------------------
 
   return (
+    <>
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
@@ -217,6 +228,8 @@ const App = () => {
         <Route path="/launchpage" element={<LaunchPage />} />
       </Routes>
     </BrowserRouter>
+
+    </>
   );
 };
 

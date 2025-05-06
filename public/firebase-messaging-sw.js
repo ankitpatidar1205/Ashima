@@ -11,10 +11,10 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function (payload) {
-  console.log("⏰ Background message: ", payload);
+messaging.onBackgroundMessage(function(payload) {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
   self.registration.showNotification(payload.notification.title, {
     body: payload.notification.body,
-    icon: "/default-icon.png",
+    icon: payload.notification.icon || "/default-icon.png" // Default icon agar nahi diya ho
   });
 });
