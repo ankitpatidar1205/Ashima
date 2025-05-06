@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../Redux/slices/categorySlice/categorySlice";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,6 +23,14 @@ const Header = () => {
     "BUSINESS AND LEADERSHIP",
     "MARKETING & SALES",
   ];
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+   dispatch(fetchCategories())
+  },[])
+
+ 
+ const { categories } = useSelector((state) => state?.categories);
 
   return (
     <header className="fixed z-50 w-full bg-white shadow-md px-4 md:px-6 lg:px-8">
@@ -63,19 +73,19 @@ const Header = () => {
                 Courses <RiArrowDropDownLine className="w-6 h-6" />
               </button>
               {coursesDropdownOpen && (
-                <div className="absolute left-0 w-[260px] bg-white shadow-md rounded-md mt-2 z-50 max-h-[300px] overflow-y-auto">
-                  {trendingCourses.map((course, idx) => (
-                    <Link
-                      key={idx}
-                      to="/courses"
-                      className="block px-4 py-2 text-[16px] text-[#000000] hover:bg-gray-100"
-                      onClick={() => setCoursesDropdownOpen(false)}
-                    >
-                      {course}
-                    </Link>
-                  ))}
-                </div>
-              )}
+              <div className="absolute left-0 top-11 w-[260px] bg-[#ffffff] shadow-lg rounded-md z-50 max-h-[300px] overflow-y-auto">
+                {categories.map((course, idx) => (
+                  <Link
+                    key={idx}
+                    to={`/courses/${course.category_name}`}
+                    className="block px-4 py-2 text-[16px] text-[#000000] hover:bg-[#f0f0f0]"
+                    onClick={() => setCoursesDropdownOpen(false)}
+                  >
+                    {course?.category_name}
+                  </Link>
+                ))}
+              </div>
+            )}
             </div>
             <Link to="/digital" className="text-[18px] text-[#000000]">
               Digital Products
@@ -105,6 +115,8 @@ const Header = () => {
             Sign Up
           </Link>
         </div>
+
+
 
         <div className="md:hidden flex items-center space-x-4">
           <div className="relative">

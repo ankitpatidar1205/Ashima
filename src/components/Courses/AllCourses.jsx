@@ -1,56 +1,29 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import courses2 from "../../assets/courses2.png";
 import courses1 from "../../assets/courses1.png";
 import courses3 from "../../assets/courses3.png";
 import courses4 from "../../assets/courses4.png";
 import trending1 from "../../assets/trending1.png";
-import { CiFilter } from "react-icons/ci";
-import { Link } from "react-router-dom";
-import { MoreVertical } from "lucide-react"; // optional icon package
+import { CiFilter, CiGlass } from "react-icons/ci";
+import { Link, useParams } from "react-router-dom";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import Header from "../../Layout/Header";
 import Footer from '../../Layout/Footer';
 import ReviewCarrds from "../Home/ReviewCards";
-
-
-
-
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Dropdown,
-  Form,
-  Card,
-  Pagination,
-  Nav,
-} from "react-bootstrap";
-
-
-const categories = [
-  "AI & ML",
-  "Devops",
-  "NO CODE",
-  "CYBER SECURITY AND TESTING",
-  "DATA SCIENCE AND ENGINERRING",
-  "DESIGN AND DEVELOPMENT",
-  "FOUNDER CONNECT",
-  "GAMING AND NETWORK",
-  "PRODUCT",
-  "BUSINESS AND LEADERSHIP",
-  "MARKETING AND SALES",
-];
+import { Container, Row, Col, Button, Dropdown, Form, Card,Pagination, Nav,} from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
+import { fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
 
 function AllCourses() {
-  const [sortOption, setSortOption] = useState("Most Popular");
-
+  const {id}= useParams()
+   console.log(id)
+   const [activeIndex, setActiveIndex] = useState(null);
+   const [selectedCategory, setSelectedCategory] = useState("");
+   const [sortOption, setSortOption] = useState("Most Popular");
   const scrollRef = useRef(null);
-
   const [currentIndex, setCurrentIndex] = useState(0);
-
   // const scrollRef = useRef(null);
-
   const handleScroll = () => {
     const container = scrollRef.current;
     if (container) {
@@ -61,52 +34,31 @@ function AllCourses() {
     }
   };
 
-  const courses = [
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      p:
-        "Learn to program using the Ai & Ml. Master Ai & ML by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!",
-      price: "$19.99",
-      rating: 4.8,
-      reviews: 87,
-      mode: "VIDEO",
-      instructor: "BY KAPIL SHARMA",
-      image: courses1,
-    },
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      p:
-        "Learn to program using the Ai & Ml. Master Ai & ML by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!",
-      price: "$19.99",
-      rating: 4.8,
-      reviews: 87,
-      mode: "LIVE",
-      instructor: "Kapil Sharma",
-      image: courses2,
-    },
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      price: "$19.99",
-      p:
-        "Learn to program using the Ai & Ml. Master Ai & ML by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!",
-      rating: 4.8,
-      reviews: 87,
-      mode: "HYBRID",
-      instructor: "Kapil Sharma",
-      image: courses3,
-    },
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      price: "$19.99",
-      p:
-        "Learn to program using the Ai & Ml. Master Ai & ML by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!",
-      rating: 4.8,
-      reviews: 87,
-      mode: "LIVE",
-      instructor: "Kapil Sharma",
-      image: courses4,
-    },
-  ];
+  useEffect(() => {
+    if (id) {
+      setSelectedCategory(id);
+    }
+  }, [id]);
+  const handleCategoryClick = (index, categoryName) => {
+    setActiveIndex(index);
+    setSelectedCategory(categoryName);
+  };
+    
+  // fetch categories & courses
+  const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.categories);
+  const { courses } = useSelector((state) => state.courses);
+   console.log(courses)
+    // Filtered courses based on category id
+    const filteredCourses = courses?.filter(
+      (course) => course.category_name === selectedCategory
+    );    
+    console.log("Filtered Courses:", filteredCourses);
+    
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchCourses());
+  }, [dispatch]);
 
   const coursess = [
     {
@@ -228,7 +180,7 @@ function AllCourses() {
     },
   ];
 
-  const [activeIndex, setActiveIndex] = useState(0);
+ 
 
   return (
     <>
@@ -236,40 +188,25 @@ function AllCourses() {
       <Container fluid className="bg-[#ffffff]">
         {/* Top Navigation */}
         <Row className="bg-[#ffffff] uppercase">
-          {/* <hr
-            className="m-28 bg-[#047670] h-[2px] border-none"
-            style={{ width: "100%" }}
-          /> */}
           <div className="flex items-center border border-blue-500 rounded-md overflow-hidden pt-24">
-            <div
-              ref={scrollRef}
-              className="flex overflow-x-auto scroll-smooth no-scrollbar"
-              style={{ scrollBehavior: "smooth", maxWidth: "100vw" }}
-            >
-              {categories.map((category, index) => (
-                <div
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`min-w-max cursor-pointer px-4 py-2 m-2 rounded-full text-sm font-semibold whitespace-nowrap border 
-              ${
-                activeIndex === index
-                  ? "bg-teal-700 text-white"
-                  : "bg-white text-black"
-              }`}
-                >
-                  {category}
-                </div>
-              ))}
+            <div  ref={scrollRef}  className="flex overflow-x-auto scroll-smooth no-scrollbar"  style={{ scrollBehavior: "smooth", maxWidth: "100vw" }} >
+            {categories.map((category, index) => (
+       <div  key={index}  onClick={() => handleCategoryClick(index, category.category_name)}
+          className={`min-w-max cursor-pointer px-4 py-2 m-2 rounded-full text-sm font-semibold whitespace-nowrap border 
+        ${activeIndex === index ? "bg-teal-700 text-white" : "bg-white text-black"}`}>
+       {category.category_name}
+    </div>
+   ))}
+
             </div>
           </div>
         </Row>
 
         {/* Page Content */}
-
         <Row className="mb-3 mt-5">
           <Col md={8}>
             <h2 className="font-semibold font-jost text-[36px] ">
-              All AI & ML <span className="text-[#047670]">Courses</span>
+             {id} <span className="text-[#047670]">Courses</span>
             </h2>
           </Col>
         </Row>
@@ -277,31 +214,18 @@ function AllCourses() {
         {/* Filters & Sorting */}
         <Row className="mb-3 ">
           <Col md={3} className="d-flex">
-            <Button
-              variant="outline-success"
-              className="w-40 d-flex align-items-center justify-content-center gap-2"
-              style={{ height: "62px" }}
-            >
+            <Button variant="outline-success" className="w-40 d-flex align-items-center justify-content-center gap-2"
+              style={{ height: "62px" }} >
               <span style={{ color: "#047670", fontSize: "1.5rem" }}>
                 <CiFilter />
               </span>
               <span
-                style={{
-                  color: "#000000",
-                  fontWeight: "600",
-                  fontSize: "1rem",
-                }}
-              >
-                Filter
-              </span>
+                style={{ color: "#000000", fontWeight: "600", fontSize: "1rem", }}>  Filter</span>
             </Button>
 
             <Dropdown>
               <Dropdown.Toggle variant="outline-success mx-1" className="w-100">
-                <label
-                  htmlFor=""
-                  style={{ color: "#000000", fontWeight: "600" }}
-                >
+                <label  htmlFor=""  style={{ color: "#000000", fontWeight: "600" }}>
                   Sort By
                 </label>{" "}
                 <br /> {sortOption}
@@ -310,14 +234,10 @@ function AllCourses() {
                 <Dropdown.Item onClick={() => setSortOption("Most Popular")}>
                   Most Popular
                 </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => setSortOption("Highest to Lowest")}
-                >
+                <Dropdown.Item  onClick={() => setSortOption("Highest to Lowest")}>
                   Highest to Lowest
                 </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => setSortOption("Lowest to Highest")}
-                >
+                <Dropdown.Item  onClick={() => setSortOption("Lowest to Highest")} >
                   Lowest to Highest
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => setSortOption("Latest First")}>
@@ -326,11 +246,9 @@ function AllCourses() {
               </Dropdown.Menu>
             </Dropdown>
           </Col>
-          <Col
-            md={9}
-            className="text-end font-semibold text-muted font-roboto text-[24px] start-end"
-          >
-            500 RESULTS
+          <Col md={9}
+            className="text-end font-semibold text-muted font-roboto text-[24px] start-end">
+          {courses?.length}
           </Col>
         </Row>
 
@@ -431,99 +349,98 @@ function AllCourses() {
           </Col>
 
           <Col md={9}>
-            <div className="p-4">
-              {featuredCourses.map((course) => (
-                <Link
-                  key={course.id}
-                  to={`/${course.badge.toLowerCase()}`} // dynamic route based on badge
-                  className="block"
-                >
-                  <div className="flex flex-col md:flex-row gap-4 border-b pb-4 mb-6 hover:bg-gray-50 transition">
-                    {/* Course image */}
-                    <img
-                      src={course.image}
-                      alt="Course"
-                      className="w-full md:w-[365px] h-auto md:h-[214px] object-cover rounded-[4px] transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
-                    />
+  <div className="p-4">
+    {filteredCourses && filteredCourses.length > 0 ? (
+      filteredCourses.map((course) => (
+        <div
+          key={course.id}
+          className="flex flex-col md:flex-row gap-4 border-b pb-4 mb-6 hover:bg-gray-50 transition">
+          {/* Course image */}
+          <img src={course.course_image}  alt="Course"
+            className="w-full md:w-[365px] h-auto md:h-[214px] object-cover rounded-[4px] transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
+          />
 
-                    <div className="flex-1">
-                      {/* Course Title and Price */}
-                      <div className="flex flex-col sm:flex-row justify-between items-start text-[#1e1e1e] gap-2">
-                        <h2 className="text-[24px] md:text-[30px] font-[700] uppercase leading-[24px] tracking-[2%] font-roboto">
-                          {course.title}
-                        </h2>
-                        <span className="text-[24px] md:text-[30px] font-[700] leading-[24px] tracking-[2%] text-right font-roboto">
-                          {course.price}
-                        </span>
-                      </div>
+       <Link to={`/video/${course.id}`}>
+          <div className="flex-1 p-4 border rounded-lg bg-white">
+            {/* Title */}
+            <h2 className="text-[24px] md:text-[30px] font-[700] uppercase leading-[30px] tracking-[2%] font-roboto text-[#1e1e1e] mb-2">
+              {course.course_title}
+            </h2>
 
-                      {/* Description with Line Breaks */}
-                      <div
-                        className="text-[15px] leading-[17px] tracking-[2%] text-black mt-1 font-roboto font-[400]"
-                        dangerouslySetInnerHTML={{ __html: course.description }}
-                      />
+            {/* Description */}
+            <p className="text-[15px] leading-[20px] tracking-[1%] text-black mt-1 font-roboto font-[400] mb-3">
+              {course.course_description}
+            </p>
 
-                      {/* Author, Updated info, and more */}
-                      <div className="mt-2">
-                        <h4 className="font-[700] font-roboto text-[16px] leading-[14px] tracking-[2%] uppercase text-teal-700">
-                          BY {course.author}
-                        </h4>
+            {/* Price */}
+            <h3 className="text-[22px] font-[700] text-[#047670] font-roboto mb-2">
+              Rs {course.course_price}
+            </h3>
 
-                        <h6 className="font-[600] font-roboto text-[16px] leading-[14px] tracking-[2%] text-black uppercase mb-0">
-                          microsoft
-                        </h6>
+            {/* Instructor */}
+            <div className="mb-3">
+              <h4 className="font-[700] font-roboto text-[16px] uppercase text-teal-700">
+                BY {course.instructor_name}
+              </h4>
+              <p className="font-roboto font-[500] text-[13px] uppercase text-black">
+                {course.updated_at} • {course.hours} • {course.lectures}
+              </p>
+            </div>
 
-                        <h7 className="font-roboto font-[500] text-[13px] leading-[12px] tracking-[2%] uppercase text-black">
-                          {course.updated} • {course.hours} • {course.lectures}
-                        </h7>
+            {/* Rating and Type */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-roboto font-[500] text-[#1e1e1e] text-[12px]">
+                RATING {course.rating}
+              </span>
+              <div className="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+              <span className="text-[#047670] font-[500] text-[12px]">
+                ({course.reviews})
+              </span>
 
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="font-roboto font-[500] text-[#1e1e1e] text-[12px] leading-[12px] tracking-[2%]">
-                            RATING {course.rating}
-                          </span>
-                          <div className="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
-                          <span className="text-[#047670] font-[500] text-[12px] leading-[15px] tracking-[2%]">
-                            ({course.reviews})
-                          </span>
-                          <span
-                            className={`text-white w-[101px] h-[21px] text-[10px] px-4 py-1 rounded-[4px] uppercase font-roboto text-center
+              <span
+                className={`text-white w-[101px] h-[21px] text-[10px] px-4 py-1 rounded-[4px] uppercase font-roboto text-center
                   ${
-                    course.badge === "VIDEO"
-                      ? "bg-[#ff757a]"
-                      : course.badge === "LIVE"
+                    course.course_type === "HyBrid"
+                      ? "bg-[#ffb347]"
+                      : course.course_type === "Live"
                       ? "bg-[#09d0c6]"
-                      : course.badge === "HYBRID"
-                      ? "bg-black text-white"
+                      : course.course_type === "HYBRID"
+                      ? "bg-[#1e293b]"
                       : "bg-gray-400"
                   }`}
-                          >
-                            {course.badge}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-
-              {/* Pagination */}
-              <div className="flex flex-wrap justify-center items-center gap-2 text-sm mt-4">
-                <button className="text-gray-500 hover:text-black">
-                  &larr; Previous
-                </button>
-                <button className="px-2 py-1 bg-teal-500 text-white rounded">
-                  1
-                </button>
-                <button className="hover:underline">2</button>
-                <button className="hover:underline">3</button>
-                <span>...</span>
-                <button className="hover:underline">67</button>
-                <button className="text-gray-500 hover:text-black">
-                  Next &rarr;
-                </button>
-              </div>
+              >
+                {course.course_type}
+              </span>
             </div>
-          </Col>
+          </div>
+          </Link>
+        </div>
+      ))
+    ) : (
+      <div className="text-center text-gray-600 font-roboto text-[18px] py-8">
+        🚫 No Courses Found for "{id}"
+      </div>
+    )}
+
+    {/* Pagination */}
+    {filteredCourses && filteredCourses.length > 0 && (
+      <div className="flex flex-wrap justify-center items-center gap-2 text-sm mt-4">
+        <button className="text-gray-500 hover:text-black">
+          &larr; Previous
+        </button>
+        <button className="px-2 py-1 bg-teal-500 text-white rounded">
+          1
+        </button>
+        <button className="hover:underline">2</button>
+        <button className="hover:underline">3</button>
+        <span>...</span>
+        <button className="hover:underline">67</button>
+        <button className="text-gray-500 hover:text-black">Next &rarr;</button>
+      </div>
+    )}
+  </div>
+</Col>
+
         </Row>
 
         <Row className="mb-3 px-4 md:px-8 pt-4">

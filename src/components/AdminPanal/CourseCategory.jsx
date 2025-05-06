@@ -122,10 +122,7 @@ const CourseCategory = () => {
               {categories && categories.length > 0 ? (
   categories
     .filter((category) =>
-      category.category_name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    )
+      category?.category_name?.toLowerCase()?.includes(searchTerm.toLowerCase()))
     .map((category, index) => (
       <tr key={category.id} className="border-b">
         <td className="p-2">{index + 1}</td>

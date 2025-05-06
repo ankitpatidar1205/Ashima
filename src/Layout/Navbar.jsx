@@ -58,7 +58,7 @@ const Navbar = () => {
                 {categories.map((course, idx) => (
                   <Link
                     key={idx}
-                    to="/courses"
+                    to={`/courses/${course.category_name}`}
                     className="block px-4 py-2 text-[16px] text-[#000000] hover:bg-[#f0f0f0]"
                     onClick={() => setCoursesDropdownOpen(false)}
                   >

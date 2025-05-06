@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   deleteDigitalProduct,
   getAllDigitalProducts,
+  publishProduct,
 } from "../../Redux/slices/DigitalProductSlice/DigitalProductSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -49,6 +50,20 @@ const DigitalProducts = () => {
     });
   };
 
+  const handleToggleStatus = async (productId, currentStatus) => {
+    const newStatus = currentStatus === "1" ? "0" : "1"; // Toggle between 1 (Published) and 0 (Draft)
+  
+    // Dispatch action to update the product status
+   await dispatch(publishProduct({ id: productId, status: newStatus }));
+   await dispatch(getAllDigitalProducts());
+    // Optionally, show a success alert after updating
+    Swal.fire(
+      "Status Updated",
+      currentStatus === "1" ? "Product is now Draft" : "Product is now Published",
+      "success"
+    );
+  };
+  
   return (
     <DashboardLayout>
       <div className="p-6">
@@ -79,13 +94,18 @@ const DigitalProducts = () => {
                 </div>
 
                 <div className="flex justify-between mt-2">
-                  <span className={`text-xs px-2 py-1 rounded ${
-                      product.status === "1"
-                        ? "bg-green-100 text-green-600"
-                        : "bg-yellow-100 text-yellow-600" }`}>
-                    {product.status === "1" ? "Published" : "Draft"}
-                  </span>
-                </div>
+  <span
+    onClick={() => handleToggleStatus(product.id, product.status)} // Add click handler
+    className={`text-xs px-2 py-1 rounded cursor-pointer ${
+      product.status === "1"
+        ? "bg-green-100 text-green-600"
+        : "bg-yellow-100 text-yellow-600"
+    }`}
+  >
+    {product.status === "1" ? "Published" : "Draft"}
+  </span>
+</div>
+
 
                 <h3 className="font-semibold mt-2">{product.product_title}</h3>
                 <p className="text-sm text-gray-600">  {product.description.length > 50 ? `${product.description.slice(0, 50)}...`

@@ -62,7 +62,14 @@ export const updateDigitalProduct = createAsyncThunk(
     }
   }
 );
-
+// Async thunk to handle product status update
+export const publishProduct = createAsyncThunk(
+  "products/publishProduct",
+  async ({ id, status }) => {
+    const response = await axiosInstance.patch(`/publishProduct/${id}`, { status });
+    return response.data; // Assuming the response returns the updated product data
+  }
+);
 
 // ========== Slice ==========
 const productSlice = createSlice({

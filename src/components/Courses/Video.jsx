@@ -15,18 +15,7 @@ import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import ReviewCrad from "../Home/ReviewCards";
 import FAQSection from "../Home/FAQSection";
-
-import {
-  FaStar,
-  FaArrowRight,
-  FaCheckCircle,
-  FaVideo,
-  FaFileAlt,
-  FaDownload,
-  FaTv,
-  FaUser,
-  FaHeart,
-} from "react-icons/fa";
+import {  FaStar,  FaArrowRight,  FaCheckCircle,  FaVideo,  FaFileAlt,  FaDownload,  FaTv,  FaUser,  FaHeart,} from "react-icons/fa";
 
 const Live = () => {
   const recommendedCourses = [

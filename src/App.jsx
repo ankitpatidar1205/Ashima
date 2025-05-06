@@ -81,7 +81,7 @@ const App = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<Courses />} /> {/* Fixed route */}
+        <Route path="/courses/:id" element={<Courses />} /> {/* Fixed route */}
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
@@ -173,10 +173,10 @@ const App = () => {
         <Route path="/setting" element={<Setting></Setting>}></Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/digital" element={<MyDigital />} />
-        <Route path="/marketProduct" element={<MarketProduct />} />
+        <Route path="/marketProduct/:id" element={<MarketProduct />} />
         <Route path="/live" element={<Live />} />
         <Route path="/hybrid" element={<Hybrid />} />
-        <Route path="/video" element={<Video />} />
+        <Route path="/video/:id" element={<Video />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blogsDetail" element={<BlogDeatils />} />
         <Route path="/instructor" element={<Instructor />} />

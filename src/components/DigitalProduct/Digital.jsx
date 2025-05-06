@@ -11,8 +11,11 @@ import { getAllDigitalProducts } from "../../Redux/slices/DigitalProductSlice/Di
 
 function DigitalProductsSection() {
   const productSectionRef = useRef(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [priceRange, setPriceRange] = useState("");
+  const [sortOption, setSortOption] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
   const scrollToProducts = () => {
     if (productSectionRef.current) {
       productSectionRef.current.scrollIntoView({ behavior: "smooth" });
@@ -22,8 +25,41 @@ function DigitalProductsSection() {
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-
+  const handlePriceRangeChange = (e) => {
+    setPriceRange(e.target.value);
+  };
+  
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+  
     const products = useSelector((state) => state.products);
+    const filteredProducts = products?.data
+    ?.filter((item) => {
+      // Search filter
+      if (searchQuery && !item.product_title.toLowerCase().includes(searchQuery.toLowerCase())) {
+        return false;
+      }
+  
+      // Price range filter
+      if (priceRange === "Under 10" && item.sale_price >= 10) return false;
+      if (priceRange === "10-50" && (item.sale_price < 10 || item.sale_price > 50)) return false;
+      if (priceRange === "50+" && item.sale_price <= 50) return false;
+  
+      return true;
+    })
+    ?.sort((a, b) => {
+      if (sortOption === "A-Z") return a.product_title.localeCompare(b.product_title);
+      if (sortOption === "Z-A") return b.product_title.localeCompare(a.product_title);
+      if (sortOption === "Price Low-High") return a.sale_price - b.sale_price;
+      if (sortOption === "Price High-Low") return b.sale_price - a.sale_price;
+      return 0;
+    });
+  
+  
   
     useEffect(() => {
       dispatch(getAllDigitalProducts());
@@ -118,26 +154,37 @@ function DigitalProductsSection() {
         </div>
 
         {/* Right Side Filters */}
-        <div className="flex flex-wrap items-center gap-2 font-inter mt-4">
-          <select className="border border-gray-300 rounded-full px-4 py-2 text-[14px] bg-white focus:outline-none">
-            <option>Price Range</option>
-          </select>
-          <select className="border border-gray-300 rounded-full px-4 py-2 text-[14px] bg-white focus:outline-none">
-            <option>File Type</option>
-          </select>
-          <select className="border border-gray-300 rounded-full px-4 py-2 text-[14px] bg-white focus:outline-none">
-            <option>Sort By : Most Popular</option>
-          </select>
-          <select className="border border-gray-300 rounded-full px-4 py-2 text-[14px] bg-white focus:outline-none">
-            <option>Date Added</option>
-          </select>
-        </div>
+        <div className="flex flex-wrap items-center gap-2 font-inter mt-4">\ {/* Search */}
+  <input
+    type="text"
+    value={searchQuery}
+    onChange={handleSearchChange}
+    placeholder="Search products..."
+    className="border rounded-full px-4 py-2"
+  />
+  <select onChange={handlePriceRangeChange} className="border rounded-full px-4 py-2">
+    <option value="">Price Range</option>
+    <option value="Under 10">Under $10</option>
+    <option value="10-50">$10 - $50</option>
+    <option value="50+">$50+</option>
+  </select>
+
+  <select onChange={handleSortChange} className="border rounded-full px-4 py-2">
+    <option value="">Sort By</option>
+    <option value="A-Z">A - Z</option>
+    <option value="Z-A">Z - A</option>
+    <option value="Price Low-High">Price: Low to High</option>
+    <option value="Price High-Low">Price: High to Low</option>
+  </select>
+</div>
+
+
       </div>
 
 
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10 px-4 md:px-10">
-        {products?.data?.map((item, index) => (
-          <Link to="/marketProduct" key={index} className="block group relative">
+        {filteredProducts?.map((item, index) => (
+          <Link to={`/marketProduct/${item.id}`} key={index} className="block group relative">
             <div className="border w-full max-w-[350px] h-[425px] rounded-lg shadow-sm overflow-hidden transition-all duration-300 mx-auto bg-white group-hover:bg-[#fffaf1] group-hover:shadow-lg">
               <div className="overflow-hidden">
              <img src={  JSON.parse(item.product_images)?.[0] ||  "https://via.placeholder.com/150"}

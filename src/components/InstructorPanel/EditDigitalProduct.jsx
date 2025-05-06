@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
@@ -24,7 +24,12 @@ const EditDigitalProduct = () => {
     status: 0,
     selectedCategory: null,
     image: null,
+    author: "",
+    productType: "",
+    publishDate: "",
   });
+
+  const [loading, setLoading] = useState(false); // Track loading state
 
   // Fetch products & categories on mount
   useEffect(() => {
@@ -32,22 +37,21 @@ const EditDigitalProduct = () => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  // Map categories for react-select
-  const categoryOptions = categories?.map((cat) => ({
-    value: cat.id,
-    label: cat.category_name,
-  }));
-
-  // Get product from Redux state
+  const categoryOptions = useMemo(() => {
+    return categories?.map((cat) => ({
+      value: cat.id,
+      label: cat.category_name,
+    }));
+  }, [categories]);
+  
   const product = products?.data?.find((item) => item.id == id);
-
-  // Populate form data
+  
   useEffect(() => {
     if (product && categoryOptions.length) {
       const categoryOption = categoryOptions.find(
         (cat) => cat.value === product.category
       );
-
+  
       setFormData({
         productTitle: product.product_title || "",
         description: product.description || "",
@@ -56,6 +60,9 @@ const EditDigitalProduct = () => {
         status: product.status || 0,
         selectedCategory: categoryOption || null,
         image: null,
+        author: product.author || "",
+        productType: product.product_type || "",
+        publishDate: product.publish_date || "",
       });
     }
   }, [product, categoryOptions]);
@@ -75,8 +82,11 @@ const EditDigitalProduct = () => {
     setFormData((prev) => ({ ...prev, selectedCategory: selectedOption }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Prevent form submission while loading
+    if (loading) return;
 
     const submitData = new FormData();
     submitData.append("product_title", formData.productTitle);
@@ -85,18 +95,27 @@ const EditDigitalProduct = () => {
     submitData.append("sale_price", formData.salePrice);
     submitData.append("status", formData.status);
     submitData.append("category", formData.selectedCategory?.value);
+    submitData.append("author", formData.author);
+    submitData.append("product_type", formData.productType);
+    submitData.append("publish_date", formData.publishDate);
 
     if (formData.image) {
       submitData.append("product_images", formData.image);
     }
 
-    dispatch(updateDigitalProduct({ id, formData: submitData })).then(() =>
-      navigate("/digitalproduct")
-    );
+    setLoading(true); // Set loading state to true before dispatch
+
+    // Dispatch the update action and wait for it to complete
+    await dispatch(updateDigitalProduct({ id, formData: submitData }));
+
+    setLoading(false); // Reset loading state
+
+    // Navigate to the digital product list after update
+    navigate("/digitalproduct");
   };
 
   const handleCancel = () => {
-    navigate("/digitalproduct");
+  navigate("/digitalproduct")
   };
 
   return (
@@ -172,6 +191,39 @@ const EditDigitalProduct = () => {
                 <option value={1}>Published</option>
               </select>
             </div>
+
+            <div>
+              <label className="text-sm">Author</label>
+              <input
+                type="text"
+                name="author"
+                value={formData.author}
+                onChange={handleChange}
+                className="border px-3 py-2 w-full rounded mt-1"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm">Product Type</label>
+              <input
+                type="text"
+                name="productType"
+                value={formData.productType}
+                onChange={handleChange}
+                className="border px-3 py-2 w-full rounded mt-1"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm">Publish Date</label>
+              <input
+                type="date"
+                name="publishDate"
+                value={formData.publishDate}
+                onChange={handleChange}
+                className="border px-3 py-2 w-full rounded mt-1"
+              />
+            </div>
           </div>
 
           <div className="border border-dashed rounded mt-6 p-6 text-center">
@@ -197,8 +249,9 @@ const EditDigitalProduct = () => {
             <button
               type="submit"
               className="bg-teal-700 text-white px-4 py-2 rounded"
+              disabled={loading} // Disable the button while loading
             >
-              Update Product
+              {loading ? "Updating..." : "Update Product"}
             </button>
           </div>
         </form>

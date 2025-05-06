@@ -12,10 +12,7 @@ const CourseDetails = () => {
       <Container fluid className="bg-light min-vh-100 p-4">
         <div className="flex justify-between items-center">
           <h3 className="fw-bold">Course Details</h3>
-          <button
-            className="d-flex p-2 rounded align-items-center font-semibold
-                text-white bg-teal-700"
-            onClick={() => navigate(-1)}
+          <button  className="d-flex p-2 rounded align-items-center font-semibold     text-white bg-teal-700" onClick={() => navigate(-1)}
             // className="mb-3"
           >
             <FaArrowLeft className="me-1" /> Back to Courses

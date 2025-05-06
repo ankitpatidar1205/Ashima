@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import marketproduct1 from "../../assets/marketproduct1.png";
 import marketproduct2 from "../../assets/marketproduct2.png";
 import marketproduct3 from "../../assets/marketproduct3.png";
@@ -15,10 +15,28 @@ import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import REviewCarrds from "../Home/ReviewCards";
+import axiosInstance from "../../utils/axiosInstance";
 
 const MarketProduct = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const {id} = useParams()
+  const [product, setProduct] = useState(null);
 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await axiosInstance.get(`/product?id=${id}`);
+        console.log(res.data.data[0])
+        setProduct(res.data.data[0]);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
+
+    if (id) {
+      fetchProduct();
+    }
+  }, [id]);
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -72,19 +90,15 @@ const MarketProduct = () => {
       <Header />
       <div className=" pt-9 flex flex-col lg:flex-row bg-[#047670] lg:h-[652px] px-4 lg:pt-14">
         {/* Left Image Section */}
-        <button
-          onClick={() => window.history.back()}
-          className="absolute top-28 left-4 text-white text-2xl bg-[#047670] rounded-full p-2"
-        >
+        <button  onClick={() => window.history.back()}  className="absolute top-28 left-4 text-white text-2xl bg-[#047670] rounded-full p-2" >
           ←
         </button>
 
         <div className="flex w-full lg:w-1/2 items-center justify-center lg:justify-start p-6 lg:pl-20 ">
-          <img
-            src={digitalproduct1}
-            alt="Lost Connections Book"
-            className="w-full h-full object-contain rounded-tl-[4px] rounded-tr-[4px] mt-8"
-          />
+        {product?.product_images && (
+        <img  src={JSON.parse(product.product_images)[0]}  alt={product?.product_title}
+    className="w-full h-full object-contain rounded-tl-[4px] rounded-tr-[4px] mt-8" />)}
+
         </div>
 
         {/* Right Content Section */}
@@ -92,22 +106,21 @@ const MarketProduct = () => {
           {/* eBook Tag */}
 
           <div className="text-[13px] font-roboto text-[#000000] mt-4">
-            e Book
+           {product?.product_type}
           </div>
 
           {/* Title */}
           <div className="w-full text-[30px] lg:text-[30px] tracking-[0.02em] capitalize font-impact mt-2">
-            Premium Glow Up Akademi <br />
-            Metodu (% 50 Ozel Indirim)
+          {product?.product_title}
             {/* Author */}
             <div className="text-[12px] font-Jost mb-2 text-[#1E1E1ECC] p-2 rounded-md mt-2">
-              By <span>Glow Up Academy</span>
+              By <span>{product?.author}</span>
             </div>
           </div>
 
           {/* Price and File */}
           <div className="text-[45px] lg:text-[32px] font-impact text-[#047670] whitespace-nowrap text-start mt-2">
-            Try 129{" "}
+            Try {product?.sale_price}{" "}
             <span className="text-[20px] text-[#1E1E1E] font-jost">
               | 1 File
             </span>
@@ -133,10 +146,7 @@ const MarketProduct = () => {
           {/* PDF Download Section */}
           <div className="flex items-center border border-[#047670] justify-center gap-[12px] font-roboto p-2 rounded-[12px] mt-5">
             <img src={marketproduct1} alt="icon" className="w-6 h-6" />
-            <a
-              href="#"
-              className="flex-1 text-center !text-[#047670] py-2 rounded-[12px] text-sm lg:text-[22px] truncate"
-            >
+            <a href="#" className="flex-1 text-center !text-[#047670] py-2 rounded-[12px] text-sm lg:text-[22px] truncate">
               Premium Glowup.PDF (128mb)
             </a>
             <img src={marketproduct2} alt="lock" className="w-6" />
@@ -203,32 +213,12 @@ const MarketProduct = () => {
           <h2 className="text-2xl lg:text-[26px] font-impact text-[#1E1E1E]">
             About This Product
           </h2>
-
-          {/* Right Share Button */}
-          <div className="flex items-center gap-2 text-[#047670] font-jost text-[18px] cursor-pointer">
-            <span>Share</span>
-            <img src={marketproduct8} className="w-[30px] h-[30px]" />
-          </div>
         </div>
 
         <p className="mb-4 text-base lg:text-[18px] font-Jost">
-          Sorularınızdan Bıktınız Mı? Glow Up Akademi Metodu Size Yardımcı
-          Olacaktır. 🚀
+          {product?.description}
         </p>
-        <p className="mb-4 text-base lg:text-[18px] font-Jost">
-          Glow Up Akademi Metodu Göz Çevresindeki İyileşmelerden (Puffiner
-          [şeyi] Tutan, Heaving Straightening Kadar Gözle Görüldü) Her Şeyi
-          Anlayın. Kullanmanız Gereken Cilt Bakım Ürünleri, Size Sürülene Kadar
-          Ne İşe Yaradıklarını, Size Güvenlik Veriyoruz...
-        </p>
-        <p className="mb-4 text-base lg:text-[18px] font-Jost">
-          Ürün Ekstra Olarak Yazan Günlük Rutininizi Ve Tavsiyelerinizi De
-          İçeriyor. 🧴
-        </p>
-        <p className="mb-4 text-base lg:text-[18px] font-Jost">
-          Ürün Şuanki Sınırlı Stoklu İndirimde Ve Hızlı Eriştiği Değerlere
-          Yükseleceğini, O Yüzden Elini Çabuk Tut!
-        </p>
+       
       </div>
 
       <div className="bg-[#000000] py-20 px-6 md:px-12 mt-5">
