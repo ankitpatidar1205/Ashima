@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { messaging, getToken, onMessage } from "./firebase.config";
+import { useEffect } from "react";
 import axios from 'axios'
 import ScrollToTop from "./Auth/ScrollToTop";
 import Courses from "./components/Courses/AllCourses"; // Capitalized component name
@@ -73,9 +75,36 @@ import EditInstruction from "./components/AdminPanal/EditInstruction";
 import EditDigitalProduct from "./components/InstructorPanel/EditDigitalProduct";
 import EditStudent from "./components/AdminPanal/EditStudent";
 import EditCertificateTemplates from "./components/AdminPanal/EditCertificateTemplates";
+import ResetPassword from "./Auth/ResetPassword";
+import ResetPasswordSucessfullPage from "./Auth/ResetPasswordSucessfullPage";
+
 axios.defaults.withCredentials = true;
 
 const App = () => {
+  //----------------------------------------------------------------------------------
+  // firebase notification  
+  useEffect(() => {
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        getToken(messaging, {
+          vapidKey: "BBjIAf4Boh0eKMGte_vq4AjsThPq97dzE_JiasEcLTzbXXvHJT28e5ib9QENEtZEpIciDKfYo0HmLwpFvIVXQOs",
+        })
+          .then((currentToken) => {
+            console.log("FCM Token:", currentToken);
+            localStorage.setItem("fcmToken", currentToken)
+          })
+          .catch((err) => console.log("Token Error: ", err));
+      }
+    });
+
+    onMessage(messaging, (payload) => {
+      console.log("Notification Received:", payload);
+      alert(`${payload.notification.title}: ${payload.notification.body}`);
+    });
+  }, []);
+
+  //-----------------------------------------------------------------------------
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -84,26 +113,28 @@ const App = () => {
         <Route path="/courses" element={<Courses />} /> {/* Fixed route */}
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/reset-password-success" element={<ResetPasswordSucessfullPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
-        <Route  path="/digitalproduct" element={<DigitalProducts></DigitalProducts>}></Route>
-        <Route  path="/edit-digital-product/:id" element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
-        <Route  path="/product-detail/:id" element={<ProductDetails></ProductDetails>}></Route>
+        <Route path="/digitalproduct" element={<DigitalProducts></DigitalProducts>}></Route>
+        <Route path="/edit-digital-product/:id" element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
+        <Route path="/product-detail/:id" element={<ProductDetails></ProductDetails>}></Route>
         <Route path="/PaymentAnalytics" element={<PaymentAnalytics></PaymentAnalytics>}></Route>
-        <Route  path="/viewTranscation" element={<ManageTransaction></ManageTransaction>}></Route>
+        <Route path="/viewTranscation" element={<ManageTransaction></ManageTransaction>}></Route>
         <Route path="/RefundProcess" element={<RefundProcess></RefundProcess>}></Route>
         <Route path="/newCourse" element={<NewCourse></NewCourse>}></Route>
-        <Route  path="/createnewpage"  element={<CreateNewPage></CreateNewPage>}></Route>
+        <Route path="/createnewpage" element={<CreateNewPage></CreateNewPage>}></Route>
         <Route path="/mycourse" element={<MyCourses></MyCourses>}></Route>
         <Route path="/courses/:id" element={<CourseDetails />} />
-        <Route  path="/conversation"  element={<Conversation></Conversation>}></Route>
-        <Route path="/coursecomments"  element={<CourseComments></CourseComments>} ></Route>
-        <Route  path="/certificate"  element={<CertificatesPage></CertificatesPage>}></Route>
-        <Route path="/edit-template/:id"  element={<EditCertificateTemplates></EditCertificateTemplates>}></Route>
-        <Route path="/descussiontrending"   element={<Descussiontrending></Descussiontrending>} ></Route>
-        <Route  path="/descussionnew"  element={<DescussionNew></DescussionNew>}></Route>
+        <Route path="/conversation" element={<Conversation></Conversation>}></Route>
+        <Route path="/coursecomments" element={<CourseComments></CourseComments>} ></Route>
+        <Route path="/certificate" element={<CertificatesPage></CertificatesPage>}></Route>
+        <Route path="/edit-template/:id" element={<EditCertificateTemplates></EditCertificateTemplates>}></Route>
+        <Route path="/descussiontrending" element={<Descussiontrending></Descussiontrending>} ></Route>
+        <Route path="/descussionnew" element={<DescussionNew></DescussionNew>}></Route>
         <Route path="/descussionunanswered" element={<Dis_unanswered></Dis_unanswered>}></Route>
         <Route path="/descussionmostlike" element={<DiscussionMostLike></DiscussionMostLike>} ></Route>
         <Route
@@ -128,7 +159,7 @@ const App = () => {
         <Route path="/edit-instruction/:id" element={<EditInstruction></EditInstruction>}></Route>
         <Route path="/course/:id" element={<CoursesDetails />} />
         <Route path="/course-category" element={<CourseCategory />} />
-        <Route path="/blog-articles"  element={<Blogs_article></Blogs_article>}></Route>
+        <Route path="/blog-articles" element={<Blogs_article></Blogs_article>}></Route>
         <Route
           path="/community-discussion"
           element={<ManageComm_Discu></ManageComm_Discu>}
@@ -164,7 +195,7 @@ const App = () => {
           path="/ReporteIssues"
           element={<ViewReportedIssues></ViewReportedIssues>}
         ></Route>
-        <Route path="/student-details/:id" element={<StudentDetails/>} />
+        <Route path="/student-details/:id" element={<StudentDetails />} />
         <Route path="/qasection" element={<QA></QA>}></Route>
         <Route path="/assignment" element={<Assignments></Assignments>}></Route>
         <Route path="/earning" element={<Earning></Earning>}></Route>
