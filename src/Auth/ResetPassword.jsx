@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import BASE_URL from "../utils/baseURL"
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ResetPassword = () => {
     const { token } = useParams();
@@ -17,8 +18,16 @@ const ResetPassword = () => {
                     token, email, newPassword: password
                 }
             );
-
-            navigate('/login')
+            // Show success alert
+            Swal.fire({
+                title: "Password Reset Successful",
+                text: "You can now login with your new password",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#047670",
+            }).then(() => {
+                navigate('/login');
+            });
 
         } catch (error) {
             console.error(error);

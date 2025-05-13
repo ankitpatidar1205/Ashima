@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { messaging } from "./firebase.config";
-import { onMessage } from "firebase/messaging";
+import { onMessage,getToken } from "firebase/messaging";
 import { useEffect } from "react";
 import axios from 'axios'
 import ScrollToTop from "./Auth/ScrollToTop";
@@ -18,7 +18,7 @@ import Blog from "./components/Blogs/Blog";
 import MyDigital from "./components/DigitalProduct/MyDigital";
 import InstructorSignup from "./components/Instructor/InstructorSignUp";
 import Home from "./components/Home/Home";
-import ProtectedRoute from "./Auth/ProtectedRoute";
+// import ProtectedRoute from "./Auth/ProtectedRoute";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import StudentDashboard from "./components/Dashboard/StudentDashboard ";
 import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
@@ -53,7 +53,7 @@ import ManageInstructors from "./components/AdminPanal/ManageInstructors";
 import ManageCourses from "./components/AdminPanal/ManageCourses";
 import StudentDetails from "./components/AdminPanal/StudentDetails";
 import RefundProcess from "./components/AdminPanal/RefundProcess";
-import ViewTransaction from "./components/AdminPanal/ViewTransaction";
+// import ViewTransaction from "./components/AdminPanal/ViewTransaction";
 import Blogs_article from "./components/AdminPanal/BlogsArticles";
 import ManageComm_Discu from "./components/AdminPanal/Community";
 import AdminRolesManagement from "./components/AdminPanal/AdminRole";
@@ -86,32 +86,41 @@ const App = () => {
   // firebase notification  
 
   useEffect(() => {
-    if ('Notification' in window) {
-      console.log("✅ Notifications are supported in this browser.");
-  
-      if (Notification.permission !== "granted") {
-        Notification.requestPermission().then((permission) => {
-          console.log("Notification permission:", permission);
-        });
+    const requestNotificationPermission = async () => {
+      try {
+        const permission = await Notification.requestPermission();
+        console.log("Notification permission:", permission);
+        if (permission === "granted") {
+          const token = await getToken(messaging, {
+            vapidKey: "BBjIAf4Boh0eKMGte_vq4AjsThPq97dzE_JiasEcLTzbXXvHJT28e5ib9QENEtZEpIciDKfYo0HmLwpFvIVXQOs"
+          });
+          localStorage.setItem("fcmToken", token)
+          console.log("FCM Token:", token);
+        }
+      } catch (error) {
+        console.error("Error requesting notification permission:", error);
       }
+    };
+
+    if ("Notification" in window) {
+      requestNotificationPermission();
+
+      onMessage(messaging, (payload) => {
+        console.log("Foreground message received:", payload);
+        const { title, body, icon } = payload.notification;
+
+        if (Notification.permission === "granted") {
+          new Notification(title, {
+            body,
+            icon: icon || "/default-icon.png",
+          });
+        }
+      });
     } else {
       console.log("❌ Notifications are not supported in this browser.");
-      return;
     }
-  
-    onMessage(messaging, (payload) => {
-      console.log("Foreground message received: ", payload);
-      const { title, body, icon } = payload.notification;
-  
-      if (Notification.permission === "granted") {
-        new Notification(title, {
-          body,
-          icon: icon || "/default-icon.png",
-        });
-      }
-    });
   }, []);
-  
+
 
   //-----------------------------------------------------------------------------
 
