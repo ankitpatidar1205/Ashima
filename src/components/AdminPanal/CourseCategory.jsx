@@ -52,7 +52,7 @@ const CourseCategory = () => {
       await dispatch(createCategory({ category_name: categoryName, fcmToken })).unwrap();
       setIsAddModalOpen(false);
       setCategoryName("");
-      // Swal.fire("Success!", "Category added successfully.", "success");
+      Swal.fire("Success!", "Category added successfully.", "success");
       dispatch(fetchCategories());
     } catch (error) {
       Swal.fire("Failed!", error || "Failed to add category.", "error");
