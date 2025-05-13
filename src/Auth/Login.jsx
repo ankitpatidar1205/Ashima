@@ -43,7 +43,7 @@ const Login = () => {
         },
         withCredentials: true,
       });
-  
+     console.log(meResponse)
       if (meResponse.data.success) {
         const userData = {
           id: meResponse.data.data.id,
@@ -53,6 +53,7 @@ const Login = () => {
   
         localStorage.setItem("user", JSON.stringify(userData));
         localStorage.setItem("token", encodedaccessToken);
+        localStorage.setItem("is_id", meResponse.data.data.id);
   
         Swal.fire({
           icon: "success",

@@ -11,7 +11,7 @@ const AddArticleModal = ({ isOpen, onClose }) => {
     category_id: "",
     content: "",
     tags: "",
-     article: null,
+    article: null,
     status: "0", // Default status (0 = draft, 1 = published)
   });
 
@@ -23,7 +23,7 @@ const AddArticleModal = ({ isOpen, onClose }) => {
     data.append("category_id", formData.category_id);
     data.append("content", formData.content);
     data.append("tags", formData.tags);
-    data.append(" article", formData.article);
+    data.append("article", formData.article);
     data.append("status", formData.status); // Status is "0" for draft or "1" for published
 
     try {

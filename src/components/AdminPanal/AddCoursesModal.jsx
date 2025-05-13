@@ -6,6 +6,8 @@ import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice"
 
 const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
   const dispatch = useDispatch();
+  const fcmToken=localStorage.getItem('fcmToken')
+  console.log("fcmToken",fcmToken);
   const [formData, setFormData] = useState({
     course_title: "",
     course_description: "",
@@ -17,6 +19,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
     course_content_video_link: "",
     test_video: null,
     status: "0",
+    fcmToken
   });
   // Initialize course_syllabus with an array of objects
   const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: "" }]);
@@ -69,6 +72,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
     data.append("category_id", formData.category_id);
     data.append("course_content_video_link", formData.course_content_video_link);
     data.append("status", formData.status);
+    data.append("fcmToken", fcmToken);
     // Append course_syllabus as an array of objects
     data.append("course_syllabus", JSON.stringify(course_syllabus));
 

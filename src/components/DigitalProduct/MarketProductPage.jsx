@@ -6,10 +6,7 @@ import marketproduct3 from "../../assets/marketproduct3.png";
 import marketproduct4 from "../../assets/marketproduct4.png";
 import marketproduct5 from "../../assets/marketproduct5.png";
 import marketproduct6 from "../../assets/marketproduct6.png";
-import marketproduct8 from "../../assets/marketproduct8.png";
-import digitalproduct1 from "../../assets/digitalproduct1.png";
 import StartLearning from "../Home/StartLearning";
-import reviewimage from "../../assets/reviewimage.jpg";
 import { useState } from "react";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
@@ -26,8 +23,8 @@ const MarketProduct = () => {
     const fetchProduct = async () => {
       try {
         const res = await axiosInstance.get(`/product?id=${id}`);
-        console.log(res.data.data[0])
-        setProduct(res.data.data[0]);
+        console.log(res.data.data)
+        setProduct(res.data.data);
       } catch (error) {
         console.error('Error fetching product:', error);
       }
@@ -97,8 +94,7 @@ const MarketProduct = () => {
         <div className="flex w-full lg:w-1/2 items-center justify-center lg:justify-start p-6 lg:pl-20 ">
         {product?.product_images && (
         <img  src={JSON.parse(product.product_images)[0]}  alt={product?.product_title}
-    className="w-full h-full object-contain rounded-tl-[4px] rounded-tr-[4px] mt-8" />)}
-
+           className="w-full h-full object-contain rounded-tl-[4px] rounded-tr-[4px] mt-8" />)}
         </div>
 
         {/* Right Content Section */}
@@ -135,11 +131,8 @@ const MarketProduct = () => {
 
           {/* Unlock and Access Button */}
           <button className="w-full lg:w-[214px] mx-auto lg:ml-20 h-[32.33px] bg-[#ffffff] rounded-[4px] text-sm lg:text-[18px] text-[#1E1E1ECC] flex items-center justify-center gap-4 mt-2 font-jost">
-            <img
-              src={marketproduct2}
-              alt="lock"
-              className="w-[24px] h-[24px]"
-            />
+            <img src={marketproduct2} alt="lock"
+              className="w-[24px] h-[24px]"/>
             Unlock And Access
           </button>
 
@@ -205,22 +198,59 @@ const MarketProduct = () => {
           </div>
         </div>
       </div>
+{/* About This Product Section */}
+<div className="lg:w-[796px] lg:ml-20">
+  {/* Product Description Box */}
+  <div className="bg-white p-4 rounded-md shadow text-[#1E1E1E] mb-8">
+    <div className="flex items-center justify-between mb-4">
+      <h2 className="text-2xl lg:text-[26px] font-impact text-[#1E1E1E]">
+        About This Product
+      </h2>
+    </div>
 
-      {/* About This Product Section */}
-      <div className="lg:w-[796px] bg-[#ffffff] p-4 rounded-md shadow text-[#1E1E1E] mt-8 lg:mt-20 lg:ml-20">
-        <div className="flex items-center justify-between mb-4">
-          {/* Left Heading */}
-          <h2 className="text-2xl lg:text-[26px] font-impact text-[#1E1E1E]">
-            About This Product
-          </h2>
+    <p className="mb-4 text-base lg:text-[18px] font-Jost">
+      {product?.description || "No description available."}
+    </p>
+  </div>
+
+  {/* Instructor Details Box */}
+  <div className="bg-white p-4 rounded-md shadow text-[#1E1E1E]">
+    <h3 className="text-xl lg:text-2xl font-impact text-[#1E1E1E] mb-4 border-b pb-3">
+      Now Your Instructor
+    </h3>
+
+    {product?.instructor_details ? (
+      <div className="flex items-center gap-4">
+        {product.instructor_details.profile_image && (
+          <img src={product?.instructor_details?.profile_image}
+            alt={product?.instructor_details?.full_name || "Instructor"}
+            className="w-20 h-20 rounded-full object-cover border"
+          />
+        )}
+
+        <div>
+          {product.instructor_details.full_name && (
+            <h4 className="text-lg font-bold">
+              {product?.instructor_details?.full_name}
+            </h4>
+          )}
+          {product.instructor_details.email && (
+            <p className="text-sm text-gray-600">
+              📧 {product?.instructor_details?.email}
+            </p>
+          )}
+          {product.instructor_details.mobile_number && (
+            <p className="text-sm text-gray-600">
+              📞 {product?.instructor_details?.mobile_number}
+            </p>
+          )}
         </div>
-
-        <p className="mb-4 text-base lg:text-[18px] font-Jost">
-          {product?.description}
-        </p>
-       
       </div>
-
+    ) : (
+      <p className="text-sm text-gray-600">Instructor details not available.</p>
+    )}
+  </div>
+</div>
       <div className="bg-[#000000] py-20 px-6 md:px-12 mt-5">
         <div className="mx-auto grid grid-cols-1 md:grid-cols-2 items-center">
           <div className="text-[#ffffff] flex flex-col gap-4 text-start pr-20 sm:pr-20 lg:pr-40">
@@ -259,11 +289,8 @@ const MarketProduct = () => {
           </div>
         </div>
       </div>
-
       <StartLearning />
-
       <REviewCarrds />
-
       <Footer />
     </>
   );

@@ -1,18 +1,18 @@
 
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { FaSearch, FaDownload, FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
-import  { useState } from "react";
+import { useState } from "react";
 import AddArticleModal from "./AddArticle";
 import { fetchArticles, deleteArticle } from "../../Redux/slices/articleSlice/articleSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { format } from 'date-fns'; 
-import {fetchCategories} from "../../Redux/slices/categorySlice/categorySlice"
+import { format } from 'date-fns';
+import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice"
 import Swal from "sweetalert2";
 
 
 const Blogs_article = () => {
-   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const blogData = [
     {
       id: "#BL001",
@@ -24,14 +24,14 @@ const Blogs_article = () => {
       status: "Published",
     },
   ];
-  
-   
+
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchArticles());
     dispatch(fetchCategories());
-  },[])
+  }, [])
   const handleDelete = (id) => {
     console.log(id)
     Swal.fire({
@@ -45,19 +45,19 @@ const Blogs_article = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteArticle(id))
-        .unwrap()
-        .then(() => {
-          Swal.fire("Deleted!", "Blog has been deleted.", "success");
-        })
-        .catch(() => {
-          Swal.fire("Error!", "Something went wrong.", "error");
-        });
+          .unwrap()
+          .then(() => {
+            Swal.fire("Deleted!", "Blog has been deleted.", "success");
+          })
+          .catch(() => {
+            Swal.fire("Error!", "Something went wrong.", "error");
+          });
       }
     });
   }
   const { articles } = useSelector((state) => state.articles);
-  const  categories  = useSelector((state) => state?.categories?.categories);
-  
+  const categories = useSelector((state) => state?.categories?.categories);
+  console.log("articles", articles);
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-100 min-h-screen">
@@ -138,7 +138,7 @@ const Blogs_article = () => {
             </thead>
             <tbody>
               {articles?.map((item, idx) => (
-                 
+
                 <tr key={idx} className="border-b">
                   <td className="px-4 py-3">{item?.id}</td>
                   <td className="px-4 py-3">
@@ -148,12 +148,20 @@ const Blogs_article = () => {
                   <td className="px-4 py-3">{item?.category_name}</td>
                   <td className="px-4 py-3">{item?.author}</td>
                   <td className="px-4 py-3">
-                    {format(item?.created_at, 'yyyy-MM-dd')}
+                    {item?.created_at ? format(new Date(item.created_at), 'yyyy-MM-dd') : 'N/A'}
+
                   </td>
                   <td className="px-4 py-3">
-                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-600">
-                      {item?.status}
-                    </span>
+                  <span
+  className={`px-2 py-1 rounded-full text-xs font-medium ${
+    item?.status === '0'
+      ? 'bg-red-100 text-yellow-800'
+      : 'bg-green-100 text-green-600'
+  }`}
+>
+  {item?.status === '0' ? 'Draft' : 'Published'}
+</span>
+
                   </td>
                   <td className="px-4 py-3 flex gap-3 items-center">
                     <FaEye className="text-blue-600 cursor-pointer" />

@@ -17,7 +17,7 @@ const AddProductModal = ({ onClose }) => {
   const [status, setStatus] = useState(0);
   const [productImage, setProductImage] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+ const [instructorid, setInstructorId]= useState("")
   // New fields
   const [author, setAuthor] = useState("");
   const [productType, setProductType] = useState("");
@@ -29,6 +29,12 @@ const AddProductModal = ({ onClose }) => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
+  useEffect(()=>{
+    const inst_id= localStorage.getItem("is_id")
+    if(inst_id){
+     setInstructorId(inst_id)
+    }
+  })
   const categoryOptions = categories?.map((cat) => ({
     value: cat.id,
     label: cat.category_name,
@@ -47,6 +53,7 @@ const AddProductModal = ({ onClose }) => {
     formData.append("regular_price", regularPrice);
     formData.append("sale_price", salePrice);
     formData.append("status", status);
+    formData.append("instructor_id", instructorid);
     if (productImage) {
       formData.append("product_images", productImage);
     }

@@ -1,29 +1,46 @@
 import { useState } from "react";
 import axios from "axios";
+import BASE_URL from "../utils/baseURL"
+// import emailjs from "@emailjs/browser";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2"; // Import Swal
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const navigate = useNavigate()
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
 
-    if (!email) {
-      alert("Please enter your email");
-      return;
-    }
-     
     try {
       const res = await axios.post(
-        "https://hrb5wx2v-6002.inc1.devtunnels.ms/api/user/forgotPassword",
+        `${BASE_URL}/forgot-password`,
         { email }
       );
+      localStorage.setItem('email', res?.data?.data?.email)
+      const token = res?.data?.data?.token
+      const templateParams = {
+        user_email: email,
+        message: `Here is your reset password link: http://localhost:5173/reset-password/${token}`,
+      };
 
-      console.log(res.data);
-      alert("Reset link sent successfully on your email");
-      setEmail("");  // Clear field after success
+      emailjs
+        .send(
+          "service_68qd39f",
+          "template_w3y5r24",
+          templateParams,
+          "yKjOHMzuhnM9AqSP6"
+        )
+        .then((response) => {
+          setEmail("");
+          navigate('/reset-password-success')
+        })
+        .catch((err) => {
+          console.error("FAILED...", err);
+        });
+
     } catch (error) {
       console.error(error);
-      alert("Something went wrong. Please try again.");
     }
   };
 
@@ -39,9 +56,10 @@ const ForgotPassword = () => {
           placeholder="Enter Your Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
           className="border w-full px-3 py-2 rounded mb-4 outline-none focus:ring-2 focus:ring-[#047670]"
         />
-     
+
         <button
           onClick={handleForgotPassword}
           className="bg-[#047670] text-white w-full py-2 rounded hover:bg-[#035b57] transition"

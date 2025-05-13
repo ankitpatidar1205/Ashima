@@ -14,17 +14,26 @@ const DigitalProducts = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("lowToHigh");
+   const [instructorid, setInstructorId]= useState("")
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-
+   console.log(products.data)
   useEffect(() => {
     dispatch(getAllDigitalProducts());
   }, [dispatch]);
-
-  const filteredProducts = products.data?.filter((product) =>
+  useEffect(()=>{
+    const inst_id= localStorage.getItem("is_id")
+    if(inst_id){
+     setInstructorId(inst_id)
+    }
+  })
+  const filteredProducts = products.data
+  ?.filter((product) => 
     product?.product_title?.toLowerCase()?.includes(searchQuery.toLowerCase())
-  );
+  )
+  ?.filter((product) => product?.instructor_id === instructorid);
+
 
   const sortedProducts = filteredProducts?.sort((a, b) => {
     const aPrice = parseFloat(a.sale_price);
