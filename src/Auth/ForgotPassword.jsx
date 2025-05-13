@@ -17,6 +17,7 @@ const ForgotPassword = () => {
         `${BASE_URL}/forgot-password`,
         { email }
       );
+      console.log(res,"res");
       localStorage.setItem('email', res?.data?.data?.email)
       const token = res?.data?.data?.token
       const templateParams = {
