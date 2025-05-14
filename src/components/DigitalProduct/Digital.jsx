@@ -182,29 +182,54 @@ function DigitalProductsSection() {
       </div>
 
 
-      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10 px-4 md:px-10">
-        {filteredProducts?.map((item, index) => (
-          <Link to={`/marketProduct/${item.id}`} key={index} className="block group relative">
-            <div className="border w-full max-w-[350px] h-[425px] rounded-lg shadow-sm overflow-hidden transition-all duration-300 mx-auto bg-white group-hover:bg-[#fffaf1] group-hover:shadow-lg">
-              <div className="overflow-hidden">
-             <img src={  JSON.parse(item.product_images)?.[0] ||  "https://via.placeholder.com/150"}
-               alt={item.product_title}  className="object-cover w-[310px] h-[234px] mx-auto transition-transform duration-300 group-hover:scale-105" />            
-              </div>
-              <div className="p-3">
-                <p className="text-[15px] text-[#000000] w-[45px] h-[20px]"> {item.product_type}</p>
-                <h3 className="font-impact text-[20px] leading-[25px] w-[272px] h-[50px] text-black">  {item.product_title} </h3>
-                <p className="text-[14px] text-nowrap text-[#1E1E1E] w-[123px] h-[14px] font-jost"> By {item.author} </p>
-                <div className="flex items-center gap-2 mt-1">
-                  <p className="text-[#047670] font-impact text-[22px] leading-[25px]">
-                   Try {item.sale_price}
-                  </p>
-                  <p className="text-[#1e1e1e] text-[14px]">1 File</p>
-                </div>
-              </div>
-            </div>
-          </Link>
-        ))}
+    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 px-4 md:px-10">
+  {filteredProducts?.map((item, index) => (
+    <Link
+      to={`/marketProduct/${item.id}`}
+      key={index}
+      className="block group relative"
+    >
+      <div className="border w-full max-w-[350px] h-auto rounded-lg shadow-sm overflow-hidden transition-all duration-300 mx-auto bg-white group-hover:bg-[#fffaf1] group-hover:shadow-lg">
+        <div className="overflow-hidden">
+          <img
+            src={
+              JSON.parse(item.product_images)?.[0] ||
+              "https://via.placeholder.com/310x234"
+            }
+            alt={item.product_title}
+            className="object-cover w-full h-[234px] transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+
+        <div className="p-4">
+          {/* Product Type */}
+          <p className="text-[14px] text-[#333] mb-1">
+            {item.product_type}
+          </p>
+
+          {/* Title */}
+          <h3 className="font-impact text-[18px] text-black leading-[24px] mb-2 break-words">
+            {item.product_title}
+          </h3>
+
+          {/* Author */}
+          <p className="text-[13px] text-[#666] mb-2 font-jost truncate">
+            By {item.author}
+          </p>
+
+          {/* Price & Files */}
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-[#047670] font-impact text-[20px]">
+              ${item.sale_price}
+            </p>
+            <p className="text-[#1e1e1e] text-[13px]">1 File</p>
+          </div>
+        </div>
       </div>
+    </Link>
+  ))}
+</div>
+
 
       {/* FAQ AND REVIEWS */}
       <div className="bg-[#000000] py-20 px-6 md:px-12 mt-5">

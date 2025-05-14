@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  FaLinkedin,
-  FaTwitter,
-  FaGithub,
-  FaPlus,
-  FaEdit,
-} from "react-icons/fa";
+import { FaLinkedin, FaTwitter, FaGithub,  FaPlus,  FaEdit,} from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 
 const ProfileLayout = () => {

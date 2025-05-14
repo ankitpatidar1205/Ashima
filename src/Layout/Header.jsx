@@ -122,8 +122,7 @@ const Header = () => {
           <div className="relative">
             <button
               onClick={() => setCoursesDropdownOpen(!coursesDropdownOpen)}
-              className="font-roboto text-[18px] text-[#000000] flex items-center"
-            >
+              className="font-roboto text-[18px] text-[#000000] flex items-center" >
               Courses
               <RiArrowDropDownLine className="w-[28px] h-[28px]" />
             </button>
@@ -194,15 +193,13 @@ const Header = () => {
               <Link
                 to="/login"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
-              >
+                className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg">
                 Login
               </Link>
               <Link
                 to="/signup"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
-              >
+                className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg" >
                 Sign Up
               </Link>
             </div>

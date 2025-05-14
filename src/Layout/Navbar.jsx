@@ -45,10 +45,8 @@ const Navbar = () => {
         <nav className="hidden md:flex space-x-10 text-[16px] text-[#1e1e1e]">
           {/* ✅ Courses Dropdown */}
           <div className="relative">
-            <button
-              onClick={() => setCoursesDropdownOpen(!coursesDropdownOpen)}
-              className="text-[18px] text-[#000000] flex items-center"
-            >
+            <button  onClick={() => setCoursesDropdownOpen(!coursesDropdownOpen)}
+              className="text-[18px] text-[#000000] flex items-center">
               Courses
               <RiArrowDropDownLine className="w-[28px] h-[28px]" />
             </button>
@@ -56,12 +54,9 @@ const Navbar = () => {
             {coursesDropdownOpen && (
               <div className="absolute left-0 top-11 w-[260px] bg-[#ffffff] shadow-lg rounded-md z-50 max-h-[300px] overflow-y-auto">
                 {categories.map((course, idx) => (
-                  <Link
-                    key={idx}
-                    to={`/courses/${course.category_name}`}
+                  <Link key={idx} to={`/courses/${course.category_name}`}
                     className="block px-4 py-2 text-[16px] text-[#000000] hover:bg-[#f0f0f0]"
-                    onClick={() => setCoursesDropdownOpen(false)}
-                  >
+                    onClick={() => setCoursesDropdownOpen(false)}>
                     {course?.category_name}
                   </Link>
                 ))}
@@ -84,8 +79,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-4">
           <Link
             to={"/login"}
-            className="px-5 py-2 text-white bg-[#1e1e1e] rounded-lg"
-          >
+            className="px-5 py-2 text-white bg-[#1e1e1e] rounded-lg">
             Login
           </Link>
           <Link

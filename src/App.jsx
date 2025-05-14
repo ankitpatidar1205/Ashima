@@ -11,9 +11,6 @@ import BlogDeatils from "./components/Blogs/BlogsDetails";
 import Instructor from "./components/Instructor/Instructor";
 import "./App.css";
 import MarketProduct from "./components/DigitalProduct/MarketProductPage";
-import Hybrid from "./components/Courses/Hybrid";
-import Video from "./components/Courses/Video";
-import Live from "./components/Courses/Live";
 import Blog from "./components/Blogs/Blog";
 import MyDigital from "./components/DigitalProduct/MyDigital";
 import InstructorSignup from "./components/Instructor/InstructorSignUp";
@@ -29,7 +26,6 @@ import Business from "./components/BusinessProduct/Business";
 import AIPowered from "./components/BusinessProduct/AI-Powered";
 import LaunchPage from "./components/BusinessProduct/LaunchPage";
 import MyCourses from "./components/InstructorPanel/MyCourses";
-import CreateNewPage from "./components/InstructorPanel/CreateNewPage";
 import CourseDetails from "./components/InstructorPanel/CourseDetails";
 import Conversation from "./components/InstructorPanel/Conversation";
 import CourseComments from "./components/InstructorPanel/CourseComments";
@@ -78,6 +74,7 @@ import EditStudent from "./components/AdminPanal/EditStudent";
 import EditCertificateTemplates from "./components/AdminPanal/EditCertificateTemplates";
 import ResetPassword from "./Auth/ResetPassword";
 import ResetPasswordSucessfullPage from "./Auth/ResetPasswordSucessfullPage";
+import CourceDetail from "./components/Courses/CourceDetail";
 
 axios.defaults.withCredentials = true;
 
@@ -146,7 +143,7 @@ const App = () => {
         <Route path="/viewTranscation" element={<ManageTransaction></ManageTransaction>}></Route>
         <Route path="/RefundProcess" element={<RefundProcess></RefundProcess>}></Route>
         <Route path="/newCourse" element={<NewCourse></NewCourse>}></Route>
-        <Route path="/createnewpage" element={<CreateNewPage></CreateNewPage>}></Route>
+
         <Route path="/mycourse" element={<MyCourses></MyCourses>}></Route>
         <Route path="/courses/:id" element={<CourseDetails />} />
         <Route path="/conversation" element={<Conversation></Conversation>}></Route>
@@ -194,27 +191,13 @@ const App = () => {
           element={<ViewAssessments></ViewAssessments>}
         ></Route>
         <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
-        <Route
-          path="/CertificateTemplate"
-          element={<CertificateTemplates></CertificateTemplates>}
-        ></Route>
-        <Route
-          path="/CertificateManagemnet"
-          element={<CertificateManagement></CertificateManagement>}
-        ></Route>
-        <Route
-          path="/adminSettings"
-          element={<AdminSettings></AdminSettings>}
-        ></Route>
+        <Route  path="/CertificateTemplate"  element={<CertificateTemplates></CertificateTemplates>}></Route>
+        <Route  path="/CertificateManagemnet"  element={<CertificateManagement></CertificateManagement>}></Route>
+        <Route  path="/adminSettings"  element={<AdminSettings></AdminSettings>}></Route>
         <Route path="/refund-details/:id" element={<RefundDetails />} />
-        <Route
-          path="/RolePermission"
-          element={<RolePermission></RolePermission>}
-        ></Route>
-        <Route
-          path="/ReporteIssues"
-          element={<ViewReportedIssues></ViewReportedIssues>}
-        ></Route>
+        <Route  path="/RolePermission"  element={<RolePermission></RolePermission>}></Route>
+        <Route path="/ReporteIssues"
+          element={<ViewReportedIssues></ViewReportedIssues>} ></Route>
         <Route path="/student-details/:id" element={<StudentDetails />} />
         <Route path="/qasection" element={<QA></QA>}></Route>
         <Route path="/assignment" element={<Assignments></Assignments>}></Route>
@@ -225,9 +208,8 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/digital" element={<MyDigital />} />
         <Route path="/marketProduct/:id" element={<MarketProduct />} />
-        <Route path="/live" element={<Live />} />
-        <Route path="/hybrid" element={<Hybrid />} />
-        <Route path="/video/:id" element={<Video />} />
+
+        <Route path="/Cource-Detail/:id" element={<CourceDetail />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blogsDetail" element={<BlogDeatils />} />
         <Route path="/instructor" element={<Instructor />} />

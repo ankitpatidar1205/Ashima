@@ -8,20 +8,24 @@ const Login = () => {
   const [email, setEmail] = useState("admin@gmail.com");
   const [password, setPassword] = useState("admin@123");
   const navigate = useNavigate();
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!email || !password) {
       alert("Please fill in all fields.");
       return;
     }
-  
-    try {
-      const response = await axios.post(`${BASE_URL}/login`, { email, password }, { withCredentials: true });
 
-      console.log(response.data.message);
-      
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/login`,
+        { email, password },
+        { withCredentials: true }
+      );
+
+      // console.log(response.data.message);
+
       // Check if status is 201 — show message if available
       if (response.status === 201) {
         await Swal.fire({
@@ -30,37 +34,35 @@ const Login = () => {
           text: response.data.message,
         });
       }
-      
-  
+
       // Proceed to get token & call me API
       const encodedaccessToken = response.data.data.encodedaccessToken;
       const decryptedToken = decryptToken(encodedaccessToken);
       const parsedToken = decryptedToken ? JSON.parse(decryptedToken) : null;
-  
+
       const meResponse = await axios.get(`${BASE_URL}/me`, {
         headers: {
           Authorization: `Bearer ${parsedToken}`,
         },
         withCredentials: true,
       });
-     console.log(meResponse)
+      console.log("meResponse", meResponse);
       if (meResponse.data.success) {
         const userData = {
           id: meResponse.data.data.id,
-          email: meResponse.data.data.email,
           role: meResponse.data.data.role,
         };
-  
-        localStorage.setItem("user", JSON.stringify(userData));
+
+        localStorage.setItem("user", JSON.stringify(meResponse.data.data));
         localStorage.setItem("token", encodedaccessToken);
         localStorage.setItem("is_id", meResponse.data.data.id);
-  
+
         Swal.fire({
           icon: "success",
           title: "Login Successful!",
           text: `Welcome, ${userData.role}!`,
         });
-  
+
         if (userData.role === "admin") {
           navigate(`/admin-dashboard`);
         } else if (userData.role === "student") {
@@ -74,7 +76,9 @@ const Login = () => {
         Swal.fire({
           icon: "error",
           title: "Login Failed",
-          text: meResponse.data.message || "Something went wrong, please try again.",
+          text:
+            meResponse.data.message ||
+            "Something went wrong, please try again.",
         });
       }
     } catch (error) {
@@ -82,14 +86,12 @@ const Login = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: error?.response?.data?.message || "Something went wrong, please try again.",
+        text:
+          error?.response?.data?.message ||
+          "Something went wrong, please try again.",
       });
     }
   };
-  
-  
-  
-  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#FAF9F7] px-4">
@@ -140,7 +142,7 @@ const Login = () => {
           </div>
 
           <button
-            className="w-full bg-gray-300 text-[#1E1E1E]/50 py-2 rounded text-[15px] sm:text-[16px] font-medium"
+            className="w-full bg-[#047670] text-white py-2 rounded text-[15px] sm:text-[16px] font-medium hover:bg-[#03665e] transition"
             type="submit"
           >
             LOGIN

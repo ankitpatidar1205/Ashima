@@ -14,7 +14,7 @@ const DigitalProducts = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("lowToHigh");
-   const [instructorid, setInstructorId]= useState("")
+  const [instructorid, setInstructorId]= useState("")
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);

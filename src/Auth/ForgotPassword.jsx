@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import BASE_URL from "../utils/baseURL"
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2"; // Import Swal
 
@@ -52,8 +52,7 @@ const ForgotPassword = () => {
           Forgot Password
         </h2>
 
-        <input
-          type="email"
+        <input   type="email"
           placeholder="Enter Your Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

@@ -51,7 +51,7 @@ function AllCourses() {
    console.log(courses)
     // Filtered courses based on category id
     const filteredCourses = courses?.filter(
-      (course) => course.category_name === selectedCategory
+      (course) => course?.category_name === selectedCategory
     );    
     console.log("Filtered Courses:", filteredCourses);
     
@@ -360,7 +360,7 @@ function AllCourses() {
             className="w-full md:w-[365px] h-auto md:h-[214px] object-cover rounded-[4px] transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
           />
 
-       <Link to={`/video/${course.id}`}>
+       <Link to={`/Cource-Detail/${course.id}`}>
           <div className="flex-1 p-4 border rounded-lg bg-white">
             {/* Title */}
             <h2 className="text-[24px] md:text-[30px] font-[700] uppercase leading-[30px] tracking-[2%] font-roboto text-[#1e1e1e] mb-2">
