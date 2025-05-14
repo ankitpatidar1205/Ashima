@@ -75,6 +75,7 @@ import EditCertificateTemplates from "./components/AdminPanal/EditCertificateTem
 import ResetPassword from "./Auth/ResetPassword";
 import ResetPasswordSucessfullPage from "./Auth/ResetPasswordSucessfullPage";
 import CourceDetail from "./components/Courses/CourceDetail";
+import SingleBlog from "./components/Home/SingleBlog";
 
 axios.defaults.withCredentials = true;
 
@@ -139,6 +140,7 @@ const App = () => {
         <Route path="/digitalproduct" element={<DigitalProducts></DigitalProducts>}></Route>
         <Route path="/edit-digital-product/:id" element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
         <Route path="/product-detail/:id" element={<ProductDetails></ProductDetails>}></Route>
+        <Route path="/singleblog/:id" element={<SingleBlog />}></Route>
         <Route path="/PaymentAnalytics" element={<PaymentAnalytics></PaymentAnalytics>}></Route>
         <Route path="/viewTranscation" element={<ManageTransaction></ManageTransaction>}></Route>
         <Route path="/RefundProcess" element={<RefundProcess></RefundProcess>}></Route>

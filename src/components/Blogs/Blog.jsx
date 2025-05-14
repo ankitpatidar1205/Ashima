@@ -1,12 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import blog1 from "../../assets/blog1.png";
-import blog2 from "../../assets/blog2.png";
-import blog3 from "../../assets/blog3.png";
-import blog4 from "../../assets/blog4.png";
-import blog5 from "../../assets/blog5.png";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchArticles } from "../../Redux/slices/articleSlice/articleSlice";
 const Blog = () => {
   const trendingCourses = [
     "All Blogs",
@@ -28,41 +26,14 @@ const Blog = () => {
     setSelectedCourse(course);
   };
 
-  const blogPosts = [
-    {
-      imageUrl: blog2,
-      meta: "25.march.2025",
-      title: "LangGraph Tutorial for Beginners to Build AI Agents",
-      description:
-        "A step-by-step, hands-on Langgraph tutorial that takes you from the basics to advanced concepts, helping you quickly.",
-      link: "#",
-    },
-    {
-      imageUrl: blog3,
-      meta: "25.march.2025",
-      title: "LangGraph Tutorial for Beginners to Build AI Agents",
-      description:
-        "A step-by-step, hands-on Langgraph tutorial that takes you from the basics to advanced concepts, helping you quickly.",
-      link: "#",
-    },
-    {
-      imageUrl: blog4,
-      meta: "25.march.2025",
-      title: "LangGraph Tutorial for Beginners to Build AI Agents",
-      description:
-        "A step-by-step, hands-on Langgraph tutorial that takes you from the basics to advanced concepts, helping you quickly.",
-      link: "#",
-    },
-    {
-      imageUrl: blog5,
-      meta: "25.march.2025",
-      title: "LangGraph Tutorial for Beginners to Build AI Agents",
-      description:
-        "A step-by-step, hands-on Langgraph tutorial that takes you from the basics to advanced concepts, helping you quickly.",
-      link: "#",
-    },
-    // Add more blog post objects as needed
-  ];
+  const dispatch = useDispatch();
+
+  const { articles, loading } = useSelector((state) => state.articles);
+
+  console.log(articles.data);
+  useEffect(() => {
+    dispatch(fetchArticles());
+  }, [dispatch]);
   return (
     <>
       <Header />
@@ -205,86 +176,34 @@ const Blog = () => {
         </div>
       </section>
 
-      <section className="blog-posts px-10 sm:px-6 md:px-10 mt-16 ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 auto-rows-auto">
-          {blogPosts.map((post, index) => (
-            <Link
-              to="/blogsDetail"
-              key={index}
-              className="bg-[#ffffff] rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:bg-[#fffaf1]"
-            >
+      <div className="p-6 w-full">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {articles.map((item) => (
               <div
-                className="h-[235px] bg-cover bg-center transition-transform duration-300 hover:scale-105"
-                style={{ backgroundImage: `url(${post.imageUrl})` }}
-              ></div>
-              <div className="p-3">
-                <div className="font-jost font-normal text-[12px] text-[#000000]">
-                  {post.meta}
-                </div>
-                <h3 className="text-[20px] font-impact font-normal text-[#000000] ">
-                  {post.title}
-                </h3>
-                <p className="text-[12px] text-[#1E1E1E]/80 font-normal font-jost">
-                  {post.description}
-                </p>
-
-                <div className="inline-flex justify-center items-center bg-[#047670] text-white w-[225px] h-[42px] text-[14px] font-bold font-roboto rounded-[8px] border-[1px] mt-2">
-                  Best Artificial Intelligence Blogs
+                key={item.id}
+                className="w-full h-[404px] relative rounded-md overflow-hidden"
+              >
+                <img
+                  src={item.article}
+                  alt="Article"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+                <div className="absolute bottom-4 left-4 text-white font-impact uppercase">
+                  <h3 className="text-[22px] leading-[28px]">{item.title}</h3>
+                  <Link to={`/singleblog/${item.id}`}>
+                    <button className="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-100 transition text-sm">
+                      Learn More
+                    </button>
+                  </Link>
                 </div>
               </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Pagination (Optional) */}
-
-        <div className="flex justify-center items-center gap-2 mt-10 font-jost text-sm">
-          {/* Previous */}
-          <a
-            href="#"
-            className="flex items-center gap-1 px-3 py-1 border border-[#047670] rounded-md text-[#757575] hover:bg-[#047670]/10"
-          >
-            ← <span>Previous</span>
-          </a>
-
-          {/* Page 1 (active) */}
-          <a
-            href="#"
-            className="px-3 py-1 bg-[#047670] text-[#fff] rounded-md font-bold border border-[#047670]"
-          >
-            1
-          </a>
-
-          {/* Other pages */}
-          <a
-            href="#"
-            className="px-3 py-1 border border-[#047670] text-[#000000] rounded-md"
-          >
-            2
-          </a>
-          <a
-            href="#"
-            className="px-3 py-1 border border-[#047670] text-[#000000] rounded-md"
-          >
-            3
-          </a>
-          <span className="px-2 text-gray-500">...</span>
-          <a
-            href="#"
-            className="px-3 py-1 border border-[#047670] text-[#000000] rounded-md"
-          >
-            67
-          </a>
-
-          {/* Next */}
-          <a
-            href="#"
-            className="flex items-center gap-1 px-3 py-1 border border-[#047670] rounded-md text-[#000000] hover:bg-[#047670]/10"
-          >
-            <span>Next</span> →
-          </a>
-        </div>
-      </section>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Trending Section */}
 

@@ -3,16 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllDigitalProducts } from "../../Redux/slices/DigitalProductSlice/DigitalProductSlice";
 import { Link } from "react-router-dom";
 
-
 const DigitalProducts = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-   console.log(products.data)
+  console.log(products.data);
   useEffect(() => {
     dispatch(getAllDigitalProducts());
   }, [dispatch]);
   return (
-    
     <div className="bg-white text-black py-16">
       {/* Title Section */}
       <div
@@ -40,40 +38,53 @@ const DigitalProducts = () => {
       </div>
 
       {/* Responsive Wrapper Added */}
-     <div className="w-full mt-16 px-4">
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-{products.data.slice().reverse().slice(0, 4).map((product, index) => {
-  // Parsing the product_images string into an actual array
-  const productImages = JSON.parse(product.product_images);
+      <div className="w-full mt-16 px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {products.data
+            .slice()
+            .reverse()
+            .slice(0, 4)
+            .map((product, index) => {
+              // Parsing the product_images string into an actual array
+              const productImages = JSON.parse(product.product_images);
 
-  return (
-    <>
-   <Link to={`/marketProduct/${product.id}`}> <div key={product.id} className="w-full h-[404px] relative rounded-md overflow-hidden">
-      <img
-        src={productImages?.[0] || "https://via.placeholder.com/150"}
-        alt={product.product_title}
-        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-      />
-      <div className="absolute top-4 left-4 bg-[rgba(255,255,255,0.4)] text-white text-sm font-bold py-2 px-3 rounded-4 font-Roboto Condensed uppercase tracking-wide">
-        {product.tag ? product.tag : `Product ${index + 1}`}
+              return (
+                <>
+                  <Link to={`/marketProduct/${product.id}`}>
+                    {" "}
+                    <div
+                      key={product.id}
+                      className="w-full h-[404px] relative rounded-md overflow-hidden"
+                    >
+                      <img
+                        src={
+                          productImages?.[0] ||
+                          "https://via.placeholder.com/150"
+                        }
+                        alt={product.product_title}
+                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      />
+                      <div className="absolute top-4 left-4 bg-[rgba(255,255,255,0.4)] text-white text-sm font-bold py-2 px-3 rounded-4 font-Roboto Condensed uppercase tracking-wide">
+                        {product.tag ? product.tag : `Product ${index + 1}`}
+                      </div>
+                      <div className="absolute bottom-4 left-4 text-white font-impact uppercase">
+                        <h3 className="text-[22px] leading-[28px]">
+                          {product.product_title}
+                        </h3>
+                        <p className="font-Roboto Condensed text-sm mt-1">
+                          {product.description.length > 50
+                            ? `${product.description.slice(0, 50)}...`
+                            : product.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>{" "}
+                </>
+              );
+            })}
+        </div>
       </div>
-      <div className="absolute bottom-4 left-4 text-white font-impact uppercase">
-        <h3 className="text-[22px] leading-[28px]">{product.product_title}</h3>
-        <p className="font-Roboto Condensed text-sm mt-1">
-          {product.description.length > 50 ? `${product.description.slice(0, 50)}...` : product.description}
-        </p>
-      </div>
-    </div></Link> </>
-  );
-})}
-
-
-
-  </div>
-</div>
-
-      </div>
- 
+    </div>
   );
 };
 
