@@ -1,39 +1,27 @@
-
 import React, { useEffect } from "react";
 import { FaSearch, FaDownload, FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { useState } from "react";
 import AddArticleModal from "./AddArticle";
-import { fetchArticles, deleteArticle } from "../../Redux/slices/articleSlice/articleSlice";
+import {
+  fetchArticles,
+  deleteArticle,
+} from "../../Redux/slices/articleSlice/articleSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { format } from 'date-fns';
-import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice"
+import { format } from "date-fns";
 import Swal from "sweetalert2";
-
 
 const Blogs_article = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const blogData = [
-    {
-      id: "#BL001",
-      title: "The Future of Online Learning",
-      subtitle: "Published by Admin",
-      category: "Education",
-      author: "John Anderson",
-      published_date: "Jan 15, 2024",
-      status: "Published",
-    },
-  ];
-
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchArticles());
-    dispatch(fetchCategories());
-  }, [])
+  }, []);
+  
   const handleDelete = (id) => {
-    console.log(id)
+    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -54,10 +42,10 @@ const Blogs_article = () => {
           });
       }
     });
-  }
+  };
   const { articles } = useSelector((state) => state.articles);
-  const categories = useSelector((state) => state?.categories?.categories);
-  console.log("articles", articles);
+  console.log(articles);
+
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-100 min-h-screen">
@@ -122,11 +110,11 @@ const Blogs_article = () => {
             <thead className="bg-gray-50">
               <tr>
                 {[
-                  "Blog ID",
+                  "#",
                   "Title",
+                  "Image",
                   "Category",
-                  "Author",
-                  "Published Date",
+                  "Tag",
                   "Status",
                   "Actions",
                 ].map((head) => (
@@ -138,35 +126,42 @@ const Blogs_article = () => {
             </thead>
             <tbody>
               {articles?.map((item, idx) => (
-
                 <tr key={idx} className="border-b">
-                  <td className="px-4 py-3">{item?.id}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3">{idx + 1}</td>
+                  <td>
                     <p className="font-medium">{item?.title}</p>
-                    <p className="text-xs text-gray-500">{item.subtitle}</p>
+                  </td>
+                  <td className="px-4 py-3">
+                    <img
+                      src={item.article}
+                      alt=""
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                      }}
+                    />
                   </td>
                   <td className="px-4 py-3">{item?.category_name}</td>
-                  <td className="px-4 py-3">{item?.author}</td>
+                  <td className="px-4 py-3">{item?.tags}</td>
                   <td className="px-4 py-3">
-                    {item?.created_at ? format(new Date(item.created_at), 'yyyy-MM-dd') : 'N/A'}
-
-                  </td>
-                  <td className="px-4 py-3">
-                  <span
-  className={`px-2 py-1 rounded-full text-xs font-medium ${
-    item?.status === '0'
-      ? 'bg-red-100 text-yellow-800'
-      : 'bg-green-100 text-green-600'
-  }`}
->
-  {item?.status === '0' ? 'Draft' : 'Published'}
-</span>
-
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        item?.status === "0"
+                          ? "bg-red-100 text-yellow-800"
+                          : "bg-green-100 text-green-600"
+                      }`}
+                    >
+                      {item?.status === "0" ? "Draft" : "Published"}
+                    </span>
                   </td>
                   <td className="px-4 py-3 flex gap-3 items-center">
                     <FaEye className="text-blue-600 cursor-pointer" />
                     <FaEdit className="text-gray-600 cursor-pointer" />
-                    <FaTrash className="text-red-600 cursor-pointer" onClick={() => handleDelete(item?.id)} />
+                    <FaTrash
+                      className="text-red-600 cursor-pointer"
+                      onClick={() => handleDelete(item?.id)}
+                    />
                   </td>
                 </tr>
               ))}

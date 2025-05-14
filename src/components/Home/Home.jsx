@@ -14,6 +14,7 @@ import ReviewCards from "../Home/ReviewCards";
 import StartLearning from "../Home/StartLearning";
 // import Header from "../../Layout/Header";
 import Footer from '../../Layout/Footer';
+import AllBlogs from './AllBlogs';
 
 
 const Home = () => {
@@ -30,6 +31,7 @@ const Home = () => {
         <DigitalProducts />
         <FeaturedIn />
         <Letmake />
+        <AllBlogs/>
         <FAQSection />
         <ReviewCards />
         <StartLearning />
