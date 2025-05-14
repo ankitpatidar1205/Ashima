@@ -1,14 +1,18 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMoon, FaBell, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const SoftwareNavbar = ({ isCollapsed }) => {
-  // const token = JSON.parse(localStorage.getItem("token"));
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [role, setRole] = useState("");
 
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) setRole(user.role);
+  }, []);
   return (
     <>
       <div
@@ -62,12 +66,13 @@ const SoftwareNavbar = ({ isCollapsed }) => {
               onClick={() => setDropdownOpen(!dropdownOpen)} />
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-md z-50">
-                <a  href="#profile"  className="flex items-center px-4 py-2 text-black hover:bg-teal-700 hover:text-white">
-                  <FaUser className="mr-2" /> My Profile
-                </a>
-                <a href="#settings" className="flex items-center px-4 py-2 text-black hover:bg-teal-700">
-                  <FaCog className="mr-2" /> Settings
-                </a>
+               <Link  to={`/${role}-profile`} 
+                   className="flex items-center px-4 py-2 text-black hover:bg-teal-700 hover:text-white">
+                 <FaUser className="mr-2" /> My Profile
+               </Link>
+                <Link to="/change-password" className="flex items-center px-4 py-2 text-black hover:bg-teal-700">
+                  <FaCog className="mr-2" /> Change Password
+                </Link>
                 <Link to={"/"} className="flex items-center px-4 py-2 text-black text-black-600 hover:bg-teal-700">
                   <FaSignOutAlt className="mr-2" /> Logout
                 </Link>

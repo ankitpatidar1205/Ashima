@@ -31,7 +31,7 @@ import Conversation from "./components/InstructorPanel/Conversation";
 import CourseComments from "./components/InstructorPanel/CourseComments";
 import Earning from "./components/InstructorPanel/Earning";
 import Calender from "./components/InstructorPanel/Calender";
-import Profile from "./components/InstructorPanel/Profile";
+
 import Setting from "./components/InstructorPanel/Setting";
 import ProductDetails from "./components/InstructorPanel/ProductDetails";
 import CertificatesPage from "./components/StudentPanal/Certificate";
@@ -43,7 +43,6 @@ import DiscussionMostLike from "./components/StudentPanal/DiscussionMostLike";
 import QA from "./components/StudentPanal/QA";
 import ReviewsRating from "./components/StudentPanal/ReviewRating";
 import Mc_Dashboard from "./components/StudentPanal/MyCourses";
-import Student_Setting from "./components/StudentPanal/Student_setting";
 import ManageStudent from "./components/AdminPanal/ManageStudent";
 import ManageInstructors from "./components/AdminPanal/ManageInstructors";
 import ManageCourses from "./components/AdminPanal/ManageCourses";
@@ -52,7 +51,6 @@ import RefundProcess from "./components/AdminPanal/RefundProcess";
 // import ViewTransaction from "./components/AdminPanal/ViewTransaction";
 import Blogs_article from "./components/AdminPanal/BlogsArticles";
 import ManageComm_Discu from "./components/AdminPanal/Community";
-import AdminRolesManagement from "./components/AdminPanal/AdminRole";
 import InstructorDetails from "./components/AdminPanal/InstructorDetails";
 import CoursesDetails from "./components/AdminPanal/CoursesDetails";
 import ViewAssessments from "./components/AdminPanal/ViewAssessments";
@@ -75,6 +73,10 @@ import EditCertificateTemplates from "./components/AdminPanal/EditCertificateTem
 import ResetPassword from "./Auth/ResetPassword";
 import ResetPasswordSucessfullPage from "./Auth/ResetPasswordSucessfullPage";
 import CourceDetail from "./components/Courses/CourceDetail";
+import ProfileLayout from "./components/InstructorPanel/InstructorProfile";
+import StudentProfile from "./components/StudentPanal/StudentProfile";
+import AdminProfile from "./components/AdminPanal/AdminProfile";
+import ChangePassword from "./components/ChangePassword/ChangePassword";
 
 axios.defaults.withCredentials = true;
 
@@ -161,10 +163,6 @@ const App = () => {
           path="/student-courses"
           element={<Mc_Dashboard></Mc_Dashboard>}
         ></Route>
-        <Route
-          path="/student-settings"
-          element={<Student_Setting></Student_Setting>}
-        ></Route>
         <Route path="/manage-student" element={<ManageStudent></ManageStudent>} ></Route>
         <Route path="/edit-student/:id" element={<EditStudent></EditStudent>} ></Route>
         <Route
@@ -182,10 +180,7 @@ const App = () => {
           element={<ManageComm_Discu></ManageComm_Discu>}
         ></Route>
         <Route path="/discussion-details/:id" element={<DiscussionDetails />} />
-        <Route
-          path="/admin-role"
-          element={<AdminRolesManagement></AdminRolesManagement>}
-        ></Route>
+      
         <Route
           path="/ViewAssessments"
           element={<ViewAssessments></ViewAssessments>}
@@ -203,7 +198,6 @@ const App = () => {
         <Route path="/assignment" element={<Assignments></Assignments>}></Route>
         <Route path="/earning" element={<Earning></Earning>}></Route>
         <Route path="/calender" element={<Calender></Calender>}></Route>
-        <Route path="/profile" element={<Profile></Profile>}></Route>
         <Route path="/setting" element={<Setting></Setting>}></Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/digital" element={<MyDigital />} />
@@ -217,6 +211,11 @@ const App = () => {
         <Route path="/business" element={<Business />} />
         <Route path="/aipowered" element={<AIPowered />} />
         <Route path="/launchpage" element={<LaunchPage />} />
+        <Route path="/instructor-profile" element={<ProfileLayout></ProfileLayout>}></Route>
+        <Route path="/student-profile" element={<StudentProfile></StudentProfile>}></Route>
+        <Route path="/admin-profile" element={<AdminProfile></AdminProfile>}></Route>
+        <Route path="/change-password" element={<ChangePassword></ChangePassword>}></Route>
+
       </Routes>
     </BrowserRouter>
 

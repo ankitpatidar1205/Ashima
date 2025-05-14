@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { Link } from "react-router-dom";
@@ -68,10 +68,8 @@ const filteredCourses = courses
       <div className="p-6 bg-gray-50 min-h-screen">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Manage Courses</h2>
-          <button
-            className="bg-teal-700 text-white px-4 py-2 rounded"
-            onClick={() => setIsModalOpen(true)}
-          >
+          <button className="bg-teal-700 text-white px-4 py-2 rounded"
+            onClick={() => setIsModalOpen(true)} >
             Add Course
           </button>
         </div>
