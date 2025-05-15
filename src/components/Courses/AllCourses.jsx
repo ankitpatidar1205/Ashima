@@ -382,7 +382,7 @@ function AllCourses() {
           </Button>
 
           <div  ref={scrollRef} className="d-flex overflow-auto pb-3"
-            style={{  scrollBehavior: "smooth",  marginLeft: "0",  gap: "1rem",  }}>
+            style={{  scrollBehavior: "smooth",  marginLeft: "0", gap: "1rem",  }}>
             {coursess.map((course, index) => (
               <Link
                 key={index}
@@ -393,8 +393,7 @@ function AllCourses() {
                     ? "/live"
                     : "/hybrid"
                 }
-                className="text-decoration-none"
-              >
+                className="text-decoration-none">
                 <Card
                   // className="flex-shrink-0 transition-transform duration-100 transform hover:scale-105 shadow-sm hover:shadow-lg"
                   style={{
@@ -404,8 +403,7 @@ function AllCourses() {
                     marginLeft: "21px",
                     cursor: "pointer",
                     overflow: "visible",
-                  }}
-                >
+                  }}>
                   <div className="overflow-hidden rounded-[6px]">
                     <img
                       src={course.image}
@@ -457,16 +455,12 @@ function AllCourses() {
             ))}
           </div>
 
-          <Button
-            variant="dark"
+          <Button variant="dark"
             className="position-absolute end-0 top-50 translate-middle-y z-2 d-none d-md-inline"
-            onClick={() => scroll("right")}
-          >
+            onClick={() => scroll("right")} >
             <FaArrowRight />
           </Button>
         </div>
-
-      
 
         {/* Popular Courses */}
         <Row className="mt-5 p-4">
@@ -476,20 +470,16 @@ function AllCourses() {
             </h2>
           </Col>
         <Row className="mt-3">
-  {categories &&
-    categories?.map((item, index) => (
+      {categories &&
+         categories?.map((item, index) => (
       <Col key={index} md={2} sm={6} xs={12} className="mb-2">
-        <button
-          type="button"
-          className="btn btn-outline-dark w-100 text-truncate"
-          title={item.category_name}  
-        >
+        <button type="button" className="btn btn-outline-dark w-100 text-truncate"
+          title={item.category_name}   >
           {item.category_name}
         </button>
       </Col>
     ))}
-</Row>
-
+  </Row>
         </Row>
         <ReviewCarrds />
         <Footer />

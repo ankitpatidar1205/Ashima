@@ -129,7 +129,7 @@ const Blog = () => {
       </section>
       {/* Blog Categories */}
       <section className="bg-[#ffffff] py-8 px-10">
-        <h2 className="text-[50px] font-impact font-normal text-[#000000] mb-12">
+        <h2 className="text-[50px] font-impact font-normal text-[#000000] mb-12 text-center">
           <span className="text-[#000000">TRENDING </span>
           <span className="text-[#047670]">NEWSLETTER</span>
         </h2>
@@ -157,15 +157,11 @@ const Blog = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {articles?.map((item) => (
-              <div
-                key={item.id}
-                className="w-full h-[404px] relative rounded-md overflow-hidden"
-              >
-                <img
-                  src={item.article}
+              <div key={item.id}
+                className="w-full h-[404px] relative rounded-md overflow-hidden">
+                <img src={item.article}
                   alt="Article"
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                />
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"/>
                 <div className="absolute bottom-4 left-4 text-white font-impact uppercase">
                   <h3 className="text-[22px] leading-[28px]">{item.title}</h3>
                   <Link to={`/singleblog/${item.id}`}>

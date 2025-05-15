@@ -174,7 +174,6 @@ const RoleBasedSidebar = ({
           { icon: <FaMoneyBill />, label: "Earnings", path: "/earning" },
           { icon: <FaCalendarAlt />, label: "Calendar", path: "/calender" },
           { icon: <FaUserCircle />, label: "Profile", path: "/instructor-profile" },
-          { icon: <FaCog />, label: "Settings", path: "/setting" },
 
         ];
       default:
