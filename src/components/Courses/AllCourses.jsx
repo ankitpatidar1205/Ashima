@@ -118,13 +118,13 @@ function AllCourses() {
         <Row className="bg-[#ffffff] uppercase">
           <div className="flex items-center border border-blue-500 rounded-md overflow-hidden pt-24">
             <div  ref={scrollRef}  className="flex overflow-x-auto scroll-smooth no-scrollbar"  style={{ scrollBehavior: "smooth", maxWidth: "100vw" }} >
-            {categories.map((category, index) => (
-       <div  key={index}  onClick={() => handleCategoryClick(index, category.category_name)}
-          className={`min-w-max cursor-pointer px-4 py-2 m-2 rounded-full text-sm font-semibold whitespace-nowrap border 
-        ${activeIndex === index ? "bg-teal-700 text-white" : "bg-white text-black"}`}>
-       {category.category_name}
-    </div>
-   ))}
+               {categories.map((category, index) => (
+            <div  key={index}  onClick={() => handleCategoryClick(index, category.category_name)}
+              className={`min-w-max cursor-pointer px-4 py-2 m-2 rounded-full text-sm font-semibold whitespace-nowrap border 
+             ${activeIndex === index ? "bg-teal-700 text-white" : "bg-white text-black"}`}>
+            {category.category_name}
+          </div>
+        ))}
 
             </div>
           </div>
@@ -159,24 +159,14 @@ function AllCourses() {
                 <br /> {sortOption}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item onClick={() => setSortOption("Most Popular")}>
-                  Most Popular
-                </Dropdown.Item>
                 <Dropdown.Item  onClick={() => setSortOption("Highest to Lowest")}>
                   Highest to Lowest
                 </Dropdown.Item>
                 <Dropdown.Item  onClick={() => setSortOption("Lowest to Highest")} >
                   Lowest to Highest
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => setSortOption("Latest First")}>
-                  Latest First
-                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-          </Col>
-          <Col md={9}
-            className="text-end font-semibold text-muted font-roboto text-[24px] start-end">
-          {courses?.length}
           </Col>
         </Row>
 
@@ -230,23 +220,6 @@ function AllCourses() {
               </label>
             </div>
             <hr />
-
-            <h5 className="fw-bold">New Courses</h5>
-
-            <div className="d-flex">
-              <Form.Check type="checkbox" />
-              <label htmlFor="" className="ms-4">
-                Latest First
-              </label>
-            </div>
-            <div className="d-flex">
-              <Form.Check type="checkbox" />
-              <label htmlFor="" className="ms-4">
-                Last New Course
-              </label>
-            </div>
-            <hr />
-
             <h5 className="fw-bold">Mode</h5>
             <button>
               <div className="d-flex">
@@ -276,8 +249,8 @@ function AllCourses() {
             </button>
           </Col>
 
-          <Col md={9}>
-  <div className="p-4">
+        <Col md={9}>
+           <div className="p-4">
     {filteredCourses && filteredCourses.length > 0 ? (
       filteredCourses.map((course) => (
         <div
@@ -366,8 +339,8 @@ function AllCourses() {
         <button className="text-gray-500 hover:text-black">Next &rarr;</button>
       </div>
     )}
-  </div>
-</Col>
+          </div>
+    </Col>
 
         </Row>
 
@@ -376,11 +349,9 @@ function AllCourses() {
             <h1 className="text-[50px] md:text-[50px] text-black font-[400] font-impact leading-tight mb-2">
               AI AND ML COURSES
             </h1>
-
             <p className="text-[36px] md:text-[24px] font-semibold font-jost text-[#1E1E1E] mb-1 leading-[40px] tracking-[0.5%]">
               Courses to get you started
             </p>
-
             <p className="text-[18px] md:text-[18px] font-jost text-black font-[400]">
               Explore courses from experienced, real-world experts.
             </p>
@@ -388,24 +359,16 @@ function AllCourses() {
         </Row>
 
         {/* Tabs */}
-        <Nav
-          variant="tabs"
-          defaultActiveKey="popular"
-          className="mb-3 px-4 md:px-8"
-        >
+        <Nav variant="tabs" defaultActiveKey="popular"  className="mb-3 px-4 md:px-8" >
           <Nav.Item>
-            <Nav.Link
-              eventKey="popular"
-              className="fw-bold font-jost text-[#1E1E1E] text-[16px] md:text-[18px] border-b-2 border-black rounded-0"
-            >
+            <Nav.Link  eventKey="popular"
+              className="fw-bold font-jost text-[#1E1E1E] text-[16px] md:text-[18px] border-b-2 border-black rounded-0" >
               Most Popular
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link
-              eventKey="trending"
-              className="fw-bold font-jost text-[#1E1E1E] text-[16px] md:text-[18px] rounded-0"
-            >
+            <Nav.Link  eventKey="trending"
+              className="fw-bold font-jost text-[#1E1E1E] text-[16px] md:text-[18px] rounded-0">
               Trending
             </Nav.Link>
           </Nav.Item>
@@ -413,23 +376,13 @@ function AllCourses() {
 
         {/* Scrollable Course List */}
         <div className="position-relative d-flex flex-column">
-          <Button
-            variant="dark"
-            className="position-absolute start-0 top-50 translate-middle-y z-2 d-none d-md-inline"
-            onClick={() => scroll("left")}
-          >
+          <Button  variant="dark"  className="position-absolute start-0 top-50 translate-middle-y z-2 d-none d-md-inline"
+            onClick={() => scroll("left")} >
             <FaArrowLeft />
           </Button>
 
-          <div
-            ref={scrollRef}
-            className="d-flex overflow-auto pb-3"
-            style={{
-              scrollBehavior: "smooth",
-              marginLeft: "0",
-              gap: "1rem",
-            }}
-          >
+          <div  ref={scrollRef} className="d-flex overflow-auto pb-3"
+            style={{  scrollBehavior: "smooth",  marginLeft: "0",  gap: "1rem",  }}>
             {coursess.map((course, index) => (
               <Link
                 key={index}
@@ -522,60 +475,21 @@ function AllCourses() {
               Popular <span className="text-success">Courses</span>
             </h2>
           </Col>
-          <Row className="mt-3">
-            <div className="col-md-2 col-sm-12 text-nowrap">
-              <button type="button" className="btn btn-outline-dark w-100">
-                AI & ML
-              </button>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <button type="button" className="btn btn-outline-dark w-100 mt-1">
-                Devops
-              </button>
-            </div>
-            <div className="col-md-3 col-sm-12">
-              <button type="button" className="btn btn-outline-dark w-100">
-                Cyber Security And Testing
-              </button>
-            </div>
-            <div className="col-md-2 col-sm-12">
-              <button type="button" className="btn btn-outline-dark w-100">
-                Software Development
-              </button>
-            </div>
-            <div className="col-md-3 col-sm-12">
-              <button  type="button"  className="btn btn-outline-dark w-100"
-                style={{ textWrap: "nowrap" }}>
-                Data Science And Engineering </button>
-            </div>
+        <Row className="mt-3">
+  {categories &&
+    categories?.map((item, index) => (
+      <Col key={index} md={2} sm={6} xs={12} className="mb-2">
+        <button
+          type="button"
+          className="btn btn-outline-dark w-100 text-truncate"
+          title={item.category_name}  
+        >
+          {item.category_name}
+        </button>
+      </Col>
+    ))}
+</Row>
 
-            <div className="row mt-3">
-              <div className="col-md-2 col-sm-12 ">
-                <button type="button" className="btn btn-outline-dark w-100">
-                  Gaming And Network
-                </button>
-              </div>
-              <div className="col-md-3 col-sm-12">
-                <button type="button" className="btn btn-outline-dark w-100 mt-1">
-                  Design And Development
-                </button>
-              </div>
-              <div className="col-md-3 col-sm-12">
-                <button type="button" className="btn btn-outline-dark w-100">
-                  Business And Leadership
-                </button>
-              </div>
-              <div className="col-md-2 col-sm-12">
-                <button type="button" className="btn btn-outline-dark w-100">
-                  No Code
-                </button>
-              </div>
-              <div className="col-md-2 col-sm-12">
-                <button  type="button"  className="btn btn-outline-dark w-100"  style={{ textWrap: "nowrap" }}>
-                  Founder Connect</button>
-              </div>
-            </div>
-          </Row>
         </Row>
         <ReviewCarrds />
         <Footer />
