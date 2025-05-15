@@ -12,7 +12,7 @@ const Messages = () => {
   const userId = localStorage.getItem("is_id");
 
   useEffect(() => {
-    socketRef.current = io("http://localhost:5000", { withCredentials: true });
+    socketRef.current = io("http://localhost:4000", { withCredentials: true });
 
     socketRef.current.on("connect", () => {
       console.log("✅ Socket connected:", socketRef.current.id);
