@@ -3,12 +3,8 @@ import { FaSearch, FaDownload, FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { useState } from "react";
 import AddArticleModal from "./AddArticle";
-import {
-  fetchArticles,
-  deleteArticle,
-} from "../../Redux/slices/articleSlice/articleSlice";
+import { fetchArticles, deleteArticle,} from "../../Redux/slices/articleSlice/articleSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { format } from "date-fns";
 import Swal from "sweetalert2";
 
 const Blogs_article = () => {
@@ -63,10 +59,7 @@ const Blogs_article = () => {
             {/* <button className="bg-[#047670] text-white px-4 py-2 rounded-lg text-sm">
               + Add New Article
             </button> */}
-            <button
-              className="bg-[#047670] text-white px-4 py-2 rounded-lg text-sm"
-              onClick={() => setIsModalOpen(true)}
-            >
+            <button  className="bg-[#047670] text-white px-4 py-2 rounded-lg text-sm" onClick={() => setIsModalOpen(true)} >
               + Add New Article
             </button>
 
@@ -97,10 +90,7 @@ const Blogs_article = () => {
               <option>All Status</option>
             </select>
 
-            <input
-              type="date"
-              className="border rounded-lg px-2 py-2 text-sm w-full md:w-auto"
-            />
+            <input type="date" className="border rounded-lg px-2 py-2 text-sm w-full md:w-auto"/>
           </div>
         </div>
 
@@ -111,8 +101,8 @@ const Blogs_article = () => {
               <tr>
                 {[
                   "#",
-                  "Title",
                   "Image",
+                  "Title",
                   "Category",
                   "Tag",
                   "Status",
@@ -128,9 +118,6 @@ const Blogs_article = () => {
               {articles?.map((item, idx) => (
                 <tr key={idx} className="border-b">
                   <td className="px-4 py-3">{idx + 1}</td>
-                  <td>
-                    <p className="font-medium">{item?.title}</p>
-                  </td>
                   <td className="px-4 py-3">
                     <img
                       src={item.article}
@@ -141,6 +128,9 @@ const Blogs_article = () => {
                         borderRadius: "50%",
                       }}
                     />
+                  </td>
+                 <td>
+                    <p className="font-medium">{item?.title}</p>
                   </td>
                   <td className="px-4 py-3">{item?.category_name}</td>
                   <td className="px-4 py-3">{item?.tags}</td>

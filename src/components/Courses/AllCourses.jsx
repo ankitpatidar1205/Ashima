@@ -110,78 +110,6 @@ function AllCourses() {
     }
   };
 
-  const featuredCourses = [
-    {
-      id: 1,
-      image: courses1,
-      title: "AI AND ML FOR BEGINNERS",
-      description:
-        "Learn to program using the AI & ML.Master AI & ML by building <br/> 100 projects in 100 days.Learn data science, automation,<br/> build websites, games and apps!",
-      author: "KAPIL SHARMA",
-      updated: "August 2025",
-      hours: "10 TOTAL HOURS",
-      level: "ALL LEVELS",
-      lectures: "45 LECTURES",
-      rating: "4.8",
-      reviews: 537,
-      badge: "VIDEO",
-      price: "$19.99",
-    },
-    {
-      id: 2,
-      title: "Deep Learning with Python",
-      description:
-        "Learn to program using the AI & ML.Master AI & ML by building <br/> 100 projects in 100 days.Learn data science, automation,<br/> build websites, games and apps!",
-      instructor: "Sarah Johnson",
-      updated: "1 March 2025",
-      hours: "20 Total Hours",
-      level: "Advanced",
-      author: "KAPIL SHARMA",
-      lectures: "50 Lectures",
-      rating: 4.9,
-      reviews: 120,
-      price: "$24.99",
-      badge: "HYBRID",
-      image: courses2,
-    },
-    {
-      id: 3,
-      title: "Deep Learning with Python",
-      description:
-        "Learn to program using the AI & ML.Master AI & ML by building <br/> 100 projects in 100 days.Learn data science, automation,<br/> build websites, games and apps!",
-      instructor: "Sarah Johnson",
-      updated: "next batch start 1 March 2025",
-      hours: "20 Total Hours",
-      level: "Advanced",
-      author: "KAPIL SHARMA",
-      lectures: "50 Lectures",
-      rating: 4.9,
-      reviews: 120,
-      price: "$24.99",
-      badge: "VIDEO",
-      image: courses3,
-    },
-    {
-      id: 4,
-      title: "Deep Learning with Python",
-      description:
-        "Learn to program using the AI & ML.Master AI & ML by building <br/> 100 projects in 100 days.Learn data science, automation,<br/> build websites, games and apps!",
-      instructor: "Sarah Johnson",
-      updated: "next batch start 1 March 2025",
-      hours: "20 Total Hours",
-      level: "Advanced",
-      author: "KAPIL SHARMA",
-      lectures: "50 Lectures",
-      rating: 4.9,
-      reviews: 120,
-      price: "$24.99",
-      badge: "LIVE",
-      image: courses4,
-    },
-  ];
-
- 
-
   return (
     <>
       <Header/>
@@ -585,63 +513,7 @@ function AllCourses() {
           </Button>
         </div>
 
-        <Row className="mb-3 p-5">
-          <Col>
-            <h2 className="font-semibold font-jost text-[36px] text-[#1E1E1E]">
-              Featured
-              <span className="font-semibold font-jost text-[36px] text-[#047670]">
-                Courses
-              </span>
-            </h2>
-            <p className="font-normal font-jost text-[18px] text-[#000000]">
-              Explore courses from experienced, real-world experts.
-            </p>
-          </Col>
-          <Col md={12}>
-            <Card className="p-3 shadow">
-              <Row className="g-0 align-items-center">
-                <Col md={5}>
-                  <Card.Img
-                    src={featuredCourses[currentIndex].image}
-                    className="img-fluid rounded"
-                    alt="Course"
-                  />
-                </Col>
-                <Col md={7}>
-                  <Card.Body>
-                    <h4 className="font-bold font-roboto text-[30px] text-[#1E1E1E] uppercase">
-                      {featuredCourses[currentIndex].title}
-                    </h4>
-                    <p className="font-normal font-roboto text-[14px] text-[#000000] uppercase">
-                      {featuredCourses[currentIndex].description}
-                    </p>
-                    <p className="font-bold font-roboto text-[13px] uppercase text-[#1E1E1E]">
-                      <strong>
-                        BY {featuredCourses[currentIndex].instructor}
-                      </strong>{" "}
-                      | Updated {featuredCourses[currentIndex].updated}
-                    </p>
-                    <p className="text-muted small">
-                      {featuredCourses[currentIndex].hours} |{" "}
-                      {featuredCourses[currentIndex].level} |{" "}
-                      {featuredCourses[currentIndex].lectures}
-                    </p>
-                    <p className="font-semibold font-roboto text-[13px] uppercase text-[#1E1E1E]">
-                      Rating: ⭐ {featuredCourses[currentIndex].rating} (
-                      {featuredCourses[currentIndex].reviews} reviews)
-                      <Button className="ms-2 font-roboto font-semibold  bg-[#FF757A] text-[10px] text-[#1E1E1E] uppercase">
-                        {featuredCourses[currentIndex].badge}
-                      </Button>
-                    </p>
-                    <h4 className="fw-bold font-roboto text-[30px] text-[#000000]">
-                      {featuredCourses[currentIndex].price}
-                    </h4>
-                  </Card.Body>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-        </Row>
+      
 
         {/* Popular Courses */}
         <Row className="mt-5 p-4">
@@ -652,64 +524,55 @@ function AllCourses() {
           </Col>
           <Row className="mt-3">
             <div className="col-md-2 col-sm-12 text-nowrap">
-              <button type="button" class="btn btn-outline-dark w-100">
+              <button type="button" className="btn btn-outline-dark w-100">
                 AI & ML
               </button>
             </div>
             <div className="col-md-2 col-sm-12">
-              <button type="button" class="btn btn-outline-dark w-100 mt-1">
+              <button type="button" className="btn btn-outline-dark w-100 mt-1">
                 Devops
               </button>
             </div>
             <div className="col-md-3 col-sm-12">
-              <button type="button" class="btn btn-outline-dark w-100">
+              <button type="button" className="btn btn-outline-dark w-100">
                 Cyber Security And Testing
               </button>
             </div>
             <div className="col-md-2 col-sm-12">
-              <button type="button" class="btn btn-outline-dark w-100">
+              <button type="button" className="btn btn-outline-dark w-100">
                 Software Development
               </button>
             </div>
             <div className="col-md-3 col-sm-12">
-              <button
-                type="button"
-                class="btn btn-outline-dark w-100"
-                style={{ textWrap: "nowrap" }}
-              >
-                Data Science And Engineering
-              </button>
+              <button  type="button"  className="btn btn-outline-dark w-100"
+                style={{ textWrap: "nowrap" }}>
+                Data Science And Engineering </button>
             </div>
 
             <div className="row mt-3">
               <div className="col-md-2 col-sm-12 ">
-                <button type="button" class="btn btn-outline-dark w-100">
+                <button type="button" className="btn btn-outline-dark w-100">
                   Gaming And Network
                 </button>
               </div>
               <div className="col-md-3 col-sm-12">
-                <button type="button" class="btn btn-outline-dark w-100 mt-1">
+                <button type="button" className="btn btn-outline-dark w-100 mt-1">
                   Design And Development
                 </button>
               </div>
               <div className="col-md-3 col-sm-12">
-                <button type="button" class="btn btn-outline-dark w-100">
+                <button type="button" className="btn btn-outline-dark w-100">
                   Business And Leadership
                 </button>
               </div>
               <div className="col-md-2 col-sm-12">
-                <button type="button" class="btn btn-outline-dark w-100">
+                <button type="button" className="btn btn-outline-dark w-100">
                   No Code
                 </button>
               </div>
               <div className="col-md-2 col-sm-12">
-                <button
-                  type="button"
-                  class="btn btn-outline-dark w-100"
-                  style={{ textWrap: "nowrap" }}
-                >
-                  Founder Connect
-                </button>
+                <button  type="button"  className="btn btn-outline-dark w-100"  style={{ textWrap: "nowrap" }}>
+                  Founder Connect</button>
               </div>
             </div>
           </Row>

@@ -5,34 +5,21 @@ import Footer from "../../Layout/Footer";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchArticles } from "../../Redux/slices/articleSlice/articleSlice";
+import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 const Blog = () => {
-  const trendingCourses = [
-    "All Blogs",
-    "AI & ML",
-    "DEVOPS",
-    "NO CODE",
-    "Cybersecurity & Testing",
-    "DATA SCIENCE AND ENGINERRING",
-    "DESIGN AND DEVLOPMENT",
-    "Founder Connect",
-    "Gaming & Network",
-    "Product",
-    "bussiness and leadership",
-    "Marketing & Sales",
-  ];
-
   const [selectedCourse, setSelectedCourse] = useState("");
+   const [activeTab, setActiveTab] = useState(null);
   const handleCourseClick = (course) => {
     setSelectedCourse(course);
   };
 
   const dispatch = useDispatch();
-
   const { articles, loading } = useSelector((state) => state.articles);
+  const { categories } = useSelector((state) => state.categories);
 
-  console.log(articles.data);
   useEffect(() => {
-    dispatch(fetchArticles());
+      dispatch(fetchCategories());
+      dispatch(fetchArticles());
   }, [dispatch]);
   return (
     <>
@@ -146,34 +133,22 @@ const Blog = () => {
           <span className="text-[#000000">TRENDING </span>
           <span className="text-[#047670]">NEWSLETTER</span>
         </h2>
-        <div className="flex flex-col gap-3">
-          {[0, 5, 9].map((startIndex, rowIndex) => (
-            <div
-              key={rowIndex}
-              className="flex flex-wrap justify-center gap-4 sm:gap-4 "
-            >
-              {trendingCourses
-                .slice(startIndex, startIndex + [5, 4, 2][rowIndex])
-                .map((label) => {
-                  const isSelected = selectedCourse === label;
-                  return (
-                    <button
-                      key={label}
-                      onClick={() => handleCourseClick(label)}
-                      className={`px-2 py-2 rounded-full text-[16px] font-Roboto Condensed fw-bold uppercase border transition-all
-                ${
-                  isSelected
-                    ? "bg-[#047670] text-[#fff] border-[#002726]"
-                    : "bg-[#f4F3F3] text-gray-800 border-[#000000] hover:bg-[#fffaf1] hover:text-[#000000]"
-                }`}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-            </div>
-          ))}
-        </div>
+      <div className="flex flex-wrap gap-3">
+      {categories.map((category, index) => (
+        <button
+          key={index}
+          onClick={() => setActiveTab(index)}
+          className={`px-5 py-2 rounded-full border border-black text-[14px] font-semibold 
+            ${
+              activeTab === index
+                ? "bg-teal-600 text-white"
+                : "bg-white text-black"
+            } transition duration-200 ease-in-out`}
+        >
+          {category.category_name}
+        </button>
+      ))}
+    </div>
       </section>
 
       <div className="p-6 w-full">
@@ -181,7 +156,7 @@ const Blog = () => {
           <p>Loading...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {articles.map((item) => (
+            {articles?.map((item) => (
               <div
                 key={item.id}
                 className="w-full h-[404px] relative rounded-md overflow-hidden"
