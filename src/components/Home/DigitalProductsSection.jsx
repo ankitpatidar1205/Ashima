@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const DigitalProducts = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-  console.log(products.data);
+  // console.log(products.data);
   useEffect(() => {
     dispatch(getAllDigitalProducts());
   }, [dispatch]);

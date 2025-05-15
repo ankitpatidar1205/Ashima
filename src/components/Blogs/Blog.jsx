@@ -143,7 +143,7 @@ const Blog = () => {
           <span className="text-[#047670]">NEWSLETTER</span>
         </h2>
 
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-4 ">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-4">
           {/* ALL ARTICLES button */}
           {categories.map((category) => (
             <button
