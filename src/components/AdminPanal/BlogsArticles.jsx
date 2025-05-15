@@ -81,16 +81,6 @@ const Blogs_article = () => {
               />
               <FaSearch className="absolute left-3 top-3 text-gray-400 text-sm" />
             </div>
-
-            <select className="border rounded-lg px-2 py-2 text-sm w-full md:w-auto">
-              <option>All Categories</option>
-            </select>
-
-            <select className="border rounded-lg px-2 py-2 text-sm w-full md:w-auto">
-              <option>All Status</option>
-            </select>
-
-            <input type="date" className="border rounded-lg px-2 py-2 text-sm w-full md:w-auto"/>
           </div>
         </div>
 
@@ -147,7 +137,6 @@ const Blogs_article = () => {
                   </td>
                   <td className="px-4 py-3 flex gap-3 items-center">
                     <FaEye className="text-blue-600 cursor-pointer" />
-                    <FaEdit className="text-gray-600 cursor-pointer" />
                     <FaTrash
                       className="text-red-600 cursor-pointer"
                       onClick={() => handleDelete(item?.id)}

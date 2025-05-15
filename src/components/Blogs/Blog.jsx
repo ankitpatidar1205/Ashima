@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import blog1 from "../../assets/blog1.png";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
@@ -6,12 +6,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchArticles } from "../../Redux/slices/articleSlice/articleSlice";
 import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
+
 const Blog = () => {
-  const [selectedCourse, setSelectedCourse] = useState("");
   const [activeTab, setActiveTab] = useState(null);
-  const handleCourseClick = (course) => {
-    setSelectedCourse(course);
-  };
 
   const dispatch = useDispatch();
   const { articles, loading } = useSelector((state) => state.articles);
@@ -21,11 +18,25 @@ const Blog = () => {
     dispatch(fetchCategories());
     dispatch(fetchArticles());
   }, [dispatch]);
+
+  // Set default tab to first category when categories load
+  useEffect(() => {
+    if (categories.length > 0 && activeTab === null) {
+      setActiveTab(categories[0].id);
+    }
+  }, [categories]);
+
+  // Filter articles by activeTab (category ID)
+  const filteredArticles =
+    activeTab === null
+      ? articles
+      : articles.filter((article) => article.category_id === activeTab);
+
   return (
     <>
       <Header />
       {/* Hero Section */}
-      <section className="hero bg-[#047670] py-24 sm:px-6 md:px-10  flex flex-col lg:flex-row justify-around gap-10 flex-wrap pt-32">
+      <section className="hero bg-[#047670] py-24 sm:px-6 md:px-10 flex flex-col lg:flex-row justify-around gap-10 flex-wrap pt-32">
         <div className="bg-[#ffffff] rounded-lg shadow-md p-3 w-full lg:w-[670px] h-auto">
           <img
             src={blog1}
@@ -49,9 +60,6 @@ const Blog = () => {
             Explore Large Concept Models, their architecture, differences from
             LLMs, implementation guide, and applications.
           </p>
-          {/* <button className="block mt-4 bg-[#047670] text-[#ffffff] text-[18px] sm:text-[20px] md:text-[22px] font-roboto border-[1px] font-bold rounded-[12px] h-[57px] w-full sm:w-[355px]">
-            Best Artificial Intelligence Blogs
-          </button> */}
           <button className="mt-4 bg-[#047670] text-[#ffffff] text-[18px] sm:text-[20px] md:text-[22px] font-roboto border font-bold rounded-[12px] h-[57px] w-full sm:w-[355px] flex justify-center items-center">
             Best Artificial Intelligence Blogs
           </button>
@@ -91,7 +99,7 @@ const Blog = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[18px]  font-roboto font-normal text-[#1E1E1E]">
+            <label className="text-[18px] font-roboto font-normal text-[#1E1E1E]">
               EMAIL
             </label>
             <input
@@ -100,7 +108,7 @@ const Blog = () => {
               placeholder="Enter your email"
             />
 
-            <label className="text-[18px] uppercase  font-roboto font-normal text-[#1E1E1E]">
+            <label className="text-[18px] uppercase font-roboto font-normal text-[#1E1E1E]">
               enter your program
             </label>
             <input
@@ -118,8 +126,8 @@ const Blog = () => {
             By continuing, you agree to AI Skills{" "}
             <a href="#" className="text-[#047670]">
               Terms
-            </a>
-            and
+            </a>{" "}
+            and{" "}
             <a href="#" className="text-[#047670]">
               Privacy Policy
             </a>
@@ -127,67 +135,86 @@ const Blog = () => {
           </p>
         </div>
       </section>
+
       {/* Blog Categories */}
       <section className="bg-[#ffffff] py-8 px-10">
-        <h2 className="text-[50px] font-impact font-normal text-[#000000] mb-12">
+        <h2 className="text-[50px] font-impact font-normal text-[#000000] text-center mb-12">
           <span className="text-[#000000">TRENDING </span>
           <span className="text-[#047670]">NEWSLETTER</span>
         </h2>
+
         <div className="flex flex-wrap justify-center gap-4 sm:gap-4 ">
-          {categories.map((category, index) => (
+          {/* ALL ARTICLES button */}
+          {categories.map((category) => (
             <button
-              key={index}
-              onClick={() => setActiveTab(index)}
+              key={category.id}
+              onClick={() => setActiveTab(category.id)}
               className={`px-2 py-2 rounded-full text-[16px] font-Roboto Condensed fw-bold uppercase border-1 transition-all 
-            ${
-              activeTab === index
-                ? "bg-[#047670] text-[#fff] border-[#002726]"
+                ${
+                  activeTab === category.id
+                    ? "bg-[#047670] text-[#fff] border-[#002726]"
                     : "bg-[#f4F3F3] text-gray-800 border-[#000000] hover:bg-[#fffaf1] hover:text-[#000000]"
-            } transition duration-200 ease-in-out`}
+                } transition duration-200 ease-in-out`}
             >
               {category.category_name}
             </button>
           ))}
+          <button
+            onClick={() => setActiveTab(null)}
+            className={`px-2 py-2 rounded-full text-[16px] font-Roboto Condensed fw-bold uppercase border-1 transition-all 
+              ${
+                activeTab === null
+                  ? "bg-[#047670] text-[#fff] border-[#002726]"
+                  : "bg-[#f4F3F3] text-gray-800 border-[#000000] hover:bg-[#fffaf1] hover:text-[#000000]"
+              } transition duration-200 ease-in-out`}
+          >
+            All Articles
+          </button>
         </div>
       </section>
 
+      {/* Filtered Articles */}
       <div className="p-6 w-full">
         {loading ? (
           <p>Loading...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {articles?.map((item) => (
-              <div
-                key={item.id}
-                className="w-full h-[404px] relative rounded-md overflow-hidden"
-              >
-                <img
-                  src={item.article}
-                  alt="Article"
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                />
-                <div className="absolute bottom-4 left-4 text-white font-impact uppercase">
-                  <h3 className="text-[22px] leading-[28px]">{item.title}</h3>
-                  <Link to={`/singleblog/${item.id}`}>
-                    <button className="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-100 transition text-sm">
-                      Learn More
-                    </button>
-                  </Link>
+            {filteredArticles.length > 0 ? (
+              filteredArticles.map((item) => (
+                <div
+                  key={item.id}
+                  className="w-full h-[404px] relative rounded-md overflow-hidden"
+                >
+                  <img
+                    src={item.article}
+                    alt="Article"
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                  <div className="absolute bottom-4 left-4 text-white font-impact uppercase">
+                    <h3 className="text-[22px] leading-[28px]">{item.title}</h3>
+                    <Link to={`/singleblog/${item.id}`}>
+                      <button className="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-100 transition text-sm">
+                        Learn More
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-center col-span-full text-gray-500">
+                No articles found for this category.
+              </p>
+            )}
           </div>
         )}
       </div>
 
       {/* Trending Section */}
-
       <section className="trending-section px-10 mt-12 mb-10">
         <h2 className="text-[50px] font-impact font-normal text-[#000000] mb-12">
           <span className="text-[#000000">TRENDING </span>
           <span className="text-[#047670]">TUTORIALS</span>
         </h2>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {[
             "DATA SCIENCE TUTORIAL",
@@ -208,7 +235,7 @@ const Blog = () => {
             return (
               <div
                 key={index}
-                className={` h-[216px]  w-[300px] flex items-center justify-center text-center text-[#1E1E1E] font-jost font-normal text-[20px] px-2 ${
+                className={`h-[216px] w-[300px] flex items-center justify-center text-center text-[#1E1E1E] font-jost font-normal text-[20px] px-2 ${
                   bgColors[index % 4]
                 }`}
               >
@@ -218,12 +245,13 @@ const Blog = () => {
           })}
         </div>
       </section>
+
+      {/* Trending Blogs Section */}
       <section className="trending-section px-10 mt-16 mb-10">
         <h2 className="text-[50px] font-impact font-normal text-[#000000] mb-12">
           <span className="text-[#000000">TRENDING </span>
           <span className="text-[#047670]">BLOGS</span>
         </h2>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {[
             "DATA SCIENCE TUTORIAL",
@@ -244,7 +272,7 @@ const Blog = () => {
             return (
               <div
                 key={index}
-                className={` h-[216px]  w-[300px] flex items-center justify-center text-center text-[#1E1E1E] font-jost font-normal text-[20px] px-2 ${
+                className={`h-[216px] w-[300px] flex items-center justify-center text-center text-[#1E1E1E] font-jost font-normal text-[20px] px-2 ${
                   bgColors[index % 4]
                 }`}
               >
@@ -254,6 +282,7 @@ const Blog = () => {
           })}
         </div>
       </section>
+
       <Footer />
     </>
   );
