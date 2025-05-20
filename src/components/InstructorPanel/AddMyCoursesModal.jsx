@@ -385,7 +385,9 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           </div>
 
           {/* know your instructor */}
-          <div>
+
+          
+          {/* <div>
             <label className="text-sm font-medium mb-1 block">Know Your Instructor</label>
 
             <div class="row">
@@ -425,7 +427,10 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
 
 
 
-          </div>
+          </div> */}
+
+
+
           {/* Status */}
           {courseId == null && <div className="flex items-center gap-2">
             <input

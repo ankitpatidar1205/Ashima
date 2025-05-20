@@ -135,6 +135,7 @@ const RoleBasedSidebar = ({
         return [
           { icon: <FaHome />, label: "Dashboard", path: "/student-dashboard" },
           { icon: <FaBook />, label: "My Courses", path: "/student-courses" },
+          { icon: <FaRegEye />, label: "Digital Products", path: "/student-digitalProducts" },
           { icon: <FaUsers />, label: "Certificate", path: "/certificate" },
 
           {
