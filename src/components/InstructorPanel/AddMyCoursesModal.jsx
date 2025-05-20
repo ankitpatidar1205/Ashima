@@ -4,13 +4,13 @@ import { getInstructors } from "../../Redux/slices/InstructorSlice/InstructorSli
 import { createCourse, fetchCourses, updateCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 
-const AddMyCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
+const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
   const dispatch = useDispatch();
-  const fcmToken=localStorage.getItem('fcmToken')
+  const fcmToken = localStorage.getItem('fcmToken')
   // console.log("fcmToken",fcmToken);
 
-   const [instructorid, setInstructorId]= useState("")
-   console.log(instructorid)
+  const [instructorid, setInstructorId] = useState("")
+  console.log(instructorid)
 
   const [formData, setFormData] = useState({
     course_title: "",
@@ -26,13 +26,13 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
     fcmToken
   });
 
-    useEffect(()=>{
-      const inst_id= localStorage.getItem("is_id")
-     if(inst_id){
-     setInstructorId(inst_id)
+  useEffect(() => {
+    const inst_id = localStorage.getItem("is_id")
+    if (inst_id) {
+      setInstructorId(inst_id)
     }
   })
- useEffect(() => {
+  useEffect(() => {
     if (instructorid) {
       setFormData((prev) => ({
         ...prev,
@@ -68,7 +68,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
           category_id: courseToEdit.category_id,
           course_content_video_link: courseToEdit.course_content_video_link,
           test_video: courseToEdit.test_video,
-          status:courseToEdit.status.toString(),
+          status: courseToEdit.status.toString(),
 
         });
         setCourseSyllabus(JSON.parse(courseToEdit.course_syllabus) || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
@@ -96,14 +96,14 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
     data.append("course_syllabus", JSON.stringify(course_syllabus));
     // Append FAQs as an array of objects
     data.append("faqs", JSON.stringify(faqs));
-      data.append("course_image", formData.course_image); 
-      data.append("test_video", formData.test_video);
+    data.append("course_image", formData.course_image);
+    data.append("test_video", formData.test_video);
 
     try {
       if (courseId) {
         // Update course if we are in "update" mode
-        await dispatch(updateCourse({id: courseId, formData: data }));
-          setCourseId(null)
+        await dispatch(updateCourse({ id: courseId, formData: data }));
+        setCourseId(null)
       } else {
         // Create new course if we are in "add" mode
         await dispatch(createCourse(data));
@@ -254,25 +254,25 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
               </select>
             </div>
 
-           <div>
-       <label htmlFor="instructor" className="text-sm font-medium mb-1 block">
-         Instructor
-      </label>
-   <select
-     id="instructor"
-    value={formData.instructor_id}
-    disabled
-    className="border p-2 rounded w-full bg-gray-100 text-gray-700"
-  >
-    {instructors?.map((instructor) => (
-      instructor.id === formData.instructor_id && (
-        <option key={instructor.id} value={instructor.id}>
-          {instructor.full_name}
-        </option>
-      )
-    ))}
-  </select>
-</div>
+            <div>
+              <label htmlFor="instructor" className="text-sm font-medium mb-1 block">
+                Instructor
+              </label>
+              <select
+                id="instructor"
+                value={formData.instructor_id}
+                disabled
+                className="border p-2 rounded w-full bg-gray-100 text-gray-700"
+              >
+                {instructors?.map((instructor) => (
+                  instructor.id === formData.instructor_id && (
+                    <option key={instructor.id} value={instructor.id}>
+                      {instructor.full_name}
+                    </option>
+                  )
+                ))}
+              </select>
+            </div>
 
 
             <div>
@@ -298,7 +298,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
                 <input
                   type="text"
                   name="module_title"
-                  value={module?.module_title }
+                  value={module?.module_title}
                   onChange={(e) => handleCourseSyllabusChange(index, e)}
                   placeholder="Module Title"
                   className="border p-2 rounded w-full"
@@ -383,16 +383,59 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
               + Add FAQ
             </button>
           </div>
+
+          {/* know your instructor */}
+          <div>
+            <label className="text-sm font-medium mb-1 block">Know Your Instructor</label>
+
+            <div class="row">
+              <div className="col-sm-6">
+                <input
+                  type="file"
+                  name="instrutorimage"
+                  className="border p-2 rounded w-full"
+                />
+
+              </div>
+              <div className="col-sm-6">
+                <input
+                  type="text"
+                  name="instrutorimage"
+                  className="border p-2 rounded w-full"
+                  placeholder="Enter Instructor Name"
+                />
+              </div>
+              <div className="col-sm-6 mt-3">
+                <input
+                  type="text"
+                  name="instrutorExpertise"
+                  className="border p-2 rounded w-full"
+                  placeholder="Enter Expertise"
+                />
+              </div>
+              <div className="col-sm-6 mt-3">
+                <input
+                  type="email"
+                  name="instrutorEmail"
+                  className="border p-2 rounded w-full"
+                  placeholder="Enter Email"
+                />
+              </div>
+            </div>
+
+
+
+          </div>
           {/* Status */}
-          {courseId==null && <div className="flex items-center gap-2">
-          <input
+          {courseId == null && <div className="flex items-center gap-2">
+            <input
               type="checkbox"
               checked={formData.status === "1"}
               onChange={handleCheckboxChange} // Handle checkbox change
             />
             <label className="text-sm">Active</label>
           </div>}
-          
+
 
           {/* Submit and Cancel Buttons */}
           <div className="flex justify-end gap-2">
