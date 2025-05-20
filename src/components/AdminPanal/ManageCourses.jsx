@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 const ManageCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-   const [courseId, setCourseId] = useState(null);
+  const [courseId, setCourseId] = useState(null);
   const dispatch = useDispatch();
   const { courses } = useSelector((state) => state.courses);
   useEffect(() => {
@@ -60,31 +60,18 @@ const ManageCourses = () => {
         {/* Heading & Add Button */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Manage Courses</h2>
-          <button
-            className="bg-teal-700 text-white px-4 py-2 rounded"
-            onClick={() => setIsModalOpen(true)}
-          >
+          <button  className="bg-teal-700 text-white px-4 py-2 rounded" onClick={() => setIsModalOpen(true)}>
             Add Course
           </button>
         </div>
 
-        <AddCoursesModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          courseId={courseId}
-          setCourseId={setCourseId}
-        />
+        <AddCoursesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} courseId={courseId} setCourseId={setCourseId}/>
 
         {/* Filter Section */}
         <div className="bg-white p-4 rounded shadow">
           <div className="flex flex-wrap gap-2 mb-4">
-            <input
-              type="text"
-              placeholder="Search courses..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="border px-3 py-2 rounded w-full md:w-auto"
-            />
+            <input type="text" placeholder="Search courses..." value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}  className="border px-3 py-2 rounded w-full md:w-auto"/>
             <button className="border px-3 py-2 rounded">Export</button>
           </div>
 
@@ -137,8 +124,7 @@ const ManageCourses = () => {
                       </span>
                     </td>
                     <td className="p-2">
-                      <span
-                        className={`${
+                      <span className={`${
                           course.status =="1"  
                             ? "bg-green-100 text-green-600"
                             : "bg-yellow-100 text-yellow-600"
