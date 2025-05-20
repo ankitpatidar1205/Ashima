@@ -134,21 +134,11 @@ const RoleBasedSidebar = ({
       case "student":
         return [
           { icon: <FaHome />, label: "Dashboard", path: "/student-dashboard" },
+          { icon: <FaHome />, label: "Courses", path: "/student-all-Courses" },
           { icon: <FaBook />, label: "My Courses", path: "/student-courses" },
           { icon: <FaUsers />, label: "Certificate", path: "/certificate" },
-
-          {
-            icon: <FaClipboardCheck />,
-            label: "Assignments",
-            path: "/assignment",
-          },
-          {
-            icon: <FaQuestionCircle />,
-            label: "Q&A",
-            path: "/qasection",
-          },
-
-          { icon: <FaCog />, label: "Setting", path: "/student-settings" },
+          {  icon: <FaClipboardCheck />,  label: "Assignments",  path: "/assignment", },
+          { icon: <FaQuestionCircle />, label: "Q&A", path: "/qasection",},
         ];
       case "instructor":
         return [
@@ -184,18 +174,9 @@ const RoleBasedSidebar = ({
   const menuItems = getMenuItems();
 
   return (
-    <div
-      className={`fixed z-50 transition-all duration-300 bg-white border-r  h-screen overflow-y-auto ${
-        isCollapsed ? "w-16" : "w-64"
-      }`}
-    >
-      {/* Header */}
-      {/* <div className="flex justify-between items-center p-4 border-b">
-        {!isCollapsed && <h2 className="text-3xl font-impact">AISKILLS</h2>}
-        <button onClick={() => setIsCollapsed(!isCollapsed)}>
-          <FaBars />
-        </button>
-      </div> */}
+    <div  className={`fixed z-50 transition-all duration-300 bg-white border-r  h-screen overflow-y-auto ${
+        isCollapsed ? "w-16" : "w-64" }`} >
+     
 
       <div
         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -260,15 +241,13 @@ const RoleBasedSidebar = ({
                   )}
                 </div>
               ) : (
-                <NavLink
-                  to={item.path || "#"}
+                <NavLink  to={item.path || "#"}
                   onClick={() => setActiveRoute(item.path)}
                   className={`flex items-center gap-3 px-4 py-3 transition-all cursor-pointer ${
                     activeRoute === item.path
                       ? "bg-teal-700 text-white font-semibold"
                       : "hover:bg-teal-100 text-black"
-                  }`}
-                >
+                  }`} >
                   {/* <span className="text-lg">{item.icon}</span> */}
                   <span
                     className="text-lg cursor-pointer"
@@ -309,8 +288,7 @@ const RoleBasedSidebar = ({
 
         {/* Logout */}
         <li>
-      <div
-        className="flex items-center gap-3 px-4 py-3 text-gray-800 cursor-pointer hover:bg-red-100 hover:text-red-600 transition-all"
+      <div className="flex items-center gap-3 px-4 py-3 text-gray-800 cursor-pointer hover:bg-red-100 hover:text-red-600 transition-all"
         onClick={handleLogout}
       >
         <FaSignOutAlt className="text-lg" />

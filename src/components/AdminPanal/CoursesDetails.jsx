@@ -109,33 +109,43 @@ const CoursesDetails = () => {
             <div className="space-y-4">
               {/* Instructor Info */}
               <div className="bg-white p-4 rounded shadow">
-  <h4 className="font-semibold mb-3">Instructor</h4>
-  <div className="flex items-center gap-3">
-    {coursedata.instructor_details ? (
-      <>
-        <div className="w-12 h-12 rounded-full overflow-hidden">
-          <img
-            src={coursedata.instructor_details.profile_image}
-            alt={coursedata.instructor_details.full_name}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div>
-          <p className="font-bold">{coursedata.instructor_details.full_name}</p>
-          <p className="text-sm text-gray-500">{coursedata.instructor_details.email}</p>
-        </div>
-      </>
-    ) : (
-      <p className="text-gray-500">Instructor not assigned</p>
-    )}
-  </div>
-</div>
+                <h4 className="font-semibold mb-3">Instructor</h4>
+                <div className="flex items-center gap-3">
+                  {coursedata.instructor_details ? (
+                    <>
+                      <div className="w-12 h-12 rounded-full overflow-hidden">
+                        <img
+                          src={coursedata.instructor_details.profile_image}
+                          alt={coursedata.instructor_details.full_name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-bold">
+                          {coursedata.instructor_details.full_name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {coursedata.instructor_details.email}
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-gray-500">Instructor not assigned</p>
+                  )}
+                </div>
+              </div>
 
               {/* Course Metadata */}
               <div className="bg-white p-4 rounded shadow">
                 <h4 className="font-semibold mb-3">Course Metadata</h4>
-                <p><b>Created At:</b> {new Date(coursedata.created_at).toLocaleDateString()}</p>
-                <p><b>Status:</b> {coursedata.status === "1" ? "Active" : "Inactive"}</p>
+                <p>
+                  <b>Created At:</b>{" "}
+                  {new Date(coursedata.created_at).toLocaleDateString()}
+                </p>
+                <p>
+                  <b>Status:</b>{" "}
+                  {coursedata.status === "1" ? "Active" : "Inactive"}
+                </p>
               </div>
             </div>
           </div>
