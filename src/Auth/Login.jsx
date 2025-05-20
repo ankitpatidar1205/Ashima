@@ -21,6 +21,10 @@ const Login = () => {
       setEmail("teacher@gmail.com");
       setPassword("teacher@123");
     }
+    else if(role==="superadmin"){
+      setEmail("superadmin@gmail.com");
+      setPassword("super@admin");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -79,6 +83,9 @@ const Login = () => {
           navigate(`/student-dashboard`);
         } else if (userData.role === "instructor") {
           navigate(`/instructor-dashboard`);
+        }
+        else if (userData.role === "superadmin") {
+          navigate(`/superadmin-dashboard`);
         } else {
           navigate(`/default-dashboard`);
         }
@@ -168,6 +175,12 @@ const Login = () => {
             className="px-3 py-1 text-[12px] sm:text-[13px] border border-[#047670] rounded hover:bg-[#047670] hover:text-white transition"
           >
             Student
+          </button>
+          <button
+            onClick={() => handleRoleSelect("superadmin")}
+            className="px-3 py-1 text-[12px] sm:text-[13px] border border-[#047670] rounded hover:bg-[#047670] hover:text-white transition"
+          >
+            superadmin
           </button>
         </div>
         {/* Footer */}

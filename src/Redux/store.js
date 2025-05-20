@@ -6,6 +6,7 @@ import productReducer from './slices/DigitalProductSlice/DigitalProductSlice';
 import categorySlice from './slices/categorySlice/categorySlice';
 import templateReducer from './slices/templateSlice/templateSlice';
 import articleSliceREducer from './slices/articleSlice/articleSlice'
+import adminReducer from './slices/adminSlice/adminSlice'
 export const store = configureStore({
   reducer: {
     Student:StudentReducer,
@@ -14,6 +15,7 @@ export const store = configureStore({
     products:productReducer,
     categories:categorySlice,
     templates:templateReducer,
-    articles:articleSliceREducer
+    articles:articleSliceREducer,
+    admins:adminReducer,
   },
 })
