@@ -172,6 +172,25 @@ const RoleBasedSidebar = ({
           { icon: <FaUserCircle />, label: "Profile", path: "/instructor-profile" },
 
         ];
+         case "superadmin":
+        return [
+          { icon: <FaHome />, label: "Dashboard", path: "/superadmin-dashboard" },
+          { icon: <FaBook />, label: "Plan package", path: "/plan-package" },
+          { icon: <FaQuestionCircle />, label: "Plan Request", path: "/plan-request" },
+
+          {
+            icon: <FaClipboardCheck />,
+            label: "Order Details",
+            path: "/order-details",
+          },
+          {
+            icon:<FaUsers /> ,
+            label: "User Info",
+            path: "/user-info",
+          },
+
+          { icon: <FaCog />, label: "Setting", path: "/admin-setting" },
+        ];
       default:
         return [];
     }

@@ -79,6 +79,12 @@ import AdminProfile from "./components/AdminPanal/AdminProfile";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import SingleBlog from "./components/Home/SingleBlog";
 import StudentAllCources from "./components/StudentPanal/StudentAllCources";
+import SuperadminDashboard from "./components/Dashboard/SuperadminDashboard";
+import PlanPackage from "./components/SuperadminPanel/PlanPackage";
+import PlanRequest from "./components/SuperadminPanel/PlanRequest";
+import OrderDetail from "./components/SuperadminPanel/OrderDetails";
+import UserInfo from "./components/SuperadminPanel/UserInfo";
+import AdminSetting from "./components/SuperadminPanel/AdminSetting";
 import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProducts";
 import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
 
@@ -226,7 +232,14 @@ const App = () => {
         <Route path="/student-profile" element={<StudentProfile></StudentProfile>}></Route>
         <Route path="/admin-profile" element={<AdminProfile></AdminProfile>}></Route>
         <Route path="/change-password" element={<ChangePassword></ChangePassword>}></Route>
-
+         {/* // super-admin */}
+        <Route path="/superadmin-dashboard" element={<SuperadminDashboard />} />
+        <Route path="/plan-package" element={<PlanPackage/>} />
+        <Route path="/plan-request" element={<PlanRequest/>} />
+        <Route path="/order-details" element={<OrderDetail/>} />
+        <Route path="/user-info" element={<UserInfo/>} />
+        <Route path="/admin-setting" element={<AdminSetting/>} />
+         
       </Routes>
     </BrowserRouter>
 
