@@ -3,7 +3,7 @@ import DashboardLayout from "../../Layout/DashboardLayout";
 import axiosInstance from "../../utils/axiosInstance";
 import { FaEdit } from "react-icons/fa";
 
-const AdminProfile = () => {
+const SuperAdminProfile = () => {
   const [adminId, setAdminId] = useState("");
   const [adminData, setAdminData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -95,7 +95,7 @@ const AdminProfile = () => {
         <div className="flex-1">
           <main className="p-8">
             <div className="flex justify-between items-center mb-8">
-              <h1 className="text-2xl font-bold text-gray-900">Admin Profile</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Super Admin Profile</h1>
               <button
                 onClick={handleEditClick}
                 className="rounded-lg bg-[#047670] text-white px-4 py-2 flex items-center space-x-2 hover:bg-teal-800"
@@ -224,4 +224,4 @@ const AdminProfile = () => {
   );
 };
 
-export default AdminProfile;
+export default SuperAdminProfile;

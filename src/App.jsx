@@ -84,9 +84,9 @@ import PlanPackage from "./components/SuperadminPanel/PlanPackage";
 import PlanRequest from "./components/SuperadminPanel/PlanRequest";
 import OrderDetail from "./components/SuperadminPanel/OrderDetails";
 import UserInfo from "./components/SuperadminPanel/UserInfo";
-import AdminSetting from "./components/SuperadminPanel/AdminSetting";
 import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProducts";
 import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
+import SuperAdminProfile from "./components/SuperadminPanel/SuperAdminProfile";
 
 axios.defaults.withCredentials = true;
 
@@ -238,7 +238,7 @@ const App = () => {
         <Route path="/plan-request" element={<PlanRequest/>} />
         <Route path="/order-details" element={<OrderDetail/>} />
         <Route path="/user-info" element={<UserInfo/>} />
-        <Route path="/admin-setting" element={<AdminSetting/>} />
+        <Route path="/superadmin-profile" element={<SuperAdminProfile/>} />
          
       </Routes>
     </BrowserRouter>
