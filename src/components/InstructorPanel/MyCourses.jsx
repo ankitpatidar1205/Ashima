@@ -6,7 +6,7 @@ import { deleteCourse, fetchCourses, publishCourse } from "../../Redux/slices/Co
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import AddMyCoursesModal from "./AddMyCoursesModal";
-
+import useCurrency from "../../utils/useCurrency";
 const MyCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,7 +14,7 @@ const MyCourses = () => {
   const [instructorId, setInstructorId] = useState("");
   console.log(instructorId)
   const dispatch = useDispatch();
-
+   const currency = useCurrency();
   const { courses } = useSelector((state) => state.courses);
   console.log(courses);
 
@@ -124,7 +124,10 @@ const filteredCourses = courses
           </div>
         </td>
         <td>{course?.instructor_details?.full_name}</td>
-        <td>{course?.course_price}</td>
+      <td className="p-2">
+                     {currency.symbol}
+                     {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
+                    </td>
         <td>
           <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
             {course?.course_type}

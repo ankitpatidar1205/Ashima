@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 const ChangePassword = () => {
   const [instructorId, setInstructorId] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -26,12 +27,11 @@ const ChangePassword = () => {
     }
 
     try {
-      const response = await axios.post(
-        `/change-password/${instructorId}`,
+      const response = await axiosInstance.post(
+        `/change-password`,
         {
           oldPassword,
           newPassword,
-          confirmPassword,
         }
       );
 

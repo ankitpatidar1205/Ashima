@@ -76,6 +76,11 @@ const RoleBasedSidebar = ({
             label: "Manage Courses",
             path: "/manage-courses",
           },
+          {
+            icon: <FaBook />,
+            label: "Digital Products",
+            path: "/admin-digital-product",
+          },
 
           {
             icon: <FaClipboardList />,
@@ -136,6 +141,7 @@ const RoleBasedSidebar = ({
           { icon: <FaHome />, label: "Dashboard", path: "/student-dashboard" },
           { icon: <FaHome />, label: "Courses", path: "/student-all-Courses" },
           { icon: <FaBook />, label: "My Courses", path: "/student-courses" },
+          { icon: <FaRegEye />, label: "Digital Products", path: "/student-digitalProducts" },
           { icon: <FaUsers />, label: "Certificate", path: "/certificate" },
           {  icon: <FaClipboardCheck />,  label: "Assignments",  path: "/assignment", },
           { icon: <FaQuestionCircle />, label: "Q&A", path: "/qasection",},

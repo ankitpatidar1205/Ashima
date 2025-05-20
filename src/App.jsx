@@ -79,6 +79,8 @@ import AdminProfile from "./components/AdminPanal/AdminProfile";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import SingleBlog from "./components/Home/SingleBlog";
 import StudentAllCources from "./components/StudentPanal/StudentAllCources";
+import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProducts";
+import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
 
 axios.defaults.withCredentials = true;
 
@@ -167,6 +169,10 @@ const App = () => {
           path="/student-courses"
           element={<Mc_Dashboard></Mc_Dashboard>}
         ></Route>
+        <Route
+          path="/student-digitalProducts"
+          element={<StudentDigitalProducts/>}
+        ></Route>
         <Route path="/manage-student" element={<ManageStudent></ManageStudent>} ></Route>
         <Route path="/edit-student/:id" element={<EditStudent></EditStudent>} ></Route>
         <Route
@@ -206,6 +212,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/digital" element={<MyDigital />} />
         <Route path="/marketProduct/:id" element={<MarketProduct />} />
+        <Route path="/admin-digital-product" element={<AdminDigitalProduct />} />
 
         <Route path="/Cource-Detail/:id" element={<CourceDetail />} />
         <Route path="/blog" element={<Blog />} />

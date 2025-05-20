@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa";
-
+import useCurrency from "../../utils/useCurrency";
 const StudentAllCources = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
+   const currency = useCurrency();
   const { courses } = useSelector((state) => state.courses);
 
   useEffect(() => {
@@ -65,8 +66,10 @@ const StudentAllCources = () => {
     : course.course_description}
 </p>
                 <p>
-                  <span className="font-semibold">Price:</span> {course?.course_price}
+                  <span className="font-semibold">Price:</span>  {currency.symbol}
+                     {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
                 </p>
+                   
                 <p>
                   <span className="font-semibold">Mode:</span>{" "}
                   <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">

@@ -9,7 +9,7 @@ import {
 } from "../../Redux/slices/DigitalProductSlice/DigitalProductSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-
+import useCurrency from "../../utils/useCurrency";
 const DigitalProducts = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,6 +17,7 @@ const DigitalProducts = () => {
   const [instructorid, setInstructorId]= useState("")
   const navigate = useNavigate();
   const dispatch = useDispatch();
+   const currency = useCurrency();
   const products = useSelector((state) => state.products);
    console.log(products.data)
   useEffect(() => {
@@ -114,13 +115,12 @@ const DigitalProducts = () => {
     {product.status === "1" ? "Published" : "Draft"}
   </span>
 </div>
-
-
                 <h3 className="font-semibold mt-2">{product.product_title}</h3>
                 <p className="text-sm text-gray-600">  {product.description.length > 50 ? `${product.description.slice(0, 50)}...`
                   : product.description}</p>
 
-                <div className="mt-2 font-semibold">${product.sale_price}</div>
+               <div className="mt-2 font-semibold">  {currency.symbol}
+                {(parseFloat(product.sale_price) * currency.rate).toFixed(2)} </div>
                 <div className="flex gap-3 mt-3 text-gray-600 text-lg">
                   <i  className="ri-edit-line cursor-pointer"
                     onClick={() => navigate(`/edit-digital-product/${product.id}`)}></i>

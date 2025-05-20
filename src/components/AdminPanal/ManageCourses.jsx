@@ -6,18 +6,20 @@ import { Link } from "react-router-dom";
 import { deleteCourse, fetchCourses,publishCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-
+import useCurrency from "../../utils/useCurrency";
 const ManageCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [courseId, setCourseId] = useState(null);
   const dispatch = useDispatch();
+  const currency = useCurrency();
   const { courses } = useSelector((state) => state.courses);
+  // console.log(courses)
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]); 
      
-    const { instructors } = useSelector((state) => state?.instructors);
+  
      const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -40,7 +42,8 @@ const ManageCourses = () => {
     setCourseId(id)
     setIsModalOpen(true)
     
-  };  
+  }; 
+
   const changeStatus = (id)=>{
     // const updatedStatus = currentStatus === "1" ? "0" : "1";
     const updatedCourses = courses.map((course) =>
@@ -52,7 +55,7 @@ const ManageCourses = () => {
   }
 
   const filteredCourses = courses?.filter((course) =>
-    course?.title?.toLowerCase()?.includes(searchTerm.toLowerCase())
+    course?.course_title?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
   return (
     <DashboardLayout>
@@ -91,7 +94,7 @@ const ManageCourses = () => {
                 </tr>
               </thead>
               <tbody>
-                {courses?.map((course, index) => (
+                {filteredCourses?.map((course, index) => (
                   <tr className="border-b" key={course?.id}>
                     <td className="p-2">{index + 1}</td>
                     <td className="p-2">
@@ -103,8 +106,7 @@ const ManageCourses = () => {
                     </td>
                     <td className="p-2">
                       <div className="flex flex-col">
-                        <Link
-                          to={`/course/${course?.id}`}
+                        <Link  to={`/course/${course?.id}`}
                           className="font-semibold text-teal-700"
                         >
                           {course?.course_title}
@@ -114,10 +116,12 @@ const ManageCourses = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="p-2">{instructors?.find((instructor) => instructor?.id == course?.instructor_id)?.full_name}</td>
+                    <td className="p-2">{course?.instructor_details?.full_name}</td>
                     <td className="p-2">
-                       {course?.course_price}
+                     {currency.symbol}
+                     {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
                     </td>
+
                     <td className="p-2">
                       <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
                         {course?.course_type}

@@ -11,11 +11,11 @@ import FAQSection from "../Home/FAQSection";
 import {  FaStar,  FaVideo, FaFileAlt,  FaDownload,  FaTv,  FaUser,} from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
-
+import useCurrency from "../../utils/useCurrency";
 const CourceDetail = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
-  console.log(courseData)
+  const currency = useCurrency();
 useEffect(() => {
   const fetchCourse = async () => {
     try {
@@ -183,7 +183,8 @@ useEffect(() => {
 
       <div className="mt-2">
         <p className="text-[28px] text-[#000000] font-roboto font-bold">
-          RS.{courseData?.course_price}
+         {currency.symbol}
+                     {(parseFloat(courseData?.course_price) * currency.rate).toFixed(2)}
         </p>
       </div>
 
