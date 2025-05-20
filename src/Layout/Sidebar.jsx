@@ -180,7 +180,7 @@ const RoleBasedSidebar = ({
         return [
           { icon: <FaHome />, label: "Dashboard", path: "/superadmin-dashboard" },
           { icon: <FaBook />, label: "Plan package", path: "/plan-package" },
-          { icon: <FaUsers />, label: "Plan Request", path: "/plan-request" },
+          { icon: <FaQuestionCircle />, label: "Plan Request", path: "/plan-request" },
 
           {
             icon: <FaClipboardCheck />,
@@ -188,7 +188,7 @@ const RoleBasedSidebar = ({
             path: "/order-details",
           },
           {
-            icon: <FaQuestionCircle />,
+            icon:<FaUsers /> ,
             label: "User Info",
             path: "/user-info",
           },

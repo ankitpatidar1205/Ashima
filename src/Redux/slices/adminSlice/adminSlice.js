@@ -53,11 +53,9 @@ export const deleteAdmin = createAsyncThunk(
 // Update admin status
 export const updateAdminStatus = createAsyncThunk(
   'admins/updateStatus',
-  async ({ id, status }, { rejectWithValue }) => {
+  async ({ id, is_active }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.patch(`/adminStatus/${id}`, {
-        is_active: status,
-      });
+      const response = await axiosInstance.patch(`/admin/updateStatus/${id}`,{is_active});
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

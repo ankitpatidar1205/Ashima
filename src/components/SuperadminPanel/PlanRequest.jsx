@@ -116,13 +116,14 @@ const PlanRequest = () => {
                 <td>{plan.date}</td>
                 <td>
                   <button className="btn btn-warning btn-sm me-2">
-                    <i class="fa-solid fa-user-minus"></i>
+                    {/* <i class="fa-solid fa-user-minus"></i> */}
+                    Edit
                   </button>
                   <button
                     className="btn btn-danger btn-sm"
                     onClick={() => handleDelete(index)}
                   >
-                    <i className="far fa-trash-alt"></i>
+                   Delete {/* <i className="far fa-trash-alt"></i> */}
                   </button>
                 </td>
               </tr>

@@ -1,8 +1,10 @@
  import React, { useState } from "react";
 import Swal from "sweetalert2";
 import DashboardLayout from "../../Layout/DashboardLayout";
+import { useDispatch,useSelector } from "react-redux";
 
 const PlanPackage = () => {
+    const dispatch = useDispatch()
   const [plans, setPlans] = useState([
     {
       id: 1,
@@ -53,7 +55,14 @@ const PlanPackage = () => {
   return (
     <DashboardLayout>
       <div className="container p-4">
-        <h2 className="text-center mb-4">Plan Packages</h2>
+        <div style={{display:'flex',justifyContent:'space-between'}}>  <h2 className="text-center mb-4">Plan Packages</h2>
+                       <div className="col-md-6 d-flex justify-content-md-end align-items-center mt-2 mt-md-0">
+                            <button className="btn btn-outline-dark" onClick={() => setShowModal(true)}>
+                                Add
+                            </button>
+                        </div> 
+                        </div>
+      
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
           {plans?.map((plan) => (
             <div className="col" key={plan.id}>

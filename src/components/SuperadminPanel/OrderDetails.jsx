@@ -36,28 +36,16 @@ const OrderDetail = () => {
       <header className="container-fluid bg-white shadow-sm p-3 rounded mb-4">
         <div className="row align-items-center">
           {/* Search Bar */}
-          <div className="col-md-6">
-            <div className="input-group rounded search-bar">
-              <input
-                type="text"
-                className="form-control border-2"
-                placeholder="Search..."
-                style={{ width: "200px" }}
-              />
-              <span className="input-group-text bg-transparent border-0">
-                <i className="fas fa-search"></i>
-              </span>
-            </div>
-          </div>
+          
 
           {/* User Profile & Logout */}
           <div className="col-md-6 d-flex justify-content-md-end align-items-center mt-2 mt-md-0">
-            <div className="me-4 fw-bold">Superadmin</div>
+             <h3>Order Details</h3>
              </div>
         </div>
       </header>
       <div className="col-12">
-        <h2 className="mb-3 ">Order Detail</h2>
+        
         <input
           type="text"
           placeholder="Search..."
