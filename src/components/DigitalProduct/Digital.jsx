@@ -8,10 +8,11 @@ import { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDigitalProducts } from "../../Redux/slices/DigitalProductSlice/DigitalProductSlice";
-
+import useCurrency from "../../utils/useCurrency";
 function DigitalProductsSection() {
   const productSectionRef = useRef(null);
   const dispatch = useDispatch();
+  const currency = useCurrency();
   const [priceRange, setPriceRange] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -241,7 +242,8 @@ function DigitalProductsSection() {
                 {/* Price & Files */}
                 <div className="flex items-center justify-between mt-2">
                   <p className="text-[#047670] font-impact text-[20px]">
-                    ${item.sale_price}
+                   {currency.symbol} 
+                {(parseFloat(item.sale_price) * currency.rate).toFixed(2)}
                   </p>
                   <p className="text-[#1e1e1e] text-[13px]">1 File</p>
                 </div>

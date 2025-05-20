@@ -13,12 +13,12 @@ import Footer from "../../Layout/Footer";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import REviewCarrds from "../Home/ReviewCards";
 import axiosInstance from "../../utils/axiosInstance";
-
+import useCurrency from "../../utils/useCurrency";
 const MarketProduct = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const {id} = useParams()
   const [product, setProduct] = useState(null);
-
+const currency = useCurrency();
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -116,7 +116,8 @@ const MarketProduct = () => {
 
           {/* Price and File */}
           <div className="text-[45px] lg:text-[32px] font-impact text-[#047670] whitespace-nowrap text-start mt-2">
-            Try {product?.sale_price}{" "}
+            Try {currency.symbol}
+                {(parseFloat(product?.sale_price) * currency.rate).toFixed(2)}
             <span className="text-[20px] text-[#1E1E1E] font-jost">
               | 1 File
             </span>

@@ -6,18 +6,20 @@ import { Link } from "react-router-dom";
 import { deleteCourse, fetchCourses,publishCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-
+import useCurrency from "../../utils/useCurrency";
 const ManageCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-   const [courseId, setCourseId] = useState(null);
+  const [courseId, setCourseId] = useState(null);
   const dispatch = useDispatch();
+  const currency = useCurrency();
   const { courses } = useSelector((state) => state.courses);
+  // console.log(courses)
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]); 
      
-    const { instructors } = useSelector((state) => state?.instructors);
+  
      const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -40,7 +42,8 @@ const ManageCourses = () => {
     setCourseId(id)
     setIsModalOpen(true)
     
-  };  
+  }; 
+
   const changeStatus = (id)=>{
     // const updatedStatus = currentStatus === "1" ? "0" : "1";
     const updatedCourses = courses.map((course) =>
@@ -52,7 +55,7 @@ const ManageCourses = () => {
   }
 
   const filteredCourses = courses?.filter((course) =>
-    course?.title?.toLowerCase()?.includes(searchTerm.toLowerCase())
+    course?.course_title?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
   return (
     <DashboardLayout>
@@ -60,31 +63,18 @@ const ManageCourses = () => {
         {/* Heading & Add Button */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Manage Courses</h2>
-          <button
-            className="bg-teal-700 text-white px-4 py-2 rounded"
-            onClick={() => setIsModalOpen(true)}
-          >
+          <button  className="bg-teal-700 text-white px-4 py-2 rounded" onClick={() => setIsModalOpen(true)}>
             Add Course
           </button>
         </div>
 
-        <AddCoursesModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          courseId={courseId}
-          setCourseId={setCourseId}
-        />
+        <AddCoursesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} courseId={courseId} setCourseId={setCourseId}/>
 
         {/* Filter Section */}
         <div className="bg-white p-4 rounded shadow">
           <div className="flex flex-wrap gap-2 mb-4">
-            <input
-              type="text"
-              placeholder="Search courses..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="border px-3 py-2 rounded w-full md:w-auto"
-            />
+            <input type="text" placeholder="Search courses..." value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}  className="border px-3 py-2 rounded w-full md:w-auto"/>
             <button className="border px-3 py-2 rounded">Export</button>
           </div>
 
@@ -104,7 +94,7 @@ const ManageCourses = () => {
                 </tr>
               </thead>
               <tbody>
-                {courses?.map((course, index) => (
+                {filteredCourses?.map((course, index) => (
                   <tr className="border-b" key={course?.id}>
                     <td className="p-2">{index + 1}</td>
                     <td className="p-2">
@@ -116,8 +106,7 @@ const ManageCourses = () => {
                     </td>
                     <td className="p-2">
                       <div className="flex flex-col">
-                        <Link
-                          to={`/course/${course?.id}`}
+                        <Link  to={`/course/${course?.id}`}
                           className="font-semibold text-teal-700"
                         >
                           {course?.course_title}
@@ -127,18 +116,19 @@ const ManageCourses = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="p-2">{instructors?.find((instructor) => instructor?.id == course?.instructor_id)?.full_name}</td>
+                    <td className="p-2">{course?.instructor_details?.full_name}</td>
                     <td className="p-2">
-                       {course?.course_price}
+                     {currency.symbol}
+                     {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
                     </td>
+
                     <td className="p-2">
                       <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
                         {course?.course_type}
                       </span>
                     </td>
                     <td className="p-2">
-                      <span
-                        className={`${
+                      <span className={`${
                           course.status =="1"  
                             ? "bg-green-100 text-green-600"
                             : "bg-yellow-100 text-yellow-600"

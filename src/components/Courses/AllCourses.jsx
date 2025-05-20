@@ -10,29 +10,21 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import ReviewCarrds from "../Home/ReviewCards";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Dropdown,
-  Form,
-  Card,
-  Pagination,
-  Nav,
-} from "react-bootstrap";
+import { Container, Row, Col, Button, Dropdown, Form, Card, Nav,} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 import { fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
-
+import useCurrency from "../../utils/useCurrency";
 function AllCourses() {
   const { id } = useParams();
   console.log(id);
   const [activeIndex, setActiveIndex] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [sortOption, setSortOption] = useState("Most Popular");
+
   const scrollRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const currency = useCurrency();
   // const scrollRef = useRef(null);
   const handleScroll = () => {
     const container = scrollRef.current;
@@ -318,13 +310,14 @@ function AllCourses() {
 
                         {/* Price */}
                         <h3 className="text-[22px] font-[700] text-[#047670] font-roboto mb-2">
-                          Rs {course.course_price}
+                          {currency.symbol}
+                     {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
                         </h3>
 
                         {/* Instructor */}
                         <div className="mb-3">
-                          <h4 className="font-[700] font-roboto text-[16px] uppercase text-teal-700">
-                            BY {course.instructor_name}
+                          <h4 className="font-[700] font-roboto text-[16px]  text-teal-700">
+                            By {course?.instructor_details?.full_name}
                           </h4>
                           <p className="font-roboto font-[500] text-[13px] uppercase text-black">
                             {course.updated_at} • {course.hours} •{" "}

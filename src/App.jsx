@@ -78,6 +78,7 @@ import StudentProfile from "./components/StudentPanal/StudentProfile";
 import AdminProfile from "./components/AdminPanal/AdminProfile";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import SingleBlog from "./components/Home/SingleBlog";
+import StudentAllCources from "./components/StudentPanal/StudentAllCources";
 import SuperadminDashboard from "./components/Dashboard/SuperadminDashboard";
 import PlanPackage from "./components/SuperadminPanel/PlanPackage";
 import PlanRequest from "./components/SuperadminPanel/PlanRequest";
@@ -85,6 +86,7 @@ import OrderDetail from "./components/SuperadminPanel/OrderDetails";
 import UserInfo from "./components/SuperadminPanel/UserInfo";
 import AdminSetting from "./components/SuperadminPanel/AdminSetting";
 import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProducts";
+import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
 
 axios.defaults.withCredentials = true;
 
@@ -154,6 +156,7 @@ const App = () => {
         <Route path="/viewTranscation" element={<ManageTransaction></ManageTransaction>}></Route>
         <Route path="/RefundProcess" element={<RefundProcess></RefundProcess>}></Route>
         <Route path="/newCourse" element={<NewCourse></NewCourse>}></Route>
+        <Route path="/student-all-Courses" element={<StudentAllCources></StudentAllCources>}></Route>
 
         <Route path="/mycourse" element={<MyCourses></MyCourses>}></Route>
         <Route path="/courses/:id" element={<CourseDetails />} />
@@ -215,6 +218,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/digital" element={<MyDigital />} />
         <Route path="/marketProduct/:id" element={<MarketProduct />} />
+        <Route path="/admin-digital-product" element={<AdminDigitalProduct />} />
 
         <Route path="/Cource-Detail/:id" element={<CourceDetail />} />
         <Route path="/blog" element={<Blog />} />
@@ -228,17 +232,13 @@ const App = () => {
         <Route path="/student-profile" element={<StudentProfile></StudentProfile>}></Route>
         <Route path="/admin-profile" element={<AdminProfile></AdminProfile>}></Route>
         <Route path="/change-password" element={<ChangePassword></ChangePassword>}></Route>
-         // super-admin
+         {/* // super-admin */}
         <Route path="/superadmin-dashboard" element={<SuperadminDashboard />} />
         <Route path="/plan-package" element={<PlanPackage/>} />
         <Route path="/plan-request" element={<PlanRequest/>} />
         <Route path="/order-details" element={<OrderDetail/>} />
         <Route path="/user-info" element={<UserInfo/>} />
         <Route path="/admin-setting" element={<AdminSetting/>} />
-
-
-
-
          
       </Routes>
     </BrowserRouter>
