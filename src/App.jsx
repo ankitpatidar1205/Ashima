@@ -84,6 +84,7 @@ import PlanRequest from "./components/SuperadminPanel/PlanRequest";
 import OrderDetail from "./components/SuperadminPanel/OrderDetails";
 import UserInfo from "./components/SuperadminPanel/UserInfo";
 import AdminSetting from "./components/SuperadminPanel/AdminSetting";
+import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProducts";
 
 axios.defaults.withCredentials = true;
 
@@ -170,6 +171,10 @@ const App = () => {
         <Route
           path="/student-courses"
           element={<Mc_Dashboard></Mc_Dashboard>}
+        ></Route>
+        <Route
+          path="/student-digitalProducts"
+          element={<StudentDigitalProducts/>}
         ></Route>
         <Route path="/manage-student" element={<ManageStudent></ManageStudent>} ></Route>
         <Route path="/edit-student/:id" element={<EditStudent></EditStudent>} ></Route>
