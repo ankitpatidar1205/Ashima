@@ -141,13 +141,13 @@ const PlanPackage = () => {
                 <div className="card-footer bg-white border-0 mt-auto d-flex justify-content-between gap-2">
                   {/* <button className="btn btn-primary w-50">Get Started Now</button> */}
                   <button
-                    className="btn btn-success w-25"
+                    className="btn btn-success w-32 "
                     onClick={() => handleEdit(plan.id)}
                   >
                     Edit
                   </button>
                   <button
-                    className="btn btn-danger w-25"
+                    className="btn btn-danger w-32"
                     onClick={() => handleDelete(plan.id)}
                   >
                     Delete
