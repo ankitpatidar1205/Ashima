@@ -128,33 +128,33 @@ const PlanPackage = () => {
 
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
           {plans?.map((plan) => (
-            <div className="col" key={plan.id}>
-              <div className="card border-0 shadow h-100 p-3 d-flex flex-column">
-                <h2 className="text-center">{plan?.name}</h2>
-                <div className="card-body flex-grow-1">
-                  <h4 className="fw-bold text-center">
-                    ₹{plan.price_monthly} <span className="fs-5">/ Monthly</span> | ₹
-                    {plan.price_yearly} <span className="fs-5">/ Yearly</span>
-                  </h4>
-                  <p className="text-muted text-center">{plan?.description}</p>
-                </div>
-                <div className="card-footer bg-white border-0 mt-auto d-flex justify-content-between gap-2">
-                  {/* <button className="btn btn-primary w-50">Get Started Now</button> */}
-                  <button
-                    className="btn btn-success w-32 "
-                    onClick={() => handleEdit(plan.id)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-danger w-32"
-                    onClick={() => handleDelete(plan.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
+           <div className="col" key={plan.id}>
+  <div className="card plan-card h-100 shadow-sm border-1">
+    <div className="card-body d-flex flex-column">
+      <h5 className="card-title text-center fw-bold text-primary mb-2">{plan?.name}</h5>
+      <div className="text-center mb-3">
+        <span className="badge bg-success me-2">
+          ₹{plan.price_monthly} Per Month
+        </span>
+        <span className="badge bg-info text-dark">
+          ₹{plan.price_yearly} Per Year
+        </span>
+      </div>
+      <p className="card-text text-muted text-center flex-grow-1">
+        {plan?.description}
+      </p>
+      <div className="d-flex justify-content-center gap-2 mt-auto">
+        <button className="btn btn-outline-primary" onClick={() => handleEdit(plan.id)}>
+          Edit
+        </button>
+        <button className="btn btn-outline-danger" onClick={() => handleDelete(plan.id)}>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
           ))}
         </div>
 
