@@ -94,7 +94,7 @@ const EditDigitalProduct = () => {
     submitData.append("regular_price", formData.regularPrice);
     submitData.append("sale_price", formData.salePrice);
     submitData.append("status", formData.status);
-    submitData.append("category", formData.selectedCategory?.value);
+    submitData.append("category_id", formData.selectedCategory?.value);
     submitData.append("author", formData.author);
     submitData.append("product_type", formData.productType);
     submitData.append("publish_date", formData.publishDate);
@@ -158,7 +158,7 @@ const EditDigitalProduct = () => {
             </div>
 
             <div>
-              <label className="text-sm">Regular Price ($)</label>
+              <label className="text-sm">Regular Price</label>
               <input
                 type="text"
                 name="regularPrice"
@@ -169,7 +169,7 @@ const EditDigitalProduct = () => {
             </div>
 
             <div>
-              <label className="text-sm">Sale Price ($)</label>
+              <label className="text-sm">Sale Price</label>
               <input
                 type="text"
                 name="salePrice"

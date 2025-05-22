@@ -4,9 +4,10 @@ import DashboardLayout from "../../Layout/DashboardLayout";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createContent, fetchContentById } from "../../Redux/slices/contentSlice/contentSlice";
-import { createQuiz ,fetchQuizById} from "../../Redux/slices/quizSlice/quizSlice";
+import { createContent, fetchContentById,deleteContent } from "../../Redux/slices/contentSlice/contentSlice";
+import { createQuiz ,fetchQuizById,deleteQuiz} from "../../Redux/slices/quizSlice/quizSlice";
 import { Tabs, Tab } from "react-bootstrap";
+import { FaSearch, FaDownload, FaEye, FaTrash, FaBan } from "react-icons/fa";
 
 
 const CourseContent = () => {
@@ -41,6 +42,7 @@ const CourseContent = () => {
   setShowContentModal(false);
 };
 
+ 
 
  const handleAddQuiz = async () => {
  await dispatch(createQuiz(newQuiz)).then(() => {
@@ -49,7 +51,17 @@ const CourseContent = () => {
   setNewQuiz({ topic: "", number_questions: 1, id: id });
   setShowQuizModal(false);
 };
+ const handleDelete = async(_id)=>{
+  await dispatch(deleteContent(_id))
+   dispatch(fetchContentById(id));
 
+ }
+ const handleDeleteQuiz = async(_id)=>{
+  console.log("gjhjf")
+  await dispatch(deleteQuiz(_id))
+   dispatch(fetchQuizById(id));
+
+ }
 
   useEffect(() => {
     dispatch(fetchContentById(id));
@@ -90,8 +102,22 @@ const CourseContent = () => {
     <ul>
       {state?.map((item) => (
         <div key={item?.id}>
-          <h5>{item?.title}</h5>
-          <p>{item?.description}</p>
+          <div style={{display:"flex", justifyContent:'space-between'}}><h5>{item?.title}</h5> <button   onClick={()=>handleDelete(item?.id)}>
+            <FaTrash className="text-red-600 cursor-pointer" />
+            </button></div>
+          <pre  style={{
+  backgroundColor: "#f8f9fa",
+  color: "#212529",
+  padding: "1rem",
+  borderRadius: "5px",
+  fontFamily: "Inter",
+  fontSize: "14px",
+  whiteSpace: "pre-wrap",
+  wordBreak: "break-word",
+  lineHeight: "1.5",
+  // border: "1px solid #ddd",
+  overflowX: "auto"
+}}>{item?.description}</pre>
         </div>
       ))}
     </ul>
@@ -113,7 +139,10 @@ const CourseContent = () => {
         const options = JSON.parse(q.option);
         return (
           <div key={q.id} className="mb-4 p-3 border rounded shadow-sm">
-            <h5 className="fw-bold">{q.question}</h5>
+            <div style={{display:"flex", justifyContent:'space-between'}}>
+               <h5 className="fw-bold">{q.question} </h5><button onClick={()=>handleDeleteQuiz(q?.id)}>  <FaTrash className="text-red-600 cursor-pointer" />
+            </button> </div>
+           
             <ul className="list-group">
               {options.map((opt, index) => (
                 <li

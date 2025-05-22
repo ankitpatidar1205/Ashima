@@ -29,7 +29,6 @@ const CoursesDetails = () => {
             <FaArrowLeft className="mr-2" /> Back
           </button>
         </div>
-
         {coursedata ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             {/* Left Part */}
@@ -84,9 +83,6 @@ const CoursesDetails = () => {
      View
   </button>
 </div>
-
-   
- 
   </div>
 ))}
 

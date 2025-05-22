@@ -45,7 +45,7 @@ export const deleteContent = createAsyncThunk(
   "contents/deleteContent",
   async (id, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/content/${id}`);
+      await axiosInstance.delete(`/courseSyllabusCont/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error deleting content");

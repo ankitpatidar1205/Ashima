@@ -45,7 +45,7 @@ export const deleteQuiz = createAsyncThunk(
   "quizzes/deleteQuiz",
   async (id, { rejectWithValue }) => {
     try {
-      await axiosInstance.delete(`/quiz/${id}`);
+      await axiosInstance.delete(`/Ai/deleteQuiz/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error deleting quiz");

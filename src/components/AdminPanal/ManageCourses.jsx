@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddCoursesModal from "./AddCoursesModal";
@@ -75,7 +75,7 @@ const ManageCourses = () => {
           <div className="flex flex-wrap gap-2 mb-4">
             <input type="text" placeholder="Search courses..." value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}  className="border px-3 py-2 rounded w-full md:w-auto"/>
-            <button className="border px-3 py-2 rounded">Export</button>
+            {/* <button className="border px-3 py-2 rounded">Export</button> */}
           </div>
 
           {/* Table Section */}

@@ -165,7 +165,7 @@ const RoleBasedSidebar = ({
             path: "/digitalproduct",
           },
           { icon: <FaComments />, label: "Messages", path: "/conversation" },
-          { icon: <FaComments />, label: "Comments", path: "/coursecomments" },
+          // { icon: <FaComments />, label: "Comments", path: "/coursecomments" },
          
           { icon: <FaMoneyBill />, label: "Earnings", path: "/earning" },
           { icon: <FaCalendarAlt />, label: "Calendar", path: "/calender" },
