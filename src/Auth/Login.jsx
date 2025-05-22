@@ -66,7 +66,7 @@ const Login = () => {
           id: meResponse.data.data.id,
           role: meResponse.data.data.role,
         };
-
+        localStorage.setItem("role",   meResponse?.data?.data?.role);
         localStorage.setItem("user", JSON.stringify(meResponse.data.data));
         localStorage.setItem("token", encodedaccessToken);
         localStorage.setItem("is_id", meResponse.data.data.id);

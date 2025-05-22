@@ -189,7 +189,7 @@ const RoleBasedSidebar = ({
             path: "/user-info",
           },
 
-          { icon: <FaCog />, label: "Setting", path: "/admin-setting" },
+          // { icon: <FaCog />, label: "Setting", path: "/admin-setting" },
         ];
       default:
         return [];

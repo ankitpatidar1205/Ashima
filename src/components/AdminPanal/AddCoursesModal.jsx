@@ -7,7 +7,7 @@ import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice"
 const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
   const dispatch = useDispatch();
   const fcmToken=localStorage.getItem('fcmToken')
-  console.log("fcmToken",fcmToken);
+  // console.log("fcmToken",fcmToken);
   const [formData, setFormData] = useState({
     course_title: "",
     course_description: "",
@@ -52,7 +52,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
           status:courseToEdit.status.toString(),
 
         });
-        setCourseSyllabus(JSON.parse(courseToEdit.course_syllabus) || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
+        setCourseSyllabus( courseToEdit.course_syllabus || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
         setFaqs(JSON.parse(courseToEdit.faqs) || [{ question: "", answer: "" }]); // Parse the JSON string into an array of objectscourseToEdit.faqs);
       }
     }

@@ -214,7 +214,7 @@ useEffect(() => {
       <ul className="mt-6 space-y-4">
     {courseData?.course_syllabus && (
   <ul className="mt-6 space-y-4">
-    {JSON.parse(courseData.course_syllabus).map((module, index) => (
+    {courseData.course_syllabus?.map((module, index) => (
       <li key={index} className="flex flex-col items-start">
         <h3 className="font-roboto text-[20px] font-medium text-[#047670] mb-2">
           📖 {module?.module_title}

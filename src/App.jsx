@@ -87,7 +87,7 @@ import UserInfo from "./components/SuperadminPanel/UserInfo";
 import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProducts";
 import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
 import SuperAdminProfile from "./components/SuperadminPanel/SuperAdminProfile";
-
+import CourseContent from "./components/AdminPanal/CourseContent";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -191,6 +191,8 @@ const App = () => {
         <Route path="/course/:id" element={<CoursesDetails />} />
         <Route path="/course-category" element={<CourseCategory />} />
         <Route path="/blog-articles" element={<Blogs_article></Blogs_article>}></Route>
+        <Route path="/course-content/:id" element={<CourseContent />} />
+
         <Route
           path="/community-discussion"
           element={<ManageComm_Discu></ManageComm_Discu>}
