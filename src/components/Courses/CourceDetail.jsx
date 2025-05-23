@@ -20,7 +20,6 @@ useEffect(() => {
   const fetchCourse = async () => {
     try {
       const res = await axiosInstance.get(`/course/?id=${id}`);
-      console.log(res.data);
       setCourseData(res.data.data); 
     } catch (error) {
       console.error("Error fetching course:", error);

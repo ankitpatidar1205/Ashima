@@ -24,7 +24,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
   });
 
   // Initialize course_syllabus with id/course_id fields optional
-  const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: "" }]);
+  const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: "",module_courses:"" }]);
   const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           instructor_id: courseToEdit.instructor_id,
           course_price: courseToEdit.course_price,
           course_image: courseToEdit.course_image,
-          category: courseToEdit.category_id,
+          category_id: courseToEdit.category_id,
           course_content_video_link: courseToEdit.course_content_video_link,
           test_video: courseToEdit.test_video,
           status: courseToEdit.status.toString(),
@@ -77,11 +77,11 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
             ? (typeof courseToEdit.course_syllabus === "string"
                 ? JSON.parse(courseToEdit.course_syllabus)
                 : courseToEdit.course_syllabus)
-            : [{ module_title: "", module_syllabus: "" }];
+            : [{ module_title: "", module_syllabus: "" ,module_courses:""}];
           setCourseSyllabus(syllabus);
         } catch (err) {
           console.error("Error parsing course_syllabus", err);
-          setCourseSyllabus([{ module_title: "", module_syllabus: "" }]);
+          setCourseSyllabus([{ module_title: "", module_syllabus: "",module_courses:"" }]);
         }
 
         // Parse FAQs safely
@@ -109,7 +109,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
     data.append("course_type", formData.course_type);
     data.append("instructor_id", formData.instructor_id);
     data.append("course_price", formData.course_price);
-    data.append("category", formData.category_id);
+    data.append("category_id", formData.category_id);
     data.append("course_content_video_link", formData.course_content_video_link);
     data.append("status", formData.status);
     data.append("fcmToken", fcmToken);
@@ -145,14 +145,14 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
       instructor_id: "",
       course_price: "",
       course_image: null,
-      category: "",
+      category_id: "",
       course_content_video_link: "",
       test_video: null,
       status: "0",
       fcmToken
     });
     setCourseId(null);
-    setCourseSyllabus([{ module_title: "", module_syllabus: "" }]);
+    setCourseSyllabus([{ module_title: "", module_syllabus: "",module_courses:"" }]);
     setFaqs([{ question: "", answer: "" }]);
   };
 
@@ -171,7 +171,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
 
   // Add new module without id/course_id
   const handleAddModule = () => {
-    setCourseSyllabus([...course_syllabus, { module_title: "", module_syllabus: "" }]);
+    setCourseSyllabus([...course_syllabus, { module_title: "", module_syllabus: "",module_courses:"" }]);
   };
 
   // FAQ change handler
@@ -329,6 +329,14 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
                   placeholder="Module description"
                   className="border p-2 rounded w-full"
                   rows="2"
+                />
+                <input
+                  type="text"
+                  name="module_courses"
+                  value={module?.module_courses}
+                  onChange={(e) => handleCourseSyllabusChange(index, e)}
+                  placeholder="Module cource link"
+                  className="border p-2 rounded w-full"
                 />
               </div>
             ))}
