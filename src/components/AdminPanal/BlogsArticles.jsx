@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 
 const Blogs_article = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
 
   const dispatch = useDispatch();
 
@@ -17,7 +19,6 @@ const Blogs_article = () => {
   }, []);
   
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -74,11 +75,14 @@ const Blogs_article = () => {
         <div className="bg-white rounded-lg p-4 mb-4 flex flex-col md:flex-row gap-3 items-center justify-between">
           <div className="flex flex-1 gap-2 items-center w-full">
             <div className="relative w-full md:w-[360px]">
-              <input
-                type="text"
-                placeholder="Search articles..."
-                className="pl-10 pr-4 py-2 w-full border rounded-lg text-sm focus:outline-none"
-              />
+             <input
+  type="text"
+  placeholder="Search articles..."
+  className="pl-10 pr-4 py-2 w-full border rounded-lg text-sm focus:outline-none"
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
+/>
+
               <FaSearch className="absolute left-3 top-3 text-gray-400 text-sm" />
             </div>
           </div>
@@ -105,7 +109,12 @@ const Blogs_article = () => {
               </tr>
             </thead>
             <tbody>
-              {articles?.map((item, idx) => (
+              {articles
+  ?.filter((item) =>
+    item?.title?.toLowerCase().includes(searchQuery) ||
+    item?.category_name?.toLowerCase().includes(searchQuery) ||
+    item?.tags?.toLowerCase().includes(searchQuery)
+  )?.map((item, idx) => (
                 <tr key={idx} className="border-b">
                   <td className="px-4 py-3">{idx + 1}</td>
                   <td className="px-4 py-3">

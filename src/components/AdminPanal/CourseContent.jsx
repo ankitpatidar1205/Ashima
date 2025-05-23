@@ -57,7 +57,6 @@ const CourseContent = () => {
 
  }
  const handleDeleteQuiz = async(_id)=>{
-  console.log("gjhjf")
   await dispatch(deleteQuiz(_id))
    dispatch(fetchQuizById(id));
 
@@ -102,9 +101,9 @@ const CourseContent = () => {
     <ul>
       {state?.map((item) => (
         <div key={item?.id}>
-          <div style={{display:"flex", justifyContent:'space-between'}}><h5>{item?.title}</h5> <button   onClick={()=>handleDelete(item?.id)}>
+          <div style={{display:"flex", justifyContent:'space-between'}}><h5>{item?.title}</h5> {role!="student" &&<button   onClick={()=>handleDelete(item?.id)}>
             <FaTrash className="text-red-600 cursor-pointer" />
-            </button></div>
+            </button>}</div>
           <pre  style={{
   backgroundColor: "#f8f9fa",
   color: "#212529",
@@ -140,8 +139,8 @@ const CourseContent = () => {
         return (
           <div key={q.id} className="mb-4 p-3 border rounded shadow-sm">
             <div style={{display:"flex", justifyContent:'space-between'}}>
-               <h5 className="fw-bold">{q.question} </h5><button onClick={()=>handleDeleteQuiz(q?.id)}>  <FaTrash className="text-red-600 cursor-pointer" />
-            </button> </div>
+               <h5 className="fw-bold">{q.question} </h5>{role!="student" && (<button onClick={()=>handleDeleteQuiz(q?.id)}>  <FaTrash className="text-red-600 cursor-pointer" /></button>)}
+             </div>
            
             <ul className="list-group">
               {options.map((opt, index) => (
