@@ -88,6 +88,7 @@ import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProd
 import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
 import SuperAdminProfile from "./components/SuperadminPanel/SuperAdminProfile";
 import CourseContent from "./components/AdminPanal/CourseContent";
+import Cart from "./components/Cart/Cart";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -145,6 +146,8 @@ const App = () => {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/reset-password-success" element={<ResetPasswordSucessfullPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/cart" element={<Cart/>} />
+
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/instructor-dashboard" element={<InstructorDashboard />} />

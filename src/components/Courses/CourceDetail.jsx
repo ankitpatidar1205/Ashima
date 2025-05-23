@@ -12,10 +12,12 @@ import {  FaStar,  FaVideo, FaFileAlt,  FaDownload,  FaTv,  FaUser,} from "react
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import useCurrency from "../../utils/useCurrency";
+import { addItemToCart } from "../../Redux/slices/cartSlice/cartSlice";
 const CourceDetail = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
   const currency = useCurrency();
+  const user_id = localStorage.getItem()
 useEffect(() => {
   const fetchCourse = async () => {
     try {
@@ -90,7 +92,9 @@ useEffect(() => {
     setOpenSection(openSection === index ? null : index);
   };
   const [startDate, setStartDate] = useState(new Date());
-
+  const handleCart = (id,userId)=>{
+       dispatchEvent(addItemToCart())
+  }
   return (
     <>
       <Header />
@@ -188,7 +192,7 @@ useEffect(() => {
       </div>
 
       <div className="flex flex-col mt-4">
-        <button className="w-full bg-[#ffffff] text-[#047670] text-[22px] font-roboto rounded-[12px] h-[41px] border-[1px] border-[#047670] font-bold mb-4">
+        <button  onClick={()=>{handleCart(courseData?.id)}} className="w-full bg-[#ffffff] text-[#047670] text-[22px] font-roboto rounded-[12px] h-[41px] border-[1px] border-[#047670] font-bold mb-4">
           Add To Cart
         </button>
         <button className="w-full bg-[#ffffff] text-[#047670] text-[22px] font-roboto h-[41px] rounded-[12px] border-[1px] border-[#047670] font-bold mb-4">

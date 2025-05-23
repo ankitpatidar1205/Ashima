@@ -10,6 +10,7 @@ import adminReducer from './slices/adminSlice/adminSlice'
 import planReducer from './slices/planSlice/planeSlice'
 import contentReducer from './slices/contentSlice/contentSlice'
 import quizReducer from './slices/quizSlice/quizSlice'
+import cartReducer from './slices/cartSlice/cartSlice'
 export const store = configureStore({
   reducer: {
     Student:StudentReducer,
@@ -23,5 +24,6 @@ export const store = configureStore({
     plans:planReducer,
     content:contentReducer,
     quiz:quizReducer,
+    cart:cartReducer
   },
 })
