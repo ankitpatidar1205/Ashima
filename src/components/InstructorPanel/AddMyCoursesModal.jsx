@@ -64,7 +64,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           instructor_id: courseToEdit.instructor_id,
           course_price: courseToEdit.course_price,
           course_image: courseToEdit.course_image,
-          category_id: courseToEdit.category_id,
+          category: courseToEdit.category_id,
           course_content_video_link: courseToEdit.course_content_video_link,
           test_video: courseToEdit.test_video,
           status: courseToEdit.status.toString(),
@@ -109,7 +109,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
     data.append("course_type", formData.course_type);
     data.append("instructor_id", formData.instructor_id);
     data.append("course_price", formData.course_price);
-    data.append("category_id", formData.category_id);
+    data.append("category", formData.category_id);
     data.append("course_content_video_link", formData.course_content_video_link);
     data.append("status", formData.status);
     data.append("fcmToken", fcmToken);
@@ -145,7 +145,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
       instructor_id: "",
       course_price: "",
       course_image: null,
-      category_id: "",
+      category: "",
       course_content_video_link: "",
       test_video: null,
       status: "0",
