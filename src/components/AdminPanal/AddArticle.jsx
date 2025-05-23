@@ -71,7 +71,6 @@ const AddArticleModal = ({ isOpen, onClose }) => {
     dispatch(fetchCategories());
   }, [dispatch]);
   const  categories  = useSelector((state) => state?.categories?.categories);
-  console.log("cate",categories);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">

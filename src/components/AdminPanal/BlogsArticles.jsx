@@ -19,8 +19,11 @@ const itemsPerPage = 10;
 
   useEffect(() => {
     dispatch(fetchArticles());
-  }, []);
-  
+  }, [dispatch]);
+  useEffect(() => {
+  setCurrentPage(1);
+}, [searchQuery]);
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -44,7 +47,6 @@ const itemsPerPage = 10;
     });
   };
   const { articles } = useSelector((state) => state.articles);
-  console.log(articles);
   const isPublish = async(id,status)=>{
      await  dispatch(publishArticle({id,status}))
      dispatch(fetchArticles())
