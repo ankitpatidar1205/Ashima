@@ -33,8 +33,9 @@ const StudentProfile = () => {
   const fetchStudentData = async () => {
     try {
       const response = await axiosInstance.get(`/student?id=${studentId}`);
-      const student = response.data.data[0];
+      const student = response.data.data;
       setStudentData(student);
+      console.log("s",student)
       setSelectedCourses(
         student.courses.map((c) => ({
           value: c.course_id,
@@ -113,26 +114,33 @@ const StudentProfile = () => {
               <div className="mb-6 p-3 rounded text-white bg-green-600">{message}</div>
             )}
 
-            {studentData ? (
+            {studentData? (
               <div className="bg-white rounded-lg shadow p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="col-span-1 flex flex-col items-center">
-                  <h2 className="text-xl font-bold text-gray-900">Name: {studentData.student_name}</h2>
                 </div>
-
+ <div className="w-36 h-36 rounded-full overflow-hidden bg-gray-200 mb-4">
+                    <img
+                      src={studentData.avatar || `https://ui-avatars.com/api/?name=${studentData?.name}&background=0D8ABC&color=fff`} 
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 <div className="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <h3 className="text-lg font-semibold text-teal-700 mb-2">Contact Information</h3>
-                    <p className="mb-2 text-gray-800">Email: {studentData.email}</p>
-                    <p className="text-gray-800">Mobile: {studentData.mobile}</p>
+                    <p className="mb-2 text-gray-800">Name: {studentData?.name}</p>
+
+                    <p className="mb-2 text-gray-800">Email: {studentData?.email}</p>
+                    <p className="text-gray-800">Mobile: {studentData?.mobile}</p>
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-teal-700 mb-2">Enrolled Courses</h3>
-                    <ul className="list-disc ml-5 text-gray-800">
+                    {/* <h3 className="text-lg font-semibold text-teal-700 mb-2">Enrolled Courses</h3> */}
+                    {/* <ul className="list-disc ml-5 text-gray-800">
                       {studentData.courses.map((course) => (
-                        <li key={course.course_id}>{course.course_title}</li>
+                        <li key={course?.course_id}>{course?.course_title}</li>
                       ))}
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
               </div>

@@ -39,7 +39,7 @@ const InstructorDetails = () => {
             <div className="bg-white p-4 rounded shadow text-center">
               <div className="w-24 h-24 mx-auto rounded-full mb-3 overflow-hidden">
                 <img
-                  src={selectedInstructor.profile_image}
+                  src={selectedInstructor?.avatar}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />

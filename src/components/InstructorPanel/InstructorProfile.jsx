@@ -124,7 +124,7 @@ const ProfileLayout = () => {
                 <div className="col-span-1 flex flex-col items-center">
                   <div className="w-36 h-36 rounded-full overflow-hidden bg-gray-200 mb-4">
                     <img
-                      src={instructorData.profile_image}
+                      src={instructorData?.avatar}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />
