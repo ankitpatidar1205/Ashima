@@ -13,7 +13,6 @@ const Cart = () => {
 
   const cartItems = useSelector((state) => state?.cart?.selectedItem?.items)
    const totalPrice = useSelector((state) => state?.cart?.selectedItem?.total)
-  console.log(cartItems)
   const [showCouponInput, setShowCouponInput] = useState(false);
   const [couponCode, setCouponCode] = useState("");
 
@@ -106,7 +105,7 @@ const removeItem = (id)=>{
                         style={{ cursor: "pointer", marginBottom: "8px" }}
                         className="hover-underline"
                       >
-                        <FaTrashAlt className="me-1 text-danger fs-5" onClick={()=>{removeItem(item?.id)}} /> Remove
+                        <FaTrashAlt className="me-1 text-danger fs-5" onClick={()=>{removeItem(item?.cart_item_id)}} /> Remove
                       </span>
                       {/* <span style={{ cursor: "pointer" }} className="hover-underline">
                         <FaRegBookmark className="me-1 text-primary" /> Save
