@@ -21,6 +21,7 @@ const CourseContent = () => {
 
   const [newContent, setNewContent] = useState({ title: "", description: "", course_syllabus_id: id });
   const [newQuiz, setNewQuiz] = useState({ topic: "", number_questions: 1, id: id });
+  const [loadingQuiz, setLoadingQuiz] = useState(false);
 
   const t = localStorage.getItem("title");
   const d = localStorage.getItem("description");
@@ -43,6 +44,7 @@ const CourseContent = () => {
     setNewContent({ title: "", description: "", course_syllabus_id: id });
     setShowContentModal(false);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,12 +61,19 @@ const CourseContent = () => {
   }, [id]);
 
   const handleAddQuiz = async () => {
-    await dispatch(createQuiz(newQuiz)).then(() => {
+    setLoadingQuiz(true); // start loader
+    try {
+      await dispatch(createQuiz(newQuiz));
       dispatch(fetchQuizById(id));
-    });
-    setNewQuiz({ topic: "", number_questions: 1, id: id });
-    setShowQuizModal(false);
+      setNewQuiz({ topic: "", number_questions: 1, id: id });
+      setShowQuizModal(false);
+    } catch (error) {
+      console.error("Error creating quiz:", error);
+    } finally {
+      setLoadingQuiz(false); // stop loader
+    }
   };
+
   const handleDelete = async (_id) => {
     await dispatch(deleteContent(_id))
     dispatch(fetchContentById(id));
@@ -87,43 +96,43 @@ const CourseContent = () => {
     <DashboardLayout>
       <div className="container mt-5">
         <div className="mt-5 d-flex justify-content-between align-items-start flex-wrap gap-3">
-  {/* Left: Title + Syllabus */}
-  <div>
-    <h2 className="mb-3">{data?.module_title}</h2>
-    {/* <p className="text-muted">{data?.module_syllabus}</p> */}
-  </div>
+          {/* Left: Title + Syllabus */}
+          <div>
+            <h2 className="mb-3">{data?.module_title}</h2>
+            {/* <p className="text-muted">{data?.module_syllabus}</p> */}
+          </div>
 
-  {/* Right: Buttons */}
-  <div className="d-flex gap-2 flex-wrap">
-    {role !== "student" && (
-      <>
-        <button
-          className="flex p-2 rounded items-center font-semibold text-white bg-teal-700"
-          onClick={() => setShowContentModal(true)}
-        >
-          + Add Content
-        </button>
-        <button
-          className="flex p-2 rounded items-center font-semibold text-white bg-teal-700"
-          onClick={() => setShowQuizModal(true)}
-        >
-          + Add Quiz
-        </button>
-      </>
-    )}
+          {/* Right: Buttons */}
+          <div className="d-flex gap-2 flex-wrap">
+            {role !== "student" && (
+              <>
+                <button
+                  className="flex p-2 rounded items-center font-semibold text-white bg-teal-700"
+                  onClick={() => setShowContentModal(true)}
+                >
+                  + Add Content
+                </button>
+                <button
+                  className="flex p-2 rounded items-center font-semibold text-white bg-teal-700"
+                  onClick={() => setShowQuizModal(true)}
+                >
+                  + Add Quiz
+                </button>
+              </>
+            )}
 
-    <button
-      className="flex p-2 rounded items-center font-semibold text-white bg-teal-700"
-      onClick={() => navigate(-1)}
-    >
-      <FaArrowLeft className="me-2" /> Back
-    </button>
-  </div>
-</div>
+            <button
+              className="flex p-2 rounded items-center font-semibold text-white bg-teal-700"
+              onClick={() => navigate(-1)}
+            >
+              <FaArrowLeft className="me-2" /> Back
+            </button>
+          </div>
+        </div>
 
         <div className="bg-white p-4 rounded shadow">
           {/* <h4 className="font-semibold mb-3">Intro Video</h4> */}
-          <iframe style={{height: "50vh" , width:"100%"}}
+          <iframe style={{ height: "50vh", width: "100%" }}
             src={data?.module_courses}
             title="Course Video"
             // className="w-full h-64"
@@ -134,7 +143,7 @@ const CourseContent = () => {
         <Tabs defaultActiveKey="content" id="content-quiz-tabs" className="my-4">
           {/* 📘 Course Content Tab */}
           <Tab eventKey="content" title="Course Content">
-           
+
             <ul>
               {state?.map((item) => (
                 <div key={item?.id}>
@@ -287,10 +296,18 @@ const CourseContent = () => {
             <Button
               variant="primary"
               onClick={handleAddQuiz}
-              disabled={!newQuiz.topic.trim()}
+              disabled={!newQuiz.topic.trim() || loadingQuiz}
             >
-              Add Quiz
+              {loadingQuiz ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Creating...
+                </>
+              ) : (
+                "Add Quiz"
+              )}
             </Button>
+
           </Modal.Footer>
         </Modal>
       </div>

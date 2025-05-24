@@ -1,6 +1,24 @@
+import { useEffect, useState } from "react";
 import DashboardLayout from "../../Layout/DashboardLayout";
+import axiosInstance from "../../utils/axiosInstance";
 
 const AdminDashboard = () => {
+  const [dashdata, setData] = useState({});
+
+
+  useEffect(() => {
+    const featchDashboardData = async () => {
+      try {
+        const responce = await axiosInstance.get(`/admin-dashboard`);
+        console.log("response", responce.data.data);
+        setData(responce.data.data); // Correct: it's an object
+      } catch (error) {
+        console.error("Error fetching dashboard data", error);
+      }
+    };
+
+    featchDashboardData();
+  }, []);
 
   return (
     <DashboardLayout>
@@ -10,41 +28,45 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
           <div className="bg-white p-4 rounded shadow">
             <p className="text-sm text-gray-500">Total Students</p>
-            <h3 className="text-2xl font-semibold mt-1">4</h3>
+            <h3 className="text-2xl font-semibold mt-1">{dashdata?.totalStudents || 0}</h3>
           </div>
+
           <div className="bg-white p-4 rounded shadow">
             <p className="text-sm text-gray-500">Active Instructors</p>
-            <h3 className="text-2xl font-semibold mt-1">5</h3>
+            <h3 className="text-2xl font-semibold mt-1">{dashdata?.activeInstructorCount || 0}</h3>
           </div>
+
+       
+
           <div className="bg-white p-4 rounded shadow">
             <p className="text-sm text-gray-500">Total Courses</p>
-            <h3 className="text-2xl font-semibold mt-1">8</h3>
+            <h3 className="text-2xl font-semibold mt-1">{dashdata?.totalCourses || 0}</h3>
           </div>
+
           <div className="bg-white p-4 rounded shadow">
+            <p className="text-sm text-gray-500">Not Verified Instructors</p>
+            <h3 className="text-2xl font-semibold mt-1">{dashdata?.notVerifiedInstructorCount || 0}</h3>
+          </div>
+             <div className="bg-white p-4 rounded shadow">
             <p className="text-sm text-gray-500">Revenue (MTD)</p>
-            <h3 className="text-2xl font-semibold mt-1">$124,563</h3>
-          </div>
-          <div className="bg-white p-4 rounded shadow">
-            <p className="text-sm text-gray-500">Pending Approvals</p>
-            <h3 className="text-2xl font-semibold mt-1">28</h3>
+            <h3 className="text-2xl font-semibold mt-1">_</h3>
           </div>
         </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div className="bg-white p-4 rounded shadow">
             <h4 className="font-semibold mb-4">Latest Enrollments</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <strong>John Doe</strong> <br /> Web Development Basics
-              </li>
-              <li>
-                <strong>Jane Smith</strong> <br /> UI/UX Design Masterclass
-              </li>
-              <li>
-                <strong>Mike Johnson</strong> <br /> Digital Marketing 101
-              </li>
+              {dashdata?.recentStudents?.map((student, index) => (
+                <li key={index}>
+                  <strong>{student.studentName}</strong> <br />
+                  {student.courseNames}
+                </li>
+              ))}
             </ul>
           </div>
+
 
           <div className="bg-white p-4 rounded shadow">
             <h4 className="font-semibold mb-4">Notifications</h4>

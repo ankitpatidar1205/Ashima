@@ -13,6 +13,10 @@ const ManageCourses = () => {
   const [courseId, setCourseId] = useState(null);
   const dispatch = useDispatch();
   const currency = useCurrency();
+const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 5;
+
+
   const { courses } = useSelector((state) => state.courses);
   // console.log(courses)
   useEffect(() => {
@@ -54,9 +58,17 @@ const ManageCourses = () => {
       
   }
 
-  const filteredCourses = courses?.filter((course) =>
-    course?.course_title?.toLowerCase()?.includes(searchTerm.toLowerCase())
-  );
+const filteredCourses = courses?.filter((course) =>
+  course?.course_title?.toLowerCase()?.includes(searchTerm.toLowerCase())
+);
+
+const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+
+const paginatedCourses = filteredCourses.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage
+);
+
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
@@ -94,7 +106,8 @@ const ManageCourses = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredCourses?.map((course, index) => (
+               {paginatedCourses?.map((course, index) => (
+
                   <tr className="border-b" key={course?.id}>
                     <td className="p-2">{index + 1}</td>
                     <td className="p-2">
@@ -157,16 +170,40 @@ const ManageCourses = () => {
           </div>
 
           {/* Pagination Section */}
-          <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
-            <div>Showing 1 to 10 of {courses?.length || 0} entries</div>
-            <div className="flex gap-2">
-              <button className="border px-2 py-1 rounded">Previous</button>
-              <button className="bg-[#047670] text-white px-2 py-1 rounded">1</button>
-              <button className="border px-2 py-1 rounded">2</button>
-              <button className="border px-2 py-1 rounded">3</button>
-              <button className="border px-2 py-1 rounded">Next</button>
-            </div>
-          </div>
+    <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
+  <div>
+    Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+    {Math.min(currentPage * itemsPerPage, filteredCourses.length)} of {filteredCourses.length} entries
+  </div>
+  <div className="flex gap-2">
+    <button
+      className="border px-2 py-1 rounded"
+      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+      disabled={currentPage === 1}
+    >
+      Previous
+    </button>
+
+    {[...Array(totalPages)].map((_, i) => (
+      <button
+        key={i}
+        onClick={() => setCurrentPage(i + 1)}
+        className={`px-2 py-1 rounded ${currentPage === i + 1 ? "bg-[#047670] text-white" : "border"}`}
+      >
+        {i + 1}
+      </button>
+    ))}
+
+    <button
+      className="border px-2 py-1 rounded"
+      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+      disabled={currentPage === totalPages}
+    >
+      Next
+    </button>
+  </div>
+</div>
+
         </div>
       </div>
     </DashboardLayout>
