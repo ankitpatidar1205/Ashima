@@ -46,7 +46,7 @@ const StudentAllCources = () => {
                 className="w-full h-48 object-cover"/>
               <div className="p-4 flex flex-col gap-2">
                 <div className="flex justify-between items-center">
-                  <Link  to={`/course/${course?.id}`}
+                  <Link  to={`/Cource-Detail/${course?.id}`}
                     className="text-lg font-semibold text-teal-700 hover:underline">
                     {course?.course_title}
                   </Link>
