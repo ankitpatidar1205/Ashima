@@ -104,7 +104,7 @@ useEffect(() => {
                         style={{ cursor: "pointer", marginBottom: "8px" }}
                         className="hover-underline"
                       >
-                        <FaTrashAlt className="me-1 text-danger fs-5" /> Remove
+                        <FaTrashAlt className="me-1 text-danger fs-5" /> 
                       </span>
                       {/* <span style={{ cursor: "pointer" }} className="hover-underline">
                         <FaRegBookmark className="me-1 text-primary" /> Save
