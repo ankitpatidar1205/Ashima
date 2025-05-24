@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaStar, FaTrashAlt, FaRegBookmark } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartItemById } from "../../Redux/slices/cartSlice/cartSlice";
+import { fetchCartItemById,deleteCartItem } from "../../Redux/slices/cartSlice/cartSlice";
 import Header from "../../Layout/Header";
 const Cart = () => {
   const user_id = localStorage.getItem("is_id");
@@ -52,7 +52,9 @@ useEffect(() => {
     }).render(paypalRef.current);
   }
 }, []);
-
+const removeItem = (id)=>{
+  dispatch(deleteCartItem(id))
+}
   return (
     <>
 
@@ -104,7 +106,7 @@ useEffect(() => {
                         style={{ cursor: "pointer", marginBottom: "8px" }}
                         className="hover-underline"
                       >
-                        <FaTrashAlt className="me-1 text-danger fs-5" /> Remove
+                        <FaTrashAlt className="me-1 text-danger fs-5" onClick={()=>{removeItem(item?.id)}} /> Remove
                       </span>
                       {/* <span style={{ cursor: "pointer" }} className="hover-underline">
                         <FaRegBookmark className="me-1 text-primary" /> Save
