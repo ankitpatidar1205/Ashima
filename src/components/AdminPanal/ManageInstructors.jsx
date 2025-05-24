@@ -1,27 +1,26 @@
-import  { useEffect, useState } from "react";
+ import { useEffect, useState } from "react";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddInstructorModal from "./AddInstructorModal";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getInstructors, deleteInstructor, updateInstructorStatus } from "../../Redux/slices/InstructorSlice/InstructorSlice";
+import { getInstructors, deleteInstructor, updateInstructorStatus,approveRequest } from "../../Redux/slices/InstructorSlice/InstructorSlice";
 import Swal from "sweetalert2";
+import dayjs from 'dayjs';
 
 const ManageInstructors = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [activeTab, setActiveTab] = useState("all");
 
-  // Redux state
   const { instructors } = useSelector((state) => state.instructors);
   const dispatch = useDispatch();
 
-  // Fetch instructors on mount
   useEffect(() => {
     dispatch(getInstructors());
   }, [dispatch]);
 
-  // Delete instructor handler
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -37,25 +36,17 @@ const ManageInstructors = () => {
           .unwrap()
           .then(() => {
             Swal.fire("Deleted!", "Instructor has been deleted.", "success");
+            dispatch(getInstructors());
           })
           .catch(() => {
             Swal.fire("Error!", "Something went wrong.", "error");
           });
-          dispatch(getInstructors())
       }
     });
   };
 
-  // ✅ Filtered instructors based on search query and status
-  const filteredInstructors = instructors?.filter((instructor) => {
-    const matchesSearch = instructor?.full_name?.toLowerCase()?.includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === "All" || instructor.is_active === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
-// Toggle between active and inactive
   const handleStatusToggle = (id, currentStatus) => {
-    const newStatus = currentStatus === "1" ? "0" : "1"; 
+    const newStatus = currentStatus === "1" ? "0" : "1";
     Swal.fire({
       title: "Are you sure?",
       text: `Change status to ${newStatus === "1" ? "Active" : "Inactive"}?`,
@@ -66,11 +57,11 @@ const ManageInstructors = () => {
       confirmButtonText: "Yes, change it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(updateInstructorStatus({ id, status: newStatus })) 
+        dispatch(updateInstructorStatus({ id, status: newStatus }))
           .unwrap()
           .then(() => {
             Swal.fire("Success!", "Instructor status updated.", "success");
-            dispatch(getInstructors()); // Refresh the instructors list
+            dispatch(getInstructors());
           })
           .catch(() => {
             Swal.fire("Error!", "Failed to update status.", "error");
@@ -78,8 +69,132 @@ const ManageInstructors = () => {
       }
     });
   };
-  
-  
+   const approve_Request = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Approve Request`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#047670",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes,  Approve!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(approveRequest(id))
+          .unwrap()
+          .then(() => {
+            Swal.fire("Success!", "Request Approved", "success");
+            dispatch(getInstructors());
+          })
+          .catch(() => {
+            Swal.fire("Error!", "Failed to approve request.", "error");
+          });
+      }
+    });
+  };
+
+  const filteredInstructors = instructors?.filter((instructor) => {
+    const matchesSearch = instructor?.full_name?.toLowerCase()?.includes(searchQuery.toLowerCase());
+    const matchesStatus = statusFilter === "All" || instructor.is_active === statusFilter;
+    const verified = instructor?.is_verified=="1"
+    return matchesSearch && matchesStatus && verified ;
+  });
+
+  const inactiveInstructors = instructors?.filter((instructor) => instructor?.is_verified == "0");
+  console.log(inactiveInstructors)
+  const renderTable = (data, showApprove = false) => (
+    <div className="overflow-x-auto mt-4">
+      <table className="w-full text-sm text-center text-nowrap">
+        <thead className="bg-gray-50">
+          <tr className="text-gray-500">
+            <th className="p-2">SL</th>
+            <th className="p-2">Name</th>
+            <th className="p-2">Email</th>
+            <th className="p-2">Mobile</th>
+            <th className="p-2">Expertise</th>
+            {showApprove ? (
+              <>
+              <th className="p-2">Requests</th>
+               <th className="p-2">Date</th>
+               </>
+            ) : (
+              <th className="p-2">Status</th>
+            )}
+            <th className="p-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data && data.length > 0 ? (
+            data.map((instructor, index) => (
+              <tr className="border-b" key={instructor.id}>
+                <td className="p-2">{index + 1}</td>
+                <td className="p-2">
+                  <Link to={`/instructor-detail/${instructor.id}`} className="text-teal-700 hover:underline">
+                    <strong>{instructor.full_name}</strong>
+                  </Link>
+                </td>
+                <td className="p-2">{instructor.email}</td>
+                <td className="p-2">{instructor.mobile_number}</td>
+                <td className="p-2">{instructor.expertise}</td>
+                {showApprove ? (
+                  <>
+                  <td className="p-2">
+                    <button
+                      onClick={() => approve_Request(instructor.id)}
+                      className="bg-[#047670] text-white text-xs px-3 py-1 rounded hover:bg-[#035a56]"
+                    >
+                      Approve
+                    </button>
+                  </td>
+                  <td>{dayjs(instructor?.created_at).format('DD MMM YYYY, hh:mm A')}</td>
+                  <td className="p-2 flex gap-2 text-gray-600 text-base justify-center">
+                  <Link to={`/instructor-detail/${instructor.id}`}>
+                    <FaEye />
+                  </Link>
+                   
+                  <button onClick={() => handleDelete(instructor.id)}>
+                    <FaTrash />
+                  </button>
+                </td>
+                  </>
+                ) : (
+                  <><td className="p-2">
+                    <button
+                      onClick={() => handleStatusToggle(instructor.id, instructor.is_active)}
+                      className={`${
+                        instructor.is_active === "1" ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
+                      } text-xs px-2 py-1 rounded`}
+                    >
+                      {instructor.is_active === "1" ? "Active" : "Inactive"}
+                    </button>
+                  </td>
+                  <td className="p-2 flex gap-2 text-gray-600 text-base justify-center">
+                  <Link to={`/instructor-detail/${instructor.id}`}>
+                    <FaEye />
+                  </Link>
+                  <Link to={`/edit-instruction/${instructor.id}`}>
+                    <FaEdit />
+                  </Link>
+                  <button onClick={() => handleDelete(instructor.id)}>
+                    <FaTrash />
+                  </button>
+                </td></>
+                )}
+                
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="text-center py-4">
+                No instructors found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
@@ -91,93 +206,54 @@ const ManageInstructors = () => {
           <AddInstructorModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
-          <div className="flex flex-wrap gap-2 mb-4">
-            <input
-              type="text"
-              placeholder="Search instructors..."
-              className="border px-3 py-2 rounded w-full md:w-auto"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <select
-              className="border px-3 py-2 rounded"
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-            >
-              <option value="All">All Status</option>
-              <option value="1">Active</option>
-              <option value="0">Inactive</option>
-            </select>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-center text-nowrap">
-              <thead className="bg-gray-50">
-                <tr className="text-gray-500">
-                  <th className="p-2">SL</th>
-                  <th className="p-2">Name</th>
-                  <th className="p-2">Email</th>
-                  <th className="p-2">Mobile</th>
-                  <th className="p-2">Expertise</th>
-                  <th className="p-2">Status</th>
-                  <th className="p-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredInstructors && filteredInstructors.length > 0 ? (
-                  filteredInstructors?.map((instructor, index) => (
-                    <tr className="border-b" key={instructor.id}>
-                      <td className="p-2">{index + 1}</td>
-                      <td className="p-2">
-                        <Link to={`/instructor-detail/${instructor.id}`} className="text-teal-700 hover:underline">
-                          <strong>{instructor.full_name}</strong>
-                        </Link>
-                      </td>
-                      <td className="p-2">{instructor.email}</td>
-                      <td className="p-2">{instructor.mobile_number}</td>
-                      <td className="p-2">{instructor.expertise}</td>
-                      <td className="p-2">
-                     <button onClick={() => handleStatusToggle(instructor.id, instructor.is_active)} className={`${
-                     instructor.is_active === "1"
-                     ? "bg-green-100 text-green-600"
-                    : "bg-red-100 text-red-600" } text-xs px-2 py-1 rounded`} >
-                  {instructor.is_active === "1" ? "Active" : "Inactive"} </button>
-                </td>
-                      <td className="p-2 flex gap-2 text-gray-600 text-base justify-center">
-                        <Link to={`/instructor-detail/${instructor.id}`}>
-                          <FaEye />
-                        </Link>
-                        <Link to={`/edit-instruction/${instructor.id}`}><FaEdit /></Link>
-                        <button onClick={() => handleDelete(instructor.id)}>
-                          <FaTrash />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="7" className="text-center py-4">
-                      No instructors found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Pagination buttons */}
-          <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
-            <div>Showing 1 to 10 of {filteredInstructors?.length || 0} results</div>
-            <div className="flex gap-2">
-              <button className="border px-2 py-1 rounded">Previous</button>
-              <button className="bg-[#047670] text-white px-2 py-1 rounded">1</button>
-              <button className="border px-2 py-1 rounded">2</button>
-              <button className="border px-2 py-1 rounded">3</button>
-              <button className="border px-2 py-1 rounded">Next</button>
-            </div>
-          </div>
+        {/* Tabs */}
+        <div className="flex gap-2 mb-4 border-b">
+          <button
+            className={`px-4 py-2 ${activeTab === "all" ? "border-b-2 border-[#047670] text-[#047670]" : "text-gray-500"}`}
+            onClick={() => setActiveTab("all")}
+          >
+            All Instructors
+          </button>
+          <button
+            className={`px-4 py-2 ${activeTab === "inactive" ? "border-b-2 border-[#047670] text-[#047670]" : "text-gray-500"}`}
+            onClick={() => setActiveTab("inactive")}
+          >
+            New Request
+          </button>
         </div>
+
+        {/* All Instructors Tab */}
+        {activeTab === "all" && (
+          <div className="bg-white p-4 rounded shadow">
+            <div className="flex flex-wrap gap-2 mb-4">
+              <input
+                type="text"
+                placeholder="Search instructors..."
+                className="border px-3 py-2 rounded w-full md:w-auto"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <select
+                className="border px-3 py-2 rounded"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="All">All Status</option>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
+            </div>
+            {renderTable(filteredInstructors)}
+          </div>
+        )}
+
+        {/* New Request Tab */}
+        {activeTab === "inactive" && (
+          <div className="bg-white p-4 rounded shadow">
+            <h4 className="text-md font-medium mb-2">New Instructor Requests</h4>
+            {renderTable(inactiveInstructors, true)}
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );

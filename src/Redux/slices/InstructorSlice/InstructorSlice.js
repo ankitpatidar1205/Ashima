@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../utils/axiosInstance";
 
 // 📥 Add Instructor
@@ -8,7 +8,7 @@ export const addInstructor = createAsyncThunk(
     try {
       const response = await axiosInstance.post("/instructor", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Very important!
+          "Content-Type": "multipart/form-data",
         },
       });
       return response.data;
@@ -24,7 +24,6 @@ export const getInstructors = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await axiosInstance.get(`/instructor`);
-      // console.log(res.data.data)
       return res.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -58,7 +57,7 @@ export const deleteInstructor = createAsyncThunk(
   }
 );
 
-// 🔥 Update Instructor
+// 🔄 Update Instructor
 export const updateInstructor = createAsyncThunk(
   "instructors/updateInstructor",
   async (updatedInstructor, thunkAPI) => {
@@ -68,7 +67,7 @@ export const updateInstructor = createAsyncThunk(
         updatedInstructor,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Adjust if needed
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -78,19 +77,34 @@ export const updateInstructor = createAsyncThunk(
     }
   }
 );
+
 // ✅ Update Instructor Status
 export const updateInstructorStatus = createAsyncThunk(
   "instructors/updateInstructorStatus",
   async ({ id, status }, { rejectWithValue }) => {
     try {
-    
       const response = await axiosInstance.patch(
         `instructorStatus/${id}`,
-        { is_active: status } 
+        { is_active: status }
       );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// ✅ Approve Instructor Request
+export const approveRequest = createAsyncThunk(
+  "instructors/approveRequest",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.patch(`/update-instructor/Varified/${id}`, {
+        is_verified: 1,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -100,27 +114,27 @@ const instructorSlice = createSlice({
   name: "instructors",
   initialState: {
     instructors: [],
-    selectedInstructor: null, // Store selected instructor for detail view
+    selectedInstructor: null,
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // 🔄 Add Instructor
+      // ➕ Add Instructor
       .addCase(addInstructor.pending, (state) => {
         state.loading = true;
       })
       .addCase(addInstructor.fulfilled, (state, action) => {
         state.loading = false;
-        state.instructors.push(action.payload); // ✅ this works fine now
+        state.instructors.push(action.payload);
       })
       .addCase(addInstructor.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      // 📥 Get All Instructors
+      // 📥 Get All
       .addCase(getInstructors.pending, (state) => {
         state.loading = true;
       })
@@ -133,27 +147,27 @@ const instructorSlice = createSlice({
         state.error = action.payload;
       })
 
-      // 📥 Get Instructor by ID
+      // 🔎 Get by ID
       .addCase(getInstructorById.pending, (state) => {
         state.loading = true;
       })
       .addCase(getInstructorById.fulfilled, (state, action) => {
         state.loading = false;
-        state.selectedInstructor = action.payload; // Store selected instructor data
+        state.selectedInstructor = action.payload;
       })
       .addCase(getInstructorById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      // 🗑 Delete Instructor
+      // ❌ Delete
       .addCase(deleteInstructor.pending, (state) => {
         state.loading = true;
       })
       .addCase(deleteInstructor.fulfilled, (state, action) => {
         state.loading = false;
         state.instructors = state.instructors.filter(
-          (instructor) => instructor.id !== action.payload.id
+          (instructor) => instructor.id !== action.payload
         );
       })
       .addCase(deleteInstructor.rejected, (state, action) => {
@@ -161,8 +175,8 @@ const instructorSlice = createSlice({
         state.error = action.payload;
       })
 
-       // 🔄 Update Instructor
-       .addCase(updateInstructor.pending, (state) => {
+      // ✏️ Update
+      .addCase(updateInstructor.pending, (state) => {
         state.loading = true;
       })
       .addCase(updateInstructor.fulfilled, (state, action) => {
@@ -176,17 +190,41 @@ const instructorSlice = createSlice({
         state.error = action.payload;
       })
 
-        // ✅ updateInstructorStatus
-        .addCase(updateInstructorStatus.fulfilled, (state, action) => {
-          const updatedInstructor = action.payload;
-          const index = state.instructors.findIndex(
-            (instructor) => instructor.id === updatedInstructor.id
-          );
-          if (index !== -1) {
-            state.instructors[index] = updatedInstructor;
-          }
-        });
+      // 🔁 Update Status
+      .addCase(updateInstructorStatus.fulfilled, (state, action) => {
+        const updatedInstructor = action.payload;
+        const index = state.instructors.findIndex(
+          (instructor) => instructor.id === updatedInstructor.id
+        );
+        if (index !== -1) {
+          state.instructors[index] = updatedInstructor;
+        }
+      })
+
+      // ✅ Approve Request
+      .addCase(approveRequest.fulfilled, (state, action) => {
+        const updatedInstructor = action.payload;
+        const index = state.instructors.findIndex(
+          (instructor) => instructor.id === updatedInstructor.id
+        );
+        if (index !== -1) {
+          state.instructors[index] = updatedInstructor;
+        }
+      })
+      .addCase(approveRequest.rejected, (state, action) => {
+        state.error = action.payload;
+      });
   },
 });
 
 export default instructorSlice.reducer;
+
+// export {
+//   addInstructor,
+//   getInstructors,
+//   getInstructorById,
+//   deleteInstructor,
+//   updateInstructor,
+//   updateInstructorStatus,
+//   approveRequest, // ✅ New Export
+// };

@@ -27,9 +27,9 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
     expertise: "",
-    bank_account_number: "",
-    ifsc_code: "",
-    profile_image: null,
+    // bank_account_number: "",
+    // ifsc_code: "",
+    avatar: null,
   });
 
   const dispatch = useDispatch();
@@ -87,9 +87,9 @@ const Signup = () => {
         password,
         confirmPassword,
         expertise,
-        bank_account_number,
-        ifsc_code,
-        profile_image,
+        // bank_account_number,
+        // ifsc_code,
+        avatar,
       } = instructorForm;
 
       if (password !== confirmPassword) return toast.error("Passwords do not match!");
@@ -100,10 +100,11 @@ const Signup = () => {
       formData.append("mobile_number", mobile_number);
       formData.append("password", password);
       formData.append("expertise", expertise);
-      formData.append("bank_account_number", bank_account_number);
-      formData.append("ifsc_code", ifsc_code);
-      if (profile_image) {
-        formData.append("profile_image", profile_image);
+      // formData.append("bank_account_number", bank_account_number);
+      // formData.append("ifsc_code", ifsc_code);
+
+      if (avatar) {
+        formData.append("avatar", avatar);
       }
 
       try {
@@ -154,7 +155,7 @@ const Signup = () => {
                   />
                 </div>
               ))}
-              <div className="col-span-2">
+              {/* <div className="col-span-2">
                 <label className="block text-sm font-medium mb-1">Select Courses</label>
                 <Select
                   isMulti
@@ -162,7 +163,7 @@ const Signup = () => {
                   onChange={(selected) => setStudentForm({ ...studentForm, selectedCourses: selected })}
                   className="w-full"
                 />
-              </div>
+              </div> */}
             </div>
           )}
 
@@ -175,8 +176,8 @@ const Signup = () => {
                 { name: "password", label: "Password", type: "password" },
                 { name: "confirmPassword", label: "Confirm Password", type: "password" },
                 { name: "expertise", label: "Area of Expertise", type: "text" },
-                { name: "bank_account_number", label: "Account Number", type: "text" },
-                { name: "ifsc_code", label: "IFSC Code", type: "text" },
+                // { name: "bank_account_number", label: "Account Number", type: "text" },
+                // { name: "ifsc_code", label: "IFSC Code", type: "text" },
               ].map((input, i) => (
                 <div key={i}>
                   <label className="block text-sm font-medium mb-1">{input.label}</label>
@@ -190,7 +191,7 @@ const Signup = () => {
               ))}
               <div className="col-span-2">
                 <label className="block text-sm font-medium mb-1">Profile Image</label>
-                <input type="file" name="profile_image" onChange={handleInstructorChange}
+                <input type="file" name="avatar" onChange={handleInstructorChange}
                   className="border px-3 py-2 rounded w-full" />
               </div>
             </div>

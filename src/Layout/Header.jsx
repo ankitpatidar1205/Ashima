@@ -133,8 +133,10 @@ const Header = () => {
               Newsletter
             </Link>
           </nav>
-
+   <button onClick={()=>{navigate("/cart")}}>
           <AiOutlineShoppingCart className="h-7 w-7 text-[#047670]" />
+
+   </button>
         </div>
 
         <div className="hidden md:flex space-x-4">

@@ -1,4 +1,4 @@
-// src/Redux/slices/cartSlice.js
+ // src/Redux/slices/cartSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../../utils/axiosInstance";
 
@@ -15,15 +15,28 @@ export const addItemToCart = createAsyncThunk(
   }
 );
 
-// ✅ Fetch Cart Items
+// ✅ Fetch All Cart Items
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (_, { rejectWithValue }) => {
     try {
       const res = await axiosInstance.get("/cart");
-      return res.data.data; // Adjust based on your API response
+      return res.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error fetching cart items");
+    }
+  }
+);
+
+// ✅ Fetch Single Cart Item by ID
+export const fetchCartItemById = createAsyncThunk(
+  "cart/fetchCartItemById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.get(`/cart/${id}`);
+      return res.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Error fetching cart item by ID");
     }
   }
 );
@@ -41,7 +54,7 @@ export const deleteCartItem = createAsyncThunk(
   }
 );
 
-// ✅ Update Cart Item Quantity or Details
+// ✅ Update Cart Item
 export const updateCartItem = createAsyncThunk(
   "cart/updateCartItem",
   async ({ id, updatedData }, { rejectWithValue }) => {
@@ -58,13 +71,14 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
+    selectedItem: null,
     isLoading: false,
     error: null,
   },
   reducers: {
-    // You can add synchronous reducers here if needed
     clearCart(state) {
       state.items = [];
+      state.selectedItem = null;
       state.error = null;
       state.isLoading = false;
     }
@@ -85,7 +99,7 @@ const cartSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Fetch Items
+      // Fetch All Items
       .addCase(fetchCartItems.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -95,6 +109,20 @@ const cartSlice = createSlice({
         state.items = action.payload;
       })
       .addCase(fetchCartItems.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Fetch Item by ID
+      .addCase(fetchCartItemById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchCartItemById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.selectedItem = action.payload;
+      })
+      .addCase(fetchCartItemById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
@@ -133,3 +161,5 @@ const cartSlice = createSlice({
 
 export const { clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
+
+

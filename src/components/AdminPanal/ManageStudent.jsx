@@ -137,7 +137,7 @@ const ManageStudents = () => {
                   <th className="p-2">Name</th>
                   <th className="p-2">Email</th>
                   <th className="p-2">Mobile</th>
-                  <th className="p-2">Course</th>
+                  {/* <th className="p-2">Course</th> */}
                   <th className="p-2">Status</th>
                   <th className="p-2">Actions</th>
                 </tr>
@@ -148,11 +148,11 @@ const ManageStudents = () => {
                     <tr key={student.id || index} className="border-b">
                       <td className="p-2">{(currentPage - 1) * itemsPerPage + index + 1}</td>
                       <td className="p-2">
-                        <strong className="cursor-pointer text-[#047670]">{student.student_name || "-"}</strong>
+                        <strong className="cursor-pointer text-[#047670]">{student?.name || "-"}</strong>
                       </td>
                       <td className="p-2">{student.email || "-"}</td>
                       <td className="p-2">{student.mobile || "-"}</td>
-                      <td className="p-2">{student?.courses?.[0]?.course_title || "-"}</td>
+                      {/* <td className="p-2">{student?.courses?.[0]?.course_title || "-"}</td> */}
                       <td className="p-2">
                         <button
                           onClick={() => handleStatusToggle(student.id, student.is_active)}
