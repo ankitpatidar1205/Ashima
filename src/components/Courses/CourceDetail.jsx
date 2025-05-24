@@ -17,6 +17,8 @@ import { useDispatch } from "react-redux";
 const CourceDetail = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
+  const [moduleContents, setModuleContents] = useState({});
+
   const currency = useCurrency();
   const [data, setData] = useState([])
   const user_id = localStorage.getItem("is_id")
@@ -115,6 +117,62 @@ const CourceDetail = () => {
       fetchData();
     }
   }, [id]);
+ 
+ 
+    const fetchModuleContent = async (syllabus_id) => {
+  try {
+    const response = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
+    return response.data.data;
+  } catch (err) {
+    console.error(`Error fetching module ${syllabus_id}`, err);
+    return [];
+  }
+};
+useEffect(() => {
+  const loadModuleContents = async () => {
+    if (!courseData?.course_syllabus) return;
+
+    const contentMap = {};
+    await Promise.all(
+      courseData.course_syllabus.map(async (module) => {
+        const content = await fetchModuleContent(module.id);
+        contentMap[module.id] = content;
+      })
+    );
+
+    setModuleContents(contentMap);
+  };
+
+  loadModuleContents();
+}, [courseData]);
+
+useEffect(() => {
+  const fetchModuleContent = async (syllabus_id) => {
+    try {
+      const res = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
+      return res.data.data;
+    } catch (err) {
+      console.error("Failed to load content:", err);
+      return [];
+    }
+  };
+
+  const loadModuleContents = async () => {
+    if (!courseData?.course_syllabus) return;
+
+    const contentMap = {};
+    await Promise.all(
+      courseData.course_syllabus.map(async (module) => {
+        const content = await fetchModuleContent(module.id);
+        contentMap[module.id] = content;
+      })
+    );
+
+    setModuleContents(contentMap);
+  };
+
+  loadModuleContents();
+}, [courseData]);
 
 
   return (
@@ -141,7 +199,7 @@ const CourceDetail = () => {
                     <span className="text-[#fBBC09] text-[14px]">HOSTED BY</span>
                     <div className="flex items-center gap-2">
                       <img
-                        src={courseData?.instructor_details?.profile_image}
+                        src={courseData?.instructor_details?.avatar}
                         className="w-[50px] h-[50px] rounded-full"
                         alt={courseData?.instructor_details?.full_name}
                       />
@@ -259,13 +317,13 @@ const CourceDetail = () => {
 
         <div className="w-full sm:w-[850px] ml-4 sm:ml-20 mt-16">
           <h3 className="text-[28px] sm:text-[36px] font-jost text-[#1e1e1e] mb-6 w-full sm:w-[362px] h-auto font-semibold text-center sm:text-left whitespace-nowrap">
-            Know You Are Instructor
+            Know Your Instructor
           </h3>
           <div className="flex flex-col sm:flex-row flex-wrap gap-8 sm:gap-10">
             {courseData?.instructor_details && (
               <div className="shadow-2xl border-black rounded-[4px] p-4 flex flex-col items-start gap-6 sm:w-[400px] w-full h-auto uppercase">
                 <img
-                  src={courseData.instructor_details.profile_image}
+                  src={courseData?.instructor_details?.avatar}
                   className="w-[65px] h-[65px] rounded-full bg-[#ff757A] text-[#ffffff] text-sm font-bold mt-1"
                   alt={courseData.instructor_details.full_name}
                 />
@@ -327,7 +385,7 @@ const CourceDetail = () => {
 
                 <div className="flex flex-col sm:flex-row sm:justify-between">
                   <p className="text-[16px] text-[#1e1e1e] mb-2 sm:mb-6">
-                    8 sections • 73 lectures • 16h 8m total length
+                     {courseData?.course_syllabus?.length} sections • 73 lectures • 16h 8m total length
                   </p>
                   <p className="text-[18px] text-[#047670] font-roboto cursor-pointer mb-2 sm:mb-6">
                     EXPAND ALL SECTIONS
@@ -358,12 +416,26 @@ const CourceDetail = () => {
                             </span>
                           </div>
 
-                          {openSection === i && (
-                            <div className="bg-[#ffffff] px-4 py-3 text-sm text-gray-700 border-b border-gray-300">
-                              {module.module_syllabus}
-                              <br />
-                            </div>
-                          )}
+                           {openSection === i && (
+  <div className="bg-[#ffffff] px-4 py-3 text-sm text-gray-700 border-b border-gray-300">
+    {moduleContents[module.id] ? (
+      moduleContents[module.id].length > 0 ? (
+        <ul className="space-y-1">
+          {moduleContents[module?.id]?.map((item) => (
+            <li key={item?.id} className="flex items-center gap-2 text-[#1e1e1e]">
+            <span>* {item?.title}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No topics found for this module.</p>
+      )
+    ) : (
+      <p>No topics found for this module.</p>
+    )}
+  </div>
+)}
+
 
                           {i === 0 && (
                             <div className="border-double border-[#047670]"></div>
@@ -374,13 +446,13 @@ const CourceDetail = () => {
                   )}
 
                   {/* LIVE Section */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 py-4 bg-teal-700 text-white">
+                  {/* <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 py-4 bg-teal-700 text-white">
                     <div className="flex items-center space-x-3 mb-2 sm:mb-0">
                       <ChevronDown className="w-4 h-4 text-[#ffffff]" />
                       <span className="font-bold text-lg">LIVE</span>
                     </div>
                     <span className="text-xs font-semibold">NEXT COHORT</span>
-                  </div>
+                  </div> */}
                 </div>
 
               </div>

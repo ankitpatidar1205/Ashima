@@ -23,7 +23,7 @@ const Cart = () => {
       <div className="row align-items-start shadow-lg p-3">
         {/* Left Side: Course Detail */}
         <div className="col-lg-8">
-          <p className="fw-semibold text-secondary"> {cartItems.length} Course in Cart</p>
+          <p className="fw-semibold text-secondary"> {cartItems?.length} Course in Cart</p>
           <hr />
 
           {cartItems?.map((item) => (

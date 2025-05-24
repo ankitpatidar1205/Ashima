@@ -66,7 +66,7 @@ const SoftwareNavbar = ({ isCollapsed }) => {
 
           {/* Profile Dropdown */}
           <div className="relative">
-            <img src={userData?.avatar} alt="avatar"  className="w-8 h-8 rounded-full cursor-pointer"
+            <img src={userData?.avatar || `https://ui-avatars.com/api/?name=${userData?.name}&background=0D8ABC&color=fff`} alt="avatar"  className="w-8 h-8 rounded-full cursor-pointer"
               onClick={() => setDropdownOpen(!dropdownOpen)} />
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-md z-50">
