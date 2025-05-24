@@ -193,13 +193,31 @@ const Navbar = () => {
 
             {/* ✅ Mobile Login & Launch Now */}
             <div className="mt-2 space-y-2">
-              <Link
-                to="/login"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
-              >
-                Login
-              </Link>
+                  <div>
+ {profile ? (
+            <Link
+              to={
+                profile.role === "instructor"
+                  ? "/instructor-dashboard"
+                  : profile.role === "admin"
+                    ? "/admin-dashboard"
+                    : "/student-dashboard"
+              }
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
+            >
+              Go to Dashboard
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg "
+            >
+              Login
+            </Link>
+          )}
+          </div>
               <Link
                 to="/Launchpage"
                 onClick={() => setIsMobileMenuOpen(false)}

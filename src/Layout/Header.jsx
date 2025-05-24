@@ -43,6 +43,9 @@ const Header = () => {
     setSearchTerm("");
     setSuggestions([]);
   };
+
+
+   const profile = JSON.parse(localStorage.getItem("user"));
   return (
     <header className="fixed z-50 w-full bg-white shadow-md px-4 md:px-6 lg:px-8">
       <div className="max-w-[1410px] mx-auto h-[80px] flex items-center justify-between">
@@ -140,18 +143,37 @@ const Header = () => {
         </div>
 
         <div className="hidden md:flex space-x-4">
-          <Link
-            to="/login"
-            className="px-4 py-2 border-1 rounded-lg text-[#047670] border-[#047670] hover:bg-[#047670] hover:text-white"
-          >
-            Login
-          </Link>
-          <Link
+                      <div>
+ {profile ? (
+            <Link
+              to={
+                profile.role === "instructor"
+                  ? "/instructor-dashboard"
+                  : profile.role === "admin"
+                    ? "/admin-dashboard"
+                    : "/student-dashboard"
+              }
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
+            >
+              Go to Dashboard
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg "
+            >
+              Login
+            </Link>
+          )}
+          </div>
+          {/* <Link
             to="/signup"
             className="px-4 py-2 bg-[#047670] text-white rounded-lg"
           >
             Sign Up
-          </Link>
+          </Link> */}
         </div>
 
 
