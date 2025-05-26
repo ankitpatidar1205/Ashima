@@ -83,7 +83,6 @@ const Cart = () => {
 
       <Header />
 
-
       <div className="container-fluid py-2 px-1 px-md-1" style={{ maxWidth: "1300px" }}>
         {/* Page Title */}
         <div className="mb-4" style={{ marginTop: "100px" }}>

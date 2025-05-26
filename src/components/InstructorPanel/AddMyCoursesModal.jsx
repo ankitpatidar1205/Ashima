@@ -278,7 +278,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
               </select>
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="instructor" className="text-sm font-medium mb-1 block">Instructor</label>
               <select
                 id="instructor"
@@ -294,7 +294,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
                   )
                 )}
               </select>
-            </div>
+            </div> */}
 
             <div>
               <label htmlFor="price" className="text-sm font-medium mb-1 block">Course Price</label>

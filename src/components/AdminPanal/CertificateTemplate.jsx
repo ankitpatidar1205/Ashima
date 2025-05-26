@@ -6,7 +6,6 @@ import { fetchTemplates, deleteTemplate } from "../../Redux/slices/templateSlice
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
 const CertificateTemplates = () => {
   const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -56,7 +55,6 @@ const CertificateTemplates = () => {
           </button>
           <AddTemplateModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
-
         {/* Search */}
         <div className="bg-white p-4 rounded shadow mb-4">
           <div className="flex flex-wrap gap-2 mb-6">

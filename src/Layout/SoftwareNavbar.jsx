@@ -19,8 +19,10 @@ const SoftwareNavbar = ({ isCollapsed }) => {
 
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("user");
+     localStorage.clear();
+     console.log("logout")
     navigate("/");
   };
 

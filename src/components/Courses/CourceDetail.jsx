@@ -22,6 +22,7 @@ const CourceDetail = () => {
   const currency = useCurrency();
   const [data, setData] = useState([])
   const user_id = localStorage.getItem("is_id")
+  const role = localStorage.getItem("role")
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchCourse = async () => {
@@ -98,8 +99,14 @@ const CourceDetail = () => {
   };
   const [startDate, setStartDate] = useState(new Date());
   const handleCart = () => {
-    console.log("run")
-    dispatch(addItemToCart({ user_id, course_id: id }))
+    if(role=="student"){
+      dispatch(addItemToCart({ user_id, course_id: id }))
+      alert("course added successfully")
+    }
+    else{
+       alert("Login with your student Account")
+    }
+    
   }
 
 
