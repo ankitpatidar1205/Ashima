@@ -48,25 +48,28 @@ function AllCourses() {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
   const { courses } = useSelector((state) => state.courses);
-  console.log(courses);
+  
   // Filtered courses based on category id
   const filteredCourses = courses
-    ?.filter((course) => course?.category_name === selectedCategory)
-    ?.filter((course) => {
-      if (modeFilter.length === 0) return true;
-      return modeFilter.includes(course.course_type?.toLowerCase());
-    })
-    ?.sort((a, b) => {
-      const priceA = parseFloat(a.course_price) || 0;
-      const priceB = parseFloat(b.course_price) || 0;
-
-      if (sortOption.toLowerCase() === "lowest to highest") {
-        return priceA - priceB;
-      } else if (sortOption.toLowerCase() === "highest to lowest") {
-        return priceB - priceA;
-      }
-      return 0;
-    });
+  ?.filter((course) => course?.category_name === selectedCategory)
+  ?.filter((course) => {
+    if (modeFilter.length === 0) return true;
+    return modeFilter.includes(course.course_type?.toLowerCase());
+  })
+  ?.sort((a, b) => {
+    console.log("sort")
+    const priceA = parseFloat(a?.course_price || 0);
+    const priceB = parseFloat(b?.course_price || 0);
+    const option = sortOption?.trim().toLowerCase();
+     
+    if (option === "lowest to highest") {
+      return priceA - priceB;
+    }
+    if (option === "highest to lowest") {
+      return priceB - priceA;
+    }
+    return 0;
+  });
 
 
   console.log("Filtered Courses:", filteredCourses);
@@ -247,20 +250,35 @@ function AllCourses() {
 
             <hr />
 
-            <h5 className="fw-bold">Price</h5>
-            <div className="d-flex">
-              <Form.Check type="checkbox" />
-              <label htmlFor="" className="ms-4">
-                Highest to Lowest
-              </label>
-            </div>
+             <h5 className="fw-bold">Price</h5>
+<Form>
+  <div className="d-flex">
+    <Form.Check
+      type="radio"
+      name="priceSort"
+      id="price-high"
+      checked={sortOption === "Highest to Lowest"}
+      onChange={() => setSortOption("Highest to Lowest")}
+    />
+    <label htmlFor="price-high" className="ms-4">
+      Highest to Lowest
+    </label>
+  </div>
 
-            <div className="d-flex">
-              <Form.Check type="checkbox" />
-              <label htmlFor="" className="ms-4">
-                Lowest to Highest
-              </label>
-            </div>
+  <div className="d-flex">
+    <Form.Check
+      type="radio"
+      name="priceSort"
+      id="price-low"
+      checked={sortOption === "Lowest to Highest"}
+      onChange={() => setSortOption("Lowest to Highest")}
+    />
+    <label htmlFor="price-low" className="ms-4">
+      Lowest to Highest
+    </label>
+  </div>
+</Form>
+
             <hr />
             <h5 className="fw-bold">Mode</h5>
             <Form>
