@@ -148,16 +148,24 @@ const ProfileLayout = () => {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-teal-700 mb-2">Bank Details</h3>
-                    <div className="mb-3">
-                      <span className="block text-sm font-medium text-gray-600">Bank Account Number</span>
-                      <p className="text-gray-800">{instructorData.bank_account_number}</p>
-                    </div>
-                    <div>
-                      <span className="block text-sm font-medium text-gray-600">IFSC Code</span>
-                      <p className="text-gray-800">{instructorData.ifsc_code}</p>
-                    </div>
-                  </div>
+  <h3 className="text-lg font-semibold text-teal-700 mb-2">Bank Details</h3>
+  {instructorData?.bank_account_number ? (
+    <>
+      <div className="mb-3">
+        <span className="block text-sm font-medium text-gray-600">Bank Account Number</span>
+        <p className="text-gray-800">{instructorData.bank_account_number}</p>
+      </div>
+      <div>
+        <span className="block text-sm font-medium text-gray-600">IFSC Code</span>
+        <p className="text-gray-800">{instructorData.ifsc_code}</p>
+      </div>
+    </>
+  ) : (
+                
+    <button   className="rounded-lg bg-[#047670] text-white px-4 py-2 flex items-center space-x-2 hover:bg-teal-800" onClick={handleEditClick}  >Add Bank Details</button>
+  )}
+</div>
+
                 </div>
               </div>
             ) : (

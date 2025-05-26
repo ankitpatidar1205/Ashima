@@ -53,6 +53,7 @@ useEffect(() => {
 }, []);
 const removeItem = (id)=>{
   dispatch(deleteCartItem(id))
+   
 }
   return (
     <>

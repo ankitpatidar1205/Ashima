@@ -1,8 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import courses2 from "../../assets/courses2.png";
-import courses1 from "../../assets/courses1.png";
-import courses3 from "../../assets/courses3.png";
-import courses4 from "../../assets/courses4.png";
 import trending1 from "../../assets/trending1.png";
 import { CiFilter, CiGlass } from "react-icons/ci";
 import { Link, useParams } from "react-router-dom";
@@ -10,7 +6,7 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import ReviewCarrds from "../Home/ReviewCards";
-import { Container, Row, Col, Button, Dropdown, Form, Card, Nav,} from "react-bootstrap";
+import { Container, Row, Col, Button, Dropdown, Form, Card, Nav, } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 import { fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
@@ -21,6 +17,8 @@ function AllCourses() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [sortOption, setSortOption] = useState("Most Popular");
+  const [modeFilter, setModeFilter] = useState([]);
+
 
   const scrollRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -52,9 +50,25 @@ function AllCourses() {
   const { courses } = useSelector((state) => state.courses);
   console.log(courses);
   // Filtered courses based on category id
-  const filteredCourses = courses?.filter(
-    (course) => course?.category_name === selectedCategory
-  );
+  const filteredCourses = courses
+    ?.filter((course) => course?.category_name === selectedCategory)
+    ?.filter((course) => {
+      if (modeFilter.length === 0) return true;
+      return modeFilter.includes(course.course_type?.toLowerCase());
+    })
+    ?.sort((a, b) => {
+      const priceA = parseFloat(a.course_price) || 0;
+      const priceB = parseFloat(b.course_price) || 0;
+
+      if (sortOption.toLowerCase() === "lowest to highest") {
+        return priceA - priceB;
+      } else if (sortOption.toLowerCase() === "highest to lowest") {
+        return priceB - priceA;
+      }
+      return 0;
+    });
+
+
   console.log("Filtered Courses:", filteredCourses);
 
   useEffect(() => {
@@ -111,6 +125,10 @@ function AllCourses() {
       scrollRef.current.scrollLeft += direction === "left" ? -300 : 300;
     }
   };
+  useEffect(() => {
+    console.log("Sorting by:", sortOption);
+  }, [sortOption]);
+
 
   return (
     <>
@@ -131,11 +149,10 @@ function AllCourses() {
                     handleCategoryClick(index, category.category_name)
                   }
                   className={`min-w-max cursor-pointer px-4 py-2 m-2 rounded-full text-sm font-semibold whitespace-nowrap border 
-             ${
-               activeIndex === index
-                 ? "bg-teal-700 text-white"
-                 : "bg-white text-black"
-             }`}
+             ${activeIndex === index
+                      ? "bg-teal-700 text-white"
+                      : "bg-white text-black"
+                    }`}
                 >
                   {category.category_name}
                 </div>
@@ -178,26 +195,19 @@ function AllCourses() {
 
             <Dropdown>
               <Dropdown.Toggle variant="outline-success mx-1" className="w-100">
-                <label
-                  htmlFor=""
-                  style={{ color: "#000000", fontWeight: "600" }}
-                >
-                  Sort By
-                </label>{" "}
-                <br /> {sortOption}
+                <div style={{ color: "#000000", fontWeight: "600" }}>Sort By</div>
+                <div>{sortOption}</div>
               </Dropdown.Toggle>
+
               <Dropdown.Menu>
-                <Dropdown.Item
-                  onClick={() => setSortOption("Highest to Lowest")}
-                >
+                <Dropdown.Item onClick={() => setSortOption("Highest to Lowest")}>
                   Highest to Lowest
                 </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => setSortOption("Lowest to Highest")}
-                >
+                <Dropdown.Item onClick={() => setSortOption("Lowest to Highest")}>
                   Lowest to Highest
                 </Dropdown.Item>
               </Dropdown.Menu>
+
             </Dropdown>
           </Col>
         </Row>
@@ -253,32 +263,28 @@ function AllCourses() {
             </div>
             <hr />
             <h5 className="fw-bold">Mode</h5>
-            <button>
-              <div className="d-flex">
-                <Form.Check type="checkbox" />
-                <label htmlFor="" className="ms-4">
-                  Live
-                </label>
-              </div>
-            </button>
+            <Form>
+              {["live", "hybrid", "video"].map((mode) => (
+                <div key={mode} className="d-flex mb-2">
+                  <Form.Check
+                    type="checkbox"
+                    id={`mode-${mode}`}
+                    checked={modeFilter.includes(mode)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setModeFilter([...modeFilter, mode]);
+                      } else {
+                        setModeFilter(modeFilter.filter((m) => m !== mode));
+                      }
+                    }}
+                  />
+                  <label htmlFor={`mode-${mode}`} className="ms-3 text-capitalize">
+                    {mode}
+                  </label>
+                </div>
+              ))}
+            </Form>
 
-            <div className="d-flex">
-              <Form.Check type="checkbox" />
-              <button>
-                <label htmlFor="" className="ms-4">
-                  Hybrid
-                </label>
-              </button>
-            </div>
-
-            <button>
-              <div className="d-flex">
-                <Form.Check type="checkbox" />
-                <label htmlFor="" className="ms-4">
-                  Video
-                </label>
-              </div>
-            </button>
           </Col>
 
           <Col md={9}>
@@ -311,7 +317,7 @@ function AllCourses() {
                         {/* Price */}
                         <h3 className="text-[22px] font-[700] text-[#047670] font-roboto mb-2">
                           {currency.symbol}
-                     {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
+                          {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
                         </h3>
 
                         {/* Instructor */}
@@ -337,15 +343,14 @@ function AllCourses() {
 
                           <span
                             className={`text-white w-[101px] h-[21px] text-[10px] px-4 py-1 rounded-[4px] uppercase font-roboto text-center
-                  ${
-                    course.course_type === "HyBrid"
-                      ? "bg-[#ffb347]"
-                      : course.course_type === "Live"
-                      ? "bg-[#09d0c6]"
-                      : course.course_type === "HYBRID"
-                      ? "bg-[#1e293b]"
-                      : "bg-gray-400"
-                  }`}
+                  ${course.course_type === "HyBrid"
+                                ? "bg-[#ffb347]"
+                                : course.course_type === "Live"
+                                  ? "bg-[#09d0c6]"
+                                  : course.course_type === "HYBRID"
+                                    ? "bg-[#1e293b]"
+                                    : "bg-gray-400"
+                              }`}
                           >
                             {course.course_type}
                           </span>
@@ -442,8 +447,8 @@ function AllCourses() {
                   course.mode === "VIDEO"
                     ? "/video"
                     : course.mode === "LIVE"
-                    ? "/live"
-                    : "/hybrid"
+                      ? "/live"
+                      : "/hybrid"
                 }
                 className="text-decoration-none"
               >
@@ -490,15 +495,14 @@ function AllCourses() {
 
                       <span
                         className={`text-white text-[10px] px-4 py-2 rounded-full font-roboto uppercase font-semibold inline-block w-[80px] text-center
-                  ${
-                    course.mode === "VIDEO"
-                      ? "bg-[#ff757a]"
-                      : course.mode === "LIVE"
-                      ? "bg-[#09d0c6]"
-                      : course.mode === "HYBRID"
-                      ? "bg-[#1e1e1e]"
-                      : "bg-gray-400"
-                  }`}
+                  ${course.mode === "VIDEO"
+                            ? "bg-[#ff757a]"
+                            : course.mode === "LIVE"
+                              ? "bg-[#09d0c6]"
+                              : course.mode === "HYBRID"
+                                ? "bg-[#1e1e1e]"
+                                : "bg-gray-400"
+                          }`}
                       >
                         {course.mode}
                       </span>
