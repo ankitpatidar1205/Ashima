@@ -15,7 +15,6 @@ const StudentDigitalProducts = () => {
   const dispatch = useDispatch();
    const currency = useCurrency();
   const products = useSelector((state) => state.products);
-  console.log(products.data)
   useEffect(() => {
     dispatch(getAllDigitalProducts());
   }, [dispatch]);
@@ -23,6 +22,7 @@ const StudentDigitalProducts = () => {
   const filteredProducts = products.data
     ?.filter((product) =>
       product?.product_title?.toLowerCase()?.includes(searchQuery.toLowerCase())
+    && product.status === "1"
     ) ;
 
 
@@ -93,7 +93,7 @@ const StudentDigitalProducts = () => {
                     alt={product.product_title} className="object-cover w-full h-full rounded" />
                 </div>
 
-                <div className="flex justify-between mt-2">
+                {/* <div className="flex justify-between mt-2">
                   <span  onClick={() => handleToggleStatus(product.id, product.status)} 
                     className={`text-xs px-2 py-1 rounded cursor-pointer ${product.status === "1"
                         ? "bg-green-100 text-green-600"
@@ -101,7 +101,7 @@ const StudentDigitalProducts = () => {
                       }`}>
                     {product.status === "1" ? "Published" : "Draft"}
                   </span>
-                </div>
+                </div> */}
 
 
                 <h3 className="font-semibold mt-2">{product.product_title}</h3>

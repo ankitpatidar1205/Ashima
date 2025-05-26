@@ -1,60 +1,83 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FaStar, FaTrashAlt, FaRegBookmark } from "react-icons/fa";
+ import React, { useEffect, useRef, useState } from "react";
+import { FaStar, FaTrashAlt } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartItemById,deleteCartItem } from "../../Redux/slices/cartSlice/cartSlice";
+import {
+  fetchCartItemById,
+  deleteCartItem,
+} from "../../Redux/slices/cartSlice/cartSlice";
 import Header from "../../Layout/Header";
-const Cart = () => {
-  const user_id = localStorage.getItem("is_id");
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchCartItemById(user_id))
-  }, [])
 
-  const cartItems = useSelector((state) => state?.cart?.selectedItem?.items)
-   const totalPrice = useSelector((state) => state?.cart?.selectedItem?.total)
+const Cart = () => {
+  const userId = localStorage.getItem("is_id");
+  const dispatch = useDispatch();
+
+  // 1) initial fetch (and refetch on userId change)
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchCartItemById(userId));
+    }
+  }, [dispatch, userId]);
+
+  const cartItems = useSelector(
+    (state) => state.cart.selectedItem?.items || []
+  );
+  const totalPrice = useSelector(
+    (state) => state.cart.selectedItem?.total || 0
+  );
+
   const [showCouponInput, setShowCouponInput] = useState(false);
   const [couponCode, setCouponCode] = useState("");
 
-
   const paypalRef = useRef();
 
-useEffect(() => {
-  // Cleanup existing buttons if any
-  if (paypalRef.current) {
-    paypalRef.current.innerHTML = ''; // Clear previously rendered PayPal buttons
-  }
+  // PayPal button setup
+  useEffect(() => {
+    // clear any existing buttons
+    if (paypalRef.current) paypalRef.current.innerHTML = "";
 
-  if (window.paypal) {
-    window.paypal.Buttons({
-      style: {
-        layout: 'vertical',
-        color: 'gold',
-        shape: 'rect',
-        label: 'paypal'
-      },
-      createOrder: (data, actions) => {
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: '0.01',
-              currency_code: 'USD'
-            }
-          }]
-        });
-      },
-      onApprove: (data, actions) => {
-        return actions.order.capture().then(function (details) {
-          alert('Payment Complete by ' + details.payer.name.given_name);
-        });
-      }
-    }).render(paypalRef.current);
-  }
-}, []);
-const removeItem = (id)=>{
-  dispatch(deleteCartItem(id))
-   
-}
+    if (window.paypal) {
+      window.paypal
+        .Buttons({
+          style: {
+            layout: "vertical",
+            color: "gold",
+            shape: "rect",
+            label: "paypal",
+          },
+          createOrder: (data, actions) =>
+            actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: "0.01",
+                    currency_code: "USD",
+                  },
+                },
+              ],
+            }),
+          onApprove: (data, actions) =>
+            actions.order.capture().then((details) => {
+              alert("Payment Complete by " + details.payer.name.given_name);
+            }),
+        })
+        .render(paypalRef.current);
+    }
+  }, []);
+
+  // 2) remove & re-fetch
+  const removeItem = (cartItemId) => {
+    dispatch(deleteCartItem(cartItemId))
+      .unwrap()
+      .then(() => {
+        // re-sync UI
+        return dispatch(fetchCartItemById(userId));
+      })
+      .catch((err) => {
+        console.error("Failed to delete item:", err);
+      });
+  };
+
   return (
     <>
 
@@ -125,7 +148,7 @@ const removeItem = (id)=>{
                       (1,355 ratings)
                     </span>
                   </div>
-<hr />
+                  <hr />
                 </div>
               </div>
             ))}
