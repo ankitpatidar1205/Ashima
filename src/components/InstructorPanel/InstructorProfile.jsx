@@ -75,7 +75,7 @@ const ProfileLayout = () => {
 
       // If a new image is selected, append it
       if (profileImage) {
-        updatedData.append("profile_image", profileImage);
+        updatedData.append("avatar", profileImage);
       }
 
       // API call
@@ -124,7 +124,7 @@ const ProfileLayout = () => {
                 <div className="col-span-1 flex flex-col items-center">
                   <div className="w-36 h-36 rounded-full overflow-hidden bg-gray-200 mb-4">
                     <img
-                      src={instructorData?.avatar}
+                      src={instructorData?.avatar || `https://ui-avatars.com/api/?name=${instructorData.full_name}&background=0D8ABC&color=fff`}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />

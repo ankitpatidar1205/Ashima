@@ -13,7 +13,7 @@ const AddInstructorModal = ({ isOpen, onClose }) => {
   const [expertise, setExpertise] = useState("");
   const [bank_account_number, setBankAccountNumber] = useState("");
   const [ifsc_code, setIfscCode] = useState("");
-  const [profile_image, setProfileImage] = useState(null);
+  // const [profile_image, setProfileImage] = useState(null);
   const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
 
@@ -47,12 +47,12 @@ const AddInstructorModal = ({ isOpen, onClose }) => {
     formData.append("mobile_number", mobile_number);
     formData.append("password", password);
     formData.append("expertise", expertise);
-    formData.append("bank_account_number", bank_account_number);
-    formData.append("ifsc_code", ifsc_code);
+    // formData.append("bank_account_number", bank_account_number);
+    // formData.append("ifsc_code", ifsc_code);
  
-    if (profile_image) {
-      formData.append("profile_image", profile_image);
-    }
+    // if (profile_image) {
+    //   formData.append("profile_image", profile_image);
+    // }
   
     try {
       await dispatch(addInstructor(formData)).unwrap();
@@ -118,7 +118,7 @@ const AddInstructorModal = ({ isOpen, onClose }) => {
             {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
 
             {/* Bank Account & IFSC */}
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div className="w-1/2">
                 <label className="block text-sm mb-1 font-medium">Bank Account Number</label>
                 <input type="text" placeholder="Bank Account Number" className="w-full border px-3 py-2 rounded" value={bank_account_number} onChange={(e) => setBankAccountNumber(e.target.value)} />
@@ -127,13 +127,13 @@ const AddInstructorModal = ({ isOpen, onClose }) => {
                 <label className="block text-sm mb-1 font-medium">IFSC Code</label>
                 <input type="text" placeholder="IFSC Code" className="w-full border px-3 py-2 rounded" value={ifsc_code} onChange={(e) => setIfscCode(e.target.value)} />
               </div>
-            </div>
+            </div> */}
 
             {/* Profile Image */}
-            <div>
+            {/* <div>
               <label className="block text-sm mb-1 font-medium">Profile Image</label>
               <input type="file" accept="image/*" onChange={handleProfileImageChange} className="w-full border px-3 py-2 rounded" />
-            </div>
+            </div> */}
 
             {/* Action Buttons */}
             <div className="flex justify-end gap-2">
