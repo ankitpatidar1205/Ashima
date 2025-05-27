@@ -13,7 +13,6 @@ import { fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
 import useCurrency from "../../utils/useCurrency";
 function AllCourses() {
   const { id } = useParams();
-  console.log(id);
   const [activeIndex, setActiveIndex] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [sortOption, setSortOption] = useState("Most Popular");
@@ -57,7 +56,6 @@ function AllCourses() {
     return modeFilter.includes(course.course_type?.toLowerCase());
   })
   ?.sort((a, b) => {
-    console.log("sort")
     const priceA = parseFloat(a?.course_price || 0);
     const priceB = parseFloat(b?.course_price || 0);
     const option = sortOption?.trim().toLowerCase();
@@ -72,7 +70,6 @@ function AllCourses() {
   });
 
 
-  console.log("Filtered Courses:", filteredCourses);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -128,9 +125,7 @@ function AllCourses() {
       scrollRef.current.scrollLeft += direction === "left" ? -300 : 300;
     }
   };
-  useEffect(() => {
-    console.log("Sorting by:", sortOption);
-  }, [sortOption]);
+   
 
 
   return (
@@ -174,7 +169,7 @@ function AllCourses() {
         </Row>
 
         {/* Filters & Sorting */}
-        <Row className="mb-3 ">
+        {/* <Row className="mb-3 ">
           <Col md={3} className="d-flex">
             <Button
               variant="outline-success"
@@ -213,7 +208,7 @@ function AllCourses() {
 
             </Dropdown>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row>
           {/* Sidebar Filters */}
