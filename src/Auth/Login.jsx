@@ -74,7 +74,7 @@ const Login = () => {
         Swal.fire({
           icon: "success",
           title: "Login Successful!",
-          text: `Welcome, ${userData.role}!`,
+          text: `Welcome, ${meResponse.data.data.full_name || meResponse.data.data.name}!`,
         });
 
         if (userData.role === "admin") {

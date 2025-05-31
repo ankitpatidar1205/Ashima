@@ -75,7 +75,7 @@ const ProfileLayout = () => {
 
       // If a new image is selected, append it
       if (profileImage) {
-        updatedData.append("profile_image", profileImage);
+        updatedData.append("avatar", profileImage);
       }
 
       // API call
@@ -124,7 +124,7 @@ const ProfileLayout = () => {
                 <div className="col-span-1 flex flex-col items-center">
                   <div className="w-36 h-36 rounded-full overflow-hidden bg-gray-200 mb-4">
                     <img
-                      src={instructorData?.avatar}
+                      src={instructorData?.avatar || `https://ui-avatars.com/api/?name=${instructorData.full_name}&background=0D8ABC&color=fff`}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />
@@ -148,16 +148,24 @@ const ProfileLayout = () => {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-teal-700 mb-2">Bank Details</h3>
-                    <div className="mb-3">
-                      <span className="block text-sm font-medium text-gray-600">Bank Account Number</span>
-                      <p className="text-gray-800">{instructorData.bank_account_number}</p>
-                    </div>
-                    <div>
-                      <span className="block text-sm font-medium text-gray-600">IFSC Code</span>
-                      <p className="text-gray-800">{instructorData.ifsc_code}</p>
-                    </div>
-                  </div>
+  <h3 className="text-lg font-semibold text-teal-700 mb-2">Bank Details</h3>
+  {instructorData?.bank_account_number ? (
+    <>
+      <div className="mb-3">
+        <span className="block text-sm font-medium text-gray-600">Bank Account Number</span>
+        <p className="text-gray-800">{instructorData.bank_account_number}</p>
+      </div>
+      <div>
+        <span className="block text-sm font-medium text-gray-600">IFSC Code</span>
+        <p className="text-gray-800">{instructorData.ifsc_code}</p>
+      </div>
+    </>
+  ) : (
+                
+    <button   className="rounded-lg bg-[#047670] text-white px-4 py-2 flex items-center space-x-2 hover:bg-teal-800" onClick={handleEditClick}  >Add Bank Details</button>
+  )}
+</div>
+
                 </div>
               </div>
             ) : (

@@ -130,8 +130,8 @@ const CoursesDetails = () => {
                     <>
                       <div className="w-12 h-12 rounded-full overflow-hidden">
                         <img
-                          src={coursedata.instructor_details.profile_image}
-                          alt={coursedata.instructor_details.full_name}
+                          src={coursedata?.instructor_details.avatar}
+                          alt={coursedata?.instructor_details.full_name}
                           className="w-full h-full object-cover"
                         />
                       </div>

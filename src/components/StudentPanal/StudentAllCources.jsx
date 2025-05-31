@@ -51,10 +51,10 @@ const StudentAllCources = () => {
                     {course?.course_title}
                   </Link>
                   {/* View Icon */}
-                  <Link  to={`/course/${course?.id}`}
+                  {/* <Link  to={`/course/${course?.id}`}
                     className="text-teal-700 hover:text-teal-900"  title="View Course" >
                     <FaEye />
-                  </Link>
+                  </Link> */}
                 </div>
 
                 <p className="text-sm text-gray-500">

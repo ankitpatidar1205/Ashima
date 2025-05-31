@@ -28,8 +28,8 @@ const RoleBasedSidebar = ({
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    
+    localStorage.clear()
     navigate("/");  // client-side navigation to home or login
   };
 

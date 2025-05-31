@@ -197,6 +197,25 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
       status: e.target.checked ? "1" : "0",
     });
   };
+const handleClose = () => {
+  setCourseId(null); // Clear editing state
+  setFormData({
+    course_title: "",
+    course_description: "",
+    course_type: "",
+    instructor_id: instructorid || "",
+    course_price: "",
+    course_image: null,
+    category_id: "",
+    course_content_video_link: "",
+    test_video: null,
+    status: "0",
+    fcmToken
+  });
+  setCourseSyllabus([{ module_title: "", module_syllabus: "", module_courses: "" }]);
+  setFaqs([{ question: "", answer: "" }]);
+  onClose(); // Close the modal
+};
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -278,7 +297,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
               </select>
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="instructor" className="text-sm font-medium mb-1 block">Instructor</label>
               <select
                 id="instructor"
@@ -294,7 +313,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
                   )
                 )}
               </select>
-            </div>
+            </div> */}
 
             <div>
               <label htmlFor="price" className="text-sm font-medium mb-1 block">Course Price</label>
@@ -423,7 +442,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           <div className="flex justify-end gap-2">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="border px-4 py-2 rounded"
             >
               Cancel
@@ -434,7 +453,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           </div>
         </form>
 
-        <button onClick={onClose} className="absolute top-2 right-3 text-gray-500 text-2xl">&times;</button>
+        <button onClick={handleClose} className="absolute top-2 right-3 text-gray-500 text-2xl">&times;</button>
       </div>
     </div>
   );

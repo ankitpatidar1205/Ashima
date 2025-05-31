@@ -22,6 +22,7 @@ const CourceDetail = () => {
   const currency = useCurrency();
   const [data, setData] = useState([])
   const user_id = localStorage.getItem("is_id")
+  const role = localStorage.getItem("role")
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchCourse = async () => {
@@ -98,8 +99,14 @@ const CourceDetail = () => {
   };
   const [startDate, setStartDate] = useState(new Date());
   const handleCart = () => {
-    console.log("run")
-    dispatch(addItemToCart({ user_id, course_id: id }))
+    if(role=="student"){
+      dispatch(addItemToCart({ user_id, course_id: id }))
+      alert("course added successfully")
+    }
+    else{
+       alert("Login with your student Account")
+    }
+    
   }
 
 
@@ -377,7 +384,8 @@ useEffect(() => {
 
         <div className=" bg-[#ffffff] mt-6 p-6 rounded  shadow-lg">
           <div className="w-full sm:w-[850px] ml-2 sm:ml-10">
-            <div className="bg-[#ffffff] text-[#1e1e1e] p-4 sm:p-10 flex justify-start sm:h-[524px]">
+            <div className="bg-[#ffffff] text-[#1e1e1e] p-4 sm:p-10 flex justify-start">
+
               <div className="w-full">
                 <h2 className="text-[28px] sm:text-[36px] font-roboto font-bold mb-2">
                   COURSE CONTENT
@@ -385,15 +393,15 @@ useEffect(() => {
 
                 <div className="flex flex-col sm:flex-row sm:justify-between">
                   <p className="text-[16px] text-[#1e1e1e] mb-2 sm:mb-6">
-                     {courseData?.course_syllabus?.length} sections • 73 lectures • 16h 8m total length
+                     {courseData?.course_syllabus?.length} sections  
                   </p>
-                  <p className="text-[18px] text-[#047670] font-roboto cursor-pointer mb-2 sm:mb-6">
+                  {/* <p className="text-[18px] text-[#047670] font-roboto cursor-pointer mb-2 sm:mb-6">
                     EXPAND ALL SECTIONS
-                  </p>
+                  </p> */}
                 </div>
 
                 {/* Intro + Topics List with inner borders */}
-                <div className="border-t border-double border-[#047670]/40 mt-5">
+                <div className="border-t border-double border-[#047670]/40 mt-1">
                   {courseData?.course_syllabus && (
                     <div>
                       {courseData.course_syllabus.map((module, i) => (
@@ -461,7 +469,7 @@ useEffect(() => {
 
           <div className="ml-4 sm:ml-20">
             {/* Course Includes */}
-            <h4 className="font-roboto mt-28 text-[36px] font-bold ml-0">
+            <h4 className="font-roboto text-[36px] font-bold ml-0">
               THIS COURSE{" "}
               <span className="text-[#047670] text-[36px] font-roboto font-bold">
                 INCLUDES:
