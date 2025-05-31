@@ -49,18 +49,18 @@ const EarningsOverview = () => {
                 {/* Total Earnings */}
                 <div className="bg-white p-6 rounded-lg shadow">
                   <h3 className="text-gray-500 text-sm mb-2">Total Earnings</h3>
-                  <p className="text-3xl font-bold text-gray-900">$24,850.00</p>
+                  <p className="text-3xl font-bold text-gray-900">$0</p>
                   <p className="text-green-600 text-sm mt-2">
-                    <i className="fas fa-arrow-up"></i> 12% from last month
+                    <i className="fas fa-arrow-up"></i> 0% from last month
                   </p>
                 </div>
 
                 {/* This Month */}
                 <div className="bg-white p-6 rounded-lg shadow">
                   <h3 className="text-gray-500 text-sm mb-2">This Month</h3>
-                  <p className="text-3xl font-bold text-gray-900">$3,240.00</p>
+                  <p className="text-3xl font-bold text-gray-900">$0</p>
                   <p className="text-green-600 text-sm mt-2">
-                    <i className="fas fa-arrow-up"></i> 8% from last month
+                    <i className="fas fa-arrow-up"></i> 0% from last month
                   </p>
                 </div>
 
@@ -69,7 +69,7 @@ const EarningsOverview = () => {
                   <h3 className="text-gray-500 text-sm mb-2">
                     Pending Payouts
                   </h3>
-                  <p className="text-3xl font-bold text-gray-900">$1,200.00</p>
+                  <p className="text-3xl font-bold text-gray-900">$0</p>
                   <button className="bg-teal-700 text-white px-4 py-2 rounded-lg mt-2 hover:bg-teal-800 w-full">
                     Withdraw
                   </button>
