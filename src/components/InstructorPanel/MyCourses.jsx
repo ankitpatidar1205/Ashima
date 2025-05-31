@@ -15,7 +15,7 @@ const MyCourses = () => {
   const dispatch = useDispatch();
    const currency = useCurrency();
   const { courses } = useSelector((state) => state.courses);
-  console.log(courses);
+  
 
   useEffect(() => {
     dispatch(fetchCourses());
