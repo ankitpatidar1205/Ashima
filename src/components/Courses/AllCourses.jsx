@@ -47,27 +47,27 @@ function AllCourses() {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
   const { courses } = useSelector((state) => state.courses);
-  
+
   // Filtered courses based on category id
   const filteredCourses = courses
-  ?.filter((course) => course?.category_name === selectedCategory)
-  ?.filter((course) => {
-    if (modeFilter.length === 0) return true;
-    return modeFilter.includes(course.course_type?.toLowerCase());
-  })
-  ?.sort((a, b) => {
-    const priceA = parseFloat(a?.course_price || 0);
-    const priceB = parseFloat(b?.course_price || 0);
-    const option = sortOption?.trim().toLowerCase();
-     
-    if (option === "lowest to highest") {
-      return priceA - priceB;
-    }
-    if (option === "highest to lowest") {
-      return priceB - priceA;
-    }
-    return 0;
-  });
+    ?.filter((course) => course?.category_name === selectedCategory)
+    ?.filter((course) => {
+      if (modeFilter.length === 0) return true;
+      return modeFilter.includes(course.course_type?.toLowerCase());
+    })
+    ?.sort((a, b) => {
+      const priceA = parseFloat(a?.course_price || 0);
+      const priceB = parseFloat(b?.course_price || 0);
+      const option = sortOption?.trim().toLowerCase();
+
+      if (option === "lowest to highest") {
+        return priceA - priceB;
+      }
+      if (option === "highest to lowest") {
+        return priceB - priceA;
+      }
+      return 0;
+    });
 
 
 
@@ -125,7 +125,7 @@ function AllCourses() {
       scrollRef.current.scrollLeft += direction === "left" ? -300 : 300;
     }
   };
-   
+
 
 
   return (
@@ -216,63 +216,66 @@ function AllCourses() {
             <hr />
             <h5 className="fw-bold">Ratings</h5>
             <Form>
-              <div className="d-flex">
-                <Form.Check type="radio" name="rating" />
-                <label htmlFor="" className="ms-4">
-                  4.0 & UP ⭐⭐⭐⭐ (100)
+              <div className="d-flex align-items-center mb-2">
+                <Form.Check type="radio" name="rating" id="rating45" />
+                <label htmlFor="rating45" className="ms-2">
+                  <span className="text-warning">★★★★★</span> 4.5 & up <span className="text-muted">(0)</span>
                 </label>
               </div>
 
-              <div className="d-flex">
-                <Form.Check type="radio" name="rating" />
-                <label htmlFor="" className="ms-4">
-                  4.0 & UP ⭐⭐⭐⭐ (100)
+              <div className="d-flex align-items-center mb-2">
+                <Form.Check type="radio" name="rating" id="rating40" />
+                <label htmlFor="rating40" className="ms-2">
+                  <span className="text-warning">★★★★☆</span> 4.0 & up <span className="text-muted">(0)</span>
                 </label>
               </div>
-              <div className="d-flex">
-                <Form.Check type="radio" name="rating" />
-                <label htmlFor="" className="ms-4">
-                  4.0 & UP ⭐⭐⭐⭐ (100)
+
+              <div className="d-flex align-items-center mb-2">
+                <Form.Check type="radio" name="rating" id="rating35" />
+                <label htmlFor="rating35" className="ms-2">
+                  <span className="text-warning">★★★☆☆</span> 3.5 & up <span className="text-muted">(0)</span>
                 </label>
               </div>
-              <div className="d-flex">
-                <Form.Check type="radio" name="rating" />
-                <label htmlFor="" className="ms-4">
-                  4.0 & UP ⭐⭐⭐⭐ (100)
+
+              <div className="d-flex align-items-center">
+                <Form.Check type="radio" name="rating" id="rating30"  />
+                <label htmlFor="rating30" className="ms-2">
+                  <span className="text-warning">★★★☆☆</span> 3.0 & up <span className="text-muted">(0)</span>
                 </label>
               </div>
             </Form>
 
+
             <hr />
 
-             <h5 className="fw-bold">Price</h5>
-<Form>
-  <div className="d-flex">
-    <Form.Check
-      type="radio"
-      name="priceSort"
-      id="price-high"
-      checked={sortOption === "Highest to Lowest"}
-      onChange={() => setSortOption("Highest to Lowest")}
-    />
-    <label htmlFor="price-high" className="ms-4">
-      Highest to Lowest
-    </label>
-  </div>
+            <h5 className="fw-bold">Price</h5>
+            <Form>
+              <div className="d-flex">
+                <Form.Check
+                  type="radio"
+                  name="priceSort"
+                  id="price-high"
+                  checked={sortOption === "Highest to Lowest"}
+                  onChange={() => setSortOption("Highest to Lowest")}
+                />
+                <label htmlFor="price-high" className="ms-4">
+                  Highest to Lowest
+                </label>
+              </div>
 
-  <div className="d-flex">
-    <Form.Check
-      type="radio"
-      name="priceSort"
-      id="price-low"
-      checked={sortOption === "Lowest to Highest"}
-      onChange={() => setSortOption("Lowest to Highest")}
-    />
-    <label htmlFor="price-low" className="ms-4">
-      Lowest to Highest
-    </label>
-  </div>
-</Form>
+              <div className="d-flex">
+                <Form.Check
+                  type="radio"
+                  name="priceSort"
+                  id="price-low"
+                  checked={sortOption === "Lowest to Highest"}
+                  onChange={() => setSortOption("Lowest to Highest")}
+                />
+                <label htmlFor="price-low" className="ms-4">
+                  Lowest to Highest
+                </label>
+              </div>
+            </Form>
 
             <hr />
             <h5 className="fw-bold">Mode</h5>
