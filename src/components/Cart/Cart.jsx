@@ -99,62 +99,79 @@ const Cart = () => {
             <p className="fw-semibold text-secondary"> {cartItems?.length} Course in Cart</p>
             <hr />
 
-            {cartItems?.map((item) => (
-              <div key={item?.id} className="d-flex flex-wrap gap-3 mb-4 p-3 ">
-                {/* Course Image */}
-                <img
-                  src={item?.course_image}
-                  alt="Course"
-                  className="rounded"
-                  style={{ width: "160px", height: "90px", objectFit: "cover" }}
-                />
+           {cartItems?.length === 0 ? (
+  <p className="text-center py-4">No items in cart</p>
+) : (
+  cartItems?.map((item) => (
+    <div key={item?.id} className="d-flex flex-wrap gap-3 mb-4 p-3 ">
+      {/* Course Image */}
+      <img
+        src={item?.course_image}
+        alt="Course"
+        className="rounded"
+        style={{ width: "160px", height: "90px", objectFit: "cover" }}
+      />
 
-                {/* Course Info */}
-                <div className="flex-grow-1">
-                  <div className="d-flex justify-content-between flex-wrap align-items-start mb-2">
-                    <div>
-                      <h6 className="fw-bold mb-1 text-dark">{item?.course_title}</h6>
-                      <p className="text-muted mb-0" style={{ fontSize: "18px" }}>
-                        Rs : {item?.course_price}
-                      </p>
-                    </div>
+      {/* Course Info */}
+      <div className="flex-grow-1">
+        <div className="d-flex justify-content-between flex-wrap align-items-start mb-2">
+          <div>
+            <h6 className="fw-bold mb-1 text-dark">{item?.course_title}</h6>
+            <p className="text-muted mb-0" style={{ fontSize: "18px" }}>
+              Rs : {item?.course_price}
+            </p>
+          </div>
 
-                    {/* Actions */}
-                    <div
-                      className="d-flex flex-column mt-2 mt-md-0 text-white px-2 py-1 rounded"
-                      style={{ fontSize: "14px" }}
-                    >
-                      <span
-                        style={{ cursor: "pointer", marginBottom: "8px" }}
-                        className="hover-underline"
-                      >
-                        <FaTrashAlt className="me-1 text-danger fs-5" onClick={()=>{removeItem(item?.cart_item_id)}} /> Remove
-                      </span>
-                      {/* <span style={{ cursor: "pointer" }} className="hover-underline">
-                        <FaRegBookmark className="me-1 text-primary" /> Save
-                      </span> */}
-                    </div>
-                  </div>
+          {/* Actions */}
+          <div
+            className="d-flex flex-column mt-2 mt-md-0 text-white px-2 py-1 rounded"
+            style={{ fontSize: "14px" }}
+          >
+            <span
+              style={{ cursor: "pointer", marginBottom: "8px" }}
+              className="hover-underline"
+            >
+              <FaTrashAlt
+                className="me-1 text-danger fs-5"
+                onClick={() => {
+                  removeItem(item?.cart_item_id);
+                }}
+              />{" "}
+              Remove
+            </span>
+            {/* Uncomment if Save is needed */}
+            {/* <span style={{ cursor: "pointer" }} className="hover-underline">
+              <FaRegBookmark className="me-1 text-primary" /> Save
+            </span> */}
+          </div>
+        </div>
 
-                  <div className="d-flex align-items-center mb-1">
-                    <span className="fw-bold text-success me-1">4.8</span>
-                    <span className="text-warning me-1 d-flex">
-                      {[...Array(5)].map((_, i) => (
-                        <FaStar size={12} key={i} />
-                      ))}
-                    </span>
-                    <span className="text-muted" style={{ fontSize: "18px" }}>
-                      (1,355 ratings)
-                    </span>
-                  </div>
-                  <hr />
-                </div>
-              </div>
+        <div className="d-flex align-items-center mb-1">
+          <span className="fw-bold text-success me-1">4.8</span>
+          <span className="text-warning me-1 d-flex">
+            {[...Array(5)].map((_, i) => (
+              <FaStar size={12} key={i} />
             ))}
+          </span>
+          <span className="text-muted" style={{ fontSize: "18px" }}>
+            (1,355 ratings)
+          </span>
+        </div>
+        <hr />
+      </div>
+    </div>
+  )))
+}
+
           </div>
 
           {/* Right Side: Checkout */}
-          <div className="col-lg-4 mt-4 mt-lg-0">
+          
+          
+                 {cartItems?.length === 0 ? (
+  <p className="text-center py-4"> </p>
+) : (
+  <div className="col-lg-4 mt-4 mt-lg-0">
             <h6 className="fw-bold text-dark">Total:</h6>
             <h3 className="fw-bold mb-3 text-dark">₹ {totalPrice}</h3>
 
@@ -205,7 +222,61 @@ const Cart = () => {
             >
               Proceed to Checkout →
             </div>
-          </div>
+          </div>)
+} 
+
+          {/* {<div className="col-lg-4 mt-4 mt-lg-0">
+            <h6 className="fw-bold text-dark">Total:</h6>
+            <h3 className="fw-bold mb-3 text-dark">₹ {totalPrice}</h3>
+
+
+            <p className="text-muted" style={{ fontSize: "14px" }}>
+              You won't be charged yet
+            </p>
+
+            <hr />
+            {!showCouponInput && (
+              <button
+                className="btn w-100 mt-2 fw-semibold"
+                style={{
+                  border: `2px solid #007681`,
+                  color: "#007681",
+                  fontSize: "14px"
+                }}
+                onClick={() => setShowCouponInput(true)}
+              >
+                Apply Coupon
+              </button>
+            )}
+
+            {showCouponInput && (
+              <div className="mt-2">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  className="form-control mb-2"
+                  placeholder="Enter coupon code"
+                />
+                <button
+                  className="btn btn-success w-100 fw-semibold"
+                  onClick={() => {
+                    // Handle coupon application logic here
+                    alert(`Coupon applied: ${couponCode}`);
+                  }}
+                >
+                  Submit Coupon
+                </button>
+              </div>
+            )}
+            <hr />
+            <div ref={paypalRef}
+              className="btn w-100 fw-semibold mb-2 text-white"
+              style={{ fontSize: "14px", backgroundColor: "#007681" }}
+            >
+              Proceed to Checkout →
+            </div>
+          </div>} */}
         </div>
       </div>
 

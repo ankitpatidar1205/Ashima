@@ -30,7 +30,7 @@ const Footer = () => {
               </h3>
               <ul className="space-y-2  text-[#DBDAD8] text-sm leading-relaxed">
                 <li>
-                  <Link to="/courses" className="text-[#DBDAD8]">Courses</Link>
+                  <Link to="/" className="text-[#DBDAD8]">Courses</Link>
                 </li>
                 <li>
                   <Link to="/digital" className="text-[#DBDAD8]">Digital Products</Link>

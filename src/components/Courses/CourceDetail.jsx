@@ -14,6 +14,12 @@ import axiosInstance from "../../utils/axiosInstance";
 import useCurrency from "../../utils/useCurrency";
 import { addItemToCart } from "../../Redux/slices/cartSlice/cartSlice";
 import { useDispatch } from "react-redux";
+import { ToastContainer } from 'react-toastify';
+
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const CourceDetail = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
@@ -99,15 +105,14 @@ const CourceDetail = () => {
   };
   const [startDate, setStartDate] = useState(new Date());
   const handleCart = () => {
-    if(role=="student"){
-      dispatch(addItemToCart({ user_id, course_id: id }))
-      alert("course added successfully")
+    if (role === "student") {
+      dispatch(addItemToCart({ user_id, course_id: id }));
+      toast.success("🎉 Course added to cart successfully!");
+    } else {
+      toast.error("⚠️ Please login with your student account to add this course.");
     }
-    else{
-       alert("Login with your student Account")
-    }
-    
-  }
+  };
+
 
 
   useEffect(() => {
@@ -124,66 +129,67 @@ const CourceDetail = () => {
       fetchData();
     }
   }, [id]);
- 
- 
-    const fetchModuleContent = async (syllabus_id) => {
-  try {
-    const response = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
-    return response.data.data;
-  } catch (err) {
-    console.error(`Error fetching module ${syllabus_id}`, err);
-    return [];
-  }
-};
-useEffect(() => {
-  const loadModuleContents = async () => {
-    if (!courseData?.course_syllabus) return;
 
-    const contentMap = {};
-    await Promise.all(
-      courseData.course_syllabus.map(async (module) => {
-        const content = await fetchModuleContent(module.id);
-        contentMap[module.id] = content;
-      })
-    );
 
-    setModuleContents(contentMap);
-  };
-
-  loadModuleContents();
-}, [courseData]);
-
-useEffect(() => {
   const fetchModuleContent = async (syllabus_id) => {
     try {
-      const res = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
-      return res.data.data;
+      const response = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
+      return response.data.data;
     } catch (err) {
-      console.error("Failed to load content:", err);
+      console.error(`Error fetching module ${syllabus_id}`, err);
       return [];
     }
   };
+  useEffect(() => {
+    const loadModuleContents = async () => {
+      if (!courseData?.course_syllabus) return;
 
-  const loadModuleContents = async () => {
-    if (!courseData?.course_syllabus) return;
+      const contentMap = {};
+      await Promise.all(
+        courseData.course_syllabus.map(async (module) => {
+          const content = await fetchModuleContent(module.id);
+          contentMap[module.id] = content;
+        })
+      );
 
-    const contentMap = {};
-    await Promise.all(
-      courseData.course_syllabus.map(async (module) => {
-        const content = await fetchModuleContent(module.id);
-        contentMap[module.id] = content;
-      })
-    );
+      setModuleContents(contentMap);
+    };
 
-    setModuleContents(contentMap);
-  };
+    loadModuleContents();
+  }, [courseData]);
 
-  loadModuleContents();
-}, [courseData]);
+  useEffect(() => {
+    const fetchModuleContent = async (syllabus_id) => {
+      try {
+        const res = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
+        return res.data.data;
+      } catch (err) {
+        console.error("Failed to load content:", err);
+        return [];
+      }
+    };
+
+    const loadModuleContents = async () => {
+      if (!courseData?.course_syllabus) return;
+
+      const contentMap = {};
+      await Promise.all(
+        courseData.course_syllabus.map(async (module) => {
+          const content = await fetchModuleContent(module.id);
+          contentMap[module.id] = content;
+        })
+      );
+
+      setModuleContents(contentMap);
+    };
+
+    loadModuleContents();
+  }, [courseData]);
 
 
   return (
     <>
+      <ToastContainer position="top-right" autoClose={3000} />
       <Header />
       <div className="bg-[#ffffff] py-4">
         {/* Breadcrumb Navigation */}
@@ -393,7 +399,7 @@ useEffect(() => {
 
                 <div className="flex flex-col sm:flex-row sm:justify-between">
                   <p className="text-[16px] text-[#1e1e1e] mb-2 sm:mb-6">
-                     {courseData?.course_syllabus?.length} sections  
+                    {courseData?.course_syllabus?.length} sections
                   </p>
                   {/* <p className="text-[18px] text-[#047670] font-roboto cursor-pointer mb-2 sm:mb-6">
                     EXPAND ALL SECTIONS
@@ -424,25 +430,25 @@ useEffect(() => {
                             </span>
                           </div>
 
-                           {openSection === i && (
-  <div className="bg-[#ffffff] px-4 py-3 text-sm text-gray-700 border-b border-gray-300">
-    {moduleContents[module.id] ? (
-      moduleContents[module.id].length > 0 ? (
-        <ul className="space-y-1">
-          {moduleContents[module?.id]?.map((item) => (
-            <li key={item?.id} className="flex items-center gap-2 text-[#1e1e1e]">
-            <span>* {item?.title}</span>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No topics found for this module.</p>
-      )
-    ) : (
-      <p>No topics found for this module.</p>
-    )}
-  </div>
-)}
+                          {openSection === i && (
+                            <div className="bg-[#ffffff] px-4 py-3 text-sm text-gray-700 border-b border-gray-300">
+                              {moduleContents[module.id] ? (
+                                moduleContents[module.id].length > 0 ? (
+                                  <ul className="space-y-1">
+                                    {moduleContents[module?.id]?.map((item) => (
+                                      <li key={item?.id} className="flex items-center gap-2 text-[#1e1e1e]">
+                                        <span>* {item?.title}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                ) : (
+                                  <p>No topics found for this module.</p>
+                                )
+                              ) : (
+                                <p>No topics found for this module.</p>
+                              )}
+                            </div>
+                          )}
 
 
                           {i === 0 && (

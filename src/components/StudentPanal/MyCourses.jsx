@@ -16,7 +16,7 @@ const Mc_Dashboard = () => {
               <p className="text-sm text-gray-500 mb-1">Active Courses</p>
               <FaBook className="text-3xl mb-2" />
             </div>
-            <p className="text-2xl font-semibold">4</p>
+            <p className="text-2xl font-semibold">0</p>
           </div>
 
           {/* Pending Assignments */}
@@ -25,7 +25,7 @@ const Mc_Dashboard = () => {
               <p className="text-sm text-gray-500 mb-1">Pending Assignments</p>
               <FaListUl className="text-3xl mb-2" />
             </div>
-            <p className="text-2xl font-semibold">7</p>
+            <p className="text-2xl font-semibold">0</p>
           </div>
 
           {/* Certificates Earned */}
@@ -34,7 +34,7 @@ const Mc_Dashboard = () => {
               <p className="text-sm text-gray-500 mb-1">Certificates Earned</p>
               <FaCertificate className="text-3xl mb-2" />
             </div>
-            <p className="text-2xl font-semibold">12</p>
+            <p className="text-2xl font-semibold">0</p>
           </div>
         </div>
 
