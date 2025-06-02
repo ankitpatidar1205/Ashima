@@ -22,7 +22,6 @@ const SoftwareNavbar = ({ isCollapsed }) => {
     // localStorage.removeItem("token");
     // localStorage.removeItem("user");
      localStorage.clear();
-     console.log("logout")
     navigate("/");
   };
 
