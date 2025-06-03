@@ -33,7 +33,6 @@ const Navbar = () => {
   // console.log("categories", categories);
   const profile = JSON.parse(localStorage.getItem("user"));
 
-  console.log(profile)
   return (
     <header className="fixed z-50 w-full bg-white shadow-md">
       <div className="max-w-[1410px] mx-auto h-[80px] flex items-center justify-between px-4 md:px-6 lg:px-8">

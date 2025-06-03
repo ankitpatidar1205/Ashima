@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCartItemById,
   deleteCartItem,
+  buyItem
 } from "../../Redux/slices/cartSlice/cartSlice";
 import Header from "../../Layout/Header";
 
 const Cart = () => {
   const userId = localStorage.getItem("is_id");
   const dispatch = useDispatch();
+  const [courseId,setCourseId] = useState([])
 
   // 1) initial fetch (and refetch on userId change)
   useEffect(() => {
@@ -30,7 +32,7 @@ const Cart = () => {
   const [couponCode, setCouponCode] = useState("");
 
   const paypalRef = useRef();
-
+  
   // PayPal button setup
   useEffect(() => {
     // clear any existing buttons
@@ -77,6 +79,18 @@ const Cart = () => {
         console.error("Failed to delete item:", err);
       });
   };
+const buy_item = ()=>{
+  dispatch(buyItem({user_id:userId, course_id: courseId}))
+  alert("Order SuccessFul")
+}
+useEffect(() => {
+  if (cartItems && cartItems.length > 0) {
+    const allCourseIds = cartItems.map(item => item.course_id); // or item.courseId depending on your API
+    setCourseId(allCourseIds);
+  } else {
+    setCourseId([]);
+  }
+}, [cartItems]);
 
   return (
     <>
@@ -94,6 +108,7 @@ const Cart = () => {
           {/* Left Side: Course Detail */}
           <div className="p-3">
             <h2 className="fw-bold" >Shopping Cart</h2>
+             <button className="btn-primary" onClick={buy_item}>buy Now</button>
           </div>
           <div className="col-lg-8">
             <p className="fw-semibold text-secondary"> {cartItems?.length} Course in Cart</p>

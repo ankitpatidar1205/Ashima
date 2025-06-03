@@ -30,21 +30,23 @@ const HeroSection = () => {
             experts in the field. Get the Skills to take your career forward!
           </p>
           <div className="flex justify-center items-center md:justify-center gap-4 flex-wrap mt-4">
-            <Link >
-              <button className="w-[95px] py-2 rounded-xl text-[#000000] font-roboto bg-[#09D0C6] font-medium shadow-md hover:opacity-90 transition">
-                Live
-              </button>
-            </Link>
-            <Link>
-              <button className="w-[95px] py-2 rounded-xl text-[#ffffff] font-roboto bg-[#1E1E1E] font-medium shadow-md hover:opacity-90 transition">
+            {/* <Link > */}
+            <span className="w-[95px] py-2 rounded-xl text-[#000000] font-roboto bg-[#09D0C6] font-medium shadow-md hover:opacity-90 transition flex items-center justify-center">
+                       Live
+                       </span>
+
+               
+            {/* </Link> */}
+             
+              <span className="w-[95px] py-2 rounded-xl text-[#ffffff] font-roboto bg-[#1E1E1E] font-medium shadow-md hover:opacity-90 transition  flex items-center justify-center">
                 Hybrid
-              </button>
-            </Link>
-            <Link>
-              <button className="w-[95px] py-2 rounded-xl text-[#ffffff] font-roboto bg-[#FF6B6B] font-medium shadow-md hover:opacity-90 transition">
+              </span>
+            
+           
+              <span className="w-[95px] py-2 rounded-xl text-[#ffffff] font-roboto bg-[#FF6B6B] font-medium shadow-md hover:opacity-90 transition  flex items-center justify-center">
                 Video
-              </button>
-            </Link>
+              </span>
+            
           </div>
         </div>
       </div>

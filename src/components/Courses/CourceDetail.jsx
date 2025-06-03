@@ -450,7 +450,7 @@ const CourceDetail = () => {
                             </div>
                           )}
 
-
+ 
                           {i === 0 && (
                             <div className="border-double border-[#047670]"></div>
                           )}

@@ -66,6 +66,18 @@ export const updateCartItem = createAsyncThunk(
     }
   }
 );
+export const buyItem = createAsyncThunk(
+  "/buy",
+  async (purchaseData, { rejectWithValue }) => {
+    try {
+      // Adjust endpoint and method as per your API spec
+      const res = await axiosInstance.post("/buy", purchaseData);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Error buying item");
+    }
+  }
+);
 
 const cartSlice = createSlice({
   name: "cart",
@@ -74,6 +86,7 @@ const cartSlice = createSlice({
     selectedItem: null,
     isLoading: false,
     error: null,
+    purchaseSuccess: false, // new state to track buy status
   },
   reducers: {
     clearCart(state) {
@@ -81,8 +94,13 @@ const cartSlice = createSlice({
       state.selectedItem = null;
       state.error = null;
       state.isLoading = false;
-    }
+       state.purchaseSuccess = false;
+    },
+     clearPurchaseSuccess(state) {
+      state.purchaseSuccess = false;
+    },
   },
+  
   extraReducers: (builder) => {
     builder
       // Add Item
@@ -155,7 +173,26 @@ const cartSlice = createSlice({
       .addCase(updateCartItem.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      
+      .addCase(buyItem.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.purchaseSuccess = false;
+      })
+      .addCase(buyItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.purchaseSuccess = true;
+        // Optionally clear the cart or update state as needed
+        // state.items = []; 
+      })
+      .addCase(buyItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.purchaseSuccess = false;
       });
+      ;
+      
   },
 });
 
