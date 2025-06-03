@@ -41,15 +41,16 @@ const StudentAllCources = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCourses?.map((course) => (
             <div  key={course?.id} className="bg-white rounded shadow overflow-hidden hover:shadow-lg transition">
+              <Link  to={`/Cource-Detail/${course?.id}`}
+                    className="text-lg font-semibold text-teal-700 hover:underline">
               <img  src={course?.course_image}
                 alt={course?.course_title}
                 className="w-full h-48 object-cover"/>
               <div className="p-4 flex flex-col gap-2">
                 <div className="flex justify-between items-center">
-                  <Link  to={`/Cource-Detail/${course?.id}`}
-                    className="text-lg font-semibold text-teal-700 hover:underline">
+                  
                     {course?.course_title}
-                  </Link>
+                  
                   {/* View Icon */}
                   {/* <Link  to={`/course/${course?.id}`}
                     className="text-teal-700 hover:text-teal-900"  title="View Course" >
@@ -77,6 +78,7 @@ const StudentAllCources = () => {
                   </span>
                 </p>
               </div>
+              </Link>
             </div>
           ))}
         </div>

@@ -42,7 +42,7 @@
            {filteredCourses?.map((course) => (
              <div  key={course?.id} className="bg-white rounded shadow overflow-hidden hover:shadow-lg transition">
                <Link  to={`/course/${course?.id}`}
-                     className="text-teal-700 hover:text-teal-900"  title="View Course" >
+                     className="text-lg font-semibold text-teal-700 hover:underline" >
                <img  src={course?.course_image}
                  alt={course?.course_title}
                  className="w-full h-48 object-cover"/>
