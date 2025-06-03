@@ -1,121 +1,107 @@
-import React from "react";
-import { FaBook, FaListUl, FaCertificate } from "react-icons/fa";
-import DashboardLayout from "../../Layout/DashboardLayout";
-
-const Mc_Dashboard = () => {
-  return (
-    <DashboardLayout>
-      <div className="min-h-screen w-full bg-gray-100 p-4 md:p-8">
-        <h2 className="text-xl font-semibold mb-6">Welcome back, Sarah!</h2>
-
-        {/* Top Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {/* Active Courses */}
-          <div className="bg-white p-5 rounded-lg shadow border flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-500 mb-1">Active Courses</p>
-              <FaBook className="text-3xl mb-2" />
-            </div>
-            <p className="text-2xl font-semibold">0</p>
-          </div>
-
-          {/* Pending Assignments */}
-          <div className="bg-white p-5 rounded-lg shadow border flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-500 mb-1">Pending Assignments</p>
-              <FaListUl className="text-3xl mb-2" />
-            </div>
-            <p className="text-2xl font-semibold">0</p>
-          </div>
-
-          {/* Certificates Earned */}
-          <div className="bg-white p-5 rounded-lg shadow border flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-500 mb-1">Certificates Earned</p>
-              <FaCertificate className="text-3xl mb-2" />
-            </div>
-            <p className="text-2xl font-semibold">0</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Recent Courses */}
-          <div className="bg-white p-5 rounded-md shadow border">
-            <h3 className="font-medium mb-4 text-gray-900">Recent Courses</h3>
-
-            {/* Course 1 */}
-            <div className="flex justify-between items-center py-3 border-b">
-              <div className="flex gap-4 items-center">
-                <img
-                  src="https://images.unsplash.com/photo-1642502093512-5b6c81aeef1e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d29yZCUyMGRvY3VtZW50fGVufDB8fDB8fHww"
-                  alt="course"
-                  className="w-10 h-10"
-                />
-                <div>
-                  <p className="text-sm font-medium text-gray-800">
-                    Advanced Web Development
-                  </p>
-                  <p className="text-xs text-gray-500">Progress: 75%</p>
-                </div>
-              </div>
-              <button className="bg-[#047670] text-white px-4 py-1 text-sm rounded">
-                Continue
-              </button>
-            </div>
-
-            {/* Course 2 */}
-            <div className="flex justify-between items-center py-3">
-              <div className="flex gap-4 items-center">
-                <img
-                  src="https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8REFUQSUyMFZJU1VBTElaQVRJT58ZW58MHx8MHx8fDA%3D"
-                  alt="course"
-                  className="w-10 h-10"
-                />
-                <div>
-                  <p className="text-sm font-medium text-gray-800">
-                    Data Visualization
-                  </p>
-                  <p className="text-xs text-gray-500">Progress: 45%</p>
-                </div>
-              </div>
-              <button className="bg-[#047670] text-white px-4 py-1 text-sm rounded">
-                Continue
-              </button>
-            </div>
-          </div>
-
-          {/* Upcoming Deadlines */}
-          <div className="bg-white p-5 rounded-md shadow border">
-            <h3 className="font-medium mb-4 text-gray-900">
-              Upcoming Deadlines
-            </h3>
-
-            {/* Deadline 1 */}
-            <div className="flex justify-between items-center py-3 border-b">
-              <div>
-                <p className="text-sm font-medium text-gray-800">
-                  Final Project Submission
-                </p>
-                <p className="text-xs text-gray-500">Web Development</p>
-              </div>
-              <p className="text-xs text-red-500">Due in 2 days</p>
-            </div>
-
-            {/* Deadline 2 */}
-            <div className="flex justify-between items-center py-3">
-              <div>
-                <p className="text-sm font-medium text-gray-800">
-                  Quiz: Data Structures
-                </p>
-                <p className="text-xs text-gray-500">Algorithms</p>
-              </div>
-              <p className="text-xs text-red-500">Due in 5 days</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </DashboardLayout>
-  );
-};
-
-export default Mc_Dashboard;
+ import { useEffect, useState } from "react";
+ import DashboardLayout from "../../Layout/DashboardLayout";
+ import { Link } from "react-router-dom";
+ import { fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
+ import { useDispatch, useSelector } from "react-redux";
+ import { FaEye } from "react-icons/fa";
+ import useCurrency from "../../utils/useCurrency";
+ const StudentAllCources = () => {
+   const [searchTerm, setSearchTerm] = useState("");
+   const dispatch = useDispatch();
+    const currency = useCurrency();
+   const { courses } = useSelector((state) => state.courses);
+ 
+   useEffect(() => {
+     dispatch(fetchCourses());
+   }, [dispatch]);
+ 
+   const filteredCourses = courses?.filter((course) =>
+     course?.course_title?.toLowerCase()?.includes(searchTerm.toLowerCase())
+   );
+ 
+   return (
+     <DashboardLayout>
+       <div className="p-6 bg-gray-50 min-h-screen">
+         {/* Heading */}
+         <div className="flex justify-between items-center mb-6">
+           <h2 className="text-2xl font-semibold">My Courses</h2>
+         </div>
+ 
+         {/* Filter Section */}
+         <div className="bg-white p-4 rounded shadow mb-6">
+           <div className="flex flex-wrap gap-2 mb-4">
+             <input  type="text" placeholder="Search courses..." value={searchTerm}
+               onChange={(e) => setSearchTerm(e.target.value)}
+               className="border px-3 py-2 rounded w-full md:w-auto"
+             />
+           </div>
+         </div>
+ 
+         {/* Card Grid */}
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+           {filteredCourses?.map((course) => (
+             <div  key={course?.id} className="bg-white rounded shadow overflow-hidden hover:shadow-lg transition">
+               <Link  to={`/course/${course?.id}`}
+                     className="text-teal-700 hover:text-teal-900"  title="View Course" >
+               <img  src={course?.course_image}
+                 alt={course?.course_title}
+                 className="w-full h-48 object-cover"/>
+               <div className="p-4 flex flex-col gap-2">
+                 <div className="flex justify-between items-center">
+                   {/* <Link  to={`/Cource-Detail/${course?.id}`}
+                     className="text-lg font-semibold text-teal-700 hover:underline">
+                     {course?.course_title}
+                   </Link> */}
+                   {/* View Icon */}
+                   {/* <Link  to={`/course/${course?.id}`}
+                     className="text-teal-700 hover:text-teal-900"  title="View Course" >
+                     <FaEye />
+                   </Link> */}
+                   {course?.course_title}
+                 </div>
+ 
+                 <p className="text-sm text-gray-500">
+                   Created {new Date(course?.created_at).toLocaleDateString()}
+                 </p>
+ <p className="text-gray-700">
+   {course.course_description.length > 100
+     ? `${course.course_description.substring(0, 100)}...`
+     : course.course_description}
+ </p>
+                 <p>
+                   <span className="font-semibold">Price:</span>  {currency.symbol}
+                      {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
+                 </p>
+                    
+                 <p>
+                   <span className="font-semibold">Mode:</span>{" "}
+                   <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
+                     {course?.course_type}
+                   </span>
+                 </p>
+               </div>
+               </Link>
+             </div>
+           ))}
+         </div>
+ 
+         {/* Pagination */}
+         <div className="flex justify-between items-center mt-8 text-sm text-gray-500">
+           <div>
+             Showing 1 to {filteredCourses?.length || 0} of {courses?.length || 0} entries
+           </div>
+           <div className="flex gap-2">
+             <button className="border px-2 py-1 rounded">Previous</button>
+             <button className="bg-[#047670] text-white px-2 py-1 rounded">1</button>
+             <button className="border px-2 py-1 rounded">2</button>
+             <button className="border px-2 py-1 rounded">3</button>
+             <button className="border px-2 py-1 rounded">Next</button>
+           </div>
+         </div>
+       </div>
+     </DashboardLayout>
+   );
+ };
+ 
+ export default StudentAllCources;
+ 
