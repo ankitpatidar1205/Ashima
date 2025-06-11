@@ -12,6 +12,7 @@ import Letmake from "../Home/Letmake";
 import FAQSection from "../Home/FAQSection";
 import ReviewCards from "../Home/ReviewCards";
 import StartLearning from "../Home/StartLearning";
+import Plans from "../Home/Plans";
 // import Header from "../../Layout/Header";
 import Footer from '../../Layout/Footer';
 import AllBlogs from './AllBlogs';
@@ -25,6 +26,7 @@ const Home = () => {
         <Hero />
         <Explore />
         <CompaniesSection />
+        <Plans/>
         <Trending />
         <LearningJourney />
         <CategoryButtons />

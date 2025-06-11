@@ -19,7 +19,7 @@ const Explore = () => {
         className="flex items-center gap-3 pl-10"
         animate={{ x: ["0%", "-100%"] }}
         transition={{
-          duration: 40, // Increased for smoother longer loop
+          duration: 40,
           repeat: Infinity,
           ease: "linear",
         }}

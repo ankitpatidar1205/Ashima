@@ -46,6 +46,31 @@ const Business = () => {
     { src: business9, alt: "Walmart" },
     { src: business10, alt: "JP Morgan Chase" },
   ];
+
+  const plans = [
+  {
+    name: 'Basic',
+    price: '₹0',
+    description: 'Perfect for getting started',
+    features: ['1 User', '5 Projects', 'Email Support'],
+    isPopular: false,
+  },
+  {
+    name: 'Pro',
+    price: '₹499/month',
+    description: 'For growing teams',
+    features: ['5 Users', 'Unlimited Projects', 'Priority Email Support'],
+    isPopular: true,
+  },
+  {
+    name: 'Enterprise',
+    price: '₹1,499/month',
+    description: 'Advanced features for businesses',
+    features: ['Unlimited Users', 'Custom Solutions', '24/7 Support'],
+    isPopular: false,
+  },
+];
+
  const features = [
    {
      img: business11,
@@ -505,7 +530,9 @@ const courses = [
             </div>
           </div>
         </div>
+{/* //edv */}
 
+ 
         <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10 mt-10">
           {/* Left Text Section */}
           <div className="lg:w-1/2 w-full">
@@ -535,6 +562,7 @@ const courses = [
           </div>
         </div>
       </div>
+
 
       <div className="bg-[#ffffff] text-[#000000]  py-16">
         {/* Heading */}
