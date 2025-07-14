@@ -1,13 +1,14 @@
 import React from 'react';
 import Header from '../../../Layout/Header';
 import Footer from '../../../Layout/Footer';
+import Navbar from '../../../Layout/Navbar';
 
 
 const Careers = () => {
   return (
   
     <div className="bg-white">
-      <Header/>
+      <Navbar/>
 
       {/* Hero Section */}
       <section
