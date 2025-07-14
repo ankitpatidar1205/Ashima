@@ -89,7 +89,7 @@ import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
 import SuperAdminProfile from "./components/SuperadminPanel/SuperAdminProfile";
 import CourseContent from "./components/AdminPanal/CourseContent";
 import Cart from "./components/Cart/Cart";
-import PrivacyAndTerms from "./components/PrivacyAndTerms/PrivacyAndTerms";
+import PrivacyAndTerms from "./components/Home/PrivacyAndTerms/PrivacyAndTerms";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -148,7 +148,7 @@ const App = () => {
         <Route path="/reset-password-success" element={<ResetPasswordSucessfullPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/cart" element={<Cart/>} />
-        <Route path="/privancyandterms" element={<PrivacyAndTerms/>} />
+        <Route path="/termconditions" element={<PrivacyAndTerms/>} />
 
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />

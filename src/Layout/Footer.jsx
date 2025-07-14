@@ -129,11 +129,9 @@ const Footer = () => {
                 Legal
               </h3>
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
-                <li>Cookies Policy</li>
-                <li>
-                  <Link to="/privancyandterms" className="text-decoration-none text-[#DBDAD8]">
-                  Privacy And Terms
-                  </Link></li>
+                <li> <Link to="privacypolicy" className="text-decoration-none text-[#DBDAD8]">Privacy Policy </Link></li>
+                <li><Link to="/termconditions" className="text-decoration-none text-[#DBDAD8]">Terms Conditions</Link></li>
+                <li><Link to="/cookies" className="text-decoration-none text-[#DBDAD8]">Cookies </Link></li>
               </ul>
             </div>
           </div>
