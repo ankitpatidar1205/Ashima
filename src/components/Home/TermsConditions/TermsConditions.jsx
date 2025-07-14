@@ -1,5 +1,6 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React, { useState } from 'react';
+import Footer from '../../../Layout/Footer';
 const TermsConditions = () => {
     const [activeSection, setActiveSection] = useState('');
     const sections = [
@@ -442,6 +443,8 @@ const TermsConditions = () => {
                     </div> */}
                 </div>
             </div>
+
+            <Footer />
             {/* Back to Top Button */}
             <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
