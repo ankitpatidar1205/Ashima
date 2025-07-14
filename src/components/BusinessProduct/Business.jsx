@@ -15,7 +15,7 @@ import business13 from "../../assets/business13.png";
 import business14 from "../../assets/business14.png";
 import business15 from "../../assets/business15.png";
 import business16 from "../../assets/business16.png";
-import business17 from "../../assets/business17.png"
+import business17 from "../../assets/business17.png";
 import business18 from "../../assets/business18.png";
 import business19 from "../../assets/business19.png";
 import business20 from "../../assets/business20.png";
@@ -30,7 +30,6 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
-
 
 const Business = () => {
   const sliderRef = useRef(null);
@@ -48,89 +47,89 @@ const Business = () => {
   ];
 
   const plans = [
-  {
-    name: 'Basic',
-    price: '₹0',
-    description: 'Perfect for getting started',
-    features: ['1 User', '5 Projects', 'Email Support'],
-    isPopular: false,
-  },
-  {
-    name: 'Pro',
-    price: '₹499/month',
-    description: 'For growing teams',
-    features: ['5 Users', 'Unlimited Projects', 'Priority Email Support'],
-    isPopular: true,
-  },
-  {
-    name: 'Enterprise',
-    price: '₹1,499/month',
-    description: 'Advanced features for businesses',
-    features: ['Unlimited Users', 'Custom Solutions', '24/7 Support'],
-    isPopular: false,
-  },
-];
+    {
+      name: "Basic",
+      price: "₹0",
+      description: "Perfect for getting started",
+      features: ["1 User", "5 Projects", "Email Support"],
+      isPopular: false,
+    },
+    {
+      name: "Pro",
+      price: "₹499/month",
+      description: "For growing teams",
+      features: ["5 Users", "Unlimited Projects", "Priority Email Support"],
+      isPopular: true,
+    },
+    {
+      name: "Enterprise",
+      price: "₹1,499/month",
+      description: "Advanced features for businesses",
+      features: ["Unlimited Users", "Custom Solutions", "24/7 Support"],
+      isPopular: false,
+    },
+  ];
 
- const features = [
-   {
-     img: business11,
-     desc: "Transform your workforce. Equip your employees with in-demand AI skills to enhance performance and efficiency.",
-   },
-   {
-     img: business12,
-     desc: "Flexible learning options. Choose from live sessions, hybrid courses, or video-based training to fit your team’s schedule.",
-   },
-   {
-     img: business13,
-     desc: "Real-world impact. Hands-on projects and practical exercises ensure skills translate to real business outcomes.",
-   },
-   {
-     img: business14,
-     desc: "Customized training programs. Tailor our curriculum to match your company’s goals and technological needs.",
-   },
- ];
+  const features = [
+    {
+      img: business11,
+      desc: "Transform your workforce. Equip your employees with in-demand AI skills to enhance performance and efficiency.",
+    },
+    {
+      img: business12,
+      desc: "Flexible learning options. Choose from live sessions, hybrid courses, or video-based training to fit your team’s schedule.",
+    },
+    {
+      img: business13,
+      desc: "Real-world impact. Hands-on projects and practical exercises ensure skills translate to real business outcomes.",
+    },
+    {
+      img: business14,
+      desc: "Customized training programs. Tailor our curriculum to match your company’s goals and technological needs.",
+    },
+  ];
   const duplicatedLogos = [...brandLogos, ...brandLogos]; // for infinite scroll
-const options = [
-  {
-    title: "Expert-Led Training:",
-    desc: "Learn from top industry professionals with real-world experience.",
-  },
-  {
-    title: "Interactive Sessions:",
-    desc: "Foster engagement and collaboration through live and hybrid models.",
-  },
-  {
-    title: "Ongoing Support:",
-    desc: "Post-training resources to help employees continue growing.",
-  },
-  {
-    title: "Global Reach:",
-    desc: "Empower teams from anywhere in the world with flexible online access.",
-  },
-];
-const courses = [
-  {
-    img: trending1,
-    title: "AI AND ML",
-    mentor: "Kapil Sharma",
-    rating: 4.8,
-    mode: "LIVE", // 👈 added
-  },
-  {
-    img: trending2,
-    title: "DATA SCIENCE & ENGINEERING",
-    mentor: "Kapil Sharma",
-    rating: 4.8,
-    mode: "HYBRID",
-  },
-  {
-    img: trending3,
-    title: "AI AND ML",
-    mentor: "Kapil Sharma",
-    rating: 4.8,
-    mode: "VIDEO",
-  },
-]
+  const options = [
+    {
+      title: "Expert-Led Training:",
+      desc: "Learn from top industry professionals with real-world experience.",
+    },
+    {
+      title: "Interactive Sessions:",
+      desc: "Foster engagement and collaboration through live and hybrid models.",
+    },
+    {
+      title: "Ongoing Support:",
+      desc: "Post-training resources to help employees continue growing.",
+    },
+    {
+      title: "Global Reach:",
+      desc: "Empower teams from anywhere in the world with flexible online access.",
+    },
+  ];
+  const courses = [
+    {
+      img: trending1,
+      title: "AI AND ML",
+      mentor: "Kapil Sharma",
+      rating: 4.8,
+      mode: "LIVE", // 👈 added
+    },
+    {
+      img: trending2,
+      title: "DATA SCIENCE & ENGINEERING",
+      mentor: "Kapil Sharma",
+      rating: 4.8,
+      mode: "HYBRID",
+    },
+    {
+      img: trending3,
+      title: "AI AND ML",
+      mentor: "Kapil Sharma",
+      rating: 4.8,
+      mode: "VIDEO",
+    },
+  ];
   return (
     <>
       <Header />
@@ -282,7 +281,7 @@ const courses = [
 
       <div className="text-center mb-14">
         <h2 className="text-[50px] lg:text-[40px] font-impact font-normal text-[#047670]">
-          Immediate ROI With Measurable Growth
+          High-Impact Learning, Fast Outcomes
         </h2>
         <p className="text-[16px] lg:text-[16px] text-[#000000] font-jost font-normal mt-2">
           Maximizing Your Bottom Line Achieve Rapid Returns With Our AI Training
@@ -294,45 +293,45 @@ const courses = [
         {/* Card 1 */}
         <div className="text-center px-4">
           <h4 className="text-[16px] font-bold font-jost text-[#1E1E1E] uppercase mb-2">
-            Maximizing Your Bottom Line
+            Turn Skills Into Revenue
           </h4>
           <h3 className="text-[60px] font-impact text-[#047670] font-normal mb-3">
-            9x ROI
+            Up to 10x ROI
           </h3>
           <p className="text-[20px] text-[#4B4B4B] font-jost font-normal leading-relaxed">
-            Leading businesses have experienced a 9x return on investment
-            through our AI-driven training programs, equipping teams with
-            practical skills directly applied to real-world projects.
+            Our AI-driven programs equip professionals with job-ready skills,
+            helping companies boost productivity and drive faster results across
+            real-world projects.
           </p>
         </div>
 
         {/* Card 2 */}
         <div className="text-center px-4">
           <h4 className="text-[16px] font-bold font-jost text-[#1E1E1E] uppercase mb-2">
-            Real Business Impact
+            Hands-On Skills. Measurable Gains.
           </h4>
           <h3 className="text-[60px] font-impact text-[#047670] font-normal mb-3">
-            68%
+            80% Higher Conversion Rates
           </h3>
           <p className="text-[20px] text-[#4B4B4B] font-jost font-normal leading-relaxed">
-            Our clients have seen a 68% boost in MQL-to-Opportunity conversion
-            rates through hands-on, job-specific projects — just one of the many
-            efficiencies gained during our courses.
+            Companies leveraging our AI training saw a significant uptick in
+            team performance—proving real learning creates real impact.
           </p>
         </div>
 
         {/* Card 3 */}
         <div className="text-center px-4">
           <h4 className="text-[16px] font-bold font-jost text-[#1E1E1E] uppercase mb-2">
-            Tangible Growth With Lasting Results
+        Real Returns, Real Fast
           </h4>
           <h3 className="text-[60px] font-impact text-[#047670] font-normal mb-3">
-            +$150K
+           +$150K Project Impact
+
           </h3>
           <p className="text-[20px] text-[#4B4B4B] font-jost font-normal leading-relaxed">
-            Our comprehensive training approach has delivered an average
-            financial gain of $150,000 per project, showcasing measurable value
-            and long-term business impact.
+           Each project powered by our training brings lasting ROI—transforming skills into bottom-line
+business wins.
+
           </p>
         </div>
       </div>
@@ -411,157 +410,98 @@ const courses = [
         </div>
       </div>
 
-      <div className="bg-[#047670] text-[#ffffff] px-6 py-12 lg:px-20 mt-10">
-        {/* Top Title Section */}
-        <div className="text-center font-semibold font-jost text-[20px] mb-16">
-          <p className="text-[20px] font-jost font-semibold">Our Approach</p>
-          <h2 className="text-[50px] md:text-4xl font-normal font-impact text-[#ffffff]">
-            How We Accelerate Your Team’s Growth
-          </h2>
-        </div>
+     <div className="bg-[#047670] text-[#ffffff] px-6 py-12 lg:px-20 mt-10">
+  {/* Top Title Section */}
+  <div className="text-center font-semibold font-jost text-[20px] mb-16">
+    <p className="text-[20px] font-jost font-semibold">Our Approach</p>
+    <h2 className="text-[50px] md:text-4xl font-normal font-impact text-[#ffffff]">
+      How We Accelerate Your Team’s Growth
+    </h2>
+  </div>
 
-        {/* Content Section */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center">
-          {/* Left Text Section */}
-          <div className=" w-full">
-            <div className="space-y-6 max-w-full">
-              <div className="w-full">
-                <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">
-                  Real Business Transformation
-                </h3>
-                <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3 leading-relaxed">
-                  We focus on outcomes that matter. Your team will <br />
-                  acquire practical, job-specific skills that drive <br />{" "}
-                  performance and increase profitability. Our training <br />
-                  delivers measurable results that move the needle <br />
-                  for your business.
-                </p>
-              </div>
-            </div>
-          </div>
+  {/* Section 1 */}
+  <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
+    <div className="w-full lg:w-1/2">
+      <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">Real Business Transformation</h3>
+      <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3 leading-relaxed">
+        We focus on outcomes that matter. Your team will <br />
+        acquire practical, job-specific skills that drive <br />
+        performance and increase profitability. Our training <br />
+        delivers measurable results that move the needle <br />
+        for your business.
+      </p>
+    </div>
+    <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+      <img src={business20} alt="Business" className="rounded-[4px] w-full max-w-full object-cover" />
+    </div>
+  </div>
 
-          {/* Right Image Section */}
-          <div className="lg:w-1/2 w-full flex justify-center lg:justify-end">
-            <img
-              src={business20}
-              alt="Business"
-              className="rounded-[4px] w-full max-w-md object-cover"
-            />
-          </div>
-        </div>
+  {/* Section 2 */}
+  <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 mt-10">
+    <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
+      <img src={business21} alt="Business" className="rounded-[4px] w-full max-w-full object-cover" />
+    </div>
+    <div className="w-full lg:w-1/2">
+      <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">Building Future-Ready Agility</h3>
+      <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3">
+        Equip your team to adapt to the future of tech. <br />
+        Our training ensures your employees are prepared <br />
+        for whatever comes next, making them confident <br />
+        in facing new challenges and technologies head-on.
+      </p>
+    </div>
+  </div>
 
-        <div className="flex flex-col lg:flex-row items-start lg:items-center mt-10">
-          {/* Right Image Section (First in order) */}
-          <div className="lg:w-1/2 w-full flex justify-between ">
-            <img
-              src={business21}
-              alt="Business"
-              className="rounded-[4px] w-full max-w-md object-cover"
-            />
-          </div>
+  {/* Section 3 */}
+  <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 mt-10">
+    <div className="w-full lg:w-1/2">
+      <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">Real Business Transformation</h3>
+      <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3">
+        We focus on outcomes that matter. Your team will <br />
+        acquire practical, job-specific skills that drive <br />
+        performance and increase profitability. Our training <br />
+        delivers measurable results that move the needle <br />
+        for your business.
+      </p>
+    </div>
+    <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+      <img src={business22} alt="Business" className="rounded-[4px] w-full max-w-full object-cover" />
+    </div>
+  </div>
 
-          {/* Left Text Section (Second in order) */}
-          <div className="lg:w-1/2 w-full flex justify-end">
-            <div className="max-w-full">
-              <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">
-                Building Future-Ready Agility
-              </h3>
-              <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3">
-                Equip your team to adapt to the future of tech. <br />
-                Our training ensures your employees are prepared <br />
-                for whatever comes next, making them confident
-                <br /> in facing new challenges and technologies head-on.
-              </p>
-            </div>
-          </div>
-        </div>
+  {/* Section 4 */}
+  <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 mt-10">
+    <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
+      <img src={business23} alt="Business" className="rounded-[4px] w-full max-w-full object-cover" />
+    </div>
+    <div className="w-full lg:w-1/2">
+      <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">Building Future-Ready Agility</h3>
+      <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3">
+        Equip your team to adapt to the future of tech. <br />
+        Our training ensures your employees are prepared <br />
+        for whatever comes next, making them confident <br />
+        in facing new challenges and technologies head-on.
+      </p>
+    </div>
+  </div>
 
-        <div className="flex flex-col lg:flex-row items-start lg:items-cente mt-10">
-          {/* Left Text Section */}
-          <div className="lg:w-1/2 w-full">
-            <div className="space-y-6 max-w-full">
-              <div className="w-full">
-                <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">
-                  Real Business Transformation
-                </h3>
-                <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3 ">
-                  We focus on outcomes that matter. Your team will <br />
-                  acquire practical, job-specific skills that drive <br />{" "}
-                  performance and increase profitability. Our training <br />
-                  delivers measurable results that move the needle <br />
-                  for your business.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Image Section */}
-          <div className="lg:w-1/2 w-full flex justify-center lg:justify-end">
-            <img
-              src={business22}
-              alt="Business"
-              className="rounded-[4px] w-full max-w-md object-cover"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-start lg:items-center mt-10">
-          {/* Right Image Section (First in order) */}
-          <div className="lg:w-1/2 w-full flex justify-between ">
-            <img
-              src={business23}
-              alt="Business"
-              className="rounded-[4px] w-full max-w-md object-cover"
-            />
-          </div>
-
-          {/* Left Text Section (Second in order) */}
-          <div className="lg:w-1/2 w-full flex justify-end">
-            <div className="max-w-full">
-              <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">
-                Building Future-Ready Agility
-              </h3>
-              <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3">
-                Equip your team to adapt to the future of tech. <br />
-                Our training ensures your employees are prepared <br />
-                for whatever comes next, making them confident
-                <br /> in facing new challenges and technologies head-on.
-              </p>
-            </div>
-          </div>
-        </div>
-{/* //edv */}
-
- 
-        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10 mt-10">
-          {/* Left Text Section */}
-          <div className="lg:w-1/2 w-full">
-            <div className="space-y-6 max-w-full">
-              <div className="w-full">
-                <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">
-                  Real Business Transformation
-                </h3>
-                <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3 ">
-                  We focus on outcomes that matter. Your team will <br />
-                  acquire practical, job-specific skills that drive <br />{" "}
-                  performance and increase profitability. Our training <br />
-                  delivers measurable results that move the needle <br />
-                  for your business.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Image Section */}
-          <div className="lg:w-1/2 w-full flex justify-center lg:justify-end">
-            <img
-              src={business24}
-              alt="Business"
-              className="rounded-[4px] w-full max-w-md object-cover"
-            />
-          </div>
-        </div>
-      </div>
+  {/* Section 5 */}
+  <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 mt-10">
+    <div className="w-full lg:w-1/2">
+      <h3 className="text-[30px] font-normal text-[#ffffff] font-impact mb-2">Real Business Transformation</h3>
+      <p className="text-[20px] font-jost text-[#ffffff] font-semibold mt-3">
+        We focus on outcomes that matter. Your team will <br />
+        acquire practical, job-specific skills that drive <br />
+        performance and increase profitability. Our training <br />
+        delivers measurable results that move the needle <br />
+        for your business.
+      </p>
+    </div>
+    <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+      <img src={business24} alt="Business" className="rounded-[4px] w-full max-w-full object-cover" />
+    </div>
+  </div>
+</div>
 
 
       <div className="bg-[#ffffff] text-[#000000]  py-16">
@@ -662,7 +602,8 @@ const courses = [
         </h3>
         <p className="text-center mt-3 font-jost text-[26px] uppercase font-medium  mx-auto leading-7 mb-10">
           Fill in the details below, and we’ll get in touch to explore how we
-          can <br/>support your team’s upskilling journey.
+          can <br />
+          support your team’s upskilling journey.
         </p>
 
         {/* Form Centered */}
@@ -710,7 +651,7 @@ const courses = [
             </label>
             <input
               type="tel"
-              placeholder="Enter your ph number"
+              placeholder="Enter your phone number"
               className="w-full bg-[#000000] text-[16px] font-archivo  font-medium text-[#ffffff] border-[1px] border-[#ffffff] px-4 py-2 rounded-[4px]"
             />
           </div>
@@ -722,7 +663,7 @@ const courses = [
             </label>
             <input
               type="text"
-              placeholder="enter your company name"
+              placeholder="Enter your company name"
               className="w-full bg-[#000000] text-[16px] font-archivo  font-medium text-[#ffffff] border-[1px] border-[#ffffff] px-4 py-2 rounded-[4px]"
             />
           </div>
@@ -730,7 +671,7 @@ const courses = [
           {/* Organization's Needs */}
           <div>
             <label className="block text-[16px] font-archivo mb-1 font-medium">
-              What Are Your Organization's Needs{" "}
+            Tell us about your team’s training goals{" "}
               <span className="text-[#ffffff]">*</span>
             </label>
             <textarea
@@ -743,8 +684,8 @@ const courses = [
           {/* Interested Programs */}
           <div>
             <label className="block text-[16px] font-archivo mb-1 font-medium">
-              Which Upskilling Or Reskilling Programs Are You Interested In? For
-              Which Teams? <span className="text-[#ffffff]">*</span>
+            What kind of upskilling or reskilling does your team need? Please specify the departments or
+roles. <span className="text-[#ffffff]">*</span>
             </label>
             <textarea
               placeholder="Let us know which AI courses you’d like to explore for your teams"
