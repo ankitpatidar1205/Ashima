@@ -1,7 +1,7 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React from 'react';
 
-const App: React.FC = () => {
+const Privacypolicy = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Main Content */}
@@ -231,4 +231,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App
+export default Privacypolicy;
