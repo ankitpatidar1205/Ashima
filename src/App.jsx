@@ -92,9 +92,9 @@ import Cart from "./components/Cart/Cart";
 import TermsConditions from "./components/Home/TermsConditions/TermsConditions";
 import AboutUs from "./components/Home/Aboutus/AboutUs";
 import Careers from "./components/Home/Careers/Careers";
-import { Cookie } from "lucide-react";
 import Helpsupport from "./components/Home/HelpSupport/Helpsupport";
 import CookiePolicy from "./components/Home/Cookie/CookiePolicy";
+import Privacypolicy from "./components/Home/PrivacyPolicy/Privacypolicy";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -154,6 +154,7 @@ const App = () => {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/termconditions" element={<TermsConditions/>} />
+        <Route path="/privacypolicy" element={<Privacypolicy/>} />
         <Route path="/aboutus" element={<AboutUs/>} />
         <Route path="/careers" element={<Careers/>} />
         <Route path="/cookie" element={<CookiePolicy/>} />
