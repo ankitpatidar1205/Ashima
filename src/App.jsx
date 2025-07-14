@@ -90,6 +90,8 @@ import SuperAdminProfile from "./components/SuperadminPanel/SuperAdminProfile";
 import CourseContent from "./components/AdminPanal/CourseContent";
 import Cart from "./components/Cart/Cart";
 import TermsConditions from "./components/Home/TermsConditions/TermsConditions";
+import AboutUs from "./components/Home/Aboutus/AboutUs";
+import Careers from "./components/Home/Careers/Careers";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -149,6 +151,8 @@ const App = () => {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/termconditions" element={<TermsConditions/>} />
+        <Route path="/aboutus" element={<AboutUs/>} />
+        <Route path="/careers" element={<Careers/>} />
 
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />

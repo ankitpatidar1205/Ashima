@@ -110,8 +110,8 @@ const Footer = () => {
                 Business
               </h3>
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
-                <li>About Us</li>
-                <li>Career</li>
+                <li> <Link to="/aboutus" className="text-decoration-none text-[#DBDAD8]">About Us</Link></li>
+                <li> <Link to="/careers" className="text-decoration-none text-[#DBDAD8]">Career</Link></li>
                 <li>
                   <Link
                     to="/instructor"

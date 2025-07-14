@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const App: React.FC = () => {
+const Careers = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -150,4 +150,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Careers;
