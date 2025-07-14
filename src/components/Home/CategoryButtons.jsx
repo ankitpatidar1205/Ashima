@@ -163,34 +163,39 @@ import Ride4 from "../../assets/RidePage4.png";
 
 const courses = [
   {
-    title: "MARKETING & SALES",
+    title: "Digital Marketing",
     image: Ride1,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    description: " Transform your marketing with AI-powered strategies that deliver smarter campaigns and real results. Learn to harness AI tools to create, optimize, and scale like a pro.",
   },
   {
-    title: "AI & MI",
+    title: "Artificial Intelligence",
     image: Ride2,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    description: "AI agents are reshaping every industry — don’t just use it, learn to lead with it. This course gives you hands-on skills to build, understand, and apply AI across realworld business and product scenarios.",
   },
   {
     title: "PRODUCTS",
     image: Ride3,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    description: "The future of product management isn’t just about building features — it’s about building smart, data-driven experiences. Learn how to combine strategy, user empathy, and AI to launch products that lead the market.",
   },
   {
-    title: "BUSINESS DEVELOPMENT",
+    title: "Machine Learning",
     image: Ride4,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    description: "Machines don’t just follow — they learn. Whether you design products, crunch numbers, or drive strategy — Machine Learning is your superpower.",
   },
   {
-    title: "BUSINESS STRATEGY",
+    title: "Data Science",
     image: Ride1,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    description: "In the AI era, every decision is a data decision. Whether you build, lead, or support — Data Science is your survival skill.",
   },
   {
-    title: "STARTUPS",
+    title: "STARTUP CASE STUDIES",
     image: Ride2,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    description: "Dive deep into the success secrets of the world’s top AI startups. Unlock their strategies, challenges, and breakthroughs — decoded for your next big idea.",
+  },
+   {
+    title: "No Code",
+    image: Ride4,
+    description: "Build powerful AI agents without writing a single line of code. Learn how to automate, innovate, and scale using the latest no-code AI tools — fast and easy",
   },
 ];
 
