@@ -1,6 +1,7 @@
 
 
 import React from "react";
+import { Link } from "react-router-dom";
 import startLearning from "../../assets/Start_journey.png";
 const StartLearning = () => {
   return (
@@ -10,7 +11,7 @@ const StartLearning = () => {
         {/* Left Section - Stays on top in mobile */}
         <div className="sm:w-1/2 text-left mb-6 sm:mb-0">
           <h2 className="text-[40px] sm:text-[55px] font-impact tracking-wide uppercase ml-0 sm:ml-5">
-            Start Learning <br />
+           START YOUR JOUNEY- APP COMING SOON <br />
             <span className="text-[#FF757A]">Now !</span>
           </h2>
         </div>
@@ -20,9 +21,11 @@ const StartLearning = () => {
           <p className="text-[16px] sm:text-[16px] font-Roboto Condensed text-[#000000] uppercase tracking-[0.1em] leading-relaxed mb-4">
             Become a Pro with us through industry-relevant <br /> skills
           </p>
+         <Link to="/signup" className="text-decoration-none">
           <button className="px-8 sm:px-16 py-3 bg-[#FF757A] text-black font-roboto  rounded-[16px]  transition text-start">
             sign up
           </button>
+         </Link>
         </div>
       </div>
 

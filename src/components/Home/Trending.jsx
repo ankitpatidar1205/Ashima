@@ -35,8 +35,10 @@ const TrendingWithCards = () => {
     }
   };
 
+
   return (
-    <div className="py-8 bg-[#f4F3F3] relative ">
+   <div id="courses-section" className="py-8 bg-[#f4F3F3] relative ">
+
       {/* Title */}
       <h2 className="text-[55px] sm:text-5xl md:text-5xl mb-6 sm:mb-8 text-center leading-snug sm:leading-[60px] tracking-[0.5%] font-[400] text-[#000000] font-impact">
         TRENDING <span className="text-[#047670]">COURSES</span>
