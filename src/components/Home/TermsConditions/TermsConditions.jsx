@@ -1,6 +1,7 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React, { useState } from 'react';
 import Footer from '../../../Layout/Footer';
+import Header from '../../../Layout/Header';
 
 const TermsConditions = () => {
     const [activeSection, setActiveSection] = useState('');
@@ -30,8 +31,10 @@ const TermsConditions = () => {
     return (
         <div className="bg-white">
             {/* Header */}
+            
+<Header />
             <header className="bg-teal-600 text-white py-8 md:py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto">
+                <div className="max-w-7xl mt-5 p-3 mx-auto">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div className="flex-1">
                             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">AI SKILLS Terms of Service</h1>
@@ -132,7 +135,7 @@ const TermsConditions = () => {
                                     If you do not agree, please do not use our Services.
                                 </p>
                             </div>
-                            
+
                             {/* Section 1: Our Services */}
                             <section id="services" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -176,7 +179,7 @@ const TermsConditions = () => {
                                     We are committed to providing industry-relevant, project-based learning experiences to help learners build practical AI and tech skills.
                                 </p>
                             </section>
-                            
+
                             {/* Section 2: Eligibility */}
                             <section id="eligibility" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -197,7 +200,7 @@ const TermsConditions = () => {
                                     </div>
                                 </div>
                             </section>
-                            
+
                             {/* Section 3: User Accounts */}
                             <section id="accounts" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -227,7 +230,7 @@ const TermsConditions = () => {
                                     </p>
                                 </div>
                             </section>
-                            
+
                             {/* Section 4: Payments */}
                             <section id="payments" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -255,7 +258,7 @@ const TermsConditions = () => {
                                     </div>
                                 </div>
                             </section>
-                            
+
                             {/* Section 5: Content Access */}
                             <section id="content" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -351,7 +354,7 @@ const TermsConditions = () => {
                                     </div>
                                 </div>
                             </section>
-                            
+
                             {/* Section 8: Intellectual Property */}
                             <section id="ip" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -370,7 +373,7 @@ const TermsConditions = () => {
                                     </div>
                                 </div>
                             </section>
-                            
+
                             {/* Section 9: Disclaimers */}
                             <section id="disclaimers" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -402,7 +405,7 @@ const TermsConditions = () => {
                                     </div>
                                 </div>
                             </section>
-                            
+
                             {/* Section 10: Limitation of Liability */}
                             <section id="liability" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -440,7 +443,7 @@ const TermsConditions = () => {
                                     </div>
                                 </div>
                             </section>
-                            
+
                             {/* Contact Section */}
                             <section id="contact" className="mb-8 md:mb-12">
                                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -476,7 +479,7 @@ const TermsConditions = () => {
             </div>
 
             <Footer />
-            
+
             {/* Back to Top Button */}
             <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

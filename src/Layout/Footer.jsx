@@ -65,7 +65,7 @@ const Footer = () => {
             <h3 className="font-Roboto Condensed text-[#ffffff] mb-4">Legal</h3>
             <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
-                <li> <Link to="privacypolicy" className="text-decoration-none text-[#DBDAD8]">Privacy Policy </Link></li>
+                <li> <Link to="/privacypolicy" className="text-decoration-none text-[#DBDAD8]">Privacy Policy </Link></li>
                 <li><Link to="/termconditions" className="text-decoration-none text-[#DBDAD8]">Terms Conditions</Link></li>
                 <li><Link to="/cookies" className="text-decoration-none text-[#DBDAD8]">Cookies </Link></li>
               </ul>
@@ -126,7 +126,7 @@ const Footer = () => {
                 Legal
               </h3>
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
-                <li> <Link to="privacypolicy" className="text-decoration-none text-[#DBDAD8]">Privacy Policy </Link></li>
+                <li> <Link to="/privacypolicy" className="text-decoration-none text-[#DBDAD8]">Privacy Policy </Link></li>
                 <li><Link to="/termconditions" className="text-decoration-none text-[#DBDAD8]">Terms Conditions</Link></li>
                 <li><Link to="/cookies" className="text-decoration-none text-[#DBDAD8]">Cookies </Link></li>
               </ul>
