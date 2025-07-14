@@ -130,7 +130,10 @@ const Footer = () => {
               </h3>
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
                 <li>Cookies Policy</li>
-                <li>Privacy And Terms</li>
+                <li>
+                  <Link to="/privancyandterms" className="text-decoration-none text-[#DBDAD8]">
+                  Privacy And Terms
+                  </Link></li>
               </ul>
             </div>
           </div>
