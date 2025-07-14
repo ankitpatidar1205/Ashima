@@ -28,7 +28,7 @@ const AllBlogs = () => {
         }}
       >
         <h2 className="text-[56px] sm:text-5xl font-impact uppercase mb-0 tracking-[0.5%] leading-[65px] text-center">
-          ALL <span className="text-[#008578]">ARTICLE</span>
+          ALL <span className="text-[#008578]">ARTICLES</span>
         </h2>
         <p className="text-[#000000] font-[400] text-[14px] font-Roboto leading-[25px] tracking-[0.5%] mt-2 text-center">
           <span>
