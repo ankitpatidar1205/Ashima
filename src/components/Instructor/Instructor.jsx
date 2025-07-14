@@ -71,7 +71,7 @@ const AITeacherLanding = () => {
               Teach Your Way Transform Life
             </h1>
             <p className="text-[18px] sm:text-[20px] md:text-[22px] font-jost font-semibold ">
-              Join AiSkills And Reach A Global Guideline
+              Join AI SKILLS And Reach A Global Guideline
             </p>
             <Link to="/instructorSignup">
               <button className="bg-[#ffffff] text-[#047670] font-bold font-roboto py-2 px-6 rounded-[4px] mt-2">
@@ -222,18 +222,21 @@ const AITeacherLanding = () => {
               Teach on AI Skills Plan, Publish, and Promote an Engaging Class
             </h2>
             <p className="mb-6 overflow-auto font-roboto text-[20px] font-semibold text-[#ffffff]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-              perspiciatis enim maiores earum velit eaque! Veritatis earum eaque
-              ipsa! Soluta nostrum tempore similique blanditiis ab fugit neque,
-              hic rerum quisquam sunt saepe nemo magni labore dolores dolorum
-              rem nesciunt eveniet porro doloremque commodi sint vel alias
-              aliquam! Possimus, quod ratione doloribus aliquid amet dolorum ex
-              laudantium mollitia! Maxime eos beatae pariatur a quaerat ex
-              recusandae illo, eum hic consequuntur ad quia praesentium
-              veritatis voluptatum labore eius consectetur aspernatur sequi esse
-              non quisquam dicta aperiam inventore. Ut odio, labore id
-              laboriosam architecto cum illum, quod inventore accusantium enim
-              dignissimos. Suscipit, commodi.
+              At AI Skills, we make it easy for you to plan, publish, and
+              promote engaging courses that truly connect with learners. Our
+              platform empowers you to design classes in formats that suit your
+              style—whether that’s live sessions, hybrid cohorts, or self-paced
+              video courses. With intuitive tools and a user-friendly interface,
+              you can focus on creating impactful content while we handle the
+              technical details. Promote your courses eortlessly through our
+              built-in marketing features and reach a global audience eager to
+              learn from your expertise. Connect with a vibrant community of
+              fellow instructors and professionals, expanding your network and
+              influence. Teach on your own schedule, whether you want to lead
+              live classes or build evergreen content, and enjoy dedicated
+              support every step of the way. Join AI Skills and make a real
+              dierence by helping students achieve their goals and grow their
+              careers.=
             </p>
             <Link to="/instructorSignup">
               <button className="bg-[#ffffff] text-[#047670] font-bold font-roboto py-2 px-6 rounded-[4px] mt-2">

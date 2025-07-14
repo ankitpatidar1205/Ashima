@@ -66,7 +66,7 @@ const Login = () => {
           id: meResponse.data.data.id,
           role: meResponse.data.data.role,
         };
-
+        localStorage.setItem("role",   meResponse?.data?.data?.role);
         localStorage.setItem("user", JSON.stringify(meResponse.data.data));
         localStorage.setItem("token", encodedaccessToken);
         localStorage.setItem("is_id", meResponse.data.data.id);
@@ -74,7 +74,7 @@ const Login = () => {
         Swal.fire({
           icon: "success",
           title: "Login Successful!",
-          text: `Welcome, ${userData.role}!`,
+          text: `Welcome, ${meResponse.data.data.full_name || meResponse.data.data.name}!`,
         });
 
         if (userData.role === "admin") {

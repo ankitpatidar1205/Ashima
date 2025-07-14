@@ -16,7 +16,6 @@ const CoursesDetails = () => {
 
   const courses = useSelector((state) => state?.courses?.courses);
   const coursedata = courses?.find((course) => course?.id == id);
-  console.log(coursedata);
 
   return (
     <DashboardLayout>
@@ -30,7 +29,6 @@ const CoursesDetails = () => {
             <FaArrowLeft className="mr-2" /> Back
           </button>
         </div>
-
         {coursedata ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             {/* Left Part */}
@@ -65,12 +63,29 @@ const CoursesDetails = () => {
                   />
                 </div>
 
-                {JSON.parse(coursedata.course_syllabus).map((module, index) => (
-                  <div key={index} className="border p-3 mb-2 rounded">
-                    <h5 className="font-semibold">{module.module_title}</h5>
-                    <p>{module.module_syllabus}</p>
-                  </div>
-                ))}
+                 {coursedata?.course_syllabus?.map((module, index) => (
+  <div
+    key={index}
+    className="border border-gray-200 shadow-sm rounded-lg p-4 mb-4 bg-white hover:shadow-md transition-all duration-300"
+  >
+    <div>
+      <h5 className="text-lg font-semibold text-gray-800 mb-1">{module?.module_title}</h5>
+      <p className="text-gray-600">{module?.module_syllabus}</p>
+    </div>
+     <div className="text-end">
+  <button
+    className="btn btn-primary"
+    onClick={() =>{ 
+      localStorage.setItem("title",module?.module_title)
+      localStorage.setItem("description",module?.module_syllabus)
+      navigate(`/course-content/${module.id || 1}`)}}
+  >
+     View
+  </button>
+</div>
+  </div>
+))}
+
               </div>
 
               {/* Course Video */}
@@ -115,8 +130,8 @@ const CoursesDetails = () => {
                     <>
                       <div className="w-12 h-12 rounded-full overflow-hidden">
                         <img
-                          src={coursedata.instructor_details.profile_image}
-                          alt={coursedata.instructor_details.full_name}
+                          src={coursedata?.instructor_details.avatar}
+                          alt={coursedata?.instructor_details.full_name}
                           className="w-full h-full object-cover"
                         />
                       </div>

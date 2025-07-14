@@ -35,10 +35,17 @@ const StudentDetails = () => {
           <div className="bg-white p-6 rounded shadow flex flex-col gap-6">
             {/* Basic Info */}
             <div className="flex flex-col items-center gap-2">
-              <h3 className="font-semibold">{student[0].student_name}</h3>
+              <h3 className="font-semibold">{student[0].name}</h3>
             </div>
 
             <div className="w-full grid grid-cols-2 gap-4 text-sm">
+               <div className="w-24 h-24 mx-auto rounded-full mb-3 overflow-hidden">
+                <img
+                  src={student[0].avatar||`https://ui-avatars.com/api/?name=${student[0].name}&background=0D8ABC&color=fff`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <p>
                 <strong>Email Address:</strong>
                 <br />

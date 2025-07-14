@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,9 @@ const EditStudent = () => {
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [selectedCourses, setSelectedCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const { courses } = useSelector((state) => state.courses);
 
   const courseOptions = courses?.map((course) => ({
@@ -22,50 +25,46 @@ const EditStudent = () => {
     label: course.course_title,
   }));
 
-  // Fetch available courses
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]);
 
-  // Fetch student data by ID
   useEffect(() => {
     const fetchStudent = async () => {
+      setLoading(true);
       try {
         const response = await axiosInstance.get(`/student?id=${id}`);
-        setStudentData(response.data.data[0]);
+        const student = response?.data?.data;
+        console.log("student",student)
+        setStudentData(student);
+        setName(student.name);
+        setEmail(student.email);
+        setMobile(student.mobile);
+
+        const mappedCourses = student?.courses
+          ?.filter((course) => course.course_id)
+          .map((course) => ({
+            label: course.course_title,
+            value: course.course_id,
+          }));
+
+        setSelectedCourses(mappedCourses || []);
+        setError(null);
       } catch (error) {
         console.error("Error fetching student", error);
+        setError("Failed to load student data.");
       }
+      setLoading(false);
     };
 
     fetchStudent();
   }, [id]);
 
-  // Set form values from API data
-  useEffect(() => {
-    if (studentData) {
-      console.log("Student Courses: ", studentData.courses); // ✅ check what you get
-      setName(studentData.student_name);
-      setEmail(studentData.email);
-      setMobile(studentData.mobile);
-
-      // Set selected courses from studentData
-      const mappedCourses = studentData?.courses
-        ?.filter((course) => course.course_id) // only if course_id exists
-        .map((course) => ({
-          label: course.course_title,
-          value: course.course_id,
-        }));
-
-      setSelectedCourses(mappedCourses || []);
-    }
-  }, [studentData]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedStudent = {
       id: studentData.id,
-      student_name: name,
+      name: name,
       email,
       mobile,
       course_id: JSON.stringify(selectedCourses.map((course) => course.value)),
@@ -74,7 +73,6 @@ const EditStudent = () => {
     await dispatch(updateStudent(updatedStudent));
     navigate("/manage-student");
   };
-  
 
   const handleCancel = () => {
     navigate("/manage-student");
@@ -89,13 +87,21 @@ const EditStudent = () => {
 
         <h2 className="text-xl font-semibold mb-4">Edit Student</h2>
 
-        {studentData ? (
+        {loading ? (
+          <p>Loading student data...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : (
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
                 <label className="block mb-1 font-medium">Full Name</label>
-                <input type="text" className="w-full border px-3 py-2 rounded"
-                  value={name}  onChange={(e) => setName(e.target.value)} />
+                <input
+                  type="text"
+                  className="w-full border px-3 py-2 rounded"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
 
               <div>
@@ -110,10 +116,15 @@ const EditStudent = () => {
 
               <div>
                 <label className="block mb-1 font-medium">Mobile Number</label>
-                <input  type="text"
+                <input
+                  type="text"
                   className="w-full border px-3 py-2 rounded"
                   value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}/>
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (/^\d*$/.test(val)) setMobile(val); // only numbers allowed
+                  }}
+                />
               </div>
 
               <div>
@@ -138,8 +149,6 @@ const EditStudent = () => {
               </div>
             </div>
           </form>
-        ) : (
-          <p>Loading student data...</p>
         )}
       </div>
     </div>

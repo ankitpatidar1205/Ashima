@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInstructors } from "../../Redux/slices/InstructorSlice/InstructorSlice";
 import { createCourse, fetchCourses, updateCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
@@ -6,12 +6,9 @@ import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice"
 
 const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
   const dispatch = useDispatch();
-  const fcmToken = localStorage.getItem('fcmToken')
-  // console.log("fcmToken",fcmToken);
+  const fcmToken = localStorage.getItem('fcmToken');
 
-  const [instructorid, setInstructorId] = useState("")
-  console.log(instructorid)
-
+  const [instructorid, setInstructorId] = useState("");
   const [formData, setFormData] = useState({
     course_title: "",
     course_description: "",
@@ -26,12 +23,17 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
     fcmToken
   });
 
+  // Initialize course_syllabus with id/course_id fields optional
+  const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: "",module_courses:"" }]);
+  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
+
   useEffect(() => {
-    const inst_id = localStorage.getItem("is_id")
+    const inst_id = localStorage.getItem("is_id");
     if (inst_id) {
-      setInstructorId(inst_id)
+      setInstructorId(inst_id);
     }
-  })
+  }, []);
+
   useEffect(() => {
     if (instructorid) {
       setFormData((prev) => ({
@@ -40,9 +42,6 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
       }));
     }
   }, [instructorid]);
-  // Initialize course_syllabus with an array of objects
-  const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: "" }]);
-  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
 
   useEffect(() => {
     dispatch(getInstructors());
@@ -53,9 +52,9 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
   const { categories } = useSelector((state) => state?.categories);
   const { courses } = useSelector((state) => state?.courses);
 
+  // Load course data if editing
   useEffect(() => {
     if (courseId) {
-      // If we are editing, fetch the course data
       const courseToEdit = courses.find(course => course.id === courseId);
       if (courseToEdit) {
         setFormData({
@@ -69,13 +68,35 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           course_content_video_link: courseToEdit.course_content_video_link,
           test_video: courseToEdit.test_video,
           status: courseToEdit.status.toString(),
-
+          fcmToken
         });
-        setCourseSyllabus(JSON.parse(courseToEdit.course_syllabus) || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
-        setFaqs(JSON.parse(courseToEdit.faqs) || [{ question: "", answer: "" }]); // Parse the JSON string into an array of objectscourseToEdit.faqs);
+
+        // Parse course_syllabus safely with id/course_id fields
+        try {
+          const syllabus = courseToEdit.course_syllabus
+            ? (typeof courseToEdit.course_syllabus === "string"
+                ? JSON.parse(courseToEdit.course_syllabus)
+                : courseToEdit.course_syllabus)
+            : [{ module_title: "", module_syllabus: "" ,module_courses:""}];
+          setCourseSyllabus(syllabus);
+        } catch (err) {
+          console.error("Error parsing course_syllabus", err);
+          setCourseSyllabus([{ module_title: "", module_syllabus: "",module_courses:"" }]);
+        }
+
+        // Parse FAQs safely
+        try {
+          const parsedFaqs = courseToEdit.faqs
+            ? (typeof courseToEdit.faqs === "string" ? JSON.parse(courseToEdit.faqs) : courseToEdit.faqs)
+            : [{ question: "", answer: "" }];
+          setFaqs(parsedFaqs);
+        } catch (err) {
+          console.error("Error parsing faqs", err);
+          setFaqs([{ question: "", answer: "" }]);
+        }
       }
     }
-  }, [courseId, courses]);
+  }, [courseId, courses, fcmToken]);
 
   if (!isOpen) return null;
 
@@ -92,29 +113,31 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
     data.append("course_content_video_link", formData.course_content_video_link);
     data.append("status", formData.status);
     data.append("fcmToken", fcmToken);
-    // Append course_syllabus as an array of objects
+
+    // Append course_syllabus including id/course_id if present
     data.append("course_syllabus", JSON.stringify(course_syllabus));
-    // Append FAQs as an array of objects
+
+    // Append FAQs
     data.append("faqs", JSON.stringify(faqs));
     data.append("course_image", formData.course_image);
     data.append("test_video", formData.test_video);
 
     try {
       if (courseId) {
-        // Update course if we are in "update" mode
+        // Update course if editing
         await dispatch(updateCourse({ id: courseId, formData: data }));
-        setCourseId(null)
+        setCourseId(null);
       } else {
-        // Create new course if we are in "add" mode
+        // Create new course
         await dispatch(createCourse(data));
       }
       await dispatch(fetchCourses());
-      onClose(); // Close modal after submit
+      onClose();
     } catch (error) {
       console.error("Error submitting course:", error);
     }
 
-    // Reset form fields
+    // Reset form
     setFormData({
       course_title: "",
       course_description: "",
@@ -126,39 +149,73 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
       course_content_video_link: "",
       test_video: null,
       status: "0",
+      fcmToken
     });
-    setCourseId(null)
-    setCourseSyllabus([{ module_title: "", module_syllabus: "" }]);
+    setCourseId(null);
+    setCourseSyllabus([{ module_title: "", module_syllabus: "",module_courses:"" }]);
     setFaqs([{ question: "", answer: "" }]);
   };
 
-  // Handle dynamic course_syllabus changes
+  // Update syllabus item but preserve id/course_id fields
   const handleCourseSyllabusChange = (index, e) => {
-    const newCourseSyllabus = [...course_syllabus];
-    newCourseSyllabus[index][e.target.name] = e.target.value;
-    setCourseSyllabus(newCourseSyllabus);
+    const { name, value } = e.target;
+    setCourseSyllabus((prev) => {
+      const updated = [...prev];
+      updated[index] = {
+        ...updated[index], // preserve existing fields like id, course_id
+        [name]: value,
+      };
+      return updated;
+    });
   };
 
+  // Add new module without id/course_id
   const handleAddModule = () => {
-    setCourseSyllabus([...course_syllabus, { module_title: "", module_syllabus: "" }]);
+    setCourseSyllabus([...course_syllabus, { module_title: "", module_syllabus: "",module_courses:"" }]);
   };
 
-  // Handle dynamic FAQ changes
+  // FAQ change handler
   const handleFaqChange = (index, e) => {
-    const newFaqs = [...faqs];
-    newFaqs[index][e.target.name] = e.target.value;
-    setFaqs(newFaqs);
+    const { name, value } = e.target;
+    setFaqs((prev) => {
+      const updated = [...prev];
+      updated[index] = {
+        ...updated[index],
+        [name]: value,
+      };
+      return updated;
+    });
   };
 
   const handleAddFaq = () => {
     setFaqs([...faqs, { question: "", answer: "" }]);
   };
+
   const handleCheckboxChange = (e) => {
     setFormData({
       ...formData,
-      status: e.target.checked ? "1" : "0", // If checked, set to "1", else "0"
+      status: e.target.checked ? "1" : "0",
     });
   };
+const handleClose = () => {
+  setCourseId(null); // Clear editing state
+  setFormData({
+    course_title: "",
+    course_description: "",
+    course_type: "",
+    instructor_id: instructorid || "",
+    course_price: "",
+    course_image: null,
+    category_id: "",
+    course_content_video_link: "",
+    test_video: null,
+    status: "0",
+    fcmToken
+  });
+  setCourseSyllabus([{ module_title: "", module_syllabus: "", module_courses: "" }]);
+  setFaqs([{ question: "", answer: "" }]);
+  onClose(); // Close the modal
+};
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -168,9 +225,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
         <form className="space-y-4" onSubmit={handleSubmit}>
           {/* Course Title */}
           <div>
-            <label htmlFor="courseTitle" className="text-sm font-medium mb-1 block">
-              Course Title
-            </label>
+            <label htmlFor="courseTitle" className="text-sm font-medium mb-1 block">Course Title</label>
             <input
               id="courseTitle"
               type="text"
@@ -183,9 +238,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
 
           {/* Course Description */}
           <div>
-            <label htmlFor="courseDescription" className="text-sm font-medium mb-1 block">
-              Course Description
-            </label>
+            <label htmlFor="courseDescription" className="text-sm font-medium mb-1 block">Course Description</label>
             <textarea
               id="courseDescription"
               value={formData.course_description}
@@ -193,18 +246,14 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
               placeholder="Enter course description"
               className="border p-2 rounded w-full"
               rows="3"
-            ></textarea>
+            />
           </div>
 
           {/* Course Image */}
           <div>
-            <label htmlFor="courseImage" className="text-sm font-medium mb-1 block">
-              Course Image
-            </label>
+            <label htmlFor="courseImage" className="text-sm font-medium mb-1 block">Course Image</label>
             <div className="border border-dashed p-5 rounded text-center">
-              <p className="text-sm mb-1">
-                Drag and drop your image here or <b>browse files</b>
-              </p>
+              <p className="text-sm mb-1">Drag and drop your image here or <b>browse files</b></p>
               <input
                 id="course_image"
                 type="file"
@@ -217,9 +266,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
 
           {/* Category */}
           <div>
-            <label htmlFor="courseCategory" className="text-sm font-medium mb-1 block">
-              Select Category
-            </label>
+            <label htmlFor="courseCategory" className="text-sm font-medium mb-1 block">Select Category</label>
             <select
               id="courseCategory"
               value={formData.category_id}
@@ -228,9 +275,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
             >
               <option>Select category</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.category_name}
-                </option>
+                <option key={category.id} value={category.id}>{category.category_name}</option>
               ))}
             </select>
           </div>
@@ -238,9 +283,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           {/* Course Type and Instructor */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label htmlFor="courseType" className="text-sm font-medium mb-1 block">
-                Course Type
-              </label>
+              <label htmlFor="courseType" className="text-sm font-medium mb-1 block">Course Type</label>
               <select
                 id="courseType"
                 value={formData.course_type}
@@ -254,31 +297,26 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
               </select>
             </div>
 
-            <div>
-              <label htmlFor="instructor" className="text-sm font-medium mb-1 block">
-                Instructor
-              </label>
+            {/* <div>
+              <label htmlFor="instructor" className="text-sm font-medium mb-1 block">Instructor</label>
               <select
                 id="instructor"
                 value={formData.instructor_id}
                 disabled
                 className="border p-2 rounded w-full bg-gray-100 text-gray-700"
               >
-                {instructors?.map((instructor) => (
+                {instructors?.map((instructor) =>
                   instructor.id === formData.instructor_id && (
                     <option key={instructor.id} value={instructor.id}>
                       {instructor.full_name}
                     </option>
                   )
-                ))}
+                )}
               </select>
-            </div>
-
+            </div> */}
 
             <div>
-              <label htmlFor="price" className="text-sm font-medium mb-1 block">
-                Course Price
-              </label>
+              <label htmlFor="price" className="text-sm font-medium mb-1 block">Course Price</label>
               <input
                 id="course_price"
                 type="text"
@@ -310,7 +348,15 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
                   placeholder="Module description"
                   className="border p-2 rounded w-full"
                   rows="2"
-                ></textarea>
+                />
+                <input
+                  type="text"
+                  name="module_courses"
+                  value={module?.module_courses}
+                  onChange={(e) => handleCourseSyllabusChange(index, e)}
+                  placeholder="Module cource link"
+                  className="border p-2 rounded w-full"
+                />
               </div>
             ))}
             <button
@@ -324,9 +370,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
 
           {/* Video Link */}
           <div>
-            <label className="text-sm font-medium mb-1 block">
-              Course Content - Video Link
-            </label>
+            <label className="text-sm font-medium mb-1 block">Course Content - Video Link</label>
             <input
               type="text"
               placeholder="Enter video URL"
@@ -340,9 +384,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           <div>
             <label className="text-sm font-medium mb-1 block">Test Video</label>
             <div className="border border-dashed p-5 rounded text-center">
-              <p className="text-sm mb-1">
-                Upload a test video <b>browse files</b>
-              </p>
+              <p className="text-sm mb-1">Upload a test video <b>browse files</b></p>
               <input
                 type="file"
                 accept="video/*"
@@ -384,69 +426,23 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
             </button>
           </div>
 
-          {/* know your instructor */}
-
-          
-          {/* <div>
-            <label className="text-sm font-medium mb-1 block">Know Your Instructor</label>
-
-            <div class="row">
-              <div className="col-sm-6">
-                <input
-                  type="file"
-                  name="instrutorimage"
-                  className="border p-2 rounded w-full"
-                />
-
-              </div>
-              <div className="col-sm-6">
-                <input
-                  type="text"
-                  name="instrutorimage"
-                  className="border p-2 rounded w-full"
-                  placeholder="Enter Instructor Name"
-                />
-              </div>
-              <div className="col-sm-6 mt-3">
-                <input
-                  type="text"
-                  name="instrutorExpertise"
-                  className="border p-2 rounded w-full"
-                  placeholder="Enter Expertise"
-                />
-              </div>
-              <div className="col-sm-6 mt-3">
-                <input
-                  type="email"
-                  name="instrutorEmail"
-                  className="border p-2 rounded w-full"
-                  placeholder="Enter Email"
-                />
-              </div>
+          {/* Status Checkbox */}
+          {courseId == null && (
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={formData.status === "1"}
+                onChange={handleCheckboxChange}
+              />
+              <label className="text-sm">Active</label>
             </div>
-
-
-
-          </div> */}
-
-
-
-          {/* Status */}
-          {courseId == null && <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={formData.status === "1"}
-              onChange={handleCheckboxChange} // Handle checkbox change
-            />
-            <label className="text-sm">Active</label>
-          </div>}
-
+          )}
 
           {/* Submit and Cancel Buttons */}
           <div className="flex justify-end gap-2">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="border px-4 py-2 rounded"
             >
               Cancel
@@ -457,9 +453,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           </div>
         </form>
 
-        <button onClick={onClose} className="absolute top-2 right-3 text-gray-500 text-2xl">
-          &times;
-        </button>
+        <button onClick={handleClose} className="absolute top-2 right-3 text-gray-500 text-2xl">&times;</button>
       </div>
     </div>
   );

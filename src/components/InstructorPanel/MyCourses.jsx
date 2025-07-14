@@ -12,11 +12,10 @@ const MyCourses = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [courseId, setCourseId] = useState(null);
   const [instructorId, setInstructorId] = useState("");
-  console.log(instructorId)
   const dispatch = useDispatch();
    const currency = useCurrency();
   const { courses } = useSelector((state) => state.courses);
-  console.log(courses);
+  
 
   useEffect(() => {
     dispatch(fetchCourses());

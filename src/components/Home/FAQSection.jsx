@@ -15,17 +15,17 @@ const faqs = [
   {
     question: "WHAT TYPES OF COURSES DOES AISKILLS OFFER?",
     answer:
-      "We offer courses in AI, Data Science, Software Development, Business, and more.",
+      "We oer courses in AI, Data Science, Machine Learning, Product, and many more",
   },
   {
     question: "WHAT KIND OF SUPPORT DOES AISKILLS PROVIDE TO STUDENTS?",
     answer:
-      "Students get access to 24/7 support, live mentoring, and interactive community discussions.",
+      "Students get access to all the course materials, live mentoring, and interactive community discussions.",
   },
   {
     question: "HOW DOES AISKILLS HELP ME BUILD MY CAREER?",
     answer:
-      "We provide career guidance, resume reviews, and direct job opportunities through industry partnerships.",
+      "We provide LIVE, HYBRID and VIDEO based courses along with digital products to enhance your learning. If you choose launch now, then we will provide career guidance, resume reviews and direct job opportunities through industry partnerships.",
   },
 ];
 
@@ -45,8 +45,7 @@ const FAQSection = () => {
             Frequently Asked <br /> Questions
           </h2>
           <p className="text-[16px] text-[#ffffff] font-roboto leading-snug">
-            ENHANCE YOUR LEARNING WITH INSTANT DIGITAL PRODUCTS FROM INSTANT
-            REAL-WORLD PROJECTS TO PROMPTS.
+            ENHANCE YOUR LEARNING WITH AI COURSES AND INSTANT DIGITAL PRODUCTS.
           </p>
         </div>
 

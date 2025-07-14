@@ -40,7 +40,6 @@ const LaunchPage = () => {
      mlops: true,
      ml: true,
      nlp: true,
-     capstone: true,
      deepLearning: true,
      rag: true,
      genAI: true,

@@ -4,10 +4,12 @@ import { getInstructors } from "../../Redux/slices/InstructorSlice/InstructorSli
 import { createCourse, fetchCourses, updateCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 
-const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
+const AddCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
   const dispatch = useDispatch();
-  const fcmToken=localStorage.getItem('fcmToken')
-  console.log("fcmToken",fcmToken);
+  const [loading, setLoading] = useState(false);
+
+  const fcmToken = localStorage.getItem('fcmToken')
+  // console.log("fcmToken",fcmToken);
   const [formData, setFormData] = useState({
     course_title: "",
     course_description: "",
@@ -49,10 +51,10 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
           category_id: courseToEdit.category_id,
           course_content_video_link: courseToEdit.course_content_video_link,
           test_video: courseToEdit.test_video,
-          status:courseToEdit.status.toString(),
+          status: courseToEdit.status.toString(),
 
         });
-        setCourseSyllabus(JSON.parse(courseToEdit.course_syllabus) || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
+        setCourseSyllabus(courseToEdit.course_syllabus || [{ module_title: "", module_syllabus: "" }]); // Parse the JSON string into an array of objectscourseToEdit.course_syllabus);
         setFaqs(JSON.parse(courseToEdit.faqs) || [{ question: "", answer: "" }]); // Parse the JSON string into an array of objectscourseToEdit.faqs);
       }
     }
@@ -62,7 +64,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  setLoading(true); // ✅ Start loader here!
     const data = new FormData();
     data.append("course_title", formData.course_title);
     data.append("course_description", formData.course_description);
@@ -79,18 +81,18 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
     // Append FAQs as an array of objects
     data.append("faqs", JSON.stringify(faqs));
 
-     
-      data.append("course_image", formData.course_image);
-    
-     
-      data.append("test_video", formData.test_video);
-    
+
+    data.append("course_image", formData.course_image);
+
+
+    data.append("test_video", formData.test_video);
+
 
     try {
       if (courseId) {
         // Update course if we are in "update" mode
-        await dispatch(updateCourse({id: courseId, formData: data }));
-          setCourseId(null)
+        await dispatch(updateCourse({ id: courseId, formData: data }));
+        setCourseId(null)
       } else {
         // Create new course if we are in "add" mode
         await dispatch(createCourse(data));
@@ -99,24 +101,27 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
       onClose(); // Close modal after submit
     } catch (error) {
       console.error("Error submitting course:", error);
+    } finally {
+      setLoading(false); // stop loader
+      // Reset form fields
+      setFormData({
+        course_title: "",
+        course_description: "",
+        course_type: "",
+        instructor_id: "",
+        course_price: "",
+        course_image: null,
+        category_id: "",
+        course_content_video_link: "",
+        test_video: null,
+        status: "0",
+      });
+      setCourseId(null)
+      setCourseSyllabus([{ module_title: "", module_syllabus: "" }]);
+      setFaqs([{ question: "", answer: "" }]);
     }
 
-    // Reset form fields
-    setFormData({
-      course_title: "",
-      course_description: "",
-      course_type: "",
-      instructor_id: "",
-      course_price: "",
-      course_image: null,
-      category_id: "",
-      course_content_video_link: "",
-      test_video: null,
-      status: "0",
-    });
-    setCourseId(null)
-    setCourseSyllabus([{ module_title: "", module_syllabus: "" }]);
-    setFaqs([{ question: "", answer: "" }]);
+
   };
 
   // Handle dynamic course_syllabus changes
@@ -283,7 +288,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
                 <input
                   type="text"
                   name="module_title"
-                  value={module?.module_title }
+                  value={module?.module_title}
                   onChange={(e) => handleCourseSyllabusChange(index, e)}
                   placeholder="Module Title"
                   className="border p-2 rounded w-full"
@@ -369,15 +374,15 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
             </button>
           </div>
           {/* Status */}
-          {courseId==null && <div className="flex items-center gap-2">
-          <input
+          {courseId == null && <div className="flex items-center gap-2">
+            <input
               type="checkbox"
               checked={formData.status === "1"}
               onChange={handleCheckboxChange} // Handle checkbox change
             />
             <label className="text-sm">Active</label>
           </div>}
-          
+
 
           {/* Submit and Cancel Buttons */}
           <div className="flex justify-end gap-2">
@@ -385,13 +390,29 @@ const AddCoursesModal = ({ isOpen, onClose, courseId , setCourseId}) => {
               type="button"
               onClick={onClose}
               className="border px-4 py-2 rounded"
+              disabled={loading}
             >
               Cancel
             </button>
-            <button type="submit" className="bg-teal-700 text-white px-4 py-2 rounded">
-              {courseId ? "Update Course" : "Save Course"}
+            <button
+              type="submit"
+              className="bg-teal-700 text-white px-4 py-2 rounded flex items-center gap-2"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                  </svg>
+                  Please wait...
+                </>
+              ) : (
+                courseId ? "Update Course" : "Save Course"
+              )}
             </button>
           </div>
+
         </form>
 
         <button onClick={onClose} className="absolute top-2 right-3 text-gray-500 text-2xl">

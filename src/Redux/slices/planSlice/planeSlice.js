@@ -26,6 +26,31 @@ export const fetchPlans = createAsyncThunk(
   }
 );
 
+// ✅ Get All Plans
+export const fetchPlanEnquiry = createAsyncThunk(
+  "plans/fetchPlanEnquiry",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.get("/planenquiry");
+      return res.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Error fetching plans");
+    }
+  }
+);
+
+export const createPlanEnquiry = createAsyncThunk(
+  "plans/createPlanEnquiry",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.post("/planenquiry", formData);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Error creating plan");
+    }
+  }
+);
+
 // ✅ Delete Plan
 export const deletePlan = createAsyncThunk(
   "plans/deletePlan",
@@ -75,6 +100,7 @@ const plansSlice = createSlice({
   name: "plans",
   initialState: {
     plans: [],
+    plansenquiry: [],
     isLoading: false,
     error: null,
   },
@@ -95,6 +121,20 @@ const plansSlice = createSlice({
         state.error = action.payload;
       })
 
+
+      .addCase(createPlanEnquiry.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(createPlanEnquiry.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.plansenquiry.push(action.payload);
+      })
+      .addCase(createPlanEnquiry.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
       // Fetch
       .addCase(fetchPlans.pending, (state) => {
         state.isLoading = true;
@@ -105,6 +145,19 @@ const plansSlice = createSlice({
         state.plans = action.payload;
       })
       .addCase(fetchPlans.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // Fetch
+      .addCase(fetchPlanEnquiry.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchPlanEnquiry.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.plansenquiry = action.payload;
+      })
+      .addCase(fetchPlanEnquiry.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })

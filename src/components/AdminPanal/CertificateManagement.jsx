@@ -1,6 +1,8 @@
 import React from "react";
 import { FaSearch, FaDownload, FaEye, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
+import CertificateGenerator from "../Certificate/CertificateGenerator";
+import CertificatePdfPreview from "../Certificate/CertificatePreview";
 
 const CertificateManagement = () => {
   const certificateData = [
@@ -99,8 +101,10 @@ const CertificateManagement = () => {
                     </span>
                   </td>
                   <td className="px-4 py-3 flex gap-3 items-center">
-                    <FaEye className="text-blue-600 cursor-pointer" />
-                    <FaDownload className="text-gray-600 cursor-pointer" />
+                    {/* <FaEye className="text-blue-600 cursor-pointer" /> */}
+                    <CertificatePdfPreview studentName={item.student} courseTitle={item.course}/>
+                    {/* <FaDownload className="text-gray-600 cursor-pointer" /> */}
+                    <CertificateGenerator studentName={item.student} courseTitle={item.course} />
                     <FaTrash className="text-red-600 cursor-pointer" />
                   </td>
                 </tr>

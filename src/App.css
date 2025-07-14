@@ -2,6 +2,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -9,15 +10,34 @@
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hidden {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
+
+
+/* Change the date numbers in month view */
+.fc-daygrid-day-number {
+  color: black !important;
+  /* Your desired color */
+  /* optional: make it bold */
+}
+
+/* Change the time slot labels on the left in week/day views */
+.fc-timegrid-slot-label {
+  color: #007681 !important;
+  font-weight: 600;
+}
+
 
 @keyframes scroll-right {
   from {
     transform: translateX(-80%);
   }
+
   to {
     transform: translateX(0%);
   }
@@ -27,10 +47,12 @@
 .animate-scroll-right {
   animation: scroll-right 25s linear infinite;
 }
+
 .box {
   border-left: 35px solid black;
   border-right: 35px solid black;
 }
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -40,7 +62,6 @@
 /* Handle */
 
 .shraddha {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
-

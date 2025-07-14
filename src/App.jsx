@@ -87,7 +87,14 @@ import UserInfo from "./components/SuperadminPanel/UserInfo";
 import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProducts";
 import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
 import SuperAdminProfile from "./components/SuperadminPanel/SuperAdminProfile";
-
+import CourseContent from "./components/AdminPanal/CourseContent";
+import Cart from "./components/Cart/Cart";
+import TermsConditions from "./components/Home/TermsConditions/TermsConditions";
+import AboutUs from "./components/Home/Aboutus/AboutUs";
+import Careers from "./components/Home/Careers/Careers";
+import Helpsupport from "./components/Home/HelpSupport/Helpsupport";
+import CookiePolicy from "./components/Home/Cookie/CookiePolicy";
+import Privacypolicy from "./components/Home/PrivacyPolicy/Privacypolicy";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -145,6 +152,14 @@ const App = () => {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/reset-password-success" element={<ResetPasswordSucessfullPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/cart" element={<Cart/>} />
+        <Route path="/termconditions" element={<TermsConditions/>} />
+        <Route path="/privacypolicy" element={<Privacypolicy/>} />
+        <Route path="/aboutus" element={<AboutUs/>} />
+        <Route path="/careers" element={<Careers/>} />
+        <Route path="/cookie" element={<CookiePolicy/>} />
+         <Route path="/helpsupport" element={<Helpsupport/>} />
+
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
@@ -191,6 +206,8 @@ const App = () => {
         <Route path="/course/:id" element={<CoursesDetails />} />
         <Route path="/course-category" element={<CourseCategory />} />
         <Route path="/blog-articles" element={<Blogs_article></Blogs_article>}></Route>
+        <Route path="/course-content/:id" element={<CourseContent />} />
+
         <Route
           path="/community-discussion"
           element={<ManageComm_Discu></ManageComm_Discu>}

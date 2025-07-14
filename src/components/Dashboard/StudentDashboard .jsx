@@ -15,14 +15,14 @@ const StudentDashboard = () => {
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
           {[
-            { icon: <FaBook />, label: "Active Courses", count: 4 },
-            { icon: <FaListUl />, label: "Pending Assignments", count: 7 },
+            { icon: <FaBook />, label: "Active Courses", count: 0 },
+            { icon: <FaListUl />, label: "Pending Assignments", count: 0 },
             {
               icon: <FaCertificate />,
               label: "Certificates Earned",
-              count: 12,
+              count: 0,
             },
-            { icon: <FaChartLine />, label: "Learning Progress", count: "68%" },
+            { icon: <FaChartLine />, label: "Learning Progress", count: "0%" },
           ].map((item, idx) => (
             <div
               key={idx}

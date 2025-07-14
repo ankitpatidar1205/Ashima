@@ -3,6 +3,7 @@ import { useRef } from "react";
 import letstart1 from "../../assets/letstart1.png";
 import letstart2 from "../../assets/letstart2.png";
 import letstart3 from "../../assets/letstart3.png";
+import letstart4 from "../../assets/DIGITAL PRODUCTS.jpeg";
 
 const MakeLearningBetter = () => {
   const sliderRef = useRef(null);
@@ -39,10 +40,10 @@ const MakeLearningBetter = () => {
         "STAY AHEAD IN YOUR FIELD BY MASTERING HIGH-DEMAND SKILLS THROUGH OUR ONLINE SESSIONS",
     },
     {
-      image: letstart3,
-      title: "CAREER NETWORKING",
+      image: letstart4,
+      title: "DIGITAL PRODUCTS",
       description:
-        "STAY AHEAD IN YOUR FIELD BY MASTERING HIGH-DEMAND SKILLS THROUGH OUR ONLINE SESSIONS",
+        "Instant access to ready-made AI tools, templates, and prompts to supercharge your learning.",
     },
   ];
 
@@ -94,9 +95,9 @@ const MakeLearningBetter = () => {
                   {card.title}
                 </h3>
                 <p className="text-sm mb-3">{card.description}</p>
-                <button className="px-4 py-2 bg-white text-black font-semibold rounded-full hover:bg-gray-100 transition text-sm">
+                {/* <button className="px-4 py-2 bg-white text-black font-semibold rounded-full hover:bg-gray-100 transition text-sm">
                   Learn More
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

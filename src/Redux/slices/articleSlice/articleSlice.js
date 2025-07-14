@@ -63,9 +63,10 @@ export const editArticle = createAsyncThunk(
 // ✅ Publish Article
 export const publishArticle = createAsyncThunk(
   "articles/publishArticle",
-  async (id, { rejectWithValue }) => {
+  async ({id,status}, { rejectWithValue }) => {
+     
     try {
-      const res = await axiosInstance.put(`/publisharticle/${id}`);
+      const res = await axiosInstance.patch(`/publisharticle/${id}`,{status});
       return res.data; // Assuming the API returns the updated article
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error publishing article");

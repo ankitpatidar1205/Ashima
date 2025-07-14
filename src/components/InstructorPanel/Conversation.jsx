@@ -9,7 +9,7 @@ const Messages = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const socketRef = useRef();
-  const userId = localStorage.getItem("is_id");
+  const userId = parseInt(localStorage.getItem("is_id"));
 
   useEffect(() => {
     socketRef.current = io("http://localhost:4000", { withCredentials: true });
@@ -24,7 +24,7 @@ const Messages = () => {
     });
 
     socketRef.current.on("users", setUsers);
-
+console.log("users",users)
     socketRef.current.on("new_message", (msg) => {
       // check if message relevant to current chat
       console.log("new_message", msg);
@@ -39,7 +39,7 @@ const Messages = () => {
     return () => {
       socketRef.current.disconnect();
     };
-  }, []); // <-- dependency array empty, only once on mount
+  }, []);
   useEffect(() => {
     if (!selectedUser) {
       setMessages([]);
@@ -54,12 +54,14 @@ const Messages = () => {
 
     // Listen once for messages event
     const handleMessages = (msgs) => {
-      const formatted = msgs.map((msg) => ({
+      console.log("objecttttt,",msgs.filter((data)=>data.sender_id===userId));
+      const formatted = msgs.filter((msg) => ({
         ...msg,
         isOwn: msg.sender_id === userId,
       }));
       setMessages(formatted);
     };
+
 
     socketRef.current.on("messages", handleMessages);
 
@@ -84,18 +86,18 @@ const Messages = () => {
   const handleSendMessage = () => {
     if (newMessage.trim() && selectedUser) {
       const messageData = {
-        senderId: userId,
+        senderId: parseInt(userId),
         receiverId: selectedUser.id,
         message: newMessage,
       };
       console.log("messageData", messageData);
       socketRef.current.emit("send_message", messageData);
 
-      // Optimistically update UI
       setMessages((prevMessages) => [
         ...prevMessages,
         { ...messageData, isOwn: true, created_at: new Date().toISOString() },
       ]);
+      
       setNewMessage("");
     }
   };
@@ -137,58 +139,61 @@ const Messages = () => {
                 </div>
 
                 {/* Messages Panel */}
-                <div className="flex-1 flex flex-col">
-                  <div className="flex-1 p-6 overflow-y-auto">
-                    <div className="space-y-4">
-                      {messages.map((message, index) => (
-                        <div
-                          key={index}
-                          className={`flex items-start ${message.isOwn ? "justify-end" : "justify-start"}`}
-                        >
-                          {/* Receiver Avatar */}
-                          {!message.isOwn && (
-                            <img
-                              src={selectedUser?.profile_image || "https://res.cloudinary.com/de1s1o9xc/image/upload/v1746172558/wpxrlb7rwudnv2nnfvwj.png"}
-                              className="w-8 h-8 rounded-full mr-3"
-                              alt={selectedUser?.name}
-                            />
-                          )}
+             <div className="flex-1 flex flex-col">
+  <div className="flex-1 p-6 overflow-y-auto">
+    <div className="space-y-4">
+      {messages.map((message, index) => { // Changed to use 'message'
+        const isSender = parseInt(message.sender_id) === parseInt(userId); // Corrected: use message.senderId
 
-                          {/* Message Bubble */}
-                          <div
-                            className={`rounded-lg p-2 max-w-md ${message.isOwn ? "bg-teal-800 text-white" : "bg-white text-gray-900"}`}
-                          >
+        return (
+          <div
+            key={index}
+            className={`flex items-start ${isSender ? "justify-end" : "justify-start"}`}
+          >
+            {/* Receiver Avatar */}
+            {!isSender && ( // Changed from !message.isOwn to !isSender for consistency
+              <img
+                src={selectedUser?.profile_image || "https://res.cloudinary.com/de1s1o9xc/image/upload/v1746172558/wpxrlb7rwudnv2nnfvwj.png"}
+                className="w-8 h-8 rounded-full mr-3"
+                alt={selectedUser?.name}
+              />
+            )}
 
-                            <p>{message.message}</p>
-                            <span className="text-xs text-gray-500 mt-1 block">
-                              {new Date(message.created_at).toLocaleTimeString()}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
+            {/* Message Bubble */}
+            <div
+              className={`rounded-lg p-2 max-w-md ${isSender ? "bg-teal-800 text-white" : "bg-white text-gray-900"}`} // Changed from message.isOwn to isSender
+            >
+              <p>{message.message}</p>
+              <span className="text-xs text-gray-500 mt-1 block">
+                {new Date(message.created_at).toLocaleTimeString()}
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
 
-                    </div>
-                  </div>
-
-                  {/* Message Input */}
-                  <div className="p-4 border-t border-gray-200">
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="text"
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type your message..."
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500/20"
-                      />
-                      <button
-                        onClick={handleSendMessage}
-                        className="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800"
-                      >
-                        <FaPaperPlane />
-                      </button>
-                    </div>
-                  </div>
-                </div>
+  {/* Message Input */}
+  <div className="p-4 border-t border-gray-200">
+    <div className="flex items-center space-x-2">
+      <input
+        type="text"
+        value={newMessage}
+        onChange={(e) => setNewMessage(e.target.value)}
+        placeholder="Type your message..."
+        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500/20"
+      />
+      <button
+        onClick={handleSendMessage}
+        className="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800"
+      >
+        {/* Make sure FaPaperPlane is imported from 'react-icons/fa' */}
+        <FaPaperPlane />
+      </button>
+    </div>
+  </div>
+</div>
 
 
               </div>

@@ -3,21 +3,28 @@ import { FaSearch, FaDownload, FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { useState } from "react";
 import AddArticleModal from "./AddArticle";
-import { fetchArticles, deleteArticle,} from "../../Redux/slices/articleSlice/articleSlice";
+import { fetchArticles, deleteArticle,publishArticle} from "../../Redux/slices/articleSlice/articleSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 const Blogs_article = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 10;
+
+
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchArticles());
-  }, []);
-  
+  }, [dispatch]);
+  useEffect(() => {
+  setCurrentPage(1);
+}, [searchQuery]);
+
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -40,7 +47,21 @@ const Blogs_article = () => {
     });
   };
   const { articles } = useSelector((state) => state.articles);
-  console.log(articles);
+  const isPublish = async(id,status)=>{
+     await  dispatch(publishArticle({id,status}))
+     dispatch(fetchArticles())
+  }
+const filteredArticles = articles?.filter((item) =>
+  item?.title?.toLowerCase().includes(searchQuery) ||
+  item?.category_name?.toLowerCase().includes(searchQuery) ||
+  item?.tags?.toLowerCase().includes(searchQuery)
+);
+
+const totalPages = Math.ceil(filteredArticles?.length / itemsPerPage);
+const paginatedArticles = filteredArticles?.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage
+);
 
   return (
     <DashboardLayout>
@@ -74,11 +95,14 @@ const Blogs_article = () => {
         <div className="bg-white rounded-lg p-4 mb-4 flex flex-col md:flex-row gap-3 items-center justify-between">
           <div className="flex flex-1 gap-2 items-center w-full">
             <div className="relative w-full md:w-[360px]">
-              <input
-                type="text"
-                placeholder="Search articles..."
-                className="pl-10 pr-4 py-2 w-full border rounded-lg text-sm focus:outline-none"
-              />
+             <input
+  type="text"
+  placeholder="Search articles..."
+  className="pl-10 pr-4 py-2 w-full border rounded-lg text-sm focus:outline-none"
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
+/>
+
               <FaSearch className="absolute left-3 top-3 text-gray-400 text-sm" />
             </div>
           </div>
@@ -105,9 +129,9 @@ const Blogs_article = () => {
               </tr>
             </thead>
             <tbody>
-              {articles?.map((item, idx) => (
+              {paginatedArticles?.map((item, idx) => (
                 <tr key={idx} className="border-b">
-                  <td className="px-4 py-3">{idx + 1}</td>
+                  <td className="px-4 py-3">{(currentPage - 1) * itemsPerPage + idx + 1}</td>
                   <td className="px-4 py-3">
                     <img
                       src={item.article}
@@ -125,15 +149,17 @@ const Blogs_article = () => {
                   <td className="px-4 py-3">{item?.category_name}</td>
                   <td className="px-4 py-3">{item?.tags}</td>
                   <td className="px-4 py-3">
-                    <span
+                    <button
                       className={`px-2 py-1 rounded-full text-xs font-medium ${
                         item?.status === "0"
                           ? "bg-red-100 text-yellow-800"
                           : "bg-green-100 text-green-600"
                       }`}
+                      onClick={() => isPublish(item?.id,item?.status === "0"?"1":"0")}
+
                     >
                       {item?.status === "0" ? "Draft" : "Published"}
-                    </span>
+                    </button>
                   </td>
                   <td className="px-4 py-3 flex gap-3 items-center">
                     <FaEye className="text-blue-600 cursor-pointer" />
@@ -148,20 +174,41 @@ const Blogs_article = () => {
           </table>
 
           {/* Pagination */}
-          <div className="p-4 text-sm flex justify-between items-center">
-            <span>Showing 1 to 10 of 50 entries</span>
-            <div className="flex gap-2">
-              <button className="border px-3 py-1 rounded text-sm">
-                Previous
-              </button>
-              <button className="border px-3 py-1 rounded bg-[#047670] text-white text-sm">
-                1
-              </button>
-              <button className="border px-3 py-1 rounded text-sm">2</button>
-              <button className="border px-3 py-1 rounded text-sm">3</button>
-              <button className="border px-3 py-1 rounded text-sm">Next</button>
-            </div>
-          </div>
+          <div className="p-4 text-sm flex justify-between items-center flex-wrap">
+  <span>
+    Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+    {Math.min(currentPage * itemsPerPage, filteredArticles?.length)} of{" "}
+    {filteredArticles?.length} entries
+  </span>
+  <div className="flex gap-2 mt-2 md:mt-0">
+    <button
+      className="border px-3 py-1 rounded text-sm"
+      disabled={currentPage === 1}
+      onClick={() => setCurrentPage((prev) => prev - 1)}
+    >
+      Previous
+    </button>
+    {Array.from({ length: totalPages }, (_, i) => (
+      <button
+        key={i}
+        className={`border px-3 py-1 rounded text-sm ${
+          currentPage === i + 1 ? "bg-[#047670] text-white" : ""
+        }`}
+        onClick={() => setCurrentPage(i + 1)}
+      >
+        {i + 1}
+      </button>
+    ))}
+    <button
+      className="border px-3 py-1 rounded text-sm"
+      disabled={currentPage === totalPages}
+      onClick={() => setCurrentPage((prev) => prev + 1)}
+    >
+      Next
+    </button>
+  </div>
+</div>
+
         </div>
       </div>
     </DashboardLayout>

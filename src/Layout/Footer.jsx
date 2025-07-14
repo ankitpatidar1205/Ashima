@@ -5,6 +5,9 @@ import { PiX } from "react-icons/pi"; // For X (Twitter)
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+
+
+
   return (
     <footer className="bg-[#000000] text-[#ffffff] py-12 sm:py-20 px-4 sm:px-8 lg:px-16">
       <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row justify-between items-start gap-8 sm:gap-16">
@@ -28,17 +31,19 @@ const Footer = () => {
               <h3 className="font-Roboto Condensed text-[#ffffff] mb-4">
                 Products
               </h3>
+
               <ul className="space-y-2  text-[#DBDAD8] text-sm leading-relaxed">
-                <li>
-                  <Link to="/courses" className="text-[#DBDAD8]">Courses</Link>
-                </li>
+               <li onClick={() => coursesRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+                <a className="text-[#DBDAD8]" href="#courses-section" >Courses</a>
+              </li>
+
                 <li>
                   <Link to="/digital" className="text-[#DBDAD8]">Digital Products</Link>
                 </li>
                 <li>
                   <Link to="/blog" className="text-[#DBDAD8]">Newsletter</Link>
                 </li>
-                <li>Help</li>
+                <li> <Link to="/helpsupport" className="text-[#DBDAD8]">Help</Link></li>
               </ul>
             </div>
 
@@ -48,9 +53,9 @@ const Footer = () => {
                 Business
               </h3>
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
-                <li>About Us</li>
-                <li>Career</li>
-                <li>Instructors</li>
+               <li> <Link to="/aboutus" className="text-decoration-none text-[#DBDAD8]">About Us</Link></li>
+                <li> <Link to="/careers" className="text-decoration-none text-[#DBDAD8]">Career</Link></li>
+                <li><Link to="/instructor" className="hover:text-[#ffffff] transition text-[#DBDAD8]">Instructors</Link></li>
               </ul>
             </div>
           </div>
@@ -59,8 +64,11 @@ const Footer = () => {
           <div className="w-full">
             <h3 className="font-Roboto Condensed text-[#ffffff] mb-4">Legal</h3>
             <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
-              <li>Cookies Policy</li>
-              <li>Privacy And Terms</li>
+              <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
+                <li> <Link to="/privacypolicy" className="text-decoration-none text-[#DBDAD8]">Privacy Policy </Link></li>
+                <li><Link to="/termconditions" className="text-decoration-none text-[#DBDAD8]">Terms Conditions</Link></li>
+                <li><Link to="/cookies" className="text-decoration-none text-[#DBDAD8]">Cookies </Link></li>
+              </ul>
             </ul>
           </div>
         </div>
@@ -84,10 +92,8 @@ const Footer = () => {
               Products
             </h3>
             <ul className="space-y-2  text-sm leading-relaxed">
-              <li className="">
-                <Link to="/courses" className="text-[#DBDAD8]">
-                  Courses
-                </Link>
+              <li onClick={() => coursesRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+                <a className="text-[#DBDAD8]" href="#courses-section" >Courses</a>
               </li>
               <li>
                 <Link to="/digital" className="text-[#DBDAD8]">Digital Products</Link>
@@ -95,7 +101,7 @@ const Footer = () => {
               <li>
                 <Link to="/blog" className="text-[#DBDAD8]">Newsletter</Link>
               </li>
-              <li className="text-[#DBDAD8]">Help</li>
+              <li> <Link to="/helpsupport" className="text-[#DBDAD8]">Help</Link></li>
             </ul>
           </div>
 
@@ -107,15 +113,9 @@ const Footer = () => {
                 Business
               </h3>
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
-                <li>About Us</li>
-                <li>Career</li>
-                <li>
-                  <Link
-                    to="/instructor"
-                    className="hover:text-[#ffffff] transition text-[#DBDAD8]"
-                  >
-                    Instructors
-                  </Link>
+                <li> <Link to="/aboutus" className="text-decoration-none text-[#DBDAD8]">About Us</Link></li>
+                <li> <Link to="/careers" className="text-decoration-none text-[#DBDAD8]">Career</Link></li>
+                <li><Link to="/instructor" className="hover:text-[#ffffff] transition text-[#DBDAD8]">Instructors</Link>
                 </li>
               </ul>
             </div>
@@ -126,8 +126,9 @@ const Footer = () => {
                 Legal
               </h3>
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
-                <li>Cookies Policy</li>
-                <li>Privacy And Terms</li>
+                <li> <Link to="/privacypolicy" className="text-decoration-none text-[#DBDAD8]">Privacy Policy </Link></li>
+                <li><Link to="/termconditions" className="text-decoration-none text-[#DBDAD8]">Terms Conditions</Link></li>
+                <li><Link to="/cookie" className="text-decoration-none text-[#DBDAD8]">Cookies </Link></li>
               </ul>
             </div>
           </div>

@@ -8,6 +8,9 @@ import templateReducer from './slices/templateSlice/templateSlice';
 import articleSliceREducer from './slices/articleSlice/articleSlice'
 import adminReducer from './slices/adminSlice/adminSlice'
 import planReducer from './slices/planSlice/planeSlice'
+import contentReducer from './slices/contentSlice/contentSlice'
+import quizReducer from './slices/quizSlice/quizSlice'
+import cartReducer from './slices/cartSlice/cartSlice'
 export const store = configureStore({
   reducer: {
     Student:StudentReducer,
@@ -18,6 +21,9 @@ export const store = configureStore({
     templates:templateReducer,
     articles:articleSliceREducer,
     admins:adminReducer,
-    plans:planReducer
+    plans:planReducer,
+    content:contentReducer,
+    quiz:quizReducer,
+    cart:cartReducer
   },
 })
