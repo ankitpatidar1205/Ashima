@@ -24,9 +24,9 @@ const Privacypolicy = () => {
         </div>
 
         {/* Privacy Sections */}
-        <div className="space-y-8">
+        <div className="space-y-8 ">
           {/* Section 1 */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-white  rounded-lg shadow-sm border border-gray-200">
             <div className="px-8 py-6">
               <h2 className="text-2xl font-bold text-teal-600 mb-6">1. Information We Collect</h2>
               <div className="space-y-6">
@@ -231,4 +231,4 @@ const Privacypolicy = () => {
   );
 };
 
-export default Privacypolicy;
+export default Privacypolicy

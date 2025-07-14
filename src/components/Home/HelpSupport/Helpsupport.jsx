@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const App: React.FC = () => {
+const Helpsupport = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -145,4 +145,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Helpsupport;
