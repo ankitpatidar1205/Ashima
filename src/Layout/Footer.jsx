@@ -128,7 +128,7 @@ const Footer = () => {
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
                 <li> <Link to="/privacypolicy" className="text-decoration-none text-[#DBDAD8]">Privacy Policy </Link></li>
                 <li><Link to="/termconditions" className="text-decoration-none text-[#DBDAD8]">Terms Conditions</Link></li>
-                <li><Link to="/cookies" className="text-decoration-none text-[#DBDAD8]">Cookies </Link></li>
+                <li><Link to="/cookie" className="text-decoration-none text-[#DBDAD8]">Cookies </Link></li>
               </ul>
             </div>
           </div>

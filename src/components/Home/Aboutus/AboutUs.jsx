@@ -22,7 +22,7 @@ const AboutUs = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      <div className="w-full px-6 py-16">
         {/* Mission Section */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-teal-600 mb-8">Our Mission</h2>

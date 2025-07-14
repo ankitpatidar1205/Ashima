@@ -65,7 +65,9 @@ const Navbar = () => {
               </div>
             )}
           </div>
-
+          <Link to="/aboutus" className="text-[18px] text-[#000000]">
+            AboutUs
+          </Link>
           <Link to="/digital" className="text-[18px] text-[#000000]">
             Digital Products
           </Link>
@@ -80,31 +82,31 @@ const Navbar = () => {
         {/* ✅ Desktop Buttons */}
         <div className="hidden md:flex items-center space-x-4">
           <div>
- {profile ? (
-            <Link
-              to={
-                profile.role === "instructor"
-                  ? "/instructor-dashboard"
-                  : profile.role === "admin"
-                    ? "/admin-dashboard"
-                    : "/student-dashboard"
-              }
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
-            >
-              Go to Dashboard
-            </Link>
-          ) : (
-            <Link
-              to="/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg "
-            >
-              Login
-            </Link>
-          )}
+            {profile ? (
+              <Link
+                to={
+                  profile.role === "instructor"
+                    ? "/instructor-dashboard"
+                    : profile.role === "admin"
+                      ? "/admin-dashboard"
+                      : "/student-dashboard"
+                }
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg "
+              >
+                Login
+              </Link>
+            )}
           </div>
-         
+
           <div>
             <Link
               to={"/Launchpage"}
@@ -172,6 +174,9 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
+            <Link to="/aboutus" className="block px-4 py-2 text-[18px] text-[#000000]">
+              AboutUs
+            </Link>
             <Link
               to="/digital"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -192,31 +197,31 @@ const Navbar = () => {
 
             {/* ✅ Mobile Login & Launch Now */}
             <div className="mt-2 space-y-2">
-                  <div>
- {profile ? (
-            <Link
-              to={
-                profile.role === "instructor"
-                  ? "/instructor-dashboard"
-                  : profile.role === "admin"
-                    ? "/admin-dashboard"
-                    : "/student-dashboard"
-              }
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
-            >
-              Go to Dashboard
-            </Link>
-          ) : (
-            <Link
-              to="/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg "
-            >
-              Login
-            </Link>
-          )}
-          </div>
+              <div>
+                {profile ? (
+                  <Link
+                    to={
+                      profile.role === "instructor"
+                        ? "/instructor-dashboard"
+                        : profile.role === "admin"
+                          ? "/admin-dashboard"
+                          : "/student-dashboard"
+                    }
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg"
+                  >
+                    Go to Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg "
+                  >
+                    Login
+                  </Link>
+                )}
+              </div>
               <Link
                 to="/Launchpage"
                 onClick={() => setIsMobileMenuOpen(false)}
