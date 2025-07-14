@@ -236,7 +236,7 @@ const AITeacherLanding = () => {
               live classes or build evergreen content, and enjoy dedicated
               support every step of the way. Join AI Skills and make a real
               dierence by helping students achieve their goals and grow their
-              careers.
+              careers.=
             </p>
             <Link to="/instructorSignup">
               <button className="bg-[#ffffff] text-[#047670] font-bold font-roboto py-2 px-6 rounded-[4px] mt-2">
