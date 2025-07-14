@@ -1,11 +1,20 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React from 'react';
+import Navbar from '../../../Layout/Navbar';
+import Footer from '../../../Layout/Footer';
+
 
 const Privacypolicy = () => {
   return (
-    <div className="min-h-screen bg-white">
+
+    <div className=''>
+<Navbar/>
+   
+    <div className="min-h-screen py-12 bg-white">
+    
+   
       {/* Main Content */}
-      <div className="w-full px-8 py-12">
+      <div className="w-full px-8 py-12 ">
         {/* Header Section */}
         <div className="text-center mb-16">
           <h1 className="text-6xl font-bold text-gray-900 mb-6 text-center">Privacy Policy</h1>
@@ -228,6 +237,8 @@ const Privacypolicy = () => {
         }
       `}</style>
     </div>
+    <Footer/>
+     </div>
   );
 };
 
