@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { fetchPlans, createPlanEnquiry } from "../../Redux/slices/planSlice/planeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Button } from "react-bootstrap"
+import { Link } from "react-router-dom";
 const PricingPlans = () => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
@@ -50,16 +51,24 @@ const PricingPlans = () => {
     <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       {/* Main Card */}
       <div className="text-center mb-16 p-10 bg-gradient-to-r from-[#0f766e] to-[#115e55] text-white shadow-xl rounded-3xl w-full">
-        <h2 className="text-4xl font-extrabold">Choose Your Plan</h2>
+        <h2 className="text-4xl font-extrabold">AI is booming. Jobs are transforming</h2>
         <p className="mt-4 text-lg">
-          Start with a free plan or upgrade as your business grows.
+          From Zero to AI-Ready — Live, Hybrid, or Video courses. Learn Smarter, Lead Sooner.
         </p>
-        <button
+        {/* <button
           onClick={() => setShowModal(true)}
           className="mt-6 px-6 py-3 bg-white text-[#0f766e] font-semibold rounded-xl hover:bg-gray-200 transition-all shadow-md"
         >
-          Plan Enquiry
+         JOIN NOW
+        </button> */}
+       <Link to="/signup">
+         <button
+        
+          className="mt-6 px-6 py-3 bg-white text-[#0f766e] font-semibold rounded-xl hover:bg-gray-200 transition-all shadow-md"
+        >
+         JOIN NOW
         </button>
+        </Link>
       </div>
 
       {/* Modal */}
