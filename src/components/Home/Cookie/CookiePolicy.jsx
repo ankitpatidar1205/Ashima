@@ -5,19 +5,19 @@ const CookiePolicy = () => {
         <div className="min-h-screen bg-white">
             {/* Header */}
             <header className="bg-teal-600 text-white py-8">
-                <div className="max-w-6xl mx-auto px-6">
-                    <div className="flex items-center mb-6">
+                <div className="w-full px-6 py-5">
+                    {/* <div className="flex items-center  text-center mb-6">
                         <i className="fas fa-graduation-cap text-3xl mr-3"></i>
-                        <h1 className="text-2xl font-bold">AI SKILLS</h1>
-                    </div>
-                    <h2 className="text-4xl font-bold mb-4">Cookie Policy</h2>
-                    <p className="text-xl opacity-90 max-w-3xl">
+                        <h1 className="text-2xl font-bold ">AI SKILLS</h1>
+                    </div> */}
+                    <h2 className="text-5xl font-bold mb-4 text-center">Cookie Policy</h2>
+                    <p className="text-xl opacity-90  text-center">
                         This Cookie Policy explains how AI SKILLS uses cookies and similar tracking technologies when you visit or use our platform and Services, including live, hybrid, video courses, and digital products.
                     </p>
                 </div>
             </header>
             {/* Main Content */}
-            <main className="max-w-6xl mx-auto px-6 py-12">
+            <main className="w-full px-6 py-12">
                 {/* Table of Contents */}
                 <div className="bg-gray-50 rounded-lg p-6 mb-12">
                     <h3 className="text-xl font-semibold mb-4 text-gray-800">Table of Contents</h3>

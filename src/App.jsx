@@ -94,6 +94,7 @@ import AboutUs from "./components/Home/Aboutus/AboutUs";
 import Careers from "./components/Home/Careers/Careers";
 import { Cookie } from "lucide-react";
 import Helpsupport from "./components/Home/HelpSupport/Helpsupport";
+import CookiePolicy from "./components/Home/Cookie/CookiePolicy";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -155,7 +156,7 @@ const App = () => {
         <Route path="/termconditions" element={<TermsConditions/>} />
         <Route path="/aboutus" element={<AboutUs/>} />
         <Route path="/careers" element={<Careers/>} />
-        <Route path="/cookie" element={<Cookie/>} />
+        <Route path="/cookie" element={<CookiePolicy/>} />
          <Route path="/helpsupport" element={<Helpsupport/>} />
 
         {/* <Route path="/projects"></Route> */}
