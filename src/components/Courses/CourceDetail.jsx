@@ -209,14 +209,14 @@ const CourceDetail = () => {
                   </p>
 
                   <div className="flex flex-wrap items-center gap-4 font-roboto font-bold mb-2">
-                    <span className="text-[#fBBC09] text-[14px]">HOSTED BY</span>
+                    <span className="text-[#fBBC09] text-[20px]">HOSTED BY</span>
                     <div className="flex items-center gap-2">
                       <img
                         src={courseData?.instructor_details?.avatar}
-                        className="w-[50px] h-[50px] rounded-full"
+                        className="w-[70px] h-[70px] rounded-full"
                         alt={courseData?.instructor_details?.full_name}
                       />
-                      <span className="text-[14px] text-[#ffffff]">
+                      <span className="text-[20px] text-[#ffffff]">
                         {courseData?.instructor_details?.full_name}
                       </span>
                     </div>
@@ -224,7 +224,7 @@ const CourceDetail = () => {
                 </div>
 
                 <div>
-                  <button className="bg-red-400 w-[85px] h-[26px] text-[#000000] text-[12px] px-3 py-1 rounded-[12px] font-roboto font-semibold">
+                  <button className="bg-red-400 w-[90px] h-[30px] text-[#000000] text-[16px] px-3 py-1 rounded-[12px] font-roboto font-semibold">
                     {courseData?.course_type}
                   </button>
                 </div>

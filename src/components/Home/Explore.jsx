@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import img1 from "../../assets/Courses.png";
-import img2 from "../../assets/Business.png";
+import img2 from "../../assets/bussiness22.jpg";
 import img3 from "../../assets/Newsletter.png";
 
 const cards = [
