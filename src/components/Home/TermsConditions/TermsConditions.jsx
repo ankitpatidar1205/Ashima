@@ -1,6 +1,6 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React, { useState } from 'react';
-const PrivacyAndTerms = () => {
+const TermsConditions = () => {
     const [activeSection, setActiveSection] = useState('');
     const sections = [
         { id: 'services', title: '1. Our Services' },
@@ -35,11 +35,11 @@ const PrivacyAndTerms = () => {
                                 Welcome to AI SKILLS! These Terms of Service govern your access to and use of our platform,
                                 including live sessions, hybrid programs, on-demand courses, and digital products.
                             </p>
-                            <div className="flex space-x-4">
+                            {/* <div className="flex space-x-4">
                                 <button className="bg-white text-teal-600 px-6 py-3 !rounded-button font-semibold hover:bg-teal-50 transition-colors cursor-pointer whitespace-nowrap">
                                     Accept Terms
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex-1 ml-12">
                             <img
@@ -434,12 +434,12 @@ const PrivacyAndTerms = () => {
                         <p>Last updated: July 14, 2025</p>
                         <p>Effective date: July 14, 2025</p>
                     </div>
-                    <div className="flex space-x-4">
+                    {/* <div className="flex space-x-4">
                         <button className="bg-teal-600 text-white px-6 py-3 !rounded-button font-semibold hover:bg-teal-700 transition-colors cursor-pointer whitespace-nowrap">
                             <i className="fas fa-check mr-2"></i>
                             I Accept These Terms
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* Back to Top Button */}
@@ -453,4 +453,4 @@ const PrivacyAndTerms = () => {
         </div>
     );
 };
-export default PrivacyAndTerms
+export default TermsConditions
