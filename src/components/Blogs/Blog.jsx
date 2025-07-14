@@ -19,14 +19,12 @@ const Blog = () => {
     dispatch(fetchArticles());
   }, [dispatch]);
 
-  // Set default tab to first category when categories load
   useEffect(() => {
     if (categories.length > 0 && activeTab === null) {
       setActiveTab(categories[0].id);
     }
   }, [categories]);
 
-  // Filter articles by activeTab (category ID)
   const filteredArticles =
     activeTab === null
       ? articles
@@ -35,7 +33,6 @@ const Blog = () => {
   return (
     <>
       <Header />
-      {/* Hero Section */}
       <section className="hero bg-[#047670] py-24 sm:px-6 md:px-10 flex flex-col lg:flex-row justify-around gap-10 flex-wrap pt-32">
         <div className="bg-[#ffffff] rounded-lg shadow-md p-3 w-full lg:w-[670px] h-auto">
           <img
@@ -107,15 +104,6 @@ const Blog = () => {
               className="w-full px-3 py-2 border border-[#1E1E1E]/70 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
             />
-
-            <label className="text-[18px] uppercase font-roboto font-normal text-[#1E1E1E]">
-              enter your program
-            </label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 border border-[#1E1E1E]/70 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your program"
-            />
           </div>
 
           <button className="w-full h-[47px] bg-[#1E1E1E]/10 text-[#1E1E1E]/50 font-medium py-2 rounded-lg mt-4 cursor-not-allowed text-[16px] sm:text-[18px]">
@@ -136,15 +124,13 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Blog Categories */}
       <section className="bg-[#ffffff] py-8 px-10">
         <h2 className="text-[50px] font-impact font-normal text-[#000000] text-center mb-12">
-          <span className="text-[#000000">TRENDING </span>
-          <span className="text-[#047670]">NEWSLETTER</span>
+          <span className="text-[#000000]">TRENDING </span>
+          <span className="text-[#047670]">ARTICLES</span>
         </h2>
 
         <div className="flex flex-wrap justify-center gap-4 sm:gap-4">
-          {/* ALL ARTICLES button */}
           {categories.map((category) => (
             <button
               key={category.id}
@@ -173,7 +159,6 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Filtered Articles */}
       <div className="p-6 w-full">
         {loading ? (
           <p>Loading...</p>
@@ -209,78 +194,20 @@ const Blog = () => {
         )}
       </div>
 
-      {/* Trending Section */}
       <section className="trending-section px-10 mt-12 mb-10">
         <h2 className="text-[50px] font-impact font-normal text-[#000000] mb-12">
-          <span className="text-[#000000">TRENDING </span>
-          <span className="text-[#047670]">TUTORIALS</span>
+          <span className="text-[#000000]">TRENDING </span>
+          <span className="text-[#047670]">TUTORIAL</span>
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            "DATA SCIENCE TUTORIAL",
-            "HOW TO BECOME A DATA SCIENTIST",
-            "LEARN TO BE A PRO",
-            "DATA SCIENCE",
-            "DATA SCIENCE TUTORIAL",
-            "HOW TO BECOME A DATA SCIENTIST",
-            "LEARN TO BE A PRO",
-            "DATA SCIENCE",
-          ].map((item, index) => {
-            const bgColors = [
-              "bg-[#09D0C6]",
-              "bg-[#FF757A]",
-              "bg-[#A393FF]",
-              "bg-[#FEE08B]",
-            ];
-            return (
-              <div
-                key={index}
-                className={`h-[216px] w-[300px] flex items-center justify-center text-center text-[#1E1E1E] font-jost font-normal text-[20px] px-2 ${
-                  bgColors[index % 4]
-                }`}
-              >
-                {item}
-              </div>
-            );
-          })}
-        </div>
+       
       </section>
 
-      {/* Trending Blogs Section */}
       <section className="trending-section px-10 mt-16 mb-10">
         <h2 className="text-[50px] font-impact font-normal text-[#000000] mb-12">
-          <span className="text-[#000000">TRENDING </span>
-          <span className="text-[#047670]">BLOGS</span>
+          <span className="text-[#000000]">TRENDING </span>
+          <span className="text-[#047670]">ARTICLES</span>
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            "DATA SCIENCE TUTORIAL",
-            "HOW TO BECOME A DATA SCIENTIST",
-            "LEARN TO BE A PRO",
-            "DATA SCIENCE",
-            "DATA SCIENCE TUTORIAL",
-            "HOW TO BECOME A DATA SCIENTIST",
-            "LEARN TO BE A PRO",
-            "DATA SCIENCE",
-          ].map((item, index) => {
-            const bgColors = [
-              "bg-[#09D0C6]",
-              "bg-[#FF757A]",
-              "bg-[#A393FF]",
-              "bg-[#FEE08B]",
-            ];
-            return (
-              <div
-                key={index}
-                className={`h-[216px] w-[300px] flex items-center justify-center text-center text-[#1E1E1E] font-jost font-normal text-[20px] px-2 ${
-                  bgColors[index % 4]
-                }`}
-              >
-                {item}
-              </div>
-            );
-          })}
-        </div>
+       
       </section>
 
       <Footer />

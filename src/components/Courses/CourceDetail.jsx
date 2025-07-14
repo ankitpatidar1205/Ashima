@@ -337,7 +337,7 @@ const CourceDetail = () => {
               <div className="shadow-2xl border-black rounded-[4px] p-4 flex flex-col items-start gap-6 sm:w-[400px] w-full h-auto uppercase">
                 <img
                   src={courseData?.instructor_details?.avatar}
-                  className="w-[65px] h-[65px] rounded-full bg-[#ff757A] text-[#ffffff] text-sm font-bold mt-1"
+                  className="w-[200px] h-[200px] rounded-full bg-[#ff757A] text-[#ffffff] text-sm font-bold mt-1"
                   alt={courseData.instructor_details.full_name}
                 />
 
