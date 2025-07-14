@@ -98,7 +98,7 @@ const Footer = () => {
               <li>
                 <Link to="/blog" className="text-[#DBDAD8]">Newsletter</Link>
               </li>
-              <li className="text-[#DBDAD8]">Help</li>
+              <li> <Link to="/helpsupport" className="text-[#DBDAD8]">Help</Link></li>
             </ul>
           </div>
 
