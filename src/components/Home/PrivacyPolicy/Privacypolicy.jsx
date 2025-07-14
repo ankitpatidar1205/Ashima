@@ -5,12 +5,12 @@ const Privacypolicy = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-8 py-12">
+      <div className="w-full px-8 py-12">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-gray-900 mb-6">Privacy Policy</h1>
+          <h1 className="text-6xl font-bold text-gray-900 mb-6 text-center">Privacy Policy</h1>
           <div className="w-32 h-1 bg-teal-600 mx-auto mb-8"></div>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600  leading-relaxed text-center ">
             At AI SKILLS, your privacy is important to us. This Privacy Policy explains how we collect, use,
             share, and protect your personal information when you use our platform and services,
             including live sessions, hybrid programs, video-based courses, and digital products
