@@ -1,11 +1,14 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React from 'react';
+import Footer from '../../../Layout/Footer';
+import Navbar from '../../../Layout/Navbar';
 const CookiePolicy = () => {
     return (
         <div className="min-h-screen bg-white">
             {/* Header */}
+            <Navbar />
             <header className="bg-teal-600 text-white py-8">
-                <div className="w-full px-6 py-5">
+                <div className="mt-5 py-5">
                     {/* <div className="flex items-center  text-center mb-6">
                         <i className="fas fa-graduation-cap text-3xl mr-3"></i>
                         <h1 className="text-2xl font-bold ">AI SKILLS</h1>
@@ -165,7 +168,7 @@ const CookiePolicy = () => {
                     </div>
                 </section>
                 {/* Section 7: Contact */}
-                <section id="contact" className="mb-12">
+                <section id="contact" className="">
                     <h2 className="text-3xl font-bold text-gray-800 mb-6">7. Contact Us</h2>
                     <div className="bg-teal-50 rounded-lg p-6">
                         <p className="text-gray-600 mb-4">If you have questions about our use of cookies or this policy, please contact us:</p>
@@ -182,7 +185,7 @@ const CookiePolicy = () => {
                     </div>
                 </section>
                 {/* Back to Top Button */}
-                <div className="text-center">
+                {/* <div className="text-center">
                     <button
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         className="bg-teal-600 text-white px-6 py-3 !rounded-button hover:bg-teal-700 transition-colors whitespace-nowrap cursor-pointer"
@@ -190,8 +193,9 @@ const CookiePolicy = () => {
                         <i className="fas fa-arrow-up mr-2"></i>
                         Back to Top
                     </button>
-                </div>
+                </div> */}
             </main>
+            <Footer />
         </div>
     );
 };

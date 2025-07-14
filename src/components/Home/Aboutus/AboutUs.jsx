@@ -1,9 +1,14 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 
 import React from 'react';
+import Footer from '../../../Layout/Footer';
+import Navbar from '../../../Layout/Navbar';
 
 const AboutUs = () => {
   return (
+    <div>
+
+      <Navbar />
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div 
@@ -12,7 +17,7 @@ const AboutUs = () => {
           backgroundImage: `linear-gradient(135deg, rgba(20, 184, 166, 0.9), rgba(6, 78, 59, 0.8)), url('https://readdy.ai/api/search-image?query=Modern%20professional%20tech%20learning%20environment%20with%20sleek%20computers%20and%20AI%20technology%20displays%20in%20a%20bright%20minimalist%20office%20space%20with%20people%20collaborating%20and%20studying%20artificial%20intelligence%20concepts&width=1440&height=480&seq=hero-about-001&orientation=landscape')`
         }}
       >
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto text-center mt-5">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">About Us</h1>
           <p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto">
             Welcome to AI SKILLS, your go-to platform for mastering the most in-demand AI and tech 
@@ -26,7 +31,7 @@ const AboutUs = () => {
         {/* Mission Section */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-teal-600 mb-8">Our Mission</h2>
-          <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-700  mx-auto leading-relaxed">
             At AI SKILLS, we believe learning should be accessible, practical, and tailored to the way you 
             grow. Our mission is to empower individuals and teams with industry-relevant skills that 
             prepare them for the future of work.
@@ -182,10 +187,12 @@ const AboutUs = () => {
             Your future in AI and technology starts here.
           </p>
           <button className="!rounded-button whitespace-nowrap bg-white text-teal-600 px-8 py-4 text-lg font-bold hover:bg-gray-100 transition-colors cursor-pointer">
-            Explore Our Courses
+             <a className="text-dark" href="#courses-section" >Explore Our Courses</a> 
           </button>
         </div>
       </div>
+      <Footer />
+    </div>
     </div>
   );
 };

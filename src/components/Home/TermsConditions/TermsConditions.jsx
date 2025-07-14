@@ -1,7 +1,7 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React, { useState } from 'react';
 import Footer from '../../../Layout/Footer';
-import Header from '../../../Layout/Header';
+import Navbar from '../../../Layout/Navbar';
 
 const TermsConditions = () => {
     const [activeSection, setActiveSection] = useState('');
@@ -31,8 +31,7 @@ const TermsConditions = () => {
     return (
         <div className="bg-white">
             {/* Header */}
-            
-<Header />
+            <Navbar />
             <header className="bg-teal-600 text-white py-8 md:py-16 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mt-5 p-3 mx-auto">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-8">
@@ -481,13 +480,13 @@ const TermsConditions = () => {
             <Footer />
 
             {/* Back to Top Button */}
-            <button
+            {/* <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 bg-teal-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full shadow-lg hover:bg-teal-700 transition-colors cursor-pointer flex items-center justify-center"
                 aria-label="Back to top"
             >
                 <i className="fas fa-arrow-up text-white text-sm sm:text-base"></i>
-            </button>
+            </button> */}
         </div>
     );
 };
