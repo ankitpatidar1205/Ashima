@@ -203,12 +203,6 @@ const Signup = () => {
                 className="flex items-center justify-center w-full bg-[#047670] text-white font-medium text-[18px] py-2 rounded hover:bg-[#035a57] transition">
                 Sign up as {role.toUpperCase()}
               </button>
-
-              <button type="button"
-                className="flex items-center justify-center w-full border border-[#1E1E1E]/10 text-[#000000] font-medium text-[18px] py-2 rounded hover:bg-gray-100 transition">
-                <FaGoogle className="mr-2 text-[#DB4437]" />
-                Sign up with Google
-              </button>
             </div>
           )}
         </form>

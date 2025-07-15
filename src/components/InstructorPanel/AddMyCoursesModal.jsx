@@ -427,7 +427,7 @@ const handleClose = () => {
           </div>
 
           {/* Status Checkbox */}
-          {courseId == null && (
+          {/* {courseId == null && (
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -436,7 +436,7 @@ const handleClose = () => {
               />
               <label className="text-sm">Active</label>
             </div>
-          )}
+          )} */}
 
           {/* Submit and Cancel Buttons */}
           <div className="flex justify-end gap-2">

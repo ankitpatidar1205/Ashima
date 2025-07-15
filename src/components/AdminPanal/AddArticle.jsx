@@ -119,16 +119,10 @@ const AddArticleModal = ({ isOpen, onClose }) => {
           </div>
 
           <div className="mb-3 border border-dashed border-gray-300 rounded p-6 text-center text-gray-500">
-            <input
-              type="file"
-              name=" article"
-              onChange={handleFileChange}
-              className="hidden"
-              id=" article"
-            />
-            <label htmlFor=" article" className="text-blue-600 cursor-pointer">
+             <label htmlFor=" article" className=" cursor-pointer">
               Browse files
             </label>
+            <input type="file" name="article" onChange={handleFileChange}  id=" article"/>
           </div>
 
           <div className="mb-3">

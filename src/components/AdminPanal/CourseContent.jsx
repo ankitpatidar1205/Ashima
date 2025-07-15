@@ -10,7 +10,6 @@ import { Tabs, Tab } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
 import axiosInstance from "../../utils/axiosInstance";
 
-
 const CourseContent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -210,8 +209,6 @@ const CourseContent = () => {
             ) : (
               <p className="text-muted">No quizzes available for this course yet.</p>
             )}
-
-
           </Tab>
         </Tabs>
 

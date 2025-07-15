@@ -134,8 +134,8 @@ const filteredCourses = courses
         </td>
         <td>
           <button
-            onClick={() => changeStatus(course?.id)}
-            disabled={course?.status === "1"}
+            // onClick={() => changeStatus(course?.id)}
+           
             className={`text-xs px-2 py-1 rounded ${
               course.status === "1"
                 ? "bg-green-100 text-green-600 cursor-not-allowed"

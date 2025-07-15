@@ -14,7 +14,7 @@ const StudentProfile = () => {
   const [studentData, setStudentData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    student_name: "",
+    name: "",
     email: "",
     mobile: "",
   });
@@ -58,7 +58,7 @@ const StudentProfile = () => {
 
   const handleEditClick = () => {
     setFormData({
-      student_name: studentData.student_name,
+      name: studentData.name,
       email: studentData.email,
       mobile: studentData.mobile,
     });
@@ -160,7 +160,7 @@ const StudentProfile = () => {
                       <input
                         type="text"
                         name="student_name"
-                        value={formData.student_name}
+                        value={formData.name}
                         onChange={handleChange}
                         className="w-full mt-1 border border-gray-300 rounded px-3 py-2"
                       />

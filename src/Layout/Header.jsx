@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../Redux/slices/categorySlice/categorySlice";
 import { fetchCourses } from "../Redux/slices/CourseSlice/CourseSlice";
+import { fetchCartItemById } from "../Redux/slices/cartSlice/cartSlice";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [coursesDropdownOpen, setCoursesDropdownOpen] = useState(false);
@@ -15,7 +16,14 @@ const Header = () => {
   const { categories } = useSelector((state) => state?.categories);
   const { courses } = useSelector((state) => state.courses);
   // console.log(courses)
+  const userId = localStorage.getItem("is_id");
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchCartItemById(userId));
+    }
+  }, [dispatch, userId]);
 
+  const cartItems = useSelector((state) => state.cart.selectedItem?.items || []);
   useEffect(() => {
     dispatch(fetchCategories())
     dispatch(fetchCourses());
@@ -86,16 +94,12 @@ const Header = () => {
             {suggestions.length > 0 && (
               <div className="absolute bg-white border border-gray-300 rounded-lg mt-2 w-[250px] md:w-[300px] shadow-lg z-20 max-h-80 overflow-y-auto">
                 {suggestions.map((item) => (
-                  <div
-                    key={item.id}
+                  <div   key={item.id}
                     onClick={() => handleSuggestionClick(item.id)}
                     className="flex items-center gap-3 p-3 hover:bg-gray-50 cursor-pointer transition duration-150 ease-in-out"
                   >
-                    <img
-                      src={item.course_image}
-                      alt={item.course_title}
-                      className="w-10 h-10 rounded-md object-cover border border-gray-200"
-                    />
+                    <img   src={item.course_image}   alt={item.course_title}
+                      className="w-10 h-10 rounded-md object-cover border border-gray-200"  />
                     <span className="text-base text-gray-800">{item.course_title}</span>
                   </div>
                 ))}
@@ -105,10 +109,8 @@ const Header = () => {
 
           <nav className="flex space-x-6 text-[16px]">
             <div className="relative">
-              <button
-                onClick={() => setCoursesDropdownOpen(!coursesDropdownOpen)}
-                className="flex items-center text-[18px] text-[#000000]"
-              >
+              <button onClick={() => setCoursesDropdownOpen(!coursesDropdownOpen)}
+                className="flex items-center text-[18px] text-[#000000]" >
                 Courses <RiArrowDropDownLine className="w-6 h-6" />
               </button>
               {coursesDropdownOpen && (
@@ -118,8 +120,7 @@ const Header = () => {
                       key={idx}
                       to={`/courses/${course.category_name}`}
                       className="block px-4 py-2 text-[16px] text-[#000000] hover:bg-[#f0f0f0]"
-                      onClick={() => setCoursesDropdownOpen(false)}
-                    >
+                      onClick={() => setCoursesDropdownOpen(false)}>
                       {course?.category_name}
                     </Link>
                   ))}
@@ -136,10 +137,14 @@ const Header = () => {
               Newsletter
             </Link>
           </nav>
-          <button onClick={() => { navigate("/cart") }}>
-            <AiOutlineShoppingCart className="h-7 w-7 text-[#047670]" />
-
-          </button>
+     <button onClick={() => navigate("/cart")} className="relative">
+  <AiOutlineShoppingCart className="h-7 w-7 text-[#047670]" />
+  {cartItems.length > 0 && (
+    <span className="absolute -top-1 -right-2 bg-green-600 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
+      {cartItems.length}
+    </span>
+  )}
+</button>
         </div>
 
         <div className="hidden md:flex space-x-4">
@@ -168,12 +173,6 @@ const Header = () => {
               </Link>
             )}
           </div>
-          {/* <Link
-            to="/signup"
-            className="px-4 py-2 bg-[#047670] text-white rounded-lg"
-          >
-            Sign Up
-          </Link> */}
         </div>
 
 
@@ -229,36 +228,28 @@ const Header = () => {
             className="bg-white rounded-b-md shadow-md max-w-[1364px] mx-auto p-4"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
+            transition={{ duration: 0.3 }}>
             <Link
               to="/digital"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-4 py-2 text-[18px] text-[#000000]"
-            >
+              className="block px-4 py-2 text-[18px] text-[#000000]">
               Digital Products
             </Link>
             <Link to="/business" className="block px-4 py-2 text-[18px] text-[#000000]">
               Business
             </Link>
-            <Link
-              to="/blog"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-4 py-2 text-[18px] text-[#000000]"
-            >
+            <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-[18px] text-[#000000]">
               Newsletter
             </Link>
 
             {/* ✅ Mobile Login & Launch Now */}
             <div className="mt-2 space-y-2">
-              <Link
-                to="/login"
+              <Link to="/login"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg">
                 Login
               </Link>
-              <Link
-                to="/signup"
+              <Link to="/signup"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="w-full block text-center px-4 py-2 text-white bg-[#047670] rounded-lg" >
                 Sign Up

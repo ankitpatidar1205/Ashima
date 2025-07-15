@@ -109,7 +109,7 @@ const DigitalProducts = () => {
                 <div className="flex gap-3 mt-3 text-gray-600 text-lg">
                   <i className="ri-edit-line cursor-pointer"
                     onClick={() => navigate(`/edit-digital-product/${product.id}`)}></i>
-                  <i onClick={() => navigate(`/product-detail/${product.id}`)}
+                  <i onClick={() => navigate(`/marketProduct/${product.id}`)}
                     className="ri-eye-line cursor-pointer" ></i>
                   <i onClick={() => handleDelete(product.id)}
                     className="ri-delete-bin-line cursor-pointer"></i>
