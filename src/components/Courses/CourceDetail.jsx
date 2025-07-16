@@ -1,6 +1,4 @@
 
-import liveimg4 from "../../assets/liveimg4.png";
-import liveimg5 from "../../assets/liveimg5.png";
 import { FaYoutube } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -8,27 +6,25 @@ import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import ReviewCrad from "../Home/ReviewCards";
 import FAQSection from "../Home/FAQSection";
-import { FaStar, FaVideo, FaFileAlt, FaDownload, FaTv, FaUser, } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import useCurrency from "../../utils/useCurrency";
-import { addItemToCart } from "../../Redux/slices/cartSlice/cartSlice";
+import { addItemToCart, fetchCartItemById } from "../../Redux/slices/cartSlice/cartSlice";
 import { useDispatch } from "react-redux";
 import { ToastContainer } from 'react-toastify';
-
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const CourceDetail = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
+
   const [moduleContents, setModuleContents] = useState({});
 
   const currency = useCurrency();
   const [data, setData] = useState([])
   const user_id = localStorage.getItem("is_id")
   const role = localStorage.getItem("role")
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchCourse = async () => {
@@ -45,58 +41,7 @@ const CourceDetail = () => {
     }
   }, [id]);
 
-  const recommendedCourses = [
-    {
-      id: 1,
-      title: "Java Masterclass 2025 : 130+ Hours Of Expert Lessons",
-      rating: 4.8,
-      students: "95000",
-      price: "$79.44",
-      image: "https://via.placeholder.com/100",
-      hours: "135.5 TOTAL HOURS",
-      updated: "UPDATED 2024",
-    },
-    {
-      id: 2,
-      title: "Java Masterclass 2025 : 130+ Hours Of Expert Lessons",
-      rating: 4.8,
-      students: "95000",
-      price: "$79.44",
-      image: "https://via.placeholder.com/100",
-      hours: "135.5 TOTAL HOURS",
-      updated: "UPDATED 2024",
-    },
-    {
-      id: 3,
-      title: "Java Masterclass 2025 : 130+ Hours Of Expert Lessons",
-      rating: 4.8,
-      students: "95000",
-      price: "$79.44",
-      image: "https://via.placeholder.com/100",
-      hours: "135.5 TOTAL HOURS",
-      updated: "UPDATED 2024",
-    },
-    {
-      id: 4,
-      title: "Java Masterclass 2025 : 130+ Hours Of Expert Lessons",
-      rating: 4.8,
-      students: "95000",
-      price: "$79.44",
-      image: "https://via.placeholder.com/100",
-      hours: "135.5 TOTAL HOURS",
-      updated: "UPDATED 2024",
-    },
-    {
-      id: 5,
-      title: "Java Masterclass 2025 : 130+ Hours Of Expert Lessons",
-      rating: 4.8,
-      students: "95000",
-      price: "$79.44",
-      image: "https://via.placeholder.com/100",
-      hours: "135.5 TOTAL HOURS",
-      updated: "UPDATED 2024",
-    },
-  ];
+
   const sections = ["INTRODUCTION", "TOPIC 2", "TOPIC 3", "TOPIC 4"];
   const [openSection, setOpenSection] = useState(null);
 
@@ -104,21 +49,29 @@ const CourceDetail = () => {
     setOpenSection(openSection === index ? null : index);
   };
   const [startDate, setStartDate] = useState(new Date());
-  const handleCart = () => {
+
+  const handleCart = async () => {
     if (role === "student") {
-      dispatch(addItemToCart({ user_id, course_id: id }));
-      toast.success("🎉 Course added to cart successfully!");
+     await dispatch(addItemToCart({ user_id, course_id: id }));
+      toast.success("🎉 Course added to cart successfully!",{
+        position: "top-center",
+      });
+      await dispatch(fetchCartItemById(user_id));
     } else {
-      toast.error("⚠️ Please login with your student account to add this course.");
-    }
+      toast.error("⚠️ Please login with your student account to add this course.",{
+        position: "top-center",
+      });
+    setTimeout(() => {
+      navigate("/login");
+    }, 2000); // 2 seconds delay
+  }
   };
-
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get(`/courseSyllabus/${id}`);
+        console.log(response.data.data);
         setData(response.data.data);
       } catch (err) {
         setError(err.message || "Failed to load syllabus");
@@ -134,6 +87,7 @@ const CourceDetail = () => {
   const fetchModuleContent = async (syllabus_id) => {
     try {
       const response = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
+      // console.log(response)
       return response.data.data;
     } catch (err) {
       console.error(`Error fetching module ${syllabus_id}`, err);
@@ -162,6 +116,7 @@ const CourceDetail = () => {
     const fetchModuleContent = async (syllabus_id) => {
       try {
         const res = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
+        // console.log(res)
         return res.data.data;
       } catch (err) {
         console.error("Failed to load content:", err);
@@ -238,7 +193,7 @@ const CourceDetail = () => {
                   <iframe
                     src={courseData?.test_video}
                     title="Course Video"
-                    className="w-full h-[200px] rounded-t"
+                    className="w-full h-[300px] rounded-t"
                     allowFullScreen
                   ></iframe>
 
@@ -256,30 +211,17 @@ const CourceDetail = () => {
                   <h3 className="font-normal text-[24px] sm:text-[28px] font-impact">
                     {courseData?.course_title}
                   </h3>
-                  <p className="text-[16px] font-roboto font-normal text-black/50 mt-2">
-                    {courseData?.course_description}
-                  </p>
-
-                  <hr className="w-[230px] border-[1px] border-[#000000]" />
+                 {/* <p className="text-[16px] font-roboto font-normal text-black/50 mt-2">{courseData?.course_description?.length > 300  ? courseData.course_description.slice(0, 300) + "... "  : courseData?.course_description}
+</p> */}
 
                   <div className="mt-4">
                     <button className="w-full h-[41px] bg-[#047670] text-[#ffffff] font-roboto py-3 rounded-[12px] font-bold text-[18px] flex items-center justify-center">
                       Try Personal Plan For Free
                     </button>
-
-                    <p className="text-[14px] text-[#000000] font-roboto font-medium mt-2 text-center">  Starting At $11.00 Per Month After Trial.   <br />
-                      Cancel Anytime.  </p>
                   </div>
-
-                  <div className="flex items-center">
-                    <hr className="flex-grow border-t border-[#000000]" />
-                    <span className="mx-2 text-[#000000] font-medium">Or</span>
-                    <hr className="flex-grow border-t border-[#000000]" />
-                  </div>
-
                   <div className="mt-2">
                     <p className="text-[28px] text-[#000000] font-roboto font-bold">
-                      {currency.symbol}
+                  For     {currency.symbol}
                       {(parseFloat(courseData?.course_price) * currency.rate).toFixed(2)}
                     </p>
                   </div>
@@ -288,9 +230,7 @@ const CourceDetail = () => {
                     <button onClick={() => { handleCart() }} className="w-full bg-[#ffffff] text-[#047670] text-[22px] font-roboto rounded-[12px] h-[41px] border-[1px] border-[#047670] font-bold mb-4">
                       Add To Cart
                     </button>
-                    <button className="w-full bg-[#ffffff] text-[#047670] text-[22px] font-roboto h-[41px] rounded-[12px] border-[1px] border-[#047670] font-bold mb-4">
-                      Buy Now
-                    </button>
+                  
                   </div>
                 </div>
               </div>
@@ -401,9 +341,6 @@ const CourceDetail = () => {
                   <p className="text-[16px] text-[#1e1e1e] mb-2 sm:mb-6">
                     {courseData?.course_syllabus?.length} sections
                   </p>
-                  {/* <p className="text-[18px] text-[#047670] font-roboto cursor-pointer mb-2 sm:mb-6">
-                    EXPAND ALL SECTIONS
-                  </p> */}
                 </div>
 
                 {/* Intro + Topics List with inner borders */}
@@ -438,6 +375,8 @@ const CourceDetail = () => {
                                     {moduleContents[module?.id]?.map((item) => (
                                       <li key={item?.id} className="flex items-center gap-2 text-[#1e1e1e]">
                                         <span>* {item?.title}</span>
+                                        <span> {item?.description}</span>
+                                       
                                       </li>
                                     ))}
                                   </ul>
@@ -449,7 +388,6 @@ const CourceDetail = () => {
                               )}
                             </div>
                           )}
-
  
                           {i === 0 && (
                             <div className="border-double border-[#047670]"></div>
@@ -458,127 +396,8 @@ const CourceDetail = () => {
                       ))}
                     </div>
                   )}
-
-                  {/* LIVE Section */}
-                  {/* <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 py-4 bg-teal-700 text-white">
-                    <div className="flex items-center space-x-3 mb-2 sm:mb-0">
-                      <ChevronDown className="w-4 h-4 text-[#ffffff]" />
-                      <span className="font-bold text-lg">LIVE</span>
-                    </div>
-                    <span className="text-xs font-semibold">NEXT COHORT</span>
-                  </div> */}
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <div className="ml-4 sm:ml-20">
-            {/* Course Includes */}
-            <h4 className="font-roboto text-[36px] font-bold ml-0">
-              THIS COURSE{" "}
-              <span className="text-[#047670] text-[36px] font-roboto font-bold">
-                INCLUDES:
-              </span>
-            </h4>
-
-            <div className="grid gap-3 mt-3 text-[#1e1e1e] font-roboto font-normal ml-0 text-[16px]">
-              <div className="flex flex-col sm:flex-row sm:items-center font-normal ">
-                <div className="flex items-center">
-                  <FaVideo className="mr-2" /> 16 hours on-demand video
-                </div>
-                <div className="flex items-center mt-2 sm:mt-0 sm:ml-5">
-                  <FaTv className="mr-2" /> Access on mobile and TV
                 </div>
               </div>
-
-              <div className="flex items-center">
-                <FaFileAlt className="mr-2" /> 3 articles
-              </div>
-              <div className="flex items-center">
-                <FaDownload className="mr-2" /> 4 downloadable resources
-              </div>
-            </div>
-          </div>
-
-          <div className="ml-4 sm:ml-20">
-            {/* Requirements */}
-            <h4 className="font-bold mt-10 text-[36px] text-start sm:text-left">
-              REQUIREMENTS
-            </h4>
-            <p className="text-[#1e1e1e] font-normal font-roboto text-[16px] text-start sm:text-left">
-              While we provide low-code options, this course assumes you have
-              some coding experience. It's not
-              <br className="hidden sm:block" />
-              suitable for those who have never written or worked with even
-              basic code.
-            </p>
-          </div>
-
-          {/* Students Also Bought */}
-
-          <div className=" mt-16 sm:ml-20">
-            <hr className="" />
-            <h3 className="font-bold font-roboto uppercase text-[36px] text-[#047670] text-start">
-              STUDENTS ALSO BOUGHT
-            </h3>
-
-            <div className="space-y-4 mt-4 gap-3 ml-0 sm:ml-30">
-              {recommendedCourses.map((course, index) => (
-                <div key={course.id}>
-                  <div className="flex flex-col sm:flex-row bg-[#ffffff]  items-start">
-                    <img
-                      src={liveimg4}
-                      alt={course.title}
-                      className="w-[61px] h-[81px] object-cover rounded mb-4 sm:mb-0 sm:mr-4"
-                    />
-
-                    <div className="">
-                      {/* Title + Ratings + Heart in one row */}
-                      <div className="flex flex-col sm:flex-row sm:items-center">
-                        <h6 className="font-bold text-[22px] font-roboto text-[#000000]">
-                          {course.title}
-                        </h6>
-
-                        {/* Rating, Students, Price */}
-                        <div className="flex flex-wrap items-center text-gray-600 text-[14px] mt-2 sm:mt-0 sm:ml-5">
-                          <FaStar className="text-[#FBBC09] mr-1" />
-                          {course.rating}
-                          <FaUser className="ml-4 mr-1 font-roboto font-medium text-[14px] uppercase" />
-                          {course.students}
-                          <span className="text-[#000000] ml-4 font-roboto font-bold text-[20px]">
-                            {course.price}
-                          </span>
-
-                          <button className="rounded-full flex items-center justify-center ml-4 mt-2 sm:mt-0">
-                            <img
-                              src={liveimg5}
-                              alt="Heart"
-                              className="w-[40px] h-[40px]"
-                            />
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Bottom: HIGH RATED, Hours, Updated */}
-                      <div className="mt-2">
-                        <span className="bg-[#FF757A] text-[#1e1e1e] font-semibold font-roboto uppercase px-2 py-0.5 rounded-[4px] mr-2 text-[10px]">
-                          HIGH RATED
-                        </span>
-                        <span className="text-[#047670] font-semibold uppercase font-roboto text-[16px] mr-3">
-                          {course.hours}
-                        </span>
-                        <span className="text-[#1e1e1e] font-semibold uppercase font-roboto text-[14px]">
-                          {course.updated}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 👇 Horizontal line after each course */}
-                  <hr className="w-full sm:w-[850px] border-[#000000]" />
-                </div>
-              ))}
             </div>
           </div>
         </div>

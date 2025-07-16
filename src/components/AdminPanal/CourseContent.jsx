@@ -10,7 +10,6 @@ import { Tabs, Tab } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
 import axiosInstance from "../../utils/axiosInstance";
 
-
 const CourseContent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,8 +22,7 @@ const CourseContent = () => {
   const [newQuiz, setNewQuiz] = useState({ topic: "", number_questions: 1, id: id });
   const [loadingQuiz, setLoadingQuiz] = useState(false);
 
-  const t = localStorage.getItem("title");
-  const d = localStorage.getItem("description");
+
   const role = localStorage.getItem("role");
 
   const handleChange = (e) => {
@@ -130,16 +128,6 @@ const CourseContent = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
-          {/* <h4 className="font-semibold mb-3">Intro Video</h4> */}
-          <iframe style={{ height: "50vh", width: "100%" }}
-            src={data?.module_courses}
-            title="Course Video"
-            // className="w-full h-64"
-            allowFullScreen
-          ></iframe>
-        </div>
-
         <Tabs defaultActiveKey="content" id="content-quiz-tabs" className="my-4">
           {/* 📘 Course Content Tab */}
           <Tab eventKey="content" title="Course Content">
@@ -210,8 +198,6 @@ const CourseContent = () => {
             ) : (
               <p className="text-muted">No quizzes available for this course yet.</p>
             )}
-
-
           </Tab>
         </Tabs>
 

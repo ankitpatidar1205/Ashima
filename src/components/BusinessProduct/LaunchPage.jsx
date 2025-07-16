@@ -263,26 +263,7 @@ const LaunchPage = () => {
             <h3 className="text-[24px] sm:text-[30px] font-normal font-impact text-center text-[#000000]">
               Ready to launch your career?
             </h3>
-            <div className="mt-4 space-y-4">
-              <button className="flex items-center justify-center w-full h-[47px] mb-4 border-[1px] border-[#1E1E1E]/10 text-[16px] bg-[#ffffff] text-[#000000] rounded-[4px] gap-2">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
-                  alt="LinkedIn"
-                  className="w-[24px] h-[24px] mr-2"
-                />
-                SIGN UP WITH LINKEDIN
-              </button>
-
-              <button className="flex items-center justify-center w-full h-[47px] mb-4 border-[1px] border-[#1E1E1E]/10 text-[16px] bg-[#ffffff] text-[#000000] rounded-[4px] gap-2">
-                <img
-                  src="https://developers.google.com/identity/images/g-logo.png"
-                  alt="Google"
-                  className="w-[24px] h-[24px]"
-                />
-                SIGNUP WITH GOOGLE
-              </button>
-            </div>
-
+          
             <div className="flex items-center my-2">
               <hr className="flex-grow border-[#1E1E1E]/70" />
               <span className="mx-2 text-gray-500 text-sm">Or Use Email</span>

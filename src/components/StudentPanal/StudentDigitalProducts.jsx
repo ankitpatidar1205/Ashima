@@ -119,7 +119,7 @@ const StudentDigitalProducts = () => {
                   </div>
                   <button
                     className="bg-teal-700 text-white px-3 py-1 rounded flex items-center gap-1"
-                    onClick={() => navigate(`/product-detail/${product.id}`)}
+                    onClick={() => navigate(`/marketProduct/${product.id}`)}
                   >
                     <i className="ri-eye-line"></i> View
                   </button>

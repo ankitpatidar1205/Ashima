@@ -1,16 +1,19 @@
 
-
-
-
-import React from "react";
 import { FaBook, FaListUl, FaCertificate, FaChartLine } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
+import { useEffect, useState } from "react";
 
 const StudentDashboard = () => {
+    const [userData, setUserData] = useState("");
+    useEffect(() => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      console.log("user", user)
+      if (user) setUserData(user)
+    }, []);
   return (
     <DashboardLayout>
       <div className="min-h-screen w-full bg-gray-100 p-4 md:p-6">
-        <h2 className="text-2xl font-semibold mb-6">Welcome back, Sarah!</h2>
+        <h2 className="text-2xl font-semibold mb-6">Welcome back, {userData?.name}!</h2>
 
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">

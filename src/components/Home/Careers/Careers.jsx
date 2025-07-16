@@ -21,7 +21,7 @@ const Careers = () => {
           backgroundBlendMode: 'overlay',
         }}
       >
-        <div className="position-absolute top-0 start-0 w-100 h-100" style={{ backgroundColor: 'rgba(13, 148, 136, 0.8)' }}></div>
+        <div className="position-absolute top-0 start-0 w-100 h-100"  style={{ backgroundColor: 'rgba(13, 148, 136, 0.8)' }}></div>
         <div className="container h-100 position-relative d-flex align-items-center">
           <div className="col-md-6">
             <h1 className="display-4 fw-bold mb-4">Teach Your Way<br />Transform Life</h1>

@@ -21,7 +21,7 @@ import StudentDashboard from "./components/Dashboard/StudentDashboard ";
 import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
 import DigitalProducts from "./components/InstructorPanel/DigitalProducts";
 import NewCourse from "./components/InstructorPanel/NewCourse";
-import PaymentAnalytics from "./components/AdminPanal/PaymentAnalytics";
+
 import Business from "./components/BusinessProduct/Business";
 import AIPowered from "./components/BusinessProduct/AI-Powered";
 import LaunchPage from "./components/BusinessProduct/LaunchPage";
@@ -29,7 +29,6 @@ import MyCourses from "./components/InstructorPanel/MyCourses";
 import CourseDetails from "./components/InstructorPanel/CourseDetails";
 import Conversation from "./components/InstructorPanel/Conversation";
 import CourseComments from "./components/InstructorPanel/CourseComments";
-import Earning from "./components/InstructorPanel/Earning";
 import Calender from "./components/InstructorPanel/Calender";
 
 import Setting from "./components/InstructorPanel/Setting";
@@ -40,20 +39,16 @@ import Descussiontrending from "./components/StudentPanal/Discussiontrending";
 import DescussionNew from "./components/StudentPanal/DiscussionNew";
 import Dis_unanswered from "./components/StudentPanal/DiscussionUnanswered";
 import DiscussionMostLike from "./components/StudentPanal/DiscussionMostLike";
-import QA from "./components/StudentPanal/QA";
+
 import ReviewsRating from "./components/StudentPanal/ReviewRating";
 import Mc_Dashboard from "./components/StudentPanal/MyCourses";
 import ManageStudent from "./components/AdminPanal/ManageStudent";
 import ManageInstructors from "./components/AdminPanal/ManageInstructors";
 import ManageCourses from "./components/AdminPanal/ManageCourses";
 import StudentDetails from "./components/AdminPanal/StudentDetails";
-import RefundProcess from "./components/AdminPanal/RefundProcess";
-// import ViewTransaction from "./components/AdminPanal/ViewTransaction";
 import Blogs_article from "./components/AdminPanal/BlogsArticles";
-import ManageComm_Discu from "./components/AdminPanal/Community";
 import InstructorDetails from "./components/AdminPanal/InstructorDetails";
 import CoursesDetails from "./components/AdminPanal/CoursesDetails";
-import ViewAssessments from "./components/AdminPanal/ViewAssessments";
 import CertificateTemplates from "./components/AdminPanal/CertificateTemplate";
 import CertificateManagement from "./components/AdminPanal/CertificateManagement";
 import AssessmentDetails from "./components/AdminPanal/AssessmentDetails";
@@ -62,8 +57,6 @@ import ManageTransaction from "./components/AdminPanal/ManageTransaction";
 import RefundDetails from "./components/AdminPanal/RefundDetails";
 import AdminSettings from "./components/AdminPanal/AdminSettings";
 import RolePermission from "./components/AdminPanal/RolePermission";
-
-import ViewReportedIssues from "./components/AdminPanal/ReportedIssues";
 import ForgotPassword from "./Auth/ForgotPassword";
 import CourseCategory from "./components/AdminPanal/CourseCategory";
 import EditInstruction from "./components/AdminPanal/EditInstruction";
@@ -162,6 +155,7 @@ const App = () => {
           <Route path="/helpsupport" element={<Helpsupport />} />
           <Route path="/explorecourses" element={<ExploreCourses />} />
 
+<<<<<<< HEAD
           {/* <Route path="/projects"></Route> */}
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
@@ -215,6 +209,58 @@ const App = () => {
             element={<ManageComm_Discu></ManageComm_Discu>}
           ></Route>
           <Route path="/discussion-details/:id" element={<DiscussionDetails />} />
+=======
+        {/* <Route path="/projects"></Route> */}
+        <Route path="/student-dashboard" element={<StudentDashboard />} />
+        <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
+        <Route path="/digitalproduct" element={<DigitalProducts></DigitalProducts>}></Route>
+        <Route path="/edit-digital-product/:id" element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
+        <Route path="/product-detail/:id" element={<ProductDetails></ProductDetails>}></Route>
+        <Route path="/singleblog/:id" element={<SingleBlog />}></Route>   
+        <Route path="/viewTranscation" element={<ManageTransaction></ManageTransaction>}></Route>
+        <Route path="/newCourse" element={<NewCourse></NewCourse>}></Route>
+        <Route path="/student-all-Courses" element={<StudentAllCources></StudentAllCources>}></Route>
+        <Route path="/mycourse" element={<MyCourses></MyCourses>}></Route>
+        <Route path="/courses/:id" element={<CourseDetails />} />
+        <Route path="/conversation" element={<Conversation></Conversation>}></Route>
+        <Route path="/coursecomments" element={<CourseComments></CourseComments>} ></Route>
+        <Route path="/certificate" element={<CertificatesPage></CertificatesPage>}></Route>
+        <Route path="/edit-template/:id" element={<EditCertificateTemplates></EditCertificateTemplates>}></Route>
+        <Route path="/descussiontrending" element={<Descussiontrending></Descussiontrending>} ></Route>
+        <Route path="/descussionnew" element={<DescussionNew></DescussionNew>}></Route>
+        <Route path="/descussionunanswered" element={<Dis_unanswered></Dis_unanswered>}></Route>
+        <Route path="/descussionmostlike" element={<DiscussionMostLike></DiscussionMostLike>} ></Route>
+        <Route element={<ReviewsRating></ReviewsRating>} ></Route>
+        <Route path="/student-courses"  element={<Mc_Dashboard></Mc_Dashboard>}></Route>
+        <Route path="/student-digitalProducts"   element={<StudentDigitalProducts/>} ></Route>
+        <Route path="/manage-student" element={<ManageStudent></ManageStudent>} ></Route>
+        <Route path="/edit-student/:id" element={<EditStudent></EditStudent>} ></Route>
+        <Route path="/manage-instructors"  element={<ManageInstructors></ManageInstructors>}></Route>
+        <Route path="/instructor-detail/:id" element={<InstructorDetails />} />
+        <Route path="/manage-courses" element={<ManageCourses></ManageCourses>}></Route>
+        <Route path="/edit-instruction/:id" element={<EditInstruction></EditInstruction>}></Route>
+        <Route path="/course/:id" element={<CoursesDetails />} />
+        <Route path="/course-category" element={<CourseCategory />} />
+        <Route path="/blog-articles" element={<Blogs_article></Blogs_article>}></Route>
+        <Route path="/course-content/:id" element={<CourseContent />} />
+        <Route path="/discussion-details/:id" element={<DiscussionDetails />} />
+  
+        <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
+        <Route  path="/CertificateTemplate"  element={<CertificateTemplates></CertificateTemplates>}></Route>
+        <Route  path="/CertificateManagemnet"  element={<CertificateManagement></CertificateManagement>}></Route>
+        <Route  path="/adminSettings"  element={<AdminSettings></AdminSettings>}></Route>
+        <Route path="/refund-details/:id" element={<RefundDetails />} />
+        <Route  path="/RolePermission"  element={<RolePermission></RolePermission>}></Route>
+      
+        <Route path="/student-details/:id" element={<StudentDetails />} />
+        <Route path="/assignment" element={<Assignments></Assignments>}></Route>
+        <Route path="/calender" element={<Calender></Calender>}></Route>
+        <Route path="/setting" element={<Setting></Setting>}></Route>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/digital" element={<MyDigital />} />
+        <Route path="/marketProduct/:id" element={<MarketProduct />} />
+        <Route path="/admin-digital-product" element={<AdminDigitalProduct />} />
+>>>>>>> 42951b4df78d8658dbf7691b8f591a026c00bc78
 
           <Route
             path="/ViewAssessments"

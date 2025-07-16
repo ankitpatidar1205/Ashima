@@ -91,11 +91,7 @@ const RoleBasedSidebar = ({
             label: "Assessments & Certificates",
             dropdown: true,
             children: [
-              {
-                label: "View Assessments",
-                path: "/ViewAssessments",
-                icon: <FaRegEye />,
-              },
+             
               {
                 label: "Templates",
                 path: "/CertificateTemplate",
@@ -116,29 +112,15 @@ const RoleBasedSidebar = ({
           },
 
           {
-            icon: <FaComments />,
-            label: "Community / Discussions",
-            path: "/community-discussion",
-          },
-
-          {
             icon: <FaMoneyBillWave />,
             label: "Manage Transcations",
             dropdown: true,
             children: [
               { label: "View Transaction", path: "/viewTranscation" },
-              { label: "Refund Process", path: "/RefundProcess" },
-              { label: "View Analytics", path: "/PaymentAnalytics" },
             ],
           },
 
           { icon: <FaCog />, label: "Settings", path: "/adminSettings" },
-
-          {
-            icon: <FaFlag />,
-            label: "Reported Issues",
-            path: "/ReporteIssues",
-          },
         ];
       case "student":
         return [
@@ -148,7 +130,7 @@ const RoleBasedSidebar = ({
           { icon: <FaRegEye />, label: "Digital Products", path: "/student-digitalProducts" },
           { icon: <FaUsers />, label: "Certificate", path: "/certificate" },
           { icon: <FaClipboardCheck />, label: "Assignments", path: "/assignment", },
-          { icon: <FaQuestionCircle />, label: "Q&A", path: "/qasection", },
+       
         ];
       case "instructor":
         return [
@@ -171,7 +153,6 @@ const RoleBasedSidebar = ({
           { icon: <FaComments />, label: "Messages", path: "/conversation" },
           // { icon: <FaComments />, label: "Comments", path: "/coursecomments" },
 
-          { icon: <FaMoneyBill />, label: "Earnings", path: "/earning" },
           { icon: <FaCalendarAlt />, label: "Calendar", path: "/calender" },
           { icon: <FaUserCircle />, label: "Profile", path: "/instructor-profile" },
 
@@ -208,12 +189,8 @@ const RoleBasedSidebar = ({
 
   return (
     <div className={`fixed z-50 transition-all duration-300 bg-white border-r  h-screen overflow-y-auto ${isCollapsed ? "w-16" : "w-64"}`} >
-
-
-      <div
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="flex justify-between items-center p-4 border-b cursor-pointer hover:bg-gray-100"
-      >
+      <div onClick={() => setIsCollapsed(!isCollapsed)}
+        className="flex justify-between items-center p-4 border-b cursor-pointer hover:bg-gray-100">
         {!isCollapsed && <h2 className="text-3xl font-impact" onClick={home}>AISKILLS</h2>}
         <FaBars />
       </div>

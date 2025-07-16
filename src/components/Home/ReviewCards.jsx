@@ -1,11 +1,14 @@
 import React from "react";
 import review from "../../assets/reviewimage.jpg";
 import { FaLinkedin } from "react-icons/fa"; // 👈 Import this at the
+import image1 from "../../assets/linkimg1.jpg";
+import image3 from "../../assets/linkimg3.jpg";
+import image2 from "../../assets/linkimg2.gif";
 
 const testimonials = [
   {
     name: "ARSHI KANSAL",
-    image: review,
+    image: image1,
     review:
      "Finally found a platform that teaches AI in a way that actually makes sense! I joined one of the live cohorts and it was incredible. The instructors explained complextopics in simple ways, and the real-world projects helped me apply what I learned instantly.AI Skills is hands-down the most practical and aordable learning platform I’ve used.",
     rating: 5.0,
@@ -14,7 +17,7 @@ const testimonials = [
   },
   {
     name: "ANAND ARYA",
-    image: review,
+    image: image2,
     review:
       "The hybrid learning model is a game changer. I love that I can learn through a mix of live classes and self-paced videos. It gave me theflexibility to learn at my own speed while still getting live support from mentors. AI Skillshelped me become confident in applying AI at work!",
     rating: 5.0,
@@ -22,7 +25,7 @@ const testimonials = [
   },
   {
     name: "AMIT BHATIA",
-    image: review,
+    image: image3,
     review:
       "Aordable, hands-on, and exactly what I needed to stay relevant. So many platforms charge a fortune and give you flu. AI Skills delivers real content thatmatters. I worked on actual industry-level projects and even earned a certificate that helped me get noticed in job applications. Highly recommend!",
     rating: 5.0,
@@ -30,7 +33,7 @@ const testimonials = [
   },
   {
     name: "NIKHIL GUPTA",
-    image: review,
+    image: image2,
     review:
    "Live, hybrid, and video courses — all in one place! The concept of combining dierent learning formats is brilliant. I could join live when I had time and watch videos when I didn’t. Every course felt personal and purposeful. It's not justlearning; it’s career building.",
     rating: 5.0,
@@ -38,7 +41,7 @@ const testimonials = [
   },
   {
     name: "Neha Sharma",
-    image: review,
+    image: image2,
     review:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
     rating: 5.0,

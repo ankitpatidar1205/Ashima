@@ -74,12 +74,7 @@ const paginatedArticles = filteredArticles?.slice(
             </p>
           </div>
           <div className="flex gap-2">
-            <button className="bg-gray-50 px-4 py-2 rounded-lg text-sm flex items-center gap-2 border">
-              <FaDownload /> Export
-            </button>
-            {/* <button className="bg-[#047670] text-white px-4 py-2 rounded-lg text-sm">
-              + Add New Article
-            </button> */}
+          
             <button  className="bg-[#047670] text-white px-4 py-2 rounded-lg text-sm" onClick={() => setIsModalOpen(true)} >
               + Add New Article
             </button>
@@ -162,7 +157,6 @@ const paginatedArticles = filteredArticles?.slice(
                     </button>
                   </td>
                   <td className="px-4 py-3 flex gap-3 items-center">
-                    <FaEye className="text-blue-600 cursor-pointer" />
                     <FaTrash
                       className="text-red-600 cursor-pointer"
                       onClick={() => handleDelete(item?.id)}

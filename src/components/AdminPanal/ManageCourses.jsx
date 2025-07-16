@@ -48,15 +48,12 @@ const itemsPerPage = 5;
     
   }; 
 
-  const changeStatus = (id)=>{
-    // const updatedStatus = currentStatus === "1" ? "0" : "1";
-    const updatedCourses = courses.map((course) =>
-      course.id === id ? { ...course, status: "1" } : course
-    );
-    dispatch(fetchCourses());
-    dispatch(publishCourse({id,status:"1"}))
-      
-  }
+const changeStatus = async (id, currentStatus) => {
+  const updatedStatus = currentStatus === "1" ? "0" : "1";
+
+  await dispatch(publishCourse({ id, status: updatedStatus }));
+  await dispatch(fetchCourses()); // refresh list
+};
 
 const filteredCourses = courses?.filter((course) =>
   course?.course_title?.toLowerCase()?.includes(searchTerm.toLowerCase())
@@ -73,12 +70,12 @@ const paginatedCourses = filteredCourses.slice(
     <DashboardLayout>
       <div className="p-6 bg-gray-50 min-h-screen">
         {/* Heading & Add Button */}
-        {/* <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Manage Courses</h2>
-          <button  className="bg-teal-700 text-white px-4 py-2 rounded" onClick={() => setIsModalOpen(true)}>
+          {/* <button  className="bg-teal-700 text-white px-4 py-2 rounded" onClick={() => setIsModalOpen(true)}>
             Add Course
-          </button>
-        </div> */}
+          </button> */}
+        </div>
 
         <AddCoursesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} courseId={courseId} setCourseId={setCourseId}/>
 
@@ -87,7 +84,7 @@ const paginatedCourses = filteredCourses.slice(
           <div className="flex flex-wrap gap-2 mb-4">
             <input type="text" placeholder="Search courses..." value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}  className="border px-3 py-2 rounded w-full md:w-auto"/>
-            {/* <button className="border px-3 py-2 rounded">Export</button> */}
+            
           </div>
 
           {/* Table Section */}
@@ -120,8 +117,7 @@ const paginatedCourses = filteredCourses.slice(
                     <td className="p-2">
                       <div className="flex flex-col">
                         <Link  to={`/course/${course?.id}`}
-                          className="font-semibold text-teal-700"
-                        >
+                          className="font-semibold text-teal-700">
                           {course?.course_title}
                         </Link>
                         <span className="text-xs text-gray-500">
@@ -140,19 +136,18 @@ const paginatedCourses = filteredCourses.slice(
                         {course?.course_type}
                       </span>
                     </td>
-                    <td className="p-2">
-                      <span className={`${
-                          course.status =="1"  
-                            ? "bg-green-100 text-green-600"
-                            : "bg-yellow-100 text-yellow-600"
-                        } text-xs px-2 py-1 rounded`}
-                      > <button onClick={() => changeStatus(course?.id,"1")} disabled={course?.status =="1"}>
-                        {course?.status==0?"Draft":"Published"}
-                      </button>
-                        
-                      </span>
-                    </td>
-                    <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">
+                   <td className="p-2">
+  <span className={`${
+      course.status == "1"
+        ? "bg-green-100 text-green-600"
+        : "bg-yellow-100 text-yellow-600"
+    } text-xs px-2 py-1 rounded`} >
+    <button onClick={() => changeStatus(course?.id, course?.status)}>
+      {course?.status == "0" ? "Draft" : "Published"}
+    </button>
+  </span>
+</td>
+                    <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">    
                       <Link to={`/course/${course?.id}`} className="text-gray-600">
                         <FaEye />
                       </Link>

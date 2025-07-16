@@ -19,8 +19,7 @@ const SoftwareNavbar = ({ isCollapsed }) => {
 
 
   const handleLogout = () => {
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("user");
+
      localStorage.clear();
     navigate("/");
   };
@@ -40,11 +39,7 @@ const SoftwareNavbar = ({ isCollapsed }) => {
         </div>
 
         <div className="flex items-center space-x-4 relative">
-          {/* Theme Toggle */}
-          {/* <FaMoon className="text-gray-600 cursor-pointer" /> */}
-          {/* <span>{userData?.full_name}</span> */}
-          {/* Notification Bell */}
-          <div className="relative">
+          {/* <div className="relative">
             <FaBell
               size={22}
               onClick={() => setNotifOpen(!notifOpen)}
@@ -69,7 +64,13 @@ const SoftwareNavbar = ({ isCollapsed }) => {
                 </ul>
               </div>
             )}
-          </div>
+          </div> */}
+        {(userData?.name || userData?.full_name) && (
+  <span className="flex items-center gap-1">
+    <span className="text-xl">👏</span> {/* Icon */}
+    Hi, {userData.name || userData.full_name}
+  </span>
+)}
 
           {/* Profile Dropdown */}
           <div className="relative">

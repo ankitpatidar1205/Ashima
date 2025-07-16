@@ -15,11 +15,11 @@ const Login = () => {
       setEmail("admin@gmail.com");
       setPassword("admin@123");
     } else if (role === "student") {
-      setEmail("test@gmail.com");
-      setPassword("test@123");
+      setEmail("student@gmail.com");
+      setPassword("1234");
     } else if (role === "instructor") {
-      setEmail("teacher@gmail.com");
-      setPassword("teacher@123");
+      setEmail("Instructor@gmail.com");
+      setPassword("1234");
     }
     else if(role==="superadmin"){
       setEmail("superadmin@gmail.com");

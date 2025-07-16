@@ -1,13 +1,16 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 
 import React from 'react';
+import Navbar from '../../../Layout/Navbar';
+import Footer from '../../../Layout/Footer';
 
 const Helpsupport = () => {
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navbar/>
       {/* Hero Section */}
       <div className="bg-teal-600 text-white py-16 px-6">
-        <div className="w-full mx-auto ">
+        <div className="w-full mx-auto  mt-5 py-2">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Help & Support</h1>
           <p className="text-xl mb-8 text-center">
             Welcome to the AI SKILLS Help Center! We're here to assist you with any questions or issues 
@@ -141,6 +144,7 @@ const Helpsupport = () => {
           </p>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

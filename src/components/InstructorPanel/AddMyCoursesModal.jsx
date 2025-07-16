@@ -13,7 +13,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
     course_title: "",
     course_description: "",
     course_type: "",
-    instructor_id: "",
+    instructor_id: instructorid,
     course_price: "",
     course_image: null,
     category_id: "",
@@ -24,7 +24,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
   });
 
   // Initialize course_syllabus with id/course_id fields optional
-  const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: "",module_courses:"" }]);
+  const [course_syllabus, setCourseSyllabus] = useState([{ module_title: "", module_syllabus: ""}]);
   const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
 
   useEffect(() => {
@@ -48,7 +48,6 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  const { instructors } = useSelector((state) => state?.instructors);
   const { categories } = useSelector((state) => state?.categories);
   const { courses } = useSelector((state) => state?.courses);
 
@@ -107,7 +106,7 @@ const AddMyCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
     data.append("course_title", formData.course_title);
     data.append("course_description", formData.course_description);
     data.append("course_type", formData.course_type);
-    data.append("instructor_id", formData.instructor_id);
+    data.append("instructor_id",  formData.instructor_id);
     data.append("course_price", formData.course_price);
     data.append("category_id", formData.category_id);
     data.append("course_content_video_link", formData.course_content_video_link);
@@ -212,7 +211,7 @@ const handleClose = () => {
     status: "0",
     fcmToken
   });
-  setCourseSyllabus([{ module_title: "", module_syllabus: "", module_courses: "" }]);
+  setCourseSyllabus([{ module_title: "", module_syllabus: ""}]);
   setFaqs([{ question: "", answer: "" }]);
   onClose(); // Close the modal
 };
@@ -297,24 +296,7 @@ const handleClose = () => {
               </select>
             </div>
 
-            {/* <div>
-              <label htmlFor="instructor" className="text-sm font-medium mb-1 block">Instructor</label>
-              <select
-                id="instructor"
-                value={formData.instructor_id}
-                disabled
-                className="border p-2 rounded w-full bg-gray-100 text-gray-700"
-              >
-                {instructors?.map((instructor) =>
-                  instructor.id === formData.instructor_id && (
-                    <option key={instructor.id} value={instructor.id}>
-                      {instructor.full_name}
-                    </option>
-                  )
-                )}
-              </select>
-            </div> */}
-
+          
             <div>
               <label htmlFor="price" className="text-sm font-medium mb-1 block">Course Price</label>
               <input
@@ -349,14 +331,7 @@ const handleClose = () => {
                   className="border p-2 rounded w-full"
                   rows="2"
                 />
-                <input
-                  type="text"
-                  name="module_courses"
-                  value={module?.module_courses}
-                  onChange={(e) => handleCourseSyllabusChange(index, e)}
-                  placeholder="Module cource link"
-                  className="border p-2 rounded w-full"
-                />
+               
               </div>
             ))}
             <button
@@ -427,7 +402,7 @@ const handleClose = () => {
           </div>
 
           {/* Status Checkbox */}
-          {courseId == null && (
+          {/* {courseId == null && (
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -436,7 +411,7 @@ const handleClose = () => {
               />
               <label className="text-sm">Active</label>
             </div>
-          )}
+          )} */}
 
           {/* Submit and Cancel Buttons */}
           <div className="flex justify-end gap-2">
