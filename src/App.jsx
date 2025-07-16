@@ -155,61 +155,6 @@ const App = () => {
           <Route path="/helpsupport" element={<Helpsupport />} />
           <Route path="/explorecourses" element={<ExploreCourses />} />
 
-<<<<<<< HEAD
-          {/* <Route path="/projects"></Route> */}
-          <Route path="/student-dashboard" element={<StudentDashboard />} />
-          <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
-          <Route path="/digitalproduct" element={<DigitalProducts></DigitalProducts>}></Route>
-          <Route path="/edit-digital-product/:id" element={<EditDigitalProduct></EditDigitalProduct>}  ></Route>
-          <Route path="/product-detail/:id" element={<ProductDetails></ProductDetails>}></Route>
-          <Route path="/singleblog/:id" element={<SingleBlog />}></Route>
-          <Route path="/PaymentAnalytics" element={<PaymentAnalytics></PaymentAnalytics>}></Route>
-          <Route path="/viewTranscation" element={<ManageTransaction></ManageTransaction>}></Route>
-          <Route path="/RefundProcess" element={<RefundProcess></RefundProcess>}></Route>
-          <Route path="/newCourse" element={<NewCourse></NewCourse>}></Route>
-          <Route path="/student-all-Courses" element={<StudentAllCources></StudentAllCources>}></Route>
-
-          <Route path="/mycourse" element={<MyCourses></MyCourses>}></Route>
-          <Route path="/courses/:id" element={<CourseDetails />} />
-          <Route path="/conversation" element={<Conversation></Conversation>}></Route>
-          <Route path="/coursecomments" element={<CourseComments></CourseComments>} ></Route>
-          <Route path="/certificate" element={<CertificatesPage></CertificatesPage>}></Route>
-          <Route path="/edit-template/:id" element={<EditCertificateTemplates></EditCertificateTemplates>}></Route>
-          <Route path="/descussiontrending" element={<Descussiontrending></Descussiontrending>} ></Route>
-          <Route path="/descussionnew" element={<DescussionNew></DescussionNew>}></Route>
-          <Route path="/descussionunanswered" element={<Dis_unanswered></Dis_unanswered>}></Route>
-          <Route path="/descussionmostlike" element={<DiscussionMostLike></DiscussionMostLike>} ></Route>
-          <Route
-            element={<ReviewsRating></ReviewsRating>}
-          ></Route>
-          <Route
-            path="/student-courses"
-            element={<Mc_Dashboard></Mc_Dashboard>}
-          ></Route>
-          <Route
-            path="/student-digitalProducts"
-            element={<StudentDigitalProducts />}
-          ></Route>
-          <Route path="/manage-student" element={<ManageStudent></ManageStudent>} ></Route>
-          <Route path="/edit-student/:id" element={<EditStudent></EditStudent>} ></Route>
-          <Route
-            path="/manage-instructors"
-            element={<ManageInstructors></ManageInstructors>}
-          ></Route>
-          <Route path="/instructor-detail/:id" element={<InstructorDetails />} />
-          <Route path="/manage-courses" element={<ManageCourses></ManageCourses>}></Route>
-          <Route path="/edit-instruction/:id" element={<EditInstruction></EditInstruction>}></Route>
-          <Route path="/course/:id" element={<CoursesDetails />} />
-          <Route path="/course-category" element={<CourseCategory />} />
-          <Route path="/blog-articles" element={<Blogs_article></Blogs_article>}></Route>
-          <Route path="/course-content/:id" element={<CourseContent />} />
-
-          <Route
-            path="/community-discussion"
-            element={<ManageComm_Discu></ManageComm_Discu>}
-          ></Route>
-          <Route path="/discussion-details/:id" element={<DiscussionDetails />} />
-=======
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
@@ -260,24 +205,23 @@ const App = () => {
         <Route path="/digital" element={<MyDigital />} />
         <Route path="/marketProduct/:id" element={<MarketProduct />} />
         <Route path="/admin-digital-product" element={<AdminDigitalProduct />} />
->>>>>>> 42951b4df78d8658dbf7691b8f591a026c00bc78
 
-          <Route
+          {/* <Route
             path="/ViewAssessments"
             element={<ViewAssessments></ViewAssessments>}
-          ></Route>
+          ></Route> */}
           <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
           <Route path="/CertificateTemplate" element={<CertificateTemplates></CertificateTemplates>}></Route>
           <Route path="/CertificateManagemnet" element={<CertificateManagement></CertificateManagement>}></Route>
           <Route path="/adminSettings" element={<AdminSettings></AdminSettings>}></Route>
           <Route path="/refund-details/:id" element={<RefundDetails />} />
           <Route path="/RolePermission" element={<RolePermission></RolePermission>}></Route>
-          <Route path="/ReporteIssues"
-            element={<ViewReportedIssues></ViewReportedIssues>} ></Route>
+          {/* <Route path="/ReporteIssues"
+            element={<ViewReportedIssues></ViewReportedIssues>} ></Route> */}
           <Route path="/student-details/:id" element={<StudentDetails />} />
-          <Route path="/qasection" element={<QA></QA>}></Route>
+          {/* <Route path="/qasection" element={<QA></QA>}></Route> */}
           <Route path="/assignment" element={<Assignments></Assignments>}></Route>
-          <Route path="/earning" element={<Earning></Earning>}></Route>
+          {/* <Route path="/earning" element={<Earning></Earning>}></Route> */}
           <Route path="/calender" element={<Calender></Calender>}></Route>
           <Route path="/setting" element={<Setting></Setting>}></Route>
           <Route path="/signup" element={<Signup />} />
