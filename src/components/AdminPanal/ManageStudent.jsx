@@ -83,7 +83,7 @@ const ManageStudents = () => {
 
   const filteredStudents = Student?.filter((student) => {
     const matchesSearch =
-      student.student_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.email?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
       statusFilter === "All" ||
@@ -158,10 +158,7 @@ const ManageStudents = () => {
                           onClick={() => handleStatusToggle(student.id, student.is_active)}
                           className={`text-xs px-2 py-1 rounded ${
                             student.is_active === "1"
-                              ? "bg-green-100 text-green-600"
-                              : "bg-red-100 text-red-600"
-                          }`}
-                        >
+                              ? "bg-green-100 text-green-600": "bg-red-100 text-red-600"}`}>
                           {student.is_active === "1" ? "Active" : "Inactive"}
                         </button>
                       </td>

@@ -19,7 +19,7 @@ const CourceDetail = () => {
   const [courseData, setCourseData] = useState(null);
 
   const [moduleContents, setModuleContents] = useState({});
-  console.log("dfdf",moduleContents)
+
   const currency = useCurrency();
   const [data, setData] = useState([])
   const user_id = localStorage.getItem("is_id")
@@ -193,7 +193,7 @@ const CourceDetail = () => {
                   <iframe
                     src={courseData?.test_video}
                     title="Course Video"
-                    className="w-full h-[200px] rounded-t"
+                    className="w-full h-[300px] rounded-t"
                     allowFullScreen
                   ></iframe>
 
@@ -211,30 +211,17 @@ const CourceDetail = () => {
                   <h3 className="font-normal text-[24px] sm:text-[28px] font-impact">
                     {courseData?.course_title}
                   </h3>
-                  <p className="text-[16px] font-roboto font-normal text-black/50 mt-2">
-                    {courseData?.course_description}
-                  </p>
-
-                  <hr className="w-[230px] border-[1px] border-[#000000]" />
+                 {/* <p className="text-[16px] font-roboto font-normal text-black/50 mt-2">{courseData?.course_description?.length > 300  ? courseData.course_description.slice(0, 300) + "... "  : courseData?.course_description}
+</p> */}
 
                   <div className="mt-4">
                     <button className="w-full h-[41px] bg-[#047670] text-[#ffffff] font-roboto py-3 rounded-[12px] font-bold text-[18px] flex items-center justify-center">
                       Try Personal Plan For Free
                     </button>
-
-                    <p className="text-[14px] text-[#000000] font-roboto font-medium mt-2 text-center">  Starting At $11.00 Per Month After Trial.   <br />
-                      Cancel Anytime.  </p>
                   </div>
-
-                  <div className="flex items-center">
-                    <hr className="flex-grow border-t border-[#000000]" />
-                    <span className="mx-2 text-[#000000] font-medium">Or</span>
-                    <hr className="flex-grow border-t border-[#000000]" />
-                  </div>
-
                   <div className="mt-2">
                     <p className="text-[28px] text-[#000000] font-roboto font-bold">
-                      {currency.symbol}
+                  For     {currency.symbol}
                       {(parseFloat(courseData?.course_price) * currency.rate).toFixed(2)}
                     </p>
                   </div>

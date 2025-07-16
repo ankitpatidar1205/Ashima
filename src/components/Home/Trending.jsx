@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../Redux/slices/categorySlice/categorySlice";
 import { fetchCourses } from "../../Redux/slices/CourseSlice/CourseSlice";
 import { useNavigate } from "react-router-dom";
+import useCurrency from "../../utils/useCurrency";
 
 const TrendingWithCards = () => {
   const sliderRef = useRef(null);
   const [activeTab, setActiveTab] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+    const currency = useCurrency();
+
   const { categories } = useSelector((state) => state.categories);
   const { courses } = useSelector((state) => state.courses);
   console.log(courses);
@@ -121,6 +124,10 @@ const TrendingWithCards = () => {
                         >
                           Learn More
                         </button>
+                          <span className="text-[#1e90ff] font-bold text-sm">
+     {currency.symbol}
+        {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
+  </span>
                         {/* Course Type Badge */}
                         <span
                           className={`px-3 py-1 font-bold text-white text-xs  rounded-full transition-all duration-300 shadow-md ${
