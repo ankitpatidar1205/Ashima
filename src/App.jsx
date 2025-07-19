@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { messaging } from "./firebase.config";
-import { onMessage,getToken } from "firebase/messaging";
+import { onMessage, getToken } from "firebase/messaging";
 import { useEffect } from "react";
 import axios from 'axios'
 import ScrollToTop from "./Auth/ScrollToTop";
@@ -88,7 +88,11 @@ import Careers from "./components/Home/Careers/Careers";
 import Helpsupport from "./components/Home/HelpSupport/Helpsupport";
 import CookiePolicy from "./components/Home/Cookie/CookiePolicy";
 import Privacypolicy from "./components/Home/PrivacyPolicy/Privacypolicy";
+<<<<<<< HEAD
 import AllCources from "./components/Home/ALLCources/ALLcources";
+=======
+import ExploreCourses from "./components/Home/ExploreCourses/ExploreCourses";
+>>>>>>> 1196a99be47b15271b718e7f28883f0069b14847
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -136,6 +140,7 @@ const App = () => {
 
   return (
     <>
+<<<<<<< HEAD
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
@@ -154,6 +159,26 @@ const App = () => {
         <Route path="/careers" element={<Careers/>} />
         <Route path="/cookie" element={<CookiePolicy/>} />
          <Route path="/helpsupport" element={<Helpsupport/>} />
+=======
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/courses/:id" element={<Courses />} /> {/* Fixed route */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/reset-password-success" element={<ResetPasswordSucessfullPage />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/termconditions" element={<TermsConditions />} />
+          <Route path="/privacypolicy" element={<Privacypolicy />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/cookie" element={<CookiePolicy />} />
+          <Route path="/helpsupport" element={<Helpsupport />} />
+          <Route path="/explorecourses" element={<ExploreCourses />} />
+>>>>>>> 1196a99be47b15271b718e7f28883f0069b14847
 
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
@@ -206,28 +231,51 @@ const App = () => {
         <Route path="/marketProduct/:id" element={<MarketProduct />} />
         <Route path="/admin-digital-product" element={<AdminDigitalProduct />} />
 
-        <Route path="/Cource-Detail/:id" element={<CourceDetail />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blogsDetail" element={<BlogDeatils />} />
-        <Route path="/instructor" element={<Instructor />} />
-        <Route path="/instructorSignup" element={<InstructorSignup />} />
-        <Route path="/business" element={<Business />} />
-        <Route path="/aipowered" element={<AIPowered />} />
-        <Route path="/launchpage" element={<LaunchPage />} />
-        <Route path="/instructor-profile" element={<ProfileLayout></ProfileLayout>}></Route>
-        <Route path="/student-profile" element={<StudentProfile></StudentProfile>}></Route>
-        <Route path="/admin-profile" element={<AdminProfile></AdminProfile>}></Route>
-        <Route path="/change-password" element={<ChangePassword></ChangePassword>}></Route>
-         {/* // super-admin */}
-        <Route path="/superadmin-dashboard" element={<SuperadminDashboard />} />
-        <Route path="/plan-package" element={<PlanPackage/>} />
-        <Route path="/plan-request" element={<PlanRequest/>} />
-        <Route path="/order-details" element={<OrderDetail/>} />
-        <Route path="/user-info" element={<UserInfo/>} />
-        <Route path="/superadmin-profile" element={<SuperAdminProfile/>} />
-         
-      </Routes>
-    </BrowserRouter>
+          {/* <Route
+            path="/ViewAssessments"
+            element={<ViewAssessments></ViewAssessments>}
+          ></Route> */}
+          <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
+          <Route path="/CertificateTemplate" element={<CertificateTemplates></CertificateTemplates>}></Route>
+          <Route path="/CertificateManagemnet" element={<CertificateManagement></CertificateManagement>}></Route>
+          <Route path="/adminSettings" element={<AdminSettings></AdminSettings>}></Route>
+          <Route path="/refund-details/:id" element={<RefundDetails />} />
+          <Route path="/RolePermission" element={<RolePermission></RolePermission>}></Route>
+          {/* <Route path="/ReporteIssues"
+            element={<ViewReportedIssues></ViewReportedIssues>} ></Route> */}
+          <Route path="/student-details/:id" element={<StudentDetails />} />
+          {/* <Route path="/qasection" element={<QA></QA>}></Route> */}
+          <Route path="/assignment" element={<Assignments></Assignments>}></Route>
+          {/* <Route path="/earning" element={<Earning></Earning>}></Route> */}
+          <Route path="/calender" element={<Calender></Calender>}></Route>
+          <Route path="/setting" element={<Setting></Setting>}></Route>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/digital" element={<MyDigital />} />
+          <Route path="/marketProduct/:id" element={<MarketProduct />} />
+          <Route path="/admin-digital-product" element={<AdminDigitalProduct />} />
+
+          <Route path="/Cource-Detail/:id" element={<CourceDetail />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blogsDetail" element={<BlogDeatils />} />
+          <Route path="/instructor" element={<Instructor />} />
+          <Route path="/instructorSignup" element={<InstructorSignup />} />
+          <Route path="/business" element={<Business />} />
+          <Route path="/aipowered" element={<AIPowered />} />
+          <Route path="/launchpage" element={<LaunchPage />} />
+          <Route path="/instructor-profile" element={<ProfileLayout></ProfileLayout>}></Route>
+          <Route path="/student-profile" element={<StudentProfile></StudentProfile>}></Route>
+          <Route path="/admin-profile" element={<AdminProfile></AdminProfile>}></Route>
+          <Route path="/change-password" element={<ChangePassword></ChangePassword>}></Route>
+          {/* // super-admin */}
+          <Route path="/superadmin-dashboard" element={<SuperadminDashboard />} />
+          <Route path="/plan-package" element={<PlanPackage />} />
+          <Route path="/plan-request" element={<PlanRequest />} />
+          <Route path="/order-details" element={<OrderDetail />} />
+          <Route path="/user-info" element={<UserInfo />} />
+          <Route path="/superadmin-profile" element={<SuperAdminProfile />} />
+
+        </Routes>
+      </BrowserRouter>
 
     </>
   );

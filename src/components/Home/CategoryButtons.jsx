@@ -6,7 +6,6 @@ import Ride2 from "../../assets/RidePage2.png";
 import Ride3 from "../../assets/RidePage3.png";
 import Ride4 from "../../assets/RidePage4.png";
 import { Link } from "react-router-dom";
-
 const courses = [
   {
     title: "Digital Marketing",
@@ -38,7 +37,7 @@ const courses = [
     image: Ride2,
     description: "Dive deep into the success secrets of the world’s top AI startups. Unlock their strategies, challenges, and breakthroughs — decoded for your next big idea.",
   },
-   {
+  {
     title: "No Code",
     image: Ride4,
     description: "Build powerful AI agents without writing a single line of code. Learn how to automate, innovate, and scale using the latest no-code AI tools — fast and easy",
@@ -122,9 +121,8 @@ const RideTheAIWave = () => {
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
-              className={`w-3 h-3 rounded-full ${
-                i === 0 ? "bg-[#ffffff]" : "bg-gray-500"
-              }`}
+              className={`w-3 h-3 rounded-full ${i === 0 ? "bg-[#ffffff]" : "bg-gray-500"
+                }`}
             ></div>
           ))}
         </div>
