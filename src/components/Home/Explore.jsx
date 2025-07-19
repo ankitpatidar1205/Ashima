@@ -9,7 +9,7 @@ const cards = [
   { title: "Business", image: img2 },
   { title: "Newsletter", image: img3 },
 ];
-
+// Repeat the cards to create a continuous scrolling effect
 const repeatedCards = Array(10).fill(cards).flat(); 
 
 const Explore = () => {
@@ -34,6 +34,7 @@ const Explore = () => {
          <img
               src={card.image}
               alt={card.title}
+
               className="h-full w-auto object-contain block"
             />
           </div>
