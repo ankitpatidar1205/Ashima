@@ -88,6 +88,7 @@ import Careers from "./components/Home/Careers/Careers";
 import Helpsupport from "./components/Home/HelpSupport/Helpsupport";
 import CookiePolicy from "./components/Home/Cookie/CookiePolicy";
 import Privacypolicy from "./components/Home/PrivacyPolicy/Privacypolicy";
+import AllCources from "./components/Home/ALLCources/ALLcources";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -149,6 +150,7 @@ const App = () => {
         <Route path="/termconditions" element={<TermsConditions/>} />
         <Route path="/privacypolicy" element={<Privacypolicy/>} />
         <Route path="/aboutus" element={<AboutUs/>} />
+        <Route path="/all-cources" element={<AllCources/>} />
         <Route path="/careers" element={<Careers/>} />
         <Route path="/cookie" element={<CookiePolicy/>} />
          <Route path="/helpsupport" element={<Helpsupport/>} />

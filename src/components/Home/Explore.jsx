@@ -10,7 +10,7 @@ const cards = [
   { title: "Newsletter", image: img3 },
 ];
 
-const repeatedCards = Array(10).fill(cards).flat(); // 👈 Repeat cards to avoid white space
+const repeatedCards = Array(10).fill(cards).flat(); 
 
 const Explore = () => {
   return (
@@ -22,8 +22,7 @@ const Explore = () => {
           duration: 40,
           repeat: Infinity,
           ease: "linear",
-        }}
-      >
+        }}>
         <div style={{ width: "2.5rem" }}></div>
 
         {repeatedCards.map((card, index) => (
@@ -32,7 +31,7 @@ const Explore = () => {
             className="flex-shrink-0 flex items-center justify-center"
             style={{ height: "330px", width: "auto" }}
           >
-            <img
+         <img
               src={card.image}
               alt={card.title}
               className="h-full w-auto object-contain block"

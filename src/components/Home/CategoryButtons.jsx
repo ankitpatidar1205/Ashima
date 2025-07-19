@@ -1,11 +1,11 @@
 
-
 import { useRef } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Ride1 from "../../assets/RidePage1.png";
 import Ride2 from "../../assets/RidePage2.png";
 import Ride3 from "../../assets/RidePage3.png";
 import Ride4 from "../../assets/RidePage4.png";
+import { Link } from "react-router-dom";
 
 const courses = [
   {
@@ -96,9 +96,9 @@ const RideTheAIWave = () => {
                 <p className="text-[16px] font-Roboto Condensed text-[#1E1E1E] uppercase mb-4 line-clamp-3">
                   {course.description}
                 </p>
-                <button className="w-[175px] h-[44px] bg-[#000000] text-white font-roboto rounded-xl hover:bg-gray-900 transition text-[16px]">
+            <Link to="/all-cources">    <button className="w-[175px] h-[44px] bg-[#000000] text-white font-roboto rounded-xl hover:bg-gray-900 transition text-[16px]">
                   EXPLORE COURSES
-                </button>
+                </button></Link>
               </div>
             ))}
           </div>

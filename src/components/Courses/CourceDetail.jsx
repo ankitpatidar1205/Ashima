@@ -17,11 +17,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const CourceDetail = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
-
   const [moduleContents, setModuleContents] = useState({});
-
   const currency = useCurrency();
-  const [data, setData] = useState([])
   const user_id = localStorage.getItem("is_id")
   const role = localStorage.getItem("role")
   const navigate = useNavigate();
@@ -30,25 +27,21 @@ const CourceDetail = () => {
     const fetchCourse = async () => {
       try {
         const res = await axiosInstance.get(`/course/?id=${id}`);
+        console.log("Course Data:", res.data.data);
         setCourseData(res.data.data);
       } catch (error) {
         console.error("Error fetching course:", error);
       }
     };
-
     if (id) {
       fetchCourse();
     }
   }, [id]);
 
-
-  const sections = ["INTRODUCTION", "TOPIC 2", "TOPIC 3", "TOPIC 4"];
   const [openSection, setOpenSection] = useState(null);
-
   const toggleSection = (index) => {
     setOpenSection(openSection === index ? null : index);
   };
-  const [startDate, setStartDate] = useState(new Date());
 
   const handleCart = async () => {
     if (role === "student") {
@@ -67,27 +60,10 @@ const CourceDetail = () => {
   }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get(`/courseSyllabus/${id}`);
-        console.log(response.data.data);
-        setData(response.data.data);
-      } catch (err) {
-        setError(err.message || "Failed to load syllabus");
-      }
-    };
-
-    if (id) {
-      fetchData();
-    }
-  }, [id]);
-
-
   const fetchModuleContent = async (syllabus_id) => {
     try {
-      const response = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
-      // console.log(response)
+      const response = await axiosInstance.get(`/courseSyllabusCont/${syllabus_id}`);
+      console.log(response.data.data)
       return response.data.data;
     } catch (err) {
       console.error(`Error fetching module ${syllabus_id}`, err);
@@ -105,42 +81,10 @@ const CourceDetail = () => {
           contentMap[module.id] = content;
         })
       );
-
       setModuleContents(contentMap);
     };
-
     loadModuleContents();
   }, [courseData]);
-
-  useEffect(() => {
-    const fetchModuleContent = async (syllabus_id) => {
-      try {
-        const res = await axiosInstance.get(`/courseSyllabusCont/title/${syllabus_id}`);
-        // console.log(res)
-        return res.data.data;
-      } catch (err) {
-        console.error("Failed to load content:", err);
-        return [];
-      }
-    };
-
-    const loadModuleContents = async () => {
-      if (!courseData?.course_syllabus) return;
-
-      const contentMap = {};
-      await Promise.all(
-        courseData.course_syllabus.map(async (module) => {
-          const content = await fetchModuleContent(module.id);
-          contentMap[module.id] = content;
-        })
-      );
-
-      setModuleContents(contentMap);
-    };
-
-    loadModuleContents();
-  }, [courseData]);
-
 
   return (
     <>
@@ -275,8 +219,7 @@ const CourceDetail = () => {
           <div className="flex flex-col sm:flex-row flex-wrap gap-8 sm:gap-10">
             {courseData?.instructor_details && (
               <div className="shadow-2xl border-black rounded-[4px] p-4 flex flex-col items-start gap-6 sm:w-[400px] w-full h-auto uppercase">
-                <img
-                  src={courseData?.instructor_details?.avatar}
+                <img src={courseData?.instructor_details?.avatar}
                   className="w-[200px] h-[200px] rounded-full bg-[#ff757A] text-[#ffffff] text-sm font-bold mt-1"
                   alt={courseData.instructor_details.full_name}
                 />
@@ -328,15 +271,13 @@ const CourceDetail = () => {
           </div>
         </div>
 
-        <div className=" bg-[#ffffff] mt-6 p-6 rounded  shadow-lg">
+        <div className="bg-[#ffffff] mt-6 p-6 rounded  shadow-lg">
           <div className="w-full sm:w-[850px] ml-2 sm:ml-10">
             <div className="bg-[#ffffff] text-[#1e1e1e] p-4 sm:p-10 flex justify-start">
-
               <div className="w-full">
                 <h2 className="text-[28px] sm:text-[36px] font-roboto font-bold mb-2">
                   COURSE CONTENT
                 </h2>
-
                 <div className="flex flex-col sm:flex-row sm:justify-between">
                   <p className="text-[16px] text-[#1e1e1e] mb-2 sm:mb-6">
                     {courseData?.course_syllabus?.length} sections
@@ -349,8 +290,7 @@ const CourceDetail = () => {
                     <div>
                       {courseData.course_syllabus.map((module, i) => (
                         <div key={i}>
-                          <div
-                            style={{ backgroundColor: "#04767066" }}
+                          <div  style={{ backgroundColor: "#04767066" }}
                             onClick={() => toggleSection(i)}
                             className="flex flex-col sm:flex-row border-[3px] border-double border-[#047670]/40 items-start sm:items-center justify-between px-4 py-4 bg-[#047670]/40 transition-all cursor-pointer"
                           >
@@ -373,11 +313,10 @@ const CourceDetail = () => {
                                 moduleContents[module.id].length > 0 ? (
                                   <ul className="space-y-1">
                                     {moduleContents[module?.id]?.map((item) => (
-                                      <li key={item?.id} className="flex items-center gap-2 text-[#1e1e1e]">
-                                        <span>* {item?.title}</span>
-                                        <span> {item?.description}</span>
-                                       
-                                      </li>
+                                    <li key={item?.id} className="text-[#1e1e1e]">
+                                     <div className="font-semibold">* {item?.title}</div>
+                                      <p className="ml-4 text-sm text-gray-700">{item?.description}</p>
+                                   </li>
                                     ))}
                                   </ul>
                                 ) : (
@@ -388,7 +327,6 @@ const CourceDetail = () => {
                               )}
                             </div>
                           )}
- 
                           {i === 0 && (
                             <div className="border-double border-[#047670]"></div>
                           )}

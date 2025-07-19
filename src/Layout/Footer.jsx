@@ -31,12 +31,10 @@ const Footer = () => {
               <h3 className="font-Roboto Condensed text-[#ffffff] mb-4">
                 Products
               </h3>
-
               <ul className="space-y-2  text-[#DBDAD8] text-sm leading-relaxed">
-               <li onClick={() => coursesRef.current?.scrollIntoView({ behavior: 'smooth' })}>
-                <a className="text-[#DBDAD8]" href="#courses-section" >Courses</a>
+               <li>
+                <Link to="/all-cources" className="text-[#DBDAD8]">Courses</Link>
               </li>
-
                 <li>
                   <Link to="/digital" className="text-[#DBDAD8]">Digital Products</Link>
                 </li>
@@ -49,7 +47,7 @@ const Footer = () => {
 
             {/* Business Section */}
             <div>
-              <h3 className="font-Roboto Condensed text-[#ffffff] mb-4 ">
+              <h3 className="font-Roboto Condensed text-[#ffffff] mb-4">
                 Business
               </h3>
               <ul className="space-y-2 text-[#DBDAD8] text-sm leading-relaxed">
@@ -92,8 +90,8 @@ const Footer = () => {
               Products
             </h3>
             <ul className="space-y-2  text-sm leading-relaxed">
-              <li onClick={() => coursesRef.current?.scrollIntoView({ behavior: 'smooth' })}>
-                <a className="text-[#DBDAD8]" href="#courses-section" >Courses</a>
+              <li >
+                <Link to="/all-cources">Courses</Link>
               </li>
               <li>
                 <Link to="/digital" className="text-[#DBDAD8]">Digital Products</Link>

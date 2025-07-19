@@ -91,13 +91,10 @@ useEffect(() => {
 
   return (
     <>
-
       <Header />
-
       <div className="container-fluid py-2 px-1 px-md-1" style={{ maxWidth: "1300px" }}>
         {/* Page Title */}
         <div className="mb-4" style={{ marginTop: "100px" }}>
-
         </div>
 
         {/* Cart Content */}
@@ -109,12 +106,11 @@ useEffect(() => {
           </div>
           <div className="col-lg-8">
             <p className="fw-semibold text-secondary"> {cartItems?.length} Course in Cart</p>
-            <hr />
+            <hr/>
 
            {cartItems?.length === 0 ? (
             <>
-        <p className="text-center py-4">No items in cart</p>
-      
+            <p className="text-center py-4">No items in cart</p>
             </>
     
 ) : (

@@ -124,11 +124,11 @@ const currency = useCurrency();
           </div>
 
           {/* Buy Now Button */}
-          <Link to="/blog">
+        
             <button className="w-full bg-[#047670] hover:bg-[#005b4f] text-white border border-[#047670] rounded-[12px] px-px py-[10px] flex items-center justify-center gap-[10px] text-lg lg:text-[22px] mt-3">
               Buy Now
             </button>
-          </Link>
+        
 
           {/* Unlock and Access Button */}
           <button className="w-full lg:w-[214px] mx-auto lg:ml-20 h-[32.33px] bg-[#ffffff] rounded-[4px] text-sm lg:text-[18px] text-[#1E1E1ECC] flex items-center justify-center gap-4 mt-2 font-jost">

@@ -33,6 +33,7 @@ export const fetchContentById = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const res = await axiosInstance.get(`/courseSyllabusCont/${id}`);
+      console.log(res)
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Error fetching content by ID");

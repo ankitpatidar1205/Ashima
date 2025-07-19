@@ -47,12 +47,12 @@ const CourseContent = () => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get(`/courseSyllabus/${id}`);
+        console.log("Syllabus Data:", response.data.data);
         setData(response.data.data);
       } catch (err) {
         setError(err.message || "Failed to load syllabus");
       }
     };
-
     if (id) {
       fetchData();
     }
@@ -97,7 +97,7 @@ const CourseContent = () => {
           {/* Left: Title + Syllabus */}
           <div>
             <h2 className="mb-3">{data?.module_title}</h2>
-            {/* <p className="text-muted">{data?.module_syllabus}</p> */}
+
           </div>
 
           {/* Right: Buttons */}
