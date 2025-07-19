@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
   },
 });
 
-// Attach token (if using auth)
+
 axiosInstance.interceptors.request.use(
   (config) => {
     // Fetch token from localStorage here
