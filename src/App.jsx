@@ -88,11 +88,7 @@ import Careers from "./components/Home/Careers/Careers";
 import Helpsupport from "./components/Home/HelpSupport/Helpsupport";
 import CookiePolicy from "./components/Home/Cookie/CookiePolicy";
 import Privacypolicy from "./components/Home/PrivacyPolicy/Privacypolicy";
-<<<<<<< HEAD
 import AllCources from "./components/Home/ALLCources/ALLcources";
-=======
-import ExploreCourses from "./components/Home/ExploreCourses/ExploreCourses";
->>>>>>> 1196a99be47b15271b718e7f28883f0069b14847
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -140,7 +136,6 @@ const App = () => {
 
   return (
     <>
-<<<<<<< HEAD
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
@@ -159,26 +154,6 @@ const App = () => {
         <Route path="/careers" element={<Careers/>} />
         <Route path="/cookie" element={<CookiePolicy/>} />
          <Route path="/helpsupport" element={<Helpsupport/>} />
-=======
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/courses/:id" element={<Courses />} /> {/* Fixed route */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/reset-password-success" element={<ResetPasswordSucessfullPage />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/termconditions" element={<TermsConditions />} />
-          <Route path="/privacypolicy" element={<Privacypolicy />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/cookie" element={<CookiePolicy />} />
-          <Route path="/helpsupport" element={<Helpsupport />} />
-          <Route path="/explorecourses" element={<ExploreCourses />} />
->>>>>>> 1196a99be47b15271b718e7f28883f0069b14847
 
         {/* <Route path="/projects"></Route> */}
         <Route path="/student-dashboard" element={<StudentDashboard />} />
