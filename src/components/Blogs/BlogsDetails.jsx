@@ -128,7 +128,7 @@ function BlogsDetails() {
                       Agent
                     </h3>
                     <p className="font-[jost] font-normal text-[22px] mt-2">
-                      Downloadable Solution Code | Explanatory Videos | AISkills
+                      Downloadable Solution Code | Explanatory Videos | AI SKILLS
                     </p>
                     <button
                       className="mt-4 bg-[#047670] text-[#ffffff] py-2 px-6 rounded-md hover:bg-teal-700 transition-colors "
@@ -283,7 +283,7 @@ function BlogsDetails() {
                   </li>
                   <li>
                     <a href="#" className="text-[#000000] hover:underline">
-                      Learn How to Prepare for Your AI Interview with AISkills
+                      Learn How to Prepare for Your AI Interview with AI SKILLS
                     </a>
                   </li>
                 </ul>

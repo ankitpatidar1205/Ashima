@@ -454,7 +454,7 @@ const TermsConditions = () => {
                                         <i className="fas fa-envelope text-teal-600 text-lg sm:text-xl mr-2 sm:mr-3"></i>
                                         <div>
                                             <h3 className="font-semibold text-teal-900 text-sm sm:text-base">Questions about these Terms?</h3>
-                                            <p className="text-teal-700 text-sm sm:text-base">Reach us at support@aiskills.ai</p>
+                                            <p className="text-teal-700 text-sm sm:text-base">Reach us at support@AI SKILLS.ai</p>
                                         </div>
                                     </div>
                                     <p className="text-teal-800 text-xs sm:text-sm">

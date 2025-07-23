@@ -36,13 +36,15 @@ const SingleBlog = () => {
         </button>
 
         {/* Blog Article Container */}
+        <h1 className="text-3xl font-bold mb-4 text-center">{blog.title}</h1>
         <div className="mx-5 p-6 border shadow-sm rounded bg-[#047670] text-white">
+          
           <img
             src={blog.article}
             alt={blog.title}
-            className="w-full h-full mb-4 rounded object-cover transition-transform duration-300 hover:scale-[0.98]"
+            className="mb-4 rounded object-cover transition-transform duration-300 hover:scale-[0.98] mx-auto"
           />
-          <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
+          
           <p className="text-white text-lg mb-2">
             <strong>Category:</strong>{" "}
             {blog.category_name || "No category name available."}

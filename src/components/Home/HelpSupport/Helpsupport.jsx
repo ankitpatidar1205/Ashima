@@ -115,8 +115,8 @@ const Helpsupport = () => {
           <div className="flex items-center mb-6">
             <i className="fas fa-envelope text-teal-600 text-xl mr-3"></i>
             <span className="text-lg font-semibold text-gray-800">Email: </span>
-            <a href="mailto:support@aiskills.ai" className="text-teal-600 hover:text-teal-700 font-semibold ml-2 cursor-pointer">
-              support@aiskills.ai
+            <a href="mailto:support@AI SKILLS.ai" className="text-teal-600 hover:text-teal-700 font-semibold ml-2 cursor-pointer">
+              support@AI SKILLS.ai
             </a>
           </div>
         </div>

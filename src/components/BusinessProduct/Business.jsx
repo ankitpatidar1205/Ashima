@@ -73,7 +73,7 @@ const Business = () => {
   const features = [
     {
       img: business11,
-      desc: "Transform your workforce. Equip your employees with in-demand AI skills to enhance performance and efficiency.",
+      desc: "Transform your workforce. Equip your employees with in-demand AI SKILLS to enhance performance and efficiency.",
     },
     {
       img: business12,
@@ -144,7 +144,7 @@ const Business = () => {
             </h2>
             <p className="text-[22px] md:text-lg font-medium font-jost w-full md:w-[653px]">
               Partner With Us To Upskill Your Workforce. Empower Your Team With
-              Cutting-Edge AI Skills Through Live, Hybrid, And Video-Based
+              Cutting-Edge AI SKILLS Through Live, Hybrid, And Video-Based
               Courses. Our Comprehensive Training Programs Are Designed To Boost
               Productivity, Foster Innovation, And Help Your Business Stay Ahead
               In A Rapidly Evolving Tech Landscape.
@@ -160,7 +160,7 @@ const Business = () => {
           <div className="md:w-1/2">
             <img
               src={business1}
-              alt="AI Skills"
+              alt="AI SKILLS"
               className="rounded-md w-full object-cover shadow-lg"
             />
           </div>
@@ -589,9 +589,11 @@ business wins.
           </div>
         </div>
         <div className="flex justify-center mt-10">
-          <button className="bg-[#047670] text-[#Ffffff] text-[26px] font-semibold px-8 py-3  hover:bg-[#03665f] transition-all ">
-            Explore All Courses
-          </button>
+          <Link to="/all-cources">
+            <button className="bg-[#047670] text-[#Ffffff] text-[26px] font-semibold px-8 py-3  hover:bg-[#03665f] transition-all ">
+              Explore All Courses
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -716,7 +718,7 @@ roles. <span className="text-[#ffffff]">*</span>
             />
             <p className="text-[#ffffff]">
               By signing up, you agree to receive marketing communications from
-              AISkills. For more details, please refer to our{" "}
+              AI SKILLS. For more details, please refer to our{" "}
               <a href="#" className="underline text-[#ffffff]">
                 [Privacy Policy]
               </a>

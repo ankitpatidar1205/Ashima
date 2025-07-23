@@ -97,6 +97,9 @@ const CourceDetail = () => {
         <div className="lg:h-[500px] bg-[#047670] sm:px-10 md:px-20 py-9 sm:py-16 pt-28 lg:pt-28">
           <div className="flex flex-col lg:flex-row gap-6 h-full">
             <div className="w-full sm:w-11/12 lg:w-2/3 bg-[#047670] sm:px-6 md:px-12 py-4 mx-auto">
+            <button  onClick={() => window.history.back()}  className="absolute top-28 left-4 text-white text-2xl bg-[#047670] rounded-full p-2" style={{fontSize:"2.5rem" , fontWeight:"bold"}} >
+          ←
+        </button>
               <div className="w-full flex flex-col justify-between h-full">
                 <div>
                   <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-normal font-impact mb-2 mt-4 text-[#ffffff] uppercase">
@@ -158,11 +161,11 @@ const CourceDetail = () => {
                  {/* <p className="text-[16px] font-roboto font-normal text-black/50 mt-2">{courseData?.course_description?.length > 300  ? courseData.course_description.slice(0, 300) + "... "  : courseData?.course_description}
 </p> */}
 
-                  <div className="mt-4">
+                  {/* <div className="mt-4">
                     <button className="w-full h-[41px] bg-[#047670] text-[#ffffff] font-roboto py-3 rounded-[12px] font-bold text-[18px] flex items-center justify-center">
                       Try Personal Plan For Free
                     </button>
-                  </div>
+                  </div> */}
                   <div className="mt-2">
                     <p className="text-[28px] text-[#000000] font-roboto font-bold">
                   For     {currency.symbol}

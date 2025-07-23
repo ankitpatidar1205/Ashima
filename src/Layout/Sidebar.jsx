@@ -191,7 +191,7 @@ const RoleBasedSidebar = ({
     <div className={`fixed z-50 transition-all duration-300 bg-white border-r  h-screen overflow-y-auto ${isCollapsed ? "w-16" : "w-64"}`} >
       <div onClick={() => setIsCollapsed(!isCollapsed)}
         className="flex justify-between items-center p-4 border-b cursor-pointer hover:bg-gray-100">
-        {!isCollapsed && <h2 className="text-3xl font-impact" onClick={home}>AISKILLS</h2>}
+        {!isCollapsed && <h2 className="text-3xl font-impact" onClick={home}>AI SKILLS</h2>}
         <FaBars />
       </div>
 

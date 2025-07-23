@@ -4,6 +4,7 @@ import letstart1 from "../../assets/letstart1.png";
 import letstart2 from "../../assets/letstart2.png";
 import letstart3 from "../../assets/letstart3.png";
 import letstart4 from "../../assets/DIGITAL PRODUCTS.jpeg";
+import { Link } from "react-router-dom";
 
 const MakeLearningBetter = () => {
   const sliderRef = useRef(null);
@@ -63,9 +64,11 @@ const MakeLearningBetter = () => {
           <p className="text-[16px] sm:text-sm font-roboto text-[#000000] uppercase tracking-[0.2em] leading-[25px] mb-4">
             Become a Pro with us through industry-relevant <br /> skills
           </p>
-          <button className="px-[16px] w-[220px] h-[54px] py-[12px] bg-[#FF757A] text-black font-Roboto Condensed rounded-[16px] hover:bg-[#ff5c62] transition">
-            Sign Up
-          </button>
+          <Link to="/signup">
+            <button className="px-[16px] w-[220px] h-[54px] py-[12px] bg-[#FF757A] text-black font-Roboto Condensed rounded-[16px] hover:bg-[#ff5c62] transition">
+              Sign Up
+            </button>
+          </Link>
         </div>
       </div>
 

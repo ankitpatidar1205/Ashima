@@ -15,7 +15,9 @@ const Footer = () => {
         <div className="lg:hidden w-full flex flex-col">
           {/* First Row - Logo & Social Icons */}
           <div className="flex flex-col items-start space-y-6 w-full mb-8">
-            <FaFigma className="text-[#ff7070] text-4xl sm:text-5xl" />
+             <div className="text-[40px] md:text-[50px] text-[#000] font-impact text-white">
+            AI SKILLS
+          </div>
             <div className="flex space-x-6">
               <PiX className="text-[#ffffff] text-xl sm:text-2xl" />
               <FaInstagram className="text-[#ffffff] text-xl sm:text-2xl" />
@@ -75,7 +77,9 @@ const Footer = () => {
         <div className="hidden lg:flex w-full flex-col lg:flex-row justify-between gap-12 lg:gap-16">
           {/* Left Section - Logo & Social Icons */}
           <div className="flex flex-col items-start space-y-6 w-full lg:w-1/4">
-            <FaFigma className="text-[#ff7070] text-4xl sm:text-5xl" />
+            <div className="text-[40px] md:text-[50px] text-[#000] font-impact text-white">
+            AI SKILLS
+          </div>
             <div className="flex space-x-6">
               <PiX className="text-[#ffffff] text-xl sm:text-2xl" />
               <FaInstagram className="text-[#ffffff] text-xl sm:text-2xl" />

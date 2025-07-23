@@ -26,18 +26,18 @@ const Explore = () => {
         <div style={{ width: "2.5rem" }}></div>
 
         {repeatedCards.map((card, index) => (
-          <div
+          <a
             key={index}
+            href="/all-courses"
             className="flex-shrink-0 flex items-center justify-center"
             style={{ height: "330px", width: "auto" }}
           >
-         <img
+            <img
               src={card.image}
               alt={card.title}
-
               className="h-full w-auto object-contain block"
             />
-          </div>
+          </a>
         ))}
       </motion.div>
     </div>

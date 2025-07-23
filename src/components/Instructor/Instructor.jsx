@@ -96,7 +96,7 @@ const AITeacherLanding = () => {
       <section className="bg-[#ffffff] py-12 px-4">
         <div className="container mx-auto">
           <h2 className="text-center text-[#047670] font-impact font-normal text-[50px] mb-10">
-            Why Teach With AISkills ?
+            Why Teach With AI SKILLS ?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center">
             {/* Card 1 */}
@@ -109,7 +109,7 @@ const AITeacherLanding = () => {
                 <img src={blogdetail2} />
               </div>
               <h3 className="font-impact font-normal text-[#1E1E1E1] text-[26px] mb-2">
-                Why Teach With AISkills ?
+                Why Teach With AI SKILLS ?
               </h3>
               <p className="text-[22px] font-jost font-semibold text-[#1E1E1E1]">
                 Only A 10% Platform Fee, Much Lower Than Competitors.
@@ -212,17 +212,17 @@ const AITeacherLanding = () => {
         </div>
       </section>
 
-      {/* Teach on AI Skills Section */}
+      {/* Teach on AI SKILLS Section */}
 
       <section className="bg-[#047670] text-[#ffffff] py-0">
         <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-12 md:gap-8">
           {/* Left Content (Text) */}
           <div className="w-full md:w-1/2 flex flex-col justify-center px-5">
             <h2 className="text-[50px] font-normal  text-[#ffffff] font-impact mb-4">
-              Teach on AI Skills Plan, Publish, and Promote an Engaging Class
+              Teach on AI SKILLS Plan, Publish, and Promote an Engaging Class
             </h2>
             <p className="mb-6 overflow-auto font-roboto text-[20px] font-semibold text-[#ffffff]">
-              At AI Skills, we make it easy for you to plan, publish, and
+              At AI SKILLS, we make it easy for you to plan, publish, and
               promote engaging courses that truly connect with learners. Our
               platform empowers you to design classes in formats that suit your
               style—whether that’s live sessions, hybrid cohorts, or self-paced
@@ -234,7 +234,7 @@ const AITeacherLanding = () => {
               fellow instructors and professionals, expanding your network and
               influence. Teach on your own schedule, whether you want to lead
               live classes or build evergreen content, and enjoy dedicated
-              support every step of the way. Join AI Skills and make a real
+              support every step of the way. Join AI SKILLS and make a real
               dierence by helping students achieve their goals and grow their
               careers.=
             </p>

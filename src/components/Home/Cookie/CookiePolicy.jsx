@@ -175,7 +175,7 @@ const CookiePolicy = () => {
                         <div className="space-y-3">
                             <div className="flex items-center">
                                 <i className="fas fa-envelope text-teal-600 mr-3"></i>
-                                <span className="text-gray-700">Email: support@aiskills.ai</span>
+                                <span className="text-gray-700">Email: support@AI SKILLS.ai</span>
                             </div>
                             <div className="flex items-center">
                                 <i className="fas fa-map-marker-alt text-teal-600 mr-3"></i>

@@ -176,8 +176,8 @@ const Privacypolicy = () => {
                   <div className="flex items-center">
                     <i className="fas fa-envelope text-teal-600 mr-3"></i>
                     <span className="font-semibold text-gray-900">Email:</span>
-                    <a href="mailto:support@aiskills.ai" className="ml-2 text-teal-600 hover:text-teal-700 cursor-pointer">
-                      support@aiskills.ai
+                    <a href="mailto:support@AI SKILLS.ai" className="ml-2 text-teal-600 hover:text-teal-700 cursor-pointer">
+                      support@AI SKILLS.ai
                     </a>
                   </div>
                   <div className="flex items-center">
