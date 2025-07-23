@@ -10,7 +10,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   const [courseId,setCourseId] = useState([])
 
-  // 1) initial fetch (and refetch on userId change)
   useEffect(() => {
     if (userId) {
       dispatch(fetchCartItemById(userId));
@@ -82,7 +81,7 @@ const buy_item = ()=>{
 }
 useEffect(() => {
   if (cartItems && cartItems.length > 0) {
-    const allCourseIds = cartItems.map(item => item.course_id); // or item.courseId depending on your API
+    const allCourseIds = cartItems.map(item => item.course_id); 
     setCourseId(allCourseIds);
   } else {
     setCourseId([]);
@@ -117,12 +116,7 @@ useEffect(() => {
   cartItems?.map((item) => (
     <div key={item?.id} className="d-flex flex-wrap gap-3 mb-4 p-3 ">
       {/* Course Image */}
-      <img
-        src={item?.course_image}
-        alt="Course"
-        className="rounded"
-        style={{ width: "160px", height: "90px", objectFit: "cover" }}
-      />
+      <img  src={item?.course_image}  alt="Course"  className="rounded"  style={{ width: "160px", height: "90px", objectFit: "cover" }}/>
 
       {/* Course Info */}
       <div className="flex-grow-1">
@@ -147,7 +141,6 @@ useEffect(() => {
               />{" "}
               Remove
             </span>
-           
           </div>
         </div>
 
@@ -167,7 +160,6 @@ useEffect(() => {
     </div>
   )))
 }
-
           </div>
 
           {/* Right Side: Checkout */}
@@ -200,35 +192,20 @@ useEffect(() => {
 
             {showCouponInput && (
               <div className="mt-2">
-                <input
-                  type="text"
-                  value={couponCode}
-                  onChange={(e) => setCouponCode(e.target.value)}
-                  className="form-control mb-2"
-                  placeholder="Enter coupon code"
-                />
-                <button
-                  className="btn btn-success w-100 fw-semibold"
+                <input  type="text"  value={couponCode}  onChange={(e) => setCouponCode(e.target.value)}
+                  className="form-control mb-2"  placeholder="Enter coupon code"/>
+                <button  className="btn btn-success w-100 fw-semibold"
                   onClick={() => {
-                    // Handle coupon application logic here
-                    alert(`Coupon applied: ${couponCode}`);
-                  }}
-                >
+                    alert(`Coupon applied: ${couponCode}`);  }}>
                   Submit Coupon
                 </button>
               </div>
             )}
             <hr />
-            <div ref={paypalRef}
-              className="btn w-100 fw-semibold mb-2 text-white"
-              style={{ fontSize: "14px", backgroundColor: "#007681" }}
-            >
+            <div ref={paypalRef}  className="btn w-100 fw-semibold mb-2 text-white"  style={{ fontSize: "14px", backgroundColor: "#007681" }}>
               Proceed to Checkout →
             </div>
-          </div>)
-} 
-
-      
+          </div>)} 
         </div>
       </div>
 
