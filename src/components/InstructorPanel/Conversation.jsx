@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { FaPaperPlane } from "react-icons/fa";
-const Socket_URL= "https://cj2ww6qd-4000.inc1.devtunnels.ms"
+
+const Socket_URL = "https://cj2ww6qd-4000.inc1.devtunnels.ms";
+
 const Messages = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -113,9 +115,9 @@ const Messages = () => {
                   key={`${user.id}-${index}`}
                   className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-all duration-200 transform
                   ${isSelected
-                    ? "bg-teal-800 text-white shadow-md scale-[1.01]"
-                    : "bg-teal-500 text-gray-800 hover:bg-teal-400 hover:scale-[1.01] hover:shadow-sm"
-                  }`}
+                      ? "bg-teal-800 text-white shadow-md scale-[1.01]"
+                      : "bg-teal-500 text-gray-800 hover:bg-teal-400 hover:scale-[1.01] hover:shadow-sm"
+                    }`}
                   onClick={() => handleUserClick(user)}
                 >
                   {user?.avatar ? (
@@ -154,7 +156,9 @@ const Messages = () => {
         <div className="flex-1 flex flex-col bg-gray-100">
           <div className="px-4 py-3 border-b border-gray-300">
             <h2 className="text-lg font-semibold text-gray-800">
-              {selectedUser ? `Chat with ${selectedUser.name || selectedUser.full_name}` : "Chats"}
+              {selectedUser
+                ? `Chat with ${selectedUser.id === userId ? "You" : selectedUser.name || selectedUser.full_name}`
+                : "Chats"}
             </h2>
           </div>
 

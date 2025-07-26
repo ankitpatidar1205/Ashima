@@ -70,6 +70,8 @@ const RoleBasedSidebar = ({isCollapsed = false,setIsCollapsed = () => { },}) => 
             label: "Course Category",
             path: "/course-category",
           },
+          { icon: <FaComments />, label: "Messages", path: "/conversation" },
+
           {
             icon: <FaBook />,
             label: "Manage Courses",
@@ -97,6 +99,7 @@ const RoleBasedSidebar = ({isCollapsed = false,setIsCollapsed = () => { },}) => 
                 path: "/CertificateManagemnet",
                 icon: <FaCertificate />,
               },
+
             ],
           },
 
@@ -124,6 +127,7 @@ const RoleBasedSidebar = ({isCollapsed = false,setIsCollapsed = () => { },}) => 
           { icon: <FaRegEye />, label: "Digital Products", path: "/student-digitalProducts" },
           { icon: <FaUsers />, label: "Certificate", path: "/certificate" },
           { icon: <FaClipboardCheck />, label: "Assignments", path: "/assignment", },
+          { icon: <FaComments />, label: "Messages", path: "/conversation" },
        
         ];
       case "instructor":
@@ -153,6 +157,7 @@ const RoleBasedSidebar = ({isCollapsed = false,setIsCollapsed = () => { },}) => 
           { icon: <FaHome />, label: "Dashboard", path: "/superadmin-dashboard" },
           { icon: <FaBook />, label: "Plan package", path: "/plan-package" },
           { icon: <FaQuestionCircle />, label: "Plan Request", path: "/plan-request" },
+          { icon: <FaComments />, label: "Messages", path: "/conversation" },
 
           {
             icon: <FaClipboardCheck />,
