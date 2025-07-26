@@ -3,6 +3,8 @@ import { io } from "socket.io-client";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { FaPaperPlane } from "react-icons/fa";
 
+const Socket_URL = "https://cj2ww6qd-4000.inc1.devtunnels.ms";
+
 const Messages = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -11,8 +13,21 @@ const Messages = () => {
   const socketRef = useRef();
   const userId = parseInt(localStorage.getItem("is_id"));
 
+  const inputRef = useRef();
+  const messagesEndRef = useRef();
+
   useEffect(() => {
-    socketRef.current = io("http://localhost:4000", { withCredentials: true });
+    if (selectedUser && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [selectedUser]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    socketRef.current = io(Socket_URL, { withCredentials: true });
 
     socketRef.current.on("connect", () => {
       console.log("✅ Socket connected:", socketRef.current.id);
@@ -24,10 +39,8 @@ const Messages = () => {
     });
 
     socketRef.current.on("users", setUsers);
-console.log("users",users)
+
     socketRef.current.on("new_message", (msg) => {
-      // check if message relevant to current chat
-      console.log("new_message", msg);
       if (
         selectedUser &&
         (msg.sender_id === selectedUser.id || msg.receiver_id === selectedUser.id)
@@ -39,33 +52,29 @@ console.log("users",users)
     return () => {
       socketRef.current.disconnect();
     };
-  }, []);
+  }, [selectedUser]);
+
   useEffect(() => {
     if (!selectedUser) {
       setMessages([]);
       return;
     }
 
-    // Emit get_messages for selected user conversation
     socketRef.current.emit("get_messages", {
-      sender_id: parseInt(userId),
+      sender_id: userId,
       receiver_id: selectedUser.id,
     });
 
-    // Listen once for messages event
     const handleMessages = (msgs) => {
-      console.log("objecttttt,",msgs.filter((data)=>data.sender_id===userId));
-      const formatted = msgs.filter((msg) => ({
+      const formatted = msgs.map((msg) => ({
         ...msg,
         isOwn: msg.sender_id === userId,
       }));
       setMessages(formatted);
     };
 
-
     socketRef.current.on("messages", handleMessages);
 
-    // Cleanup listener when selectedUser changes
     return () => {
       socketRef.current.off("messages", handleMessages);
     };
@@ -73,132 +82,156 @@ console.log("users",users)
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
-    console.log("senderId", parseInt(userId));
-    console.log("receiverId", user.id);
-    socketRef.current.emit("get_messages", {
-      sender_id: parseInt(userId),
-      receiver_id: user.id,
-    });
-
-
   };
 
   const handleSendMessage = () => {
     if (newMessage.trim() && selectedUser) {
       const messageData = {
-        senderId: parseInt(userId),
+        senderId: userId,
         receiverId: selectedUser.id,
         message: newMessage,
       };
-      console.log("messageData", messageData);
       socketRef.current.emit("send_message", messageData);
-
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { ...messageData, isOwn: true, created_at: new Date().toISOString() },
-      ]);
-      
       setNewMessage("");
     }
   };
 
-  // Your render JSX remains unchanged
-
   return (
     <DashboardLayout>
-      <div className="bg-gray-50 font-sans min-h-screen flex">
-        <div className="flex-1">
-          <main className="p-8">
-            <h1 className="text-2xl font-bold text-gray-900 mb-8">Messages</h1>
+      <div className="flex h-[calc(100vh-80px)] bg-gray-50 font-sans">
+        {/* Left Sidebar */}
+        <div className="w-1/3 border-r border-gray-200 bg-white flex flex-col">
+          <div className="px-4 py-3 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-800">Users</h2>
+          </div>
 
-            <div className="bg-white rounded-lg shadow-sm">
-              <div className="flex h-[calc(100vh-220px)]">
+          <div className="flex-1 overflow-y-auto space-y-2 px-2 py-3">
+            {users.map((user, index) => {
+              const isSelected = selectedUser?.id === user.id;
+              const initial = user.name?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || "U";
 
-                {/* User List */}
-                <div className="w-1/3 border-r border-gray-200 overflow-y-auto">
-                  <div className="space-y-2">
-                    {users.map((user, index) => (
-                      <div
-                        key={`${user.id}-${index}`}
-                        className={`flex items-center p-2 rounded-lg cursor-pointer ${selectedUser?.id === user.id ? "bg-teal-800" : "bg-teal-700"
-                          }`}
-                        onClick={() => handleUserClick(user)}
-                      >
-                        <img
-                          src={user ? user.profile_image : "https://res.cloudinary.com/de1s1o9xc/image/upload/v1746172558/wpxrlb7rwudnv2nnfvwj.png"}
-                          className="w-10 h-10 rounded-full mr-3"
-                          alt={user.name}
-                        />
-                        <div className="flex-1">
-                          <h3 className="font-medium text-white">{user.email}</h3>
-                          <p className="text-white/80 text-sm">{user.lastMessage || "No recent message"}</p>
-                        </div>
-                      </div>
-                    ))}
+              return (
+                <div
+                  key={`${user.id}-${index}`}
+                  className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-all duration-200 transform
+                  ${isSelected
+                      ? "bg-teal-800 text-white shadow-md scale-[1.01]"
+                      : "bg-teal-500 text-gray-800 hover:bg-teal-400 hover:scale-[1.01] hover:shadow-sm"
+                    }`}
+                  onClick={() => handleUserClick(user)}
+                >
+                  {user?.avatar ? (
+                    <img
+                      src={user.avatar}
+                      className="w-12 h-12 rounded-full object-cover border border-white shadow-sm"
+                      alt={user.name}
+                    />
+                  ) : (
+                    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-teal-700 text-white font-bold text-lg shadow-sm">
+                      {initial}
+                    </div>
+                  )}
+
+                  <div className="flex-1 overflow-hidden">
+                    <div className="flex justify-between items-center mb-1">
+                      <h3 className={`text-base font-semibold truncate ${isSelected ? "text-white" : "text-gray-900"}`}>
+                        {user.email}
+                      </h3>
+                      <span className={`text-xs px-2 py-1 rounded-full font-medium whitespace-nowrap 
+                        ${isSelected ? "bg-white text-teal-800" : "bg-teal-700 text-white"}`}>
+                        {user.role}
+                      </span>
+                    </div>
+                    <p className={`text-sm truncate ${isSelected ? "text-gray-200" : "text-gray-100"}`}>
+                      {user.lastMessage || "No recent message"}
+                    </p>
                   </div>
                 </div>
+              );
+            })}
+          </div>
+        </div>
 
-                {/* Messages Panel */}
-             <div className="flex-1 flex flex-col">
-  <div className="flex-1 p-6 overflow-y-auto">
-    <div className="space-y-4">
-      {messages.map((message, index) => { // Changed to use 'message'
-        const isSender = parseInt(message.sender_id) === parseInt(userId); // Corrected: use message.senderId
+        {/* Right Chat Area */}
+        <div className="flex-1 flex flex-col bg-gray-100">
+          <div className="px-4 py-3 border-b border-gray-300">
+            <h2 className="text-lg font-semibold text-gray-800">
+              {selectedUser
+                ? `Chat with ${selectedUser.id === userId ? "You" : selectedUser.name || selectedUser.full_name}`
+                : "Chats"}
+            </h2>
+          </div>
 
-        return (
-          <div
-            key={index}
-            className={`flex items-start ${isSender ? "justify-end" : "justify-start"}`}
-          >
-            {/* Receiver Avatar */}
-            {!isSender && ( // Changed from !message.isOwn to !isSender for consistency
-              <img
-                src={selectedUser?.profile_image || "https://res.cloudinary.com/de1s1o9xc/image/upload/v1746172558/wpxrlb7rwudnv2nnfvwj.png"}
-                className="w-8 h-8 rounded-full mr-3"
-                alt={selectedUser?.name}
-              />
-            )}
+          <div className="flex-1 px-6 py-4 overflow-y-auto">
+            <div className="space-y-4">
+              {messages.length === 0 && (
+                <div className="text-center text-gray-400 pt-24">No messages yet.</div>
+              )}
+              {messages.map((message, index) => {
+                const isSender = message.isOwn;
+                const initial = selectedUser?.name?.[0]?.toUpperCase() || selectedUser?.email?.[0]?.toUpperCase() || "U";
 
-            {/* Message Bubble */}
-            <div
-              className={`rounded-lg p-2 max-w-md ${isSender ? "bg-teal-800 text-white" : "bg-white text-gray-900"}`} // Changed from message.isOwn to isSender
-            >
-              <p>{message.message}</p>
-              <span className="text-xs text-gray-500 mt-1 block">
-                {new Date(message.created_at).toLocaleTimeString()}
-              </span>
+                return (
+                  <div
+                    key={index}
+                    className={`flex items-start ${isSender ? "justify-end" : "justify-start"}`}
+                  >
+                    {!isSender &&
+                      (selectedUser?.avatar ? (
+                        <img
+                          src={selectedUser.avatar}
+                          className="w-8 h-8 rounded-full mr-3"
+                          alt={selectedUser?.name}
+                        />
+                      ) : (
+                        <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-teal-700 text-white font-bold text-sm">
+                          {initial}
+                        </div>
+                      ))}
+
+                    <div
+                      className={`rounded-xl p-3 max-w-xs md:max-w-md shadow-sm 
+                        ${isSender ? "bg-teal-700 text-white" : "bg-white text-gray-900"}`}
+                    >
+                      <p className="whitespace-pre-wrap">{message.message}</p>
+                      <span className="text-xs text-gray-300 mt-1 block text-right">
+                        {new Date(message.created_at).toLocaleTimeString("en-US", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+              <div ref={messagesEndRef}></div>
             </div>
           </div>
-        );
-      })}
-    </div>
-  </div>
 
-  {/* Message Input */}
-  <div className="p-4 border-t border-gray-200">
-    <div className="flex items-center space-x-2">
-      <input
-        type="text"
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-        placeholder="Type your message..."
-        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500/20"
-      />
-      <button
-        onClick={handleSendMessage}
-        className="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800"
-      >
-        {/* Make sure FaPaperPlane is imported from 'react-icons/fa' */}
-        <FaPaperPlane />
-      </button>
-    </div>
-  </div>
-</div>
-
-
-              </div>
+          <div className="px-4 py-3 bg-white border-t border-gray-300">
+            <div className="flex items-center space-x-2">
+              <input
+                ref={inputRef}
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }
+                }}
+                placeholder="Type your message..."
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+              />
+              <button
+                onClick={handleSendMessage}
+                className="px-4 py-2 bg-teal-700 text-white rounded-full hover:bg-teal-800"
+              >
+                <FaPaperPlane />
+              </button>
             </div>
-          </main>
+          </div>
         </div>
       </div>
     </DashboardLayout>
