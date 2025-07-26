@@ -1,13 +1,10 @@
 
 import { useEffect, useState } from "react";
-import { FaMoon, FaBell, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
-import { Container } from "react-bootstrap";
+import { FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 const SoftwareNavbar = ({ isCollapsed }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [role, setRole] = useState("");
   const [userData, setUserData] = useState("");
   const navigate = useNavigate()
 
@@ -17,21 +14,15 @@ const SoftwareNavbar = ({ isCollapsed }) => {
     if (user) setUserData(user)
   }, []);
 
-
   const handleLogout = () => {
-
      localStorage.clear();
     navigate("/");
   };
 
   return (
     <>
-      <div
-        className={`bg-white shadow-sm px-6 py-3 flex items-center justify-between border-b fixed top-0 z-40 transition-all duration-300 ${isCollapsed
-          ? "left-16 w-[calc(100%-4rem)]"
-          : "left-64 w-[calc(100%-16rem)]"
-          }`}
-      >
+      <div  className={`bg-white shadow-sm px-6 py-3 flex items-center justify-between border-b fixed top-0 z-40 transition-all duration-300 ${isCollapsed
+          ? "left-16 w-[calc(100%-4rem)]" : "left-64 w-[calc(100%-16rem)]" }`}>
         {/* Search */}
         <div className="flex items-center w-1/3">
           <input type="text" placeholder="Search courses..."
@@ -39,32 +30,6 @@ const SoftwareNavbar = ({ isCollapsed }) => {
         </div>
 
         <div className="flex items-center space-x-4 relative">
-          {/* <div className="relative">
-            <FaBell
-              size={22}
-              onClick={() => setNotifOpen(!notifOpen)}
-              className="text-gray-600 cursor-pointer"
-            />
-            <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full" />
-            {notifOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg rounded-md z-50">
-                <div className="p-4 font-medium border-b dark:border-gray-600">
-                  Notifications
-                </div>
-                <ul className="max-h-60 overflow-y-auto text-sm text-gray-700 dark:text-gray-200">
-                  <li className="px-4 py-2 text-black hover:text-gray-100 dark:hover:bg-teal-700">
-                    📢 New course added!
-                  </li>
-                  <li className="px-4 py-2 text-black hover:text-gray-100 dark:hover:bg-teal-700">
-                    🎉 You got a badge!
-                  </li>
-                  <li className="px-4 py-2 text-black hover:text-gray-100 dark:hover:bg-teal-700">
-                    🔔 Reminder: Complete your profile
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div> */}
         {(userData?.name || userData?.full_name) && (
   <span className="flex items-center gap-1">
     <span className="text-xl">👏</span> {/* Icon */}

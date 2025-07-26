@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import blog1 from "../../assets/blog1.png";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import { Link } from "react-router-dom";
@@ -19,11 +18,7 @@ const Blog = () => {
     dispatch(fetchArticles());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (categories.length > 0 && activeTab === null) {
-  //     setActiveTab(categories[0].id);
-  //   }
-  // }, [categories]);
+
 
   const filteredArticles =
     activeTab === null

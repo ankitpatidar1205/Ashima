@@ -128,8 +128,8 @@ const LaunchPage = () => {
    },
    {
      icon: Launch7,
-     title: "Supportive AI Skills",
-     desc: "Supportive AI skills community for guidance and collaboration.",
+     title: "Supportive AI SKILLS",
+     desc: "Supportive AI SKILLS community for guidance and collaboration.",
    },
    {
      icon: Launch8,
@@ -150,7 +150,7 @@ const LaunchPage = () => {
        {
          title:
            "Continuous Support: Study Buddy, AI Prep Help, and Community Access.",
-         desc: "You won’t be alone during this journey. You’ll have a dedicated study buddy to help with motivation and learning. Plus, access to a supportive AI skills community where you can collaborate and get advice from others going through the same process.",
+         desc: "You won’t be alone during this journey. You’ll have a dedicated study buddy to help with motivation and learning. Plus, access to a supportive AI SKILLS community where you can collaborate and get advice from others going through the same process.",
        },
        {
          title:
@@ -295,7 +295,7 @@ const LaunchPage = () => {
             </button>
 
             <p className="text-[12px] font-roboto font-normal text-center text-[#047670] mt-3">
-              By continuing, you agree to AI Skills{" "}
+              By continuing, you agree to AI SKILLS{" "}
               <a href="#" className="text-[#047670]">
                 Terms
               </a>

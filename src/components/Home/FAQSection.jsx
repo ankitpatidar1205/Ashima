@@ -3,27 +3,27 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 
 const faqs = [
   {
-    question: "WHAT MAKES AISKILLS DIFFERENT FROM OTHER PLATFORMS?",
+    question: "WHAT MAKES AI SKILLS DIFFERENT FROM OTHER PLATFORMS?",
     answer:
-      "AISKILLS provides real-world AI-powered learning experiences with hands-on projects and expert guidance.",
+      "AI SKILLS provides real-world AI-powered learning experiences with hands-on projects and expert guidance.",
   },
   {
-    question: "HOW DOES AISKILLS' AI-POWERED LEARNING WORK?",
+    question: "HOW DOES AI SKILLS AI-POWERED LEARNING WORK?",
     answer:
       "Our AI tailors personalized learning paths based on your skills and progress, offering real-time recommendations.",
   },
   {
-    question: "WHAT TYPES OF COURSES DOES AISKILLS OFFER?",
+    question: "WHAT TYPES OF COURSES DOES AI SKILLS OFFER?",
     answer:
-      "We oer courses in AI, Data Science, Machine Learning, Product, and many more",
+      "We offer courses in AI, Data Science, Machine Learning, Product, and many more.",
   },
   {
-    question: "WHAT KIND OF SUPPORT DOES AISKILLS PROVIDE TO STUDENTS?",
+    question: "WHAT KIND OF SUPPORT DOES AI SKILLS PROVIDE TO STUDENTS?",
     answer:
       "Students get access to all the course materials, live mentoring, and interactive community discussions.",
   },
   {
-    question: "HOW DOES AISKILLS HELP ME BUILD MY CAREER?",
+    question: "HOW DOES AI SKILLS HELP ME BUILD MY CAREER?",
     answer:
       "We provide LIVE, HYBRID and VIDEO based courses along with digital products to enhance your learning. If you choose launch now, then we will provide career guidance, resume reviews and direct job opportunities through industry partnerships.",
   },

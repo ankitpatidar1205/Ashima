@@ -34,7 +34,7 @@ const Careers = () => {
       {/* Why Teach Section */}
       <section className="py-5 bg-white">
         <div className="p-5 text-center">
-          <h2 className="display-5 fw-bold text-teal mb-5">Why Teach With AISkills?</h2>
+          <h2 className="display-5 fw-bold text-teal mb-5">Why Teach With AI SKILLS?</h2>
           <div className="row g-4">
             <div className="col-md-4">
               <div className="p-4 shadow rounded bg-white h-100">
@@ -113,8 +113,8 @@ const Careers = () => {
             <h4 className="fw-bold mb-2">How to Apply</h4>
             <p className="mb-4">
               Send your resume and cover letter to{' '}
-              <a href="mailto:careers@aiskills.ai" className="text-decoration-none text-teal">
-                careers@aiskills.ai
+              <a href="mailto:careers@AI SKILLS.ai" className="text-decoration-none text-teal">
+                careers@AI SKILLS.ai
               </a>
             </p>
 
@@ -125,8 +125,8 @@ const Careers = () => {
 
             <p>
               Questions? Contact us at{' '}
-              <a href="mailto:careers@aiskills.ai" className="text-decoration-none text-teal">
-                careers@aiskills.ai
+              <a href="mailto:careers@AI SKILLS.ai" className="text-decoration-none text-teal">
+                careers@AI SKILLS.ai
               </a>
             </p>
           </div>

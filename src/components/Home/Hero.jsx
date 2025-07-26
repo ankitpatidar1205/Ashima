@@ -15,9 +15,9 @@ const HeroSection = () => {
             TO LIFT UP YOUR CAREER <br />
             MASTER THE FUTURE OF TECHNOLOGY
           </h1>
-          <button className="mt-3 px-6 py-2 bg-teal-700 text-[#ffffff] font-bold text-[16px] rounded-xl shadow-md hover:bg-teal-600 transition">
+        <Link to="/all-cources"> <button className="mt-3 px-6 py-2 bg-teal-700 text-[#ffffff] font-bold text-[16px] rounded-xl shadow-md hover:bg-teal-600 transition">
             Explore Courses
-          </button>
+          </button> </Link> 
         </div>
 
         <div className="w-full md:w-1/2 md:mt-0 md:ml-12">

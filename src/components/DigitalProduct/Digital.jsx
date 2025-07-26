@@ -79,12 +79,12 @@ function DigitalProductsSection() {
 
   const faqData = [
     {
-      question: "WHAT TYPES OF DIGITAL PRODUCTS ARE AVAILABLE ON AISKILLS?",
+      question: "WHAT TYPES OF DIGITAL PRODUCTS ARE AVAILABLE ON AI SKILLS?",
       answer:
-        "AISKILLS offers a wide range of digital products including eBooks, online courses, software tools, templates, and more.",
+        "AI SKILLS offers a wide range of digital products including eBooks, online courses, software tools, templates, and more.",
     },
     {
-      question: "ARE THE DIGITAL PRODUCTS ON AISKILLS BEGINNER-FRIENDLY?",
+      question: "ARE THE DIGITAL PRODUCTS ON AI SKILLS BEGINNER-FRIENDLY?",
       answer:
         "Yes, most of our digital products are beginner-friendly, with easy-to-follow instructions and tutorials.",
     },
@@ -100,17 +100,17 @@ function DigitalProductsSection() {
         "Refunds are available within 30 days of purchase. Please contact customer support for assistance.",
     },
     {
-      question: "CAN INSTRUCTORS SELL THEIR OWN DIGITAL PRODUCTS ON AISKILLS?",
+      question: "CAN INSTRUCTORS SELL THEIR OWN DIGITAL PRODUCTS ON AI SKILLS?",
       answer:
-        "Yes, instructors can sell their digital products on AISKILLS. You can sign up as a seller and upload your products for sale.",
+        "Yes, instructors can sell their digital products on AI SKILLS. You can sign up as a seller and upload your products for sale.",
     },
     {
       question: "ARE THERE ANY FREE DIGITAL PRODUCTS AVAILABLE?",
       answer:
-        "Yes, AISKILLS offers several free digital products, including free courses, templates, and resources.",
+        "Yes, AI SKILLS offers several free digital products, including free courses, templates, and resources.",
     },
     {
-      question: "CAN I USE AISKILLS DIGITAL PRODUCTS FOR COMMERCIAL PROJECTS?",
+      question: "CAN I USE AI SKILLS DIGITAL PRODUCTS FOR COMMERCIAL PROJECTS?",
       answer:
         "Some digital products are licensed for commercial use, but please review the license terms of each product before using them in commercial projects.",
     },

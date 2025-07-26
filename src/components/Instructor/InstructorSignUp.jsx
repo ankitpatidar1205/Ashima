@@ -73,7 +73,7 @@ const Signup = () => {
 
         {/* Bottom Info */}
         <p className="text-center mt-4 text-[11px] text-[#02756A] px-2">
-          By Continuing, You Agree To Ai Skills Terms And Privacy Policy.
+          By Continuing, You Agree To AI SKILLS Terms And Privacy Policy.
         </p>
 
         <div className="text-center mt-4 text-[12px] text-[#000000]">

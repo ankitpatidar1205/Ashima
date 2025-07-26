@@ -18,7 +18,6 @@ function AllCourses() {
   const [sortOption, setSortOption] = useState("Most Popular");
   const [modeFilter, setModeFilter] = useState([]);
 
-
   const scrollRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const currency = useCurrency();
@@ -69,55 +68,10 @@ function AllCourses() {
       return 0;
     });
 
-
-
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchCourses());
   }, [dispatch]);
-
-  const coursess = [
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      instructor: "Kapil Sharma",
-      rating: 4.8,
-      price: "$19.99",
-      mode: "LIVE",
-      image: trending1,
-    },
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      instructor: "Kapil Sharma",
-      rating: 4.8,
-      price: "$19.99",
-      mode: "HYBRID",
-      image: trending1,
-    },
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      instructor: "Kapil Sharma",
-      rating: 4.8,
-      price: "$19.99",
-      mode: "LIVE",
-      image: trending1,
-    },
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      instructor: "Kapil Sharma",
-      rating: 4.8,
-      price: "$19.99",
-      mode: "VIDEO",
-      image: trending1,
-    },
-    {
-      title: "AI AND ML FOR BEGINNERS",
-      instructor: "Kapil Sharma",
-      rating: 4.8,
-      price: "$19.99",
-      mode: "LIVE",
-      image: trending1,
-    },
-  ];
 
   // Scroll Function for Navigation Arrows
   const scroll = (direction) => {
@@ -167,87 +121,11 @@ function AllCourses() {
             </h2>
           </Col>
         </Row>
-
-        {/* Filters & Sorting */}
-        {/* <Row className="mb-3 ">
-          <Col md={3} className="d-flex">
-            <Button
-              variant="outline-success"
-              className="w-40 d-flex align-items-center justify-content-center gap-2"
-              style={{ height: "62px" }}
-            >
-              <span style={{ color: "#047670", fontSize: "1.5rem" }}>
-                <CiFilter />
-              </span>
-              <span
-                style={{
-                  color: "#000000",
-                  fontWeight: "600",
-                  fontSize: "1rem",
-                }}
-              >
-                {" "}
-                Filter
-              </span>
-            </Button>
-
-            <Dropdown>
-              <Dropdown.Toggle variant="outline-success mx-1" className="w-100">
-                <div style={{ color: "#000000", fontWeight: "600" }}>Sort By</div>
-                <div>{sortOption}</div>
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={() => setSortOption("Highest to Lowest")}>
-                  Highest to Lowest
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setSortOption("Lowest to Highest")}>
-                  Lowest to Highest
-                </Dropdown.Item>
-              </Dropdown.Menu>
-
-            </Dropdown>
-          </Col>
-        </Row> */}
-
         <Row>
           {/* Sidebar Filters */}
           <Col md={3}>
+           
             <hr />
-            <h5 className="fw-bold">Ratings</h5>
-            <Form>
-              <div className="d-flex align-items-center mb-2">
-                <Form.Check type="radio" name="rating" id="rating45" />
-                <label htmlFor="rating45" className="ms-2">
-                  <span className="text-warning">★★★★★</span> 4.5 & up <span className="text-muted">(0)</span>
-                </label>
-              </div>
-
-              <div className="d-flex align-items-center mb-2">
-                <Form.Check type="radio" name="rating" id="rating40" />
-                <label htmlFor="rating40" className="ms-2">
-                  <span className="text-warning">★★★★☆</span> 4.0 & up <span className="text-muted">(0)</span>
-                </label>
-              </div>
-
-              <div className="d-flex align-items-center mb-2">
-                <Form.Check type="radio" name="rating" id="rating35" />
-                <label htmlFor="rating35" className="ms-2">
-                  <span className="text-warning">★★★☆☆</span> 3.5 & up <span className="text-muted">(0)</span>
-                </label>
-              </div>
-
-              <div className="d-flex align-items-center">
-                <Form.Check type="radio" name="rating" id="rating30"  />
-                <label htmlFor="rating30" className="ms-2">
-                  <span className="text-warning">★★★☆☆</span> 3.0 & up <span className="text-muted">(0)</span>
-                </label>
-              </div>
-            </Form>
-
-
-            <hr />
-
             <h5 className="fw-bold">Price</h5>
             <Form>
               <div className="d-flex">
@@ -256,8 +134,7 @@ function AllCourses() {
                   name="priceSort"
                   id="price-high"
                   checked={sortOption === "Highest to Lowest"}
-                  onChange={() => setSortOption("Highest to Lowest")}
-                />
+                  onChange={() => setSortOption("Highest to Lowest")}/>
                 <label htmlFor="price-high" className="ms-4">
                   Highest to Lowest
                 </label>
@@ -269,8 +146,7 @@ function AllCourses() {
                   name="priceSort"
                   id="price-low"
                   checked={sortOption === "Lowest to Highest"}
-                  onChange={() => setSortOption("Lowest to Highest")}
-                />
+                  onChange={() => setSortOption("Lowest to Highest")} />
                 <label htmlFor="price-low" className="ms-4">
                   Lowest to Highest
                 </label>
@@ -292,8 +168,7 @@ function AllCourses() {
                       } else {
                         setModeFilter(modeFilter.filter((m) => m !== mode));
                       }
-                    }}
-                  />
+                    }}/>
                   <label htmlFor={`mode-${mode}`} className="ms-3 text-capitalize">
                     {mode}
                   </label>
@@ -307,10 +182,10 @@ function AllCourses() {
             <div className="p-4">
               {filteredCourses && filteredCourses.length > 0 ? (
                 filteredCourses.map((course) => (
-                  <div
-                    key={course.id}
-                    className="flex flex-col md:flex-row gap-4 border-b pb-4 mb-6 hover:bg-gray-50 transition"
-                  >
+                <>
+                    <Link to={`/Cource-Detail/${course.id}`}>
+                  <div  key={course.id}
+                    className="flex flex-col md:flex-row gap-4 border-b pb-4 mb-6 hover:bg-gray-50 transition">
                     {/* Course image */}
                     <img
                       src={course.course_image}
@@ -318,7 +193,7 @@ function AllCourses() {
                       className="w-full md:w-[365px] h-auto md:h-[214px] object-cover rounded-[4px] transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
                     />
 
-                    <Link to={`/Cource-Detail/${course.id}`}>
+                  
                       <div className="flex-1 p-4 border rounded-lg bg-white">
                         {/* Title */}
                         <h2 className="text-[24px] md:text-[30px] font-[700] uppercase leading-[30px] tracking-[2%] font-roboto text-[#1e1e1e] mb-2">
@@ -341,10 +216,7 @@ function AllCourses() {
                           <h4 className="font-[700] font-roboto text-[16px]  text-teal-700">
                             By {course?.instructor_details?.full_name}
                           </h4>
-                          <p className="font-roboto font-[500] text-[13px] uppercase text-black">
-                            {course.updated_at} • {course.hours} •{" "}
-                            {course.lectures}
-                          </p>
+                        
                         </div>
 
                         {/* Rating and Type */}
@@ -372,8 +244,9 @@ function AllCourses() {
                           </span>
                         </div>
                       </div>
-                    </Link>
                   </div>
+                    </Link>
+                </>
                 ))
               ) : (
                 <div className="text-center text-gray-600 font-roboto text-[18px] py-8">

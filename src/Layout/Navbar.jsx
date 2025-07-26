@@ -4,24 +4,13 @@ import { Link } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../Redux/slices/categorySlice/categorySlice";
+import logo from "../assets/logo.jfif"; // Adjust the path as necessary
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [coursesDropdownOpen, setCoursesDropdownOpen] = useState(false);
 
-  const trendingCourses = [
-    "AI & ML",
-    "DEVOPS",
-    "NO CODE",
-    "CYBERSECURITY & TESTING",
-    "DATA SCIENCE AND ENGINERRING",
-    "DESIGN AND DEVLOPMENT",
-    "FOUNDER CONNECT ",
-    "GAMING & NETWORK",
-    "PRODUCT",
-    "BUSSINESS AND LEADERSHIP",
-    "MARKETING & SALES",
-  ];
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCategories())
@@ -39,7 +28,7 @@ const Navbar = () => {
         {/* ✅ Logo */}
         <Link to="/">
           <div className="font-normal text-[32px] sm:text-[40px] lg:text-[50px] text-[#000000] tracking-[0.5%] leading-[55px] font-impact">
-            AI SKILLS
+           <img src={logo}  alt="Logo"  className="h-[45px] w-[180px] object-contain md:h-[55px] md:w-[200px]"   />
           </div>
         </Link>
 
@@ -65,9 +54,7 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          <Link to="/aboutus" className="text-[18px] text-[#000000]">
-            AboutUs
-          </Link>
+ 
           <Link to="/digital" className="text-[18px] text-[#000000]">
             Digital Products
           </Link>
@@ -131,13 +118,11 @@ const Navbar = () => {
             </button>
             {coursesDropdownOpen && (
               <div className="absolute -left-24 top-11 w-[260px] bg-[#ffffff] shadow-md rounded-md mt-2 z-50 max-h-[300px] overflow-y-auto">
-                {trendingCourses.map((course, idx) => (
-                  <Link
-                    key={idx}
-                    to="/courses"
+                {categories.map((course, idx) => (
+                  <Link to={`/courses/${course.category_name}`} key={idx}
                     className="block px-4 py-2 font-roboto font-medium text-[16px] text-[#000000] hover:bg-[#f0f0f0]"
                   >
-                    {course}
+                    {course?.category_name}
                   </Link>
                 ))}
               </div>
@@ -174,9 +159,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Link to="/aboutus" className="block px-4 py-2 text-[18px] text-[#000000]">
-              AboutUs
-            </Link>
+         
             <Link
               to="/digital"
               onClick={() => setIsMobileMenuOpen(false)}

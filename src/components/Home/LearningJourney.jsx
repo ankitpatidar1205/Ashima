@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const LearningJourney = () => {
   return (
     <div className="w-full bg-black text-white py-16 px-4">
@@ -15,9 +16,11 @@ const LearningJourney = () => {
             Unlock endless opportunities with expert-led courses. Learn anytime,
             anywhere, and boost your skills for a brighter future.
           </p>
-          <button className="px-10 py-3 bg-[#047670] text-white font-Roboto Condensed rounded-2xl hover:bg-[#035f59] transition">
-            GET STARTED
-          </button>
+          <Link to="/signup">
+            <button className="px-10 py-3 bg-[#047670] text-white font-Roboto Condensed rounded-2xl hover:bg-[#035f59] transition">
+              GET STARTED
+            </button>
+          </Link>
         </div>
       </div>
     </div>

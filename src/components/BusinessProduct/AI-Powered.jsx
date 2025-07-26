@@ -53,7 +53,7 @@ const AIPowered = () => {
           <div className="md:w-1/2">
             <img
               src={business1}
-              alt="AI Skills"
+              alt="AI SKILLS"
               className="rounded-md w-full object-cover shadow-lg"
             />
           </div>

@@ -7,13 +7,9 @@ const DashboardLayout = ({ children }) => {
   return (
     <div className="flex">
       <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      <div
-        className={`transition-all duration-300 flex-1 min-h-screen ${
-          isCollapsed ? "pl-16" : "pl-64"
-        }`}
-      >
+      <div className={`transition-all duration-300 flex-1 min-h-screen ${
+          isCollapsed ? "pl-16" : "pl-64"}`}>
         <Navbar isCollapsed={isCollapsed} />
-
         <div className="py-4 mt-5">{children}</div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import img1 from "../../assets/Courses.png";
 import img2 from "../../assets/bussiness22.jpg";
 import img3 from "../../assets/Newsletter.png";
-
+import {Link} from "react-router-dom"
 const cards = [
   { title: "Courses", image: img1 },
   { title: "Business", image: img2 },
@@ -22,10 +22,18 @@ const Explore = () => {
         <div style={{ width: "2.5rem" }}></div>
 
         {repeatedCards.map((card, index) => (
-          <div key={index}  className="flex-shrink-0 flex items-center justify-center"
-            style={{ height: "330px", width: "auto" }}>
-         <img src={card.image}  alt={card.title} className="h-full w-auto object-contain block"/>
-          </div>
+          <Link
+            key={index}
+            to="/all-cources"
+            className="flex-shrink-0 flex items-center justify-center"
+            style={{ height: "330px", width: "auto" }}
+          >
+            <img
+              src={card.image}
+              alt={card.title}
+              className="h-full w-auto object-contain block"
+            />
+          </Link>
         ))}
       </motion.div>
     </div>

@@ -40,12 +40,12 @@ const currency = useCurrency();
 
   const faqData = [
     {
-      question: "WHAT TYPES OF DIGITAL PRODUCTS ARE AVAILABLE ON AISKILLS?",
+      question: "WHAT TYPES OF DIGITAL PRODUCTS ARE AVAILABLE ON AI SKILLS?",
       answer:
-        "AISKILLS offers a wide range of digital products including eBooks, online courses, software tools, templates, and more.",
+        "AI SKILLS offers a wide range of digital products including eBooks, online courses, software tools, templates, and more.",
     },
     {
-      question: "ARE THE DIGITAL PRODUCTS ON AISKILLS BEGINNER-FRIENDLY?",
+      question: "ARE THE DIGITAL PRODUCTS ON AI SKILLS BEGINNER-FRIENDLY?",
       answer:
         "Yes, most of our digital products are beginner-friendly, with easy-to-follow instructions and tutorials.",
     },
@@ -61,17 +61,17 @@ const currency = useCurrency();
         "Refunds are available within 30 days of purchase. Please contact customer support for assistance.",
     },
     {
-      question: "CAN INSTRUCTORS SELL THEIR OWN DIGITAL PRODUCTS ON AISKILLS?",
+      question: "CAN INSTRUCTORS SELL THEIR OWN DIGITAL PRODUCTS ON AI SKILLS?",
       answer:
-        "Yes, instructors can sell their digital products on AISKILLS. You can sign up as a seller and upload your products for sale.",
+        "Yes, instructors can sell their digital products on AI SKILLS. You can sign up as a seller and upload your products for sale.",
     },
     {
       question: "ARE THERE ANY FREE DIGITAL PRODUCTS AVAILABLE?",
       answer:
-        "Yes, AISKILLS offers several free digital products, including free courses, templates, and resources.",
+        "Yes, AI SKILLS offers several free digital products, including free courses, templates, and resources.",
     },
     {
-      question: "CAN I USE AISKILLS DIGITAL PRODUCTS FOR COMMERCIAL PROJECTS?",
+      question: "CAN I USE AI SKILLS DIGITAL PRODUCTS FOR COMMERCIAL PROJECTS?",
       answer:
         "Some digital products are licensed for commercial use, but please review the license terms of each product before using them in commercial projects.",
     },
@@ -85,11 +85,12 @@ const currency = useCurrency();
   return (
     <>
       <Header />
-      <div className=" pt-9 flex flex-col lg:flex-row bg-[#047670] lg:h-[652px] px-4 lg:pt-14">
-        {/* Left Image Section */}
-        <button  onClick={() => window.history.back()}  className="absolute top-28 left-4 text-white text-2xl bg-[#047670] rounded-full p-2" >
+       <button  onClick={() => window.history.back()}  className="absolute top-28 left-4 text-white text-2xl bg-[#047670] rounded-full p-2" style={{fontSize:"2.5rem" , fontWeight:"bold"}} >
           ←
         </button>
+      <div className=" pt-9 flex flex-col lg:flex-row bg-[#047670] lg:h-[652px] px-4 lg:pt-14">
+        {/* Left Image Section */}
+       
 
         <div className="flex w-full lg:w-1/2 items-center justify-center lg:justify-start p-6 lg:pl-20 ">
         {product?.product_images && (
@@ -98,7 +99,7 @@ const currency = useCurrency();
         </div>
 
         {/* Right Content Section */}
-        <div className="relative w-full lg:absolute lg:w-[460px] bg-[#ffffff] rounded-md p-6 lg:mt-20 lg:left-[50%] xl:left-[931px] border-2 border-[#047670]">
+        <div className="relative w-full lg:absolute lg:w-[460px] bg-[#ffffff] rounded-md lg:justify-start  p-6 lg:mt-20 xl:left-[780px] border-2 border-[#047670]" style={{marginTop:"7rem"}}>
           {/* eBook Tag */}
 
           <div className="text-[13px] font-roboto text-[#000000] mt-4">
@@ -128,25 +129,9 @@ const currency = useCurrency();
             <button className="w-full bg-[#047670] hover:bg-[#005b4f] text-white border border-[#047670] rounded-[12px] px-px py-[10px] flex items-center justify-center gap-[10px] text-lg lg:text-[22px] mt-3">
               Buy Now
             </button>
-        
-
-          {/* Unlock and Access Button */}
-          <button className="w-full lg:w-[214px] mx-auto lg:ml-20 h-[32.33px] bg-[#ffffff] rounded-[4px] text-sm lg:text-[18px] text-[#1E1E1ECC] flex items-center justify-center gap-4 mt-2 font-jost">
-            <img src={marketproduct2} alt="lock"
-              className="w-[24px] h-[24px]"/>
-            Unlock And Access
-          </button>
-
-          {/* PDF Download Section */}
-          <div className="flex items-center border border-[#047670] justify-center gap-[12px] font-roboto p-2 rounded-[12px] mt-5">
-            <img src={marketproduct1} alt="icon" className="w-6 h-6" />
-            <a href="#" className="flex-1 text-center !text-[#047670] py-2 rounded-[12px] text-sm lg:text-[22px] truncate">
-              Premium Glowup.PDF (128mb)
-            </a>
-            <img src={marketproduct2} alt="lock" className="w-6" />
           </div>
         </div>
-      </div>
+      
 
       <div className="w-full px-4 sm:px-8 mt-10">
         <div className="lg:w-[900px] bg-[#ffffff] rounded-md text-[#1E1E1E] mt-8 lg:mt-20 lg:ml-20">

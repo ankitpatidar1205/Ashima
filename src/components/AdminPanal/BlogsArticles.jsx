@@ -6,20 +6,19 @@ import AddArticleModal from "./AddArticle";
 import { fetchArticles, deleteArticle,publishArticle} from "../../Redux/slices/articleSlice/articleSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Blogs_article = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 10;
-
-
-
+    const itemsPerPage = 10;
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchArticles());
   }, [dispatch]);
+
   useEffect(() => {
   setCurrentPage(1);
 }, [searchQuery]);
@@ -79,10 +78,7 @@ const paginatedArticles = filteredArticles?.slice(
               + Add New Article
             </button>
 
-            <AddArticleModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-            />
+            <AddArticleModal  isOpen={isModalOpen}  onClose={() => setIsModalOpen(false)} />
           </div>
         </div>
 
@@ -90,13 +86,7 @@ const paginatedArticles = filteredArticles?.slice(
         <div className="bg-white rounded-lg p-4 mb-4 flex flex-col md:flex-row gap-3 items-center justify-between">
           <div className="flex flex-1 gap-2 items-center w-full">
             <div className="relative w-full md:w-[360px]">
-             <input
-  type="text"
-  placeholder="Search articles..."
-  className="pl-10 pr-4 py-2 w-full border rounded-lg text-sm focus:outline-none"
-  value={searchQuery}
-  onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
-/>
+             <input  type="text"  placeholder="Search articles..."  className="pl-10 pr-4 py-2 w-full border rounded-lg text-sm focus:outline-none"  value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}/>
 
               <FaSearch className="absolute left-3 top-3 text-gray-400 text-sm" />
             </div>
@@ -128,15 +118,7 @@ const paginatedArticles = filteredArticles?.slice(
                 <tr key={idx} className="border-b">
                   <td className="px-4 py-3">{(currentPage - 1) * itemsPerPage + idx + 1}</td>
                   <td className="px-4 py-3">
-                    <img
-                      src={item.article}
-                      alt=""
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                      }}
-                    />
+                    <img  src={item.article}  alt="" style={{ width: "40px",  height: "40px",    borderRadius: "50%",   }} />
                   </td>
                  <td>
                     <p className="font-medium">{item?.title}</p>
@@ -146,21 +128,15 @@ const paginatedArticles = filteredArticles?.slice(
                   <td className="px-4 py-3">
                     <button
                       className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        item?.status === "0"
-                          ? "bg-red-100 text-yellow-800"
-                          : "bg-green-100 text-green-600"
+                        item?.status === "0"  ? "bg-red-100 text-yellow-800"  : "bg-green-100 text-green-600"
                       }`}
-                      onClick={() => isPublish(item?.id,item?.status === "0"?"1":"0")}
-
-                    >
+                      onClick={() => isPublish(item?.id,item?.status === "0"?"1":"0")} >
                       {item?.status === "0" ? "Draft" : "Published"}
                     </button>
                   </td>
                   <td className="px-4 py-3 flex gap-3 items-center">
-                    <FaTrash
-                      className="text-red-600 cursor-pointer"
-                      onClick={() => handleDelete(item?.id)}
-                    />
+                    <Link to={`/blogsDetail/${item?.id}`}> <FaEye  className="text-blue-600 cursor-pointer"/></Link>
+                    <FaTrash  className="text-red-600 cursor-pointer"   onClick={() => handleDelete(item?.id)} />
                   </td>
                 </tr>
               ))}
@@ -175,34 +151,17 @@ const paginatedArticles = filteredArticles?.slice(
     {filteredArticles?.length} entries
   </span>
   <div className="flex gap-2 mt-2 md:mt-0">
-    <button
-      className="border px-3 py-1 rounded text-sm"
-      disabled={currentPage === 1}
-      onClick={() => setCurrentPage((prev) => prev - 1)}
-    >
+    <button className="border px-3 py-1 rounded text-sm" disabled={currentPage === 1}  onClick={() => setCurrentPage((prev) => prev - 1)} >
       Previous
     </button>
     {Array.from({ length: totalPages }, (_, i) => (
-      <button
-        key={i}
-        className={`border px-3 py-1 rounded text-sm ${
-          currentPage === i + 1 ? "bg-[#047670] text-white" : ""
-        }`}
-        onClick={() => setCurrentPage(i + 1)}
-      >
-        {i + 1}
-      </button>
-    ))}
-    <button
-      className="border px-3 py-1 rounded text-sm"
-      disabled={currentPage === totalPages}
-      onClick={() => setCurrentPage((prev) => prev + 1)}
-    >
+      <button   key={i}   className={`border px-3 py-1 rounded text-sm ${
+          currentPage === i + 1 ? "bg-[#047670] text-white" : ""   }`}  onClick={() => setCurrentPage(i + 1)} >     {i + 1} </button>   ))}
+    <button  className="border px-3 py-1 rounded text-sm"  disabled={currentPage === totalPages}  onClick={() => setCurrentPage((prev) => prev + 1)}>
       Next
     </button>
   </div>
 </div>
-
         </div>
       </div>
     </DashboardLayout>

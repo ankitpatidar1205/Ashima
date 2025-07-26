@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../Redux/slices/categorySlice/categorySlice";
 import { fetchCourses } from "../Redux/slices/CourseSlice/CourseSlice";
 import { fetchCartItemById } from "../Redux/slices/cartSlice/cartSlice";
+import logo from "../assets/logo.jfif"; // Adjust the path as necessary
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [coursesDropdownOpen, setCoursesDropdownOpen] = useState(false);
@@ -57,11 +58,11 @@ const Header = () => {
   return (
     <header className="fixed z-50 w-full bg-white shadow-md px-4 md:px-6 lg:px-8">
       <div className="max-w-[1410px] mx-auto h-[80px] flex items-center justify-between">
-        <Link to="/">
-          <div className="text-[40px] md:text-[50px] text-[#000] font-impact">
-            AI SKILLS
-          </div>
-        </Link>
+       <Link to="/">
+    <div className="flex items-center">
+        <img src={logo}  alt="Logo"   className="h-[45px] w-[180px] object-contain md:h-[55px] md:w-[200px]" />
+    </div>
+  </Link>
 
         <div className="hidden lg:flex items-center space-x-6">
           <div className="relative">
@@ -94,8 +95,7 @@ const Header = () => {
             {suggestions.length > 0 && (
               <div className="absolute bg-white border border-gray-300 rounded-lg mt-2 w-[250px] md:w-[300px] shadow-lg z-20 max-h-80 overflow-y-auto">
                 {suggestions.map((item) => (
-                  <div   key={item.id}
-                    onClick={() => handleSuggestionClick(item.id)}
+                  <div key={item.id} onClick={() => handleSuggestionClick(item.id)}
                     className="flex items-center gap-3 p-3 hover:bg-gray-50 cursor-pointer transition duration-150 ease-in-out"
                   >
                     <img   src={item.course_image}   alt={item.course_title}
@@ -116,13 +116,9 @@ const Header = () => {
               {coursesDropdownOpen && (
                 <div className="absolute left-0 top-11 w-[260px] bg-[#ffffff] shadow-lg rounded-md z-50 max-h-[300px] overflow-y-auto">
                   {categories.map((course, idx) => (
-                    <Link
-                      key={idx}
-                      to={`/courses/${course.category_name}`}
+                    <Link key={idx} to={`/courses/${course.category_name}`}
                       className="block px-4 py-2 text-[16px] text-[#000000] hover:bg-[#f0f0f0]"
-                      onClick={() => setCoursesDropdownOpen(false)}>
-                      {course?.category_name}
-                    </Link>
+                      onClick={() => setCoursesDropdownOpen(false)}> {course?.category_name}</Link>
                   ))}
                 </div>
               )}

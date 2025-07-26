@@ -7,11 +7,11 @@ import ScrollToTop from "./Auth/ScrollToTop";
 import Courses from "./components/Courses/AllCourses"; // Capitalized component name
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
-import BlogDeatils from "./components/Blogs/BlogsDetails";
+import BlogDeatils from "./components/AdminPanal/BlogsDetails";
 import Instructor from "./components/Instructor/Instructor";
 import "./App.css";
 import MarketProduct from "./components/DigitalProduct/MarketProductPage";
-import Blog from "./components/Blogs/Blog";
+import Blog from "./components/Home/Blog";
 import MyDigital from "./components/DigitalProduct/MyDigital";
 import InstructorSignup from "./components/Instructor/InstructorSignUp";
 import Home from "./components/Home/Home";
@@ -29,7 +29,6 @@ import MyCourses from "./components/InstructorPanel/MyCourses";
 import CourseDetails from "./components/InstructorPanel/CourseDetails";
 import Conversation from "./components/InstructorPanel/Conversation";
 import CourseComments from "./components/InstructorPanel/CourseComments";
-import Calender from "./components/InstructorPanel/Calender";
 
 import Setting from "./components/InstructorPanel/Setting";
 import ProductDetails from "./components/InstructorPanel/ProductDetails";
@@ -199,7 +198,6 @@ const App = () => {
       
         <Route path="/student-details/:id" element={<StudentDetails />} />
         <Route path="/assignment" element={<Assignments></Assignments>}></Route>
-        <Route path="/calender" element={<Calender></Calender>}></Route>
         <Route path="/setting" element={<Setting></Setting>}></Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/digital" element={<MyDigital />} />
@@ -216,13 +214,9 @@ const App = () => {
           <Route path="/adminSettings" element={<AdminSettings></AdminSettings>}></Route>
           <Route path="/refund-details/:id" element={<RefundDetails />} />
           <Route path="/RolePermission" element={<RolePermission></RolePermission>}></Route>
-          {/* <Route path="/ReporteIssues"
-            element={<ViewReportedIssues></ViewReportedIssues>} ></Route> */}
+        
           <Route path="/student-details/:id" element={<StudentDetails />} />
-          {/* <Route path="/qasection" element={<QA></QA>}></Route> */}
           <Route path="/assignment" element={<Assignments></Assignments>}></Route>
-          {/* <Route path="/earning" element={<Earning></Earning>}></Route> */}
-          <Route path="/calender" element={<Calender></Calender>}></Route>
           <Route path="/setting" element={<Setting></Setting>}></Route>
           <Route path="/signup" element={<Signup />} />
           <Route path="/digital" element={<MyDigital />} />
@@ -231,7 +225,7 @@ const App = () => {
 
           <Route path="/Cource-Detail/:id" element={<CourceDetail />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blogsDetail" element={<BlogDeatils />} />
+          <Route path="/blogsDetail/:id" element={<BlogDeatils />} />
           <Route path="/instructor" element={<Instructor />} />
           <Route path="/instructorSignup" element={<InstructorSignup />} />
           <Route path="/business" element={<Business />} />

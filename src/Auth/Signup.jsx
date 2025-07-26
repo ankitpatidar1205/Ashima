@@ -208,7 +208,7 @@ const Signup = () => {
         </form>
 
         <p className="text-center mt-4 text-[11px] text-[#02756A] px-2">
-          By Continuing, you agree to Ai Skills Terms and Privacy Policy.
+          By Continuing, you agree to AI SKILLS Terms and Privacy Policy.
         </p>
         <div className="text-center mt-4 text-[12px] text-[#000000]">
           Already have an account?{" "}
