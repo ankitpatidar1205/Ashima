@@ -24,7 +24,7 @@ import Launch10 from "../../assets/Launch10.png";
 import business15 from "../../assets/business15.png";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import Footer from "../../Layout/Footer";
-
+import axiosInstance from '../../utils/axiosInstance';
 
 
 const LaunchPage = () => {
@@ -67,6 +67,45 @@ const LaunchPage = () => {
        )}
      </div>
    );
+
+     const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    program_name: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validation (optional)
+    if (!formData.name || !formData.email || !formData.program_name) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await axiosInstance.post(`/launch-now`, formData);
+
+      if (res.data.success) {
+        alert("Applied successfully!");
+        setFormData({ name: "", email: "", program_name: "" }); // Clear form
+      } else {
+       alert("Something went wrong!");
+      }
+    } catch (error) {
+    alert("Submission failed!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const brandLogos = [
     { src: business2, alt: "Sun Life" },
     { src: business3, alt: "Amazon" },
@@ -256,43 +295,63 @@ const LaunchPage = () => {
               </li>
             </ul>
           </div>
-
           {/* Right Section - Form */}
-
           <div className="bg-[#ffffff] w-full sm:w-[450px] h-auto p-6 rounded-lg shadow-md mt-16 lg:mt-20">
             <h3 className="text-[24px] sm:text-[30px] font-normal font-impact text-center text-[#000000]">
               Ready to launch your career?
             </h3>
           
-            <div className="flex items-center my-2">
-              <hr className="flex-grow border-[#1E1E1E]/70" />
-              <span className="mx-2 text-gray-500 text-sm">Or Use Email</span>
-              <hr className="flex-grow border-[#1E1E1E]/70" />
-            </div>
+           <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-2">
+        <label className="text-[18px] font-roboto font-normal text-[#1E1E1E]">
+          NAME
+        </label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          className="w-full px-3 py-2 border border-[#1E1E1E]/70 text-[#1E1E1E] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your name"
+        />
 
-            <div className="space-y-2">
-              <label className="text-[18px]  font-roboto font-normal text-[#1E1E1E]">
-                EMAIL
-              </label>
-              <input
-                type="email"
-                className="w-full px-3 py-2 border border-[#1E1E1E]/70 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your email"
-              />
+        <label className="text-[18px] font-roboto font-normal text-[#1E1E1E]">
+          EMAIL
+        </label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+           className="w-full px-3 py-2 border border-[#1E1E1E]/70 text-[#1E1E1E] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your email"
+        />
 
-              <label className="text-[18px] uppercase  font-roboto font-normal text-[#1E1E1E]">
-                enter your program
-              </label>
-              <input
-                type="password"
-                className="w-full px-3 py-2 border border-[#1E1E1E]/70 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your program"
-              />
-            </div>
+        <label className="text-[18px] uppercase font-roboto font-normal text-[#1E1E1E]">
+          Enter your program
+        </label>
+        <input
+          type="text"
+          name="program_name"
+          value={formData.program_name}
+          onChange={handleChange}
+       className="w-full px-3 py-2 border border-[#1E1E1E]/70 text-[#1E1E1E] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your program"
+        />
+      </div>
 
-            <button className="w-full h-[47px] bg-[#1E1E1E]/10 text-[#1E1E1E]/50 font-medium py-2 rounded-lg mt-4  uppercase cursor-not-allowed text-[16px] sm:text-[18px]">
-              apply now
-            </button>
+      <button
+        type="submit"
+        disabled={loading}
+        className={`w-full h-[47px] ${
+          loading
+            ? "bg-[#1E1E1E]/10 text-[#1E1E1E]/50 cursor-not-allowed"
+            : "bg-[#1E1E1E] text-white cursor-pointer"
+        } font-medium py-2 rounded-lg mt-4 uppercase text-[16px] sm:text-[18px]`}
+      >
+        {loading ? "Submitting..." : "Apply Now"}
+      </button>
+        </form>
 
             <p className="text-[12px] font-roboto font-normal text-center text-[#047670] mt-3">
               By continuing, you agree to AI SKILLS{" "}
