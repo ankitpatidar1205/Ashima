@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { FaPaperPlane } from "react-icons/fa";
-const Socket_URL= "http://localhost:4000"
+const Socket_URL= "https://cj2ww6qd-4000.inc1.devtunnels.ms"
 const Messages = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
