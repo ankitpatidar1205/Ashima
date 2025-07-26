@@ -92,10 +92,9 @@ const LaunchPage = () => {
     try {
       setLoading(true);
       const res = await axiosInstance.post(`/launch-now`, formData);
-
       if (res.data.success) {
         alert("Applied successfully!");
-        setFormData({ name: "", email: "", program_name: "" }); // Clear form
+        setFormData({ name: "", email: "", program_name: "" }); 
       } else {
        alert("Something went wrong!");
       }

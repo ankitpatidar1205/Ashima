@@ -105,7 +105,11 @@ const RoleBasedSidebar = ({isCollapsed = false,setIsCollapsed = () => { },}) => 
             label: "Blogs  Articles",
             path: "/blog-articles",
           },
-
+          {
+            icon: <FaNewspaper />,
+            label: "Launch Now",
+            path: "/Launch-Now",
+          },
           {
             icon: <FaMoneyBillWave />,
             label: "Manage Transcations",

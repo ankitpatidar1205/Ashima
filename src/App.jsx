@@ -88,6 +88,7 @@ import Helpsupport from "./components/Home/HelpSupport/Helpsupport";
 import CookiePolicy from "./components/Home/Cookie/CookiePolicy";
 import Privacypolicy from "./components/Home/PrivacyPolicy/Privacypolicy";
 import AllCources from "./components/Home/ALLCources/ALLcources";
+import LaunchNow from "./components/AdminPanal/LaunchNow";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -192,7 +193,7 @@ const App = () => {
         <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
         <Route  path="/CertificateTemplate"  element={<CertificateTemplates></CertificateTemplates>}></Route>
         <Route  path="/CertificateManagemnet"  element={<CertificateManagement></CertificateManagement>}></Route>
-        <Route  path="/adminSettings"  element={<AdminSettings></AdminSettings>}></Route>
+        <Route  path="/adminSettings" element={<AdminSettings></AdminSettings>}></Route>
         <Route path="/refund-details/:id" element={<RefundDetails />} />
         <Route  path="/RolePermission"  element={<RolePermission></RolePermission>}></Route>
       
@@ -203,11 +204,8 @@ const App = () => {
         <Route path="/digital" element={<MyDigital />} />
         <Route path="/marketProduct/:id" element={<MarketProduct />} />
         <Route path="/admin-digital-product" element={<AdminDigitalProduct />} />
+        <Route path="/Launch-Now" element={<LaunchNow />} />
 
-          {/* <Route
-            path="/ViewAssessments"
-            element={<ViewAssessments></ViewAssessments>}
-          ></Route> */}
           <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
           <Route path="/CertificateTemplate" element={<CertificateTemplates></CertificateTemplates>}></Route>
           <Route path="/CertificateManagemnet" element={<CertificateManagement></CertificateManagement>}></Route>
