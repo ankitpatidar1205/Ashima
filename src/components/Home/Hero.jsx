@@ -37,16 +37,14 @@ const HeroSection = () => {
             </span>
 
 
-            {/* </Link> */}
+          
 
             <span className="w-[95px] py-2 rounded-xl text-[#ffffff] font-roboto bg-[#1E1E1E] font-medium shadow-md hover:opacity-90 transition  flex items-center justify-center">
-              Hybrid
+              Read
             </span>
 
 
-            <span className="w-[95px] py-2 rounded-xl text-[#ffffff] font-roboto bg-[#FF6B6B] font-medium shadow-md hover:opacity-90 transition  flex items-center justify-center">
-              Video
-            </span>
+           
 
           </div>
         </div>

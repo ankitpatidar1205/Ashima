@@ -50,24 +50,19 @@ const CoursesDetails = () => {
                 </div>
 
                 <p className="mt-4">{coursedata.course_description}</p>
+                <img  src={coursedata.course_image}  alt="Course"  className="h-52 object-cover"  />
               </div>
 
               {/* Course Image + Syllabus */}
               <div className="bg-white p-4 rounded shadow">
                 <h4 className="font-semibold mb-3">Course Content</h4>
                 <div className="bg-gray-300 h-52 mb-4 flex justify-center items-center">
-                  <img
-                    src={coursedata.course_image}
-                    alt="Course"
-                    className="h-52 object-cover"
-                  />
+                  
                 </div>
 
-                 {coursedata?.course_syllabus?.map((module, index) => (
-  <div
-    key={index}
-    className="border border-gray-200 shadow-sm rounded-lg p-4 mb-4 bg-white hover:shadow-md transition-all duration-300"
-  >
+      {coursedata?.course_syllabus?.map((module, index) => (
+  <div key={index}
+   className="border border-gray-200 shadow-sm rounded-lg p-4 mb-4 bg-white hover:shadow-md transition-all duration-300" >
     <div>
       <h5 className="text-lg font-semibold text-gray-800 mb-1">{module?.module_title}</h5>
       <p className="text-gray-600">{module?.module_syllabus}</p>
@@ -78,8 +73,7 @@ const CoursesDetails = () => {
     onClick={() =>{ 
       localStorage.setItem("title",module?.module_title)
       localStorage.setItem("description",module?.module_syllabus)
-      navigate(`/course-content/${module.id || 1}`)}}
-  >
+ navigate(`/course-content/${module.id || 1}`)}}>
      View
   </button>
 </div>
@@ -90,18 +84,14 @@ const CoursesDetails = () => {
 
               {/* Course Video */}
               <div className="bg-white p-4 rounded shadow">
-                <h4 className="font-semibold mb-3">Intro Video</h4>
-                <iframe
-                  src={coursedata.course_content_video_link}
-                  title="Course Video"
-                  className="w-full h-64"
-                  allowFullScreen
-                ></iframe>
+                <h4 className="font-semibold mb-3"> Video</h4>
+                <iframe  src={coursedata.course_content_video_link}
+                  title="Course Video" className="w-full h-64" allowFullScreen ></iframe>
               </div>
 
               {/* Test Video */}
               <div className="bg-white p-4 rounded shadow">
-                <h4 className="font-semibold mb-3">Test Video</h4>
+                <h4 className="font-semibold mb-3">Preview  Video</h4>
                 <video controls className="w-full h-64">
                   <source src={coursedata.test_video} type="video/mp4" />
                   Your browser does not support the video tag.

@@ -2,7 +2,7 @@
 import { FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
 import { PiX } from "react-icons/pi"; 
 import { Link } from "react-router-dom";
-
+import logo from '../assets/logo-removebg-preview.png'
 const Footer = () => {
   return (
     <footer className="bg-[#000000] text-[#ffffff] py-12 sm:py-20 px-4 sm:px-8 lg:px-16">
@@ -74,7 +74,7 @@ const Footer = () => {
           {/* Left Section - Logo & Social Icons */}
           <div className="flex flex-col items-start space-y-6 w-full lg:w-1/4">
             <div className="text-[40px] md:text-[50px] text-[#000] font-impact text-white">
-            AI SKILLS
+            <img src={logo} alt="" />
           </div>
             <div className="flex space-x-6">
               <PiX className="text-[#ffffff] text-xl sm:text-2xl" />

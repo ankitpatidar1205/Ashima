@@ -25,15 +25,14 @@ const SoftwareNavbar = ({ isCollapsed }) => {
           ? "left-16 w-[calc(100%-4rem)]" : "left-64 w-[calc(100%-16rem)]" }`}>
         {/* Search */}
         <div className="flex items-center w-1/3">
-          <input type="text" placeholder="Search courses..."
-            className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#047670] placeholder:text-teal-700" />
+          
         </div>
 
         <div className="flex items-center space-x-4 relative">
         {(userData?.name || userData?.full_name) && (
   <span className="flex items-center gap-1">
     <span className="text-xl">👏</span> {/* Icon */}
-    Hi, {userData.name || userData.full_name}
+    Hyy, {userData?.name || userData.full_name}
   </span>
 )}
 

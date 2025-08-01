@@ -154,28 +154,7 @@ function AllCourses() {
             </Form>
 
             <hr />
-            <h5 className="fw-bold">Mode</h5>
-            <Form>
-              {["live", "hybrid", "video"].map((mode) => (
-                <div key={mode} className="d-flex mb-2">
-                  <Form.Check
-                    type="checkbox"
-                    id={`mode-${mode}`}
-                    checked={modeFilter.includes(mode)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setModeFilter([...modeFilter, mode]);
-                      } else {
-                        setModeFilter(modeFilter.filter((m) => m !== mode));
-                      }
-                    }}/>
-                  <label htmlFor={`mode-${mode}`} className="ms-3 text-capitalize">
-                    {mode}
-                  </label>
-                </div>
-              ))}
-            </Form>
-
+           
           </Col>
 
           <Col md={9}>
@@ -187,13 +166,8 @@ function AllCourses() {
                   <div  key={course.id}
                     className="flex flex-col md:flex-row gap-4 border-b pb-4 mb-6 hover:bg-gray-50 transition">
                     {/* Course image */}
-                    <img
-                      src={course.course_image}
-                      alt="Course"
-                      className="w-full md:w-[365px] h-auto md:h-[214px] object-cover rounded-[4px] transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
-                    />
-
-                  
+                    <img  src={course.course_image}  alt="Course"
+                      className="w-full md:w-[365px] h-auto md:h-[214px] object-cover rounded-[4px] transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"/>
                       <div className="flex-1 p-4 border rounded-lg bg-white">
                         {/* Title */}
                         <h2 className="text-[24px] md:text-[30px] font-[700] uppercase leading-[30px] tracking-[2%] font-roboto text-[#1e1e1e] mb-2">
@@ -204,42 +178,18 @@ function AllCourses() {
                         <p className="text-[15px] leading-[20px] tracking-[1%] text-black mt-1 font-roboto font-[400] mb-3">
                           {course.course_description}
                         </p>
-
                         {/* Price */}
                         <h3 className="text-[22px] font-[700] text-[#047670] font-roboto mb-2">
                           {currency.symbol}
                           {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
                         </h3>
-
                         {/* Instructor */}
                         <div className="mb-3">
-                          <h4 className="font-[700] font-roboto text-[16px]  text-teal-700">
-                            By {course?.instructor_details?.full_name}
-                          </h4>
-                        
-                        </div>
-
+                          <h4 className="font-[700] font-roboto text-[16px]  text-teal-700"> By {course?.instructor_details?.full_name} </h4>  </div>
                         {/* Rating and Type */}
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="font-roboto font-[500] text-[#1e1e1e] text-[12px]">
-                            RATING {course.rating}
-                          </span>
-                          <div className="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
-                          <span className="text-[#047670] font-[500] text-[12px]">
-                            ({course.reviews})
-                          </span>
-
-                          <span
-                            className={`text-white w-[101px] h-[21px] text-[10px] px-4 py-1 rounded-[4px] uppercase font-roboto text-center
-                  ${course.course_type === "HyBrid"
-                                ? "bg-[#ffb347]"
-                                : course.course_type === "Live"
-                                  ? "bg-[#09d0c6]"
-                                  : course.course_type === "HYBRID"
-                                    ? "bg-[#1e293b]"
-                                    : "bg-gray-400"
-                              }`}
-                          >
+                         <span  className={`text-white w-[101px] h-[21px] text-[10px] px-4 py-1 rounded-[4px] uppercase font-roboto text-center
+                        ${course.course_type === "Read" ? "bg-[#09d0c6]" : course.course_type === "Read"  ? "bg-[#1e293b]"  : "bg-gray-400"}`}>
                             {course.course_type}
                           </span>
                         </div>

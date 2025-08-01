@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { FaEye, FaEdit, FaTrash,FaClipboardList } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import AddCoursesModal from "./AddCoursesModal";
 import { Link } from "react-router-dom";
@@ -13,8 +13,8 @@ const ManageCourses = () => {
   const [courseId, setCourseId] = useState(null);
   const dispatch = useDispatch();
   const currency = useCurrency();
-const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
 
   const { courses } = useSelector((state) => state.courses);
@@ -72,9 +72,9 @@ const paginatedCourses = filteredCourses.slice(
         {/* Heading & Add Button */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold">Manage Courses</h2>
-          {/* <button  className="bg-teal-700 text-white px-4 py-2 rounded" onClick={() => setIsModalOpen(true)}>
+          <button  className="bg-teal-700 text-white px-4 py-2 rounded" onClick={() => setIsModalOpen(true)}>
             Add Course
-          </button> */}
+          </button>
         </div>
 
         <AddCoursesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} courseId={courseId} setCourseId={setCourseId}/>
@@ -84,7 +84,6 @@ const paginatedCourses = filteredCourses.slice(
           <div className="flex flex-wrap gap-2 mb-4">
             <input type="text" placeholder="Search courses..." value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}  className="border px-3 py-2 rounded w-full md:w-auto"/>
-            
           </div>
 
           {/* Table Section */}
@@ -108,18 +107,12 @@ const paginatedCourses = filteredCourses.slice(
                   <tr className="border-b" key={course?.id}>
                     <td className="p-2">{index + 1}</td>
                     <td className="p-2">
-                      <img
-                        src={course?.course_image}
-                        alt={course?.course_title}
-                        className="w-16 h-16 object-cover rounded"
-                      />
+                      <img src={course?.course_image} alt={course?.course_title} className="w-16 h-16 object-cover rounded"/>
                     </td>
                     <td className="p-2">
                       <div className="flex flex-col">
                         <Link  to={`/course/${course?.id}`}
-                          className="font-semibold text-teal-700">
-                          {course?.course_title}
-                        </Link>
+                          className="font-semibold text-teal-700">  {course?.course_title} </Link>
                         <span className="text-xs text-gray-500">
                           Created {new Date(course?.created_at).toLocaleDateString()}
                         </span>
@@ -130,24 +123,17 @@ const paginatedCourses = filteredCourses.slice(
                      {currency.symbol}
                      {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
                     </td>
-
                     <td className="p-2">
                       <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
-                        {course?.course_type}
-                      </span>
+                        {course?.course_type}</span>
                     </td>
                    <td className="p-2">
-  <span className={`${
-      course.status == "1"
-        ? "bg-green-100 text-green-600"
-        : "bg-yellow-100 text-yellow-600"
-    } text-xs px-2 py-1 rounded`} >
-    <button onClick={() => changeStatus(course?.id, course?.status)}>
-      {course?.status == "0" ? "Draft" : "Published"}
-    </button>
-  </span>
-</td>
-                    <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">    
+            <span className={`${course.status == "1" ? "bg-green-100 text-green-600":"bg-yellow-100 text-yellow-600" } text-xs px-2 py-1 rounded`} >
+           <button onClick={() => changeStatus(course?.id, course?.status)}>{course?.status == "0" ? "Draft" : "Published"}   </button>  </span></td>
+                    <td className="p-2 flex mt-2 gap-2 text-gray-600 text-base">  
+                       <Link to={`/add-test/${course?.id}`} className="text-gray-600">
+                         <FaClipboardList />
+                      </Link>  
                       <Link to={`/course/${course?.id}`} className="text-gray-600">
                         <FaEye />
                       </Link>

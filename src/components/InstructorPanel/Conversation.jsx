@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { FaPaperPlane } from "react-icons/fa";
 
-const Socket_URL = "https://cj2ww6qd-4000.inc1.devtunnels.ms";
+const Socket_URL = "https://aiskiilsbackend-production.up.railway.app";
 
 const Messages = () => {
   const [users, setUsers] = useState([]);

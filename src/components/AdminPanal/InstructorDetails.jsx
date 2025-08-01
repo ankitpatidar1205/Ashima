@@ -1,7 +1,7 @@
-import  { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaEnvelope, FaPhone, FaCalendarAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getInstructors } from "../../Redux/slices/InstructorSlice/InstructorSlice";
 
@@ -15,7 +15,6 @@ const InstructorDetails = () => {
     dispatch(getInstructors());
   }, [dispatch]);
 
-  // Filter the instructor matching the id from the URL params
   const selectedInstructor = instructors.find(
     (instructor) => instructor.id === Number(id)
   );
@@ -23,83 +22,68 @@ const InstructorDetails = () => {
   return (
     <DashboardLayout>
       <div className="p-6 bg-gray-100 min-h-screen">
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="fw-bold">Instructor Details</h3>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold">Instructor Details</h3>
           <button
-            className="d-flex p-2 rounded align-items-center font-semibold text-white bg-teal-700"
+            className="flex items-center gap-2 px-3 py-2 rounded font-medium text-white bg-teal-700 hover:bg-teal-800 text-sm"
             onClick={() => navigate(-1)}
           >
-            <FaArrowLeft className="me-1" /> Back
+            <FaArrowLeft /> Back
           </button>
         </div>
 
         {selectedInstructor ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            {/* Profile Card */}
-            <div className="bg-white p-4 rounded shadow text-center">
-              <div className="w-24 h-24 mx-auto rounded-full mb-3 overflow-hidden">
+          <div className="bg-white p-5 rounded-lg shadow-md w-full max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Left: Profile Info */}
+              <div className="flex flex-col items-center text-center md:items-start md:text-left">
                 <img
                   src={selectedInstructor?.avatar}
                   alt="Profile"
-                  className="w-full h-full object-cover"
+                  className="w-24 h-24 rounded-full object-cover border-2 border-teal-600"
                 />
+                <h3 className="mt-3 text-lg font-semibold text-gray-800">
+                  {selectedInstructor.full_name}
+                </h3>
+                <p className="text-gray-500 text-sm">{selectedInstructor.expertise}</p>
+                <span
+                  className={`mt-2 px-2 py-1 text-xs font-medium rounded-full ${
+                    selectedInstructor.is_active === "1"
+                      ? "bg-green-100 text-green-600"
+                      : "bg-red-100 text-red-600"
+                  }`}
+                >
+                  {selectedInstructor.is_active === "1" ? "Active" : "Inactive"}
+                </span>
               </div>
-              <h3 className="font-bold text-lg">{selectedInstructor.full_name}</h3>
-              <p className="text-sm text-gray-500">{selectedInstructor.expertise}</p>
-              <span
-                className={`${
-                  selectedInstructor.is_active === "1"
-                    ? "bg-green-100 text-green-600"
-                    : "bg-red-100 text-red-600"
-                } text-xs px-2 py-1 rounded inline-block mt-2`}
-              >
-                {selectedInstructor.is_active === "1" ? "Active" : "Inactive"}
-              </span>
 
-              <div className="flex justify-around mt-4">
-                <div>
-                  <p className="text-sm text-gray-500">Courses</p>
-                  <p className="font-bold">--</p>
+              {/* Right: Contact Info */}
+              <div className="space-y-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <FaEnvelope className="text-teal-600" />
+                  <span>{selectedInstructor.email}</span>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Students</p>
-                  <p className="font-bold">--</p>
+                <div className="flex items-center gap-2">
+                  <FaPhone className="text-teal-600" />
+                  <span>{selectedInstructor.mobile_number}</span>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Revenue</p>
-                  <p className="font-bold">--</p>
+                <div className="flex items-center gap-2">
+                  <FaCalendarAlt className="text-teal-600" />
+                  <span>
+                    Created: {new Date(selectedInstructor.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaCalendarAlt className="text-teal-600" />
+                  <span>
+                    Updated: {new Date(selectedInstructor.updated_at).toLocaleDateString()}
+                  </span>
                 </div>
               </div>
-            </div>
-
-            {/* Contact Info */}
-            <div className="bg-white p-4 rounded shadow">
-              <h4 className="font-semibold mb-3">Contact Information</h4>
-              <p className="text-sm mb-1">Email</p>
-              <p className="font-bold mb-2">{selectedInstructor.email}</p>
-              <p className="text-sm mb-1">Phone</p>
-              <p className="font-bold">{selectedInstructor.mobile_number}</p>
-              <p className="text-sm mb-1">Created At</p>
-              <p className="font-bold">{new Date(selectedInstructor.created_at).toLocaleString()}</p>
-              <p className="text-sm mb-1">Updated At</p>
-              <p className="font-bold">{new Date(selectedInstructor.updated_at).toLocaleString()}</p>
-            </div>
-
-            {/* Bank Details */}
-            <div className="bg-white p-4 rounded shadow">
-              <h4 className="font-semibold mb-3">Bank Details</h4>
-              <p className="text-sm mb-1">Account Number</p>
-              <p className="font-bold mb-2">
-                {selectedInstructor.bank_account_number || "--"}
-              </p>
-              <p className="text-sm mb-1">IFSC Code</p>
-              <p className="font-bold">
-                {selectedInstructor.ifsc_code || "--"}
-              </p>
             </div>
           </div>
         ) : (
-          <p>Loading instructor details...</p>
+          <p className="text-center text-gray-600">Loading instructor details...</p>
         )}
       </div>
     </DashboardLayout>

@@ -1,11 +1,5 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import marketproduct1 from "../../assets/marketproduct1.png";
-import marketproduct2 from "../../assets/marketproduct2.png";
-import marketproduct3 from "../../assets/marketproduct3.png";
-import marketproduct4 from "../../assets/marketproduct4.png";
-import marketproduct5 from "../../assets/marketproduct5.png";
-import marketproduct6 from "../../assets/marketproduct6.png";
+import {useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import StartLearning from "../Home/StartLearning";
 import { useState } from "react";
 import Header from "../../Layout/Header";
@@ -14,11 +8,15 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 import REviewCarrds from "../Home/ReviewCards";
 import axiosInstance from "../../utils/axiosInstance";
 import useCurrency from "../../utils/useCurrency";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const MarketProduct = () => {
+  const navigate= useNavigate()
   const [openIndex, setOpenIndex] = useState(null);
   const {id} = useParams()
   const [product, setProduct] = useState(null);
-const currency = useCurrency();
+   const currency = useCurrency();
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -82,16 +80,32 @@ const currency = useCurrency();
     },
   ];
 
+const HandleBuyNow = (productId) => {
+  const student_id = localStorage.getItem("is_id");
+
+  if (student_id) {
+    // ✅ Product buy success
+    toast.success("Product bought successfully!");
+    // Yaha aap API call bhi kar sakte ho purchase ke liye
+    console.log(`Student ${student_id} bought product ${productId}`);
+  } else {
+    // ❌ Not logged in
+    toast.error("Please login to buy this product!");
+     // 3 second delay before redirect
+    setTimeout(() => {
+      navigate("/login");
+    }, 3000);
+  }
+};
   return (
     <>
+    <ToastContainer/>
       <Header />
        <button  onClick={() => window.history.back()}  className="absolute top-28 left-4 text-white text-2xl bg-[#047670] rounded-full p-2" style={{fontSize:"2.5rem" , fontWeight:"bold"}} >
-          ←
-        </button>
+          ←  </button>
       <div className=" pt-9 flex flex-col lg:flex-row bg-[#047670] lg:h-[652px] px-4 lg:pt-14">
         {/* Left Image Section */}
-       
-
+      
         <div className="flex w-full lg:w-1/2 items-center justify-center lg:justify-start p-6 lg:pl-20 ">
         {product?.product_images && (
         <img  src={JSON.parse(product.product_images)[0]}  alt={product?.product_title}
@@ -117,75 +131,20 @@ const currency = useCurrency();
 
           {/* Price and File */}
           <div className="text-[45px] lg:text-[32px] font-impact text-[#047670] whitespace-nowrap text-start mt-2">
-            Try {currency.symbol}
+            Try  {currency.symbol}
                 {(parseFloat(product?.sale_price) * currency.rate).toFixed(2)}
-            <span className="text-[20px] text-[#1E1E1E] font-jost">
-              | 1 File
-            </span>
           </div>
 
           {/* Buy Now Button */}
-        
-            <button className="w-full bg-[#047670] hover:bg-[#005b4f] text-white border border-[#047670] rounded-[12px] px-px py-[10px] flex items-center justify-center gap-[10px] text-lg lg:text-[22px] mt-3">
+            <button onClick={()=> HandleBuyNow(product.id)}  className="w-full bg-[#047670] hover:bg-[#005b4f] text-white border border-[#047670] rounded-[12px] px-px py-[10px] flex items-center justify-center gap-[10px] text-lg lg:text-[22px] mt-3">
               Buy Now
             </button>
           </div>
         </div>
       
 
-      <div className="w-full px-4 sm:px-8 mt-10">
-        <div className="lg:w-[900px] bg-[#ffffff] rounded-md text-[#1E1E1E] mt-8 lg:mt-20 lg:ml-20">
-          {/* Header Section */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
-            <h2 className="text-[#047670] text-[30px] font-impact leading-[20px]">
-              Related Images
-            </h2>
-            <div className="flex items-center gap-2 text-[#1E1E1ECC] font-jost text-[20px] mt-2 sm:mt-0 ">
-              Download
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="#047670"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"
-                />
-              </svg>
-            </div>
-          </div>
-
-          {/* Images Row with fixed min-width */}
-          <div className="flex gap-4 min-w-[850px] mt-5">
-            <img
-              src={marketproduct3}
-              alt="img1"
-              className="w-[210px] h-[140px] object-cover rounded-md"
-            />
-            <img
-              src={marketproduct4}
-              alt="img2"
-              className="w-[210px] h-[140px] object-cover rounded-md"
-            />
-            <img
-              src={marketproduct5}
-              alt="img3"
-              className="w-[210px] h-[140px] object-cover rounded-md"
-            />
-            <img
-              src={marketproduct6}
-              alt="img4"
-              className="w-[210px] h-[140px] object-cover rounded-md"
-            />
-          </div>
-        </div>
-      </div>
-{/* About This Product Section */}
-<div className="lg:w-[796px] lg:ml-20">
+   
+<div className="lg:w-[796px] lg:ml-20 mt-4">
   {/* Product Description Box */}
   <div className="bg-white p-4 rounded-md shadow text-[#1E1E1E] mb-8">
     <div className="flex items-center justify-between mb-4">

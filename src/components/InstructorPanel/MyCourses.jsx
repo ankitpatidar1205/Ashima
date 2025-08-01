@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { FaEye, FaEdit, FaTrash, FaClipboardList } from "react-icons/fa";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { Link } from "react-router-dom";
 import { deleteCourse, fetchCourses, publishCourse } from "../../Redux/slices/CourseSlice/CourseSlice";
@@ -74,22 +74,10 @@ const filteredCourses = courses
           </button>
         </div>
 
-        <AddMyCoursesModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          courseId={courseId}
-          setCourseId={setCourseId}
-        />
-
+        <AddMyCoursesModal  isOpen={isModalOpen}  onClose={() => setIsModalOpen(false)}  courseId={courseId}  setCourseId={setCourseId}/>
         <div className="bg-white p-4 rounded shadow">
-          <input
-            type="text"
-            placeholder="Search courses..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="border px-3 py-2 rounded mb-4 w-full md:w-auto"
-          />
-
+          <input type="text"  placeholder="Search courses..."  value={searchTerm}  onChange={(e) => setSearchTerm(e.target.value)}
+            className="border px-3 py-2 rounded mb-4 w-full md:w-auto"/>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-center">
               <thead className="bg-gray-50">
@@ -110,10 +98,7 @@ const filteredCourses = courses
       <tr key={course?.id} className="border-b mb-2">
         <td>{index + 1}</td>
         <td>
-          <img src={course?.course_image}
-            alt={course?.course_title}
-            className="w-16 h-14 object-cover rounded"
-          />
+          <img src={course?.course_image}  alt={course?.course_title}  className="w-16 h-14 object-cover rounded" />
         </td>
         <td>
           <Link to={`/course/${course?.id}`} className="font-semibold text-teal-700">
@@ -125,9 +110,7 @@ const filteredCourses = courses
         </td>
         <td>{course?.instructor_details?.full_name}</td>
       <td className="p-2">
-                     {currency.symbol}
-                     {(parseFloat(course?.course_price) * currency.rate).toFixed(2)}
-                    </td>
+           {currency.symbol}{(parseFloat(course?.course_price) * currency.rate).toFixed(2)} </td>
         <td>
           <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
             {course?.course_type}
@@ -136,7 +119,6 @@ const filteredCourses = courses
         <td>
           <button
             // onClick={() => changeStatus(course?.id)}
-           
             className={`text-xs px-2 py-1 rounded ${
               course.status === "1"
                 ? "bg-green-100 text-green-600 cursor-not-allowed"
@@ -147,6 +129,9 @@ const filteredCourses = courses
           </button>
         </td>
         <td className="flex gap-2 mt-2 justify-center text-gray-600 text-base">
+            <Link to={`/add-test/${course?.id}`} className="text-gray-600">
+               <FaClipboardList />
+           </Link>  
           <Link to={`/course/${course?.id}`}>
             <FaEye />
           </Link>

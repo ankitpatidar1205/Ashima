@@ -212,12 +212,8 @@ const AddCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
             <label htmlFor="courseCategory" className="text-sm font-medium mb-1 block">
               Select Category
             </label>
-            <select
-              id="courseCategory"
-              value={formData.category_id}
-              onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
-              className="border p-2 rounded w-full"
-            >
+            <select id="courseCategory" value={formData.category_id}
+              onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}  className="border p-2 rounded w-full">
               <option>Select category</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -233,16 +229,11 @@ const AddCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
               <label htmlFor="courseType" className="text-sm font-medium mb-1 block">
                 Course Type
               </label>
-              <select
-                id="courseType"
-                value={formData.course_type}
-                onChange={(e) => setFormData({ ...formData, course_type: e.target.value })}
-                className="border p-2 rounded w-full"
-              >
+              <select id="courseType" value={formData.course_type} onChange={(e) => setFormData({ ...formData, course_type: e.target.value })}
+                className="border p-2 rounded w-full">
                 <option>Select Type</option>
                 <option value="Live">Live</option>
-                <option value="HyBrid">HyBrid</option>
-                <option value="Recorded">Recorded</option>
+                <option value="Read">Read</option>
               </select>
             </div>
 
@@ -250,12 +241,9 @@ const AddCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
               <label htmlFor="instructor" className="text-sm font-medium mb-1 block">
                 Instructor
               </label>
-              <select
-                id="instructor"
-                value={formData.instructor_id}
+              <select id="instructor" value={formData.instructor_id}
                 onChange={(e) => setFormData({ ...formData, instructor_id: e.target.value })}
-                className="border p-2 rounded w-full"
-              >
+                className="border p-2 rounded w-full" >
                 <option>Select Instructor</option>
                 {instructors?.map((instructor) => (
                   <option key={instructor?.id} value={instructor.id}>
@@ -269,14 +257,9 @@ const AddCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
               <label htmlFor="price" className="text-sm font-medium mb-1 block">
                 Course Price
               </label>
-              <input
-                id="course_price"
-                type="text"
-                value={formData.course_price}
+              <input id="course_price" type="text" value={formData.course_price}
                 onChange={(e) => setFormData({ ...formData, course_price: e.target.value })}
-                placeholder="Enter price"
-                className="border p-2 rounded w-full"
-              />
+                placeholder="Enter price"className="border p-2 rounded w-full"/>
             </div>
           </div>
 
@@ -315,7 +298,7 @@ const AddCoursesModal = ({ isOpen, onClose, courseId, setCourseId }) => {
           {/* Video Link */}
           <div>
             <label className="text-sm font-medium mb-1 block">
-              Course Content - Video Link
+            Flipbook Link
             </label>
             <input
               type="text"

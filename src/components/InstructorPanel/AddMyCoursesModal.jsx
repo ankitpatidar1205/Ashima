@@ -290,9 +290,9 @@ const handleClose = () => {
                 className="border p-2 rounded w-full"
               >
                 <option>Select Type</option>
+                <option value="Read">Read</option>
                 <option value="Live">Live</option>
-                <option value="HyBrid">HyBrid</option>
-                <option value="Recorded">Recorded</option>
+        
               </select>
             </div>
 
@@ -345,7 +345,7 @@ const handleClose = () => {
 
           {/* Video Link */}
           <div>
-            <label className="text-sm font-medium mb-1 block">Course Content - Video Link</label>
+            <label className="text-sm font-medium mb-1 block">Flipbook Link</label>
             <input
               type="text"
               placeholder="Enter video URL"

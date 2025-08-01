@@ -74,7 +74,6 @@ import StudentAllCources from "./components/StudentPanal/StudentAllCources";
 import SuperadminDashboard from "./components/Dashboard/SuperadminDashboard";
 import PlanPackage from "./components/SuperadminPanel/PlanPackage";
 import PlanRequest from "./components/SuperadminPanel/PlanRequest";
-import OrderDetail from "./components/SuperadminPanel/OrderDetails";
 import UserInfo from "./components/SuperadminPanel/UserInfo";
 import StudentDigitalProducts from "./components/StudentPanal/StudentDigitalProducts";
 import AdminDigitalProduct from "./components/AdminPanal/AdminDigitalProduct";
@@ -89,6 +88,9 @@ import CookiePolicy from "./components/Home/Cookie/CookiePolicy";
 import Privacypolicy from "./components/Home/PrivacyPolicy/Privacypolicy";
 import AllCources from "./components/Home/ALLCources/ALLcources";
 import LaunchNow from "./components/AdminPanal/LaunchNow";
+import Test from "./components/AdminPanal/Test";
+import StudentTest from "./components/Courses/StudentTest";
+import ReviewManager from "./components/AdminPanal/ReviewManager";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -205,6 +207,9 @@ const App = () => {
         <Route path="/marketProduct/:id" element={<MarketProduct />} />
         <Route path="/admin-digital-product" element={<AdminDigitalProduct />} />
         <Route path="/Launch-Now" element={<LaunchNow />} />
+        <Route path="/add-test/:id" element={<Test />} />
+        <Route path="/StudentTest/:id" element={<StudentTest />} />
+        <Route path="/ReviewManager" element={<ReviewManager />} />
 
           <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
           <Route path="/CertificateTemplate" element={<CertificateTemplates></CertificateTemplates>}></Route>
@@ -237,7 +242,6 @@ const App = () => {
           <Route path="/superadmin-dashboard" element={<SuperadminDashboard />} />
           <Route path="/plan-package" element={<PlanPackage />} />
           <Route path="/plan-request" element={<PlanRequest />} />
-          <Route path="/order-details" element={<OrderDetail />} />
           <Route path="/user-info" element={<UserInfo />} />
           <Route path="/superadmin-profile" element={<SuperAdminProfile />} />
 
