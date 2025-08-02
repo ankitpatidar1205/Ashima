@@ -14,185 +14,197 @@ const StudentTest = () => {
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Get student ID from local storage
+  let studentId = null;
+  try {
+    studentId = localStorage.getItem("is_id");
+  } catch {
+    studentId = null;
+  }
 
   useEffect(() => {
     const fetchTest = async () => {
       try {
+        setLoading(true);
         const res = await axiosInstance.get(`/course/?id=${id}`);
-        const course = res.data.data;
-        if (course.tests && course.tests.length > 0) {
-          const test = course.tests[0];
-          const parsedQuestions =
-            typeof test.questions === "string"
-              ? JSON.parse(test.questions)
-              : test.questions;
-
-          setQuestions(parsedQuestions);
+        const tests = res?.data?.data?.tests;
+        if (Array.isArray(tests) && tests.length > 0) {
+          setQuestions(tests);
+        } else {
+          setQuestions([]);
         }
       } catch (err) {
         console.error("Error fetching test:", err);
-        toast.error("Failed to load test!");
+        toast.error("⚠️ Failed to load test. Please try again later.");
+        setQuestions([]);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchTest();
+    if (id) fetchTest();
   }, [id]);
 
   const handleChange = (value) => {
-    setAnswers({ ...answers, [currentQ]: value });
+    setAnswers((prev) => ({ ...prev, [currentQ]: value }));
   };
 
   const nextQuestion = () => {
-    if (currentQ < questions.length - 1) {
-      setCurrentQ(currentQ + 1);
-    }
+    setCurrentQ((prev) => (prev < questions.length - 1 ? prev + 1 : prev));
   };
 
   const prevQuestion = () => {
-    if (currentQ > 0) {
-      setCurrentQ(currentQ - 1);
-    }
+    setCurrentQ((prev) => (prev > 0 ? prev - 1 : prev));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!studentId) {
+      toast.error("⚠️ Student ID missing. Please log in again.");
+      return;
+    }
+
+    // ✅ Format answers into required structure
+    const testPayload = questions.map((q, index) => ({
+      question_id: q.id,
+      answer: answers[index] || null,
+    }));
+
     try {
-      await axiosInstance.post(`/course/submit-test`, {
-        courseId: id,
-        answers: answers,
+      await axiosInstance.post(`/submittest`, {
+        course_id: id,
+        student_id: studentId,
+        test: testPayload,
       });
+
       setSubmitted(true);
       toast.success("✅ Test submitted successfully!");
+
+      // Optional: redirect to a "Test Result" or "Dashboard" page
+      setTimeout(() => navigate("/student-dashboard"), 2000);
     } catch (error) {
       console.error("Submit error:", error);
-      toast.error("❌ Failed to submit test.");
+      toast.error("⚠️ Unable to submit test. Please try again.");
     }
   };
 
-  const allAnswered = Object.keys(answers).length === questions.length;
+  const allAnswered =
+    questions.length > 0 && Object.keys(answers).length === questions.length;
 
   return (
     <>
       <Header />
       <ToastContainer position="top-center" />
 
-      {/* Back Arrow */}
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-28 left-4 text-white rounded-full p-2 shadow-lg"
-        style={{
-          backgroundColor: "rgb(4 118 112)",
-          fontSize: "2.5rem",
-          fontWeight: "bold",
-          lineHeight: "1",
-        }}
-      >
-        ←
-      </button>
+      <div className="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen flex justify-center items-start py-12">
+        <div className="w-full max-w-5xl bg-white shadow-2xl rounded-2xl p-10 relative min-h-[80vh]">
+          <button
+            onClick={() => navigate(-1)}
+            className="absolute -top-5 -left-5 text-white rounded-full p-2 shadow-lg"
+            style={{
+              backgroundColor: "rgb(4 118 112)",
+              fontSize: "2rem",
+              fontWeight: "bold",
+              lineHeight: "1",
+            }}
+          >
+            ←
+          </button>
 
-      <div className="p-6 bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
-        <h2 className="text-3xl font-bold text-green-700 mb-8 text-center">
-          Course Test
-        </h2>
+          <h2 className="text-3xl font-bold text-green-700 mb-10 text-center">
+            Course Test
+          </h2>
 
-        {questions.length === 0 ? (
-          <p className="text-gray-600 text-center">No test available for this course.</p>
-        ) : (
-          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto relative">
-            <div className="p-6 bg-white shadow-2xl rounded-2xl border border-green-300">
-              <h4 className="text-xl font-semibold text-green-800 mb-4">
-                Question {currentQ + 1} of {questions.length}
-              </h4>
-              <p className="mb-6 text-gray-800 font-medium text-lg">
-                {questions[currentQ].question}
-              </p>
+          {loading ? (
+            <p className="text-gray-600 text-center">⏳ Loading test...</p>
+          ) : questions.length === 0 ? (
+            <p className="text-gray-600 text-center">
+              ⚠️ No test available for this course.
+            </p>
+          ) : (
+            <form onSubmit={handleSubmit} className="h-full">
+              <div className="p-6 bg-gray-50 rounded-lg border border-green-200 shadow-sm min-h-[60vh] flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xl font-semibold text-green-800 mb-4">
+                    Question {currentQ + 1} of {questions.length}
+                  </h4>
+                  <p className="mb-6 text-gray-800 font-medium text-lg">
+                    {questions[currentQ]?.question ||
+                      "⚠️ Question not available"}
+                  </p>
 
-              {["option1", "option2", "option3", "option4"].map((opt, i) => {
-                const label = ["A", "B", "C", "D"][i];
-                return (
-                  <label
-                    key={opt}
-                    className={`flex items-center gap-3 mb-3 cursor-pointer p-3 rounded-xl transition ${
-                      answers[currentQ] === opt
-                        ? "bg-green-100 border-l-4 border-green-600"
-                        : "bg-gray-50 hover:bg-green-50"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name={`question-${currentQ}`}
-                      value={opt}
-                      checked={answers[currentQ] === opt}
-                      onChange={() => handleChange(opt)}
-                      disabled={submitted}
-                      className="accent-green-600 scale-125"
-                    />
-                    <span className="text-gray-700 font-medium">
-                      {label}. {questions[currentQ][opt]}
-                    </span>
-                  </label>
-                );
-              })}
+                  {["option1", "option2", "option3", "option4"].map(
+                    (opt, i) => {
+                      const label = ["A", "B", "C", "D"][i];
+                      return (
+                        <label
+                          key={opt}
+                          className={`flex items-center gap-3 mb-3 cursor-pointer p-3 rounded-xl transition ${
+                            answers[currentQ] === opt
+                              ? "bg-green-100 border-l-4 border-green-600"
+                              : "bg-white hover:bg-green-50"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name={`question-${currentQ}`}
+                            value={opt}
+                            checked={answers[currentQ] === opt}
+                            onChange={() => handleChange(opt)}
+                            disabled={submitted}
+                            className="accent-green-600 scale-125"
+                          />
+                          <span className="text-gray-700 font-medium">
+                            {label}. {questions[currentQ]?.[opt] || "N/A"}
+                          </span>
+                        </label>
+                      );
+                    }
+                  )}
+                </div>
 
-              {/* Show Correct/Incorrect AFTER SUBMIT */}
-              {submitted && (
-                <p
-                  className={`mt-4 font-semibold text-lg ${
-                    answers[currentQ] === questions[currentQ].correct_option
-                      ? "text-green-700"
-                      : "text-red-600"
-                  }`}
-                >
-                  {answers[currentQ] === questions[currentQ].correct_option
-                    ? "✅ Correct!"
-                    : `❌ Wrong! Correct Answer: ${
-                        ["A", "B", "C", "D"][
-                          ["option1", "option2", "option3", "option4"].indexOf(
-                            questions[currentQ].correct_option
-                          )
-                        ]
-                      }`}
-                </p>
-              )}
-
-              {/* Navigation Buttons */}
-              <div className="flex justify-between items-center mt-6">
-                <button
-                  type="button"
-                  onClick={prevQuestion}
-                  disabled={currentQ === 0}
-                  className="bg-gray-300 text-gray-700 px-5 py-2 rounded-lg font-semibold disabled:opacity-50"
-                >
-                  Previous
-                </button>
-
-                {currentQ < questions.length - 1 ? (
+                <div className="flex justify-between items-center mt-8">
                   <button
                     type="button"
-                    onClick={nextQuestion}
-                    className="bg-[rgb(4,118,112)] text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition font-semibold"
+                    onClick={prevQuestion}
+                    disabled={currentQ === 0}
+                    className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold disabled:opacity-50"
                   >
-                    Next
+                    Previous
                   </button>
-                ) : (
-                  !submitted && (
+
+                  {currentQ < questions.length - 1 ? (
                     <button
-                      type="submit"
-                      disabled={!allAnswered}
-                      className={`px-6 py-2 rounded-lg font-semibold transition ${
-                        allAnswered
-                          ? "bg-blue-600 text-white hover:bg-blue-700"
-                          : "bg-gray-400 text-gray-200 cursor-not-allowed"
-                      }`}
+                      type="button"
+                      onClick={nextQuestion}
+                      className="bg-[rgb(4,118,112)] text-white px-8 py-2 rounded-lg hover:bg-teal-700 transition font-semibold"
                     >
-                      Submit Test
+                      Next
                     </button>
-                  )
-                )}
+                  ) : (
+                    !submitted && (
+                      <button
+                        type="submit"
+                        disabled={!allAnswered}
+                        className={`px-8 py-2 rounded-lg font-semibold transition ${
+                          allAnswered
+                            ? "bg-blue-600 text-white hover:bg-blue-700"
+                            : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                        }`}
+                      >
+                        Submit Test
+                      </button>
+                    )
+                  )}
+                </div>
               </div>
-            </div>
-          </form>
-        )}
+            </form>
+          )}
+        </div>
       </div>
+
       <Footer />
     </>
   );

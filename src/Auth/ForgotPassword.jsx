@@ -24,7 +24,7 @@ const ForgotPassword = () => {
         user_email: email,
         message: `Here is your reset password link: http://localhost:5173/reset-password/${token}`,
       };
-
+      
       emailjs
         .send(
           "service_68qd39f",

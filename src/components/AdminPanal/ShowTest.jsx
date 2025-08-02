@@ -1,96 +1,98 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 
 const ShowTest = ({ id }) => {
-  const [course, setCourse] = useState(null);
   const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchTests = async () => {
       try {
-        if (id) {
-          const res = await axiosInstance.get(`/course?id=${id}`);
-          if (res.data.success) {
-            const courseData = res.data.data;
-            setCourse(courseData);
+        setLoading(true);
 
-            if (courseData.tests?.length > 0) {
-              const parsedQuestions = JSON.parse(courseData.tests[0].questions);
-              setQuestions(parsedQuestions);
-            }
-          }
+        if (!id) {
+          setQuestions([]);
+          return;
+        }
+
+        const res = await axiosInstance.get(`/course?id=${id}`);
+        console.log("API Response:", res.data.data.tests);
+
+        if (res.data.success && res.data.data.tests.length > 0) {
+          setQuestions(res.data.data.tests || []);
+        } else {
+          setQuestions([]);
         }
       } catch (err) {
         console.error("Error fetching test data:", err);
+        setQuestions([]);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchCourse();
+    fetchTests();
   }, [id]);
 
-  // delete single question
-  const handleDeleteQuestion = async (indexToDelete) => {
-    if (!window.confirm("Are you sure you want to delete this question?")) return;
-
+  const handleDelete = async (qId) => {
     try {
-      // filter out the deleted question
-      const updatedQuestions = questions.filter((_, index) => index !== indexToDelete);
-
-      // update DB with new question list
-      await axiosInstance.put(`/test/${course.tests[0].id}`, {
-        questions: JSON.stringify(updatedQuestions),
-      });
-
-      setQuestions(updatedQuestions);
-      alert("Question deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting question:", error);
-      alert("Failed to delete question");
+      await axiosInstance.delete(`/deletetestquestion/${qId}`);
+      setQuestions((prev) => prev.filter((q) => q.id !== qId));
+    } catch (err) {
+      console.error("Error deleting question:", err);
+      alert("❌ Failed to delete the question. Try again.");
     }
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto bg-white shadow-md rounded-lg">
-      {course ? (
-        <>
+    <div className="p-6 max-w-3xl mx-auto bg-white shadow-md rounded-lg">
+      {loading ? (
+        <p className="text-gray-600 text-center">⏳ Loading test questions...</p>
+      ) : questions.length > 0 ? (
+        <div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            {course.course_title} - Test
+            Manage Test Questions
           </h2>
-          {questions.length > 0 ? (
-            <div>
-              {questions.map((q, index) => (
-                <div
-                  key={index}
-                  className="mb-6 p-4 border rounded-lg bg-gray-50 shadow-sm relative"
-                >
-                  <p className="font-semibold text-lg">
-                    Q{index + 1}: {q.question}
-                  </p>
-                  <ul className="list-disc ml-6 mt-2">
-                    <li>Option 1: {q.option1}</li>
-                    <li>Option 2: {q.option2}</li>
-                    <li>Option 3: {q.option3}</li>
-                    <li>Option 4: {q.option4}</li>
-                  </ul>
-                  <p className="mt-2 text-green-600 font-medium">
-                    ✅ Correct Answer: {q[q.correct_option]}
-                  </p>
 
-                  <button
-                    onClick={() => handleDeleteQuestion(index)}
-                    className="absolute top-4 right-4 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
+          {questions.map((q, index) => (
+            <div
+              key={q.id}
+              className="mb-6 p-4 border rounded-lg bg-gray-50 shadow-sm relative"
+            >
+              <p className="font-semibold text-lg">
+                Q{index + 1}: {q.question}
+              </p>
+
+              <div className="mt-3 space-y-2">
+                {["option1", "option2", "option3", "option4"].map((optKey) => (
+                  <p
+                    key={optKey}
+                    className={`p-2 rounded ${
+                      q.correct_option === optKey
+                        ? "bg-green-100 text-green-700 font-semibold"
+                        : "bg-gray-100 text-gray-700"
+                    }`}
                   >
-                    Delete
-                  </button>
-                </div>
-              ))}
+                    {q[optKey]}
+                    {q.correct_option === optKey && " ✅ (Correct Answer)"}
+                  </p>
+                ))}
+              </div>
+
+              {/* Delete Button */}
+              <button
+                onClick={() => handleDelete(q.id)}
+                className="absolute top-3 right-3 px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded"
+              >
+                Delete
+              </button>
             </div>
-          ) : (
-            <p className="text-gray-600">No test available for this course.</p>
-          )}
-        </>
+          ))}
+        </div>
       ) : (
-        <p className="text-gray-600">Loading course test...</p>
+        <p className="text-gray-600 text-center">
+          ⚠️ No test available for this course.
+        </p>
       )}
     </div>
   );

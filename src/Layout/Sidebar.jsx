@@ -155,17 +155,18 @@ const RoleBasedSidebar = ({isCollapsed = false, setIsCollapsed = () => { },}) =>
           icon: iconWrapper(<FaComments />, "bg-purple-500"),
           label: "Messages",
           path: "/conversation",
+        }, 
+         {
+          icon: iconWrapper(<FaClipboardCheck />, "bg-orange-500"),
+          label: "Test Results",
+          path: "/Test-Results",
         },
         {
           icon: iconWrapper(<FaUsers />, "bg-teal-500"),
           label: "Certificate",
           path: "/certificate",
         },
-        {
-          icon: iconWrapper(<FaClipboardCheck />, "bg-orange-500"),
-          label: "Assignments",
-          path: "/assignment",
-        },
+      
       ];
 
     case "instructor":

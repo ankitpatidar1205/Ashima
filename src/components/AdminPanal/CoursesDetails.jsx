@@ -55,37 +55,27 @@ const CoursesDetails = () => {
 
               {/* Course Image + Syllabus */}
               <div className="bg-white p-4 rounded shadow">
-                <h4 className="font-semibold mb-3">Course Content</h4>
-                <div className="bg-gray-300 h-52 mb-4 flex justify-center items-center">
-                  
-                </div>
-
+                <h4 className="font-semibold mb-3">Course Module</h4>
+               
       {coursedata?.course_syllabus?.map((module, index) => (
-  <div key={index}
-   className="border border-gray-200 shadow-sm rounded-lg p-4 mb-4 bg-white hover:shadow-md transition-all duration-300" >
+  <div key={index}  className="border border-gray-200 shadow-sm rounded-lg p-4 mb-4 bg-white hover:shadow-md transition-all duration-300" >
     <div>
       <h5 className="text-lg font-semibold text-gray-800 mb-1">{module?.module_title}</h5>
       <p className="text-gray-600">{module?.module_syllabus}</p>
     </div>
      <div className="text-end">
-  <button
-    className="btn btn-primary"
-    onClick={() =>{ 
+  <button className="btn btn-primary" onClick={() =>{ 
       localStorage.setItem("title",module?.module_title)
       localStorage.setItem("description",module?.module_syllabus)
- navigate(`/course-content/${module.id || 1}`)}}>
-     View
-  </button>
+    navigate(`/course-content/${module.id || 1}`)}}>   View </button>
 </div>
   </div>
 ))}
-
               </div>
-
               {/* Course Video */}
               <div className="bg-white p-4 rounded shadow">
                 <h4 className="font-semibold mb-3"> Video</h4>
-                <iframe  src={coursedata.course_content_video_link}
+                <iframe  src={coursedata?.course_content_video_link}
                   title="Course Video" className="w-full h-64" allowFullScreen ></iframe>
               </div>
 

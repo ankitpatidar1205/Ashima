@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,6 +7,9 @@ import axiosinstance from "../../utils/axiosInstance";
 import ShowTest from "./ShowTest";
 import { FaArrowLeft } from "react-icons/fa";
 const Test = () => {
+    const navigate = useNavigate(); // initialize hook
+  const userId = localStorage.getItem("is_id");
+
   const { id } = useParams();
   const [questions, setQuestions] = useState([
     { question: "", option1: "", option2: "", option3: "", option4: "", correct_option: "" },
@@ -34,12 +37,12 @@ const Test = () => {
     e.preventDefault();
     const payload = {
       course_id: id,
-      created_by: "admin1",
+      created_by: userId,
       questions: questions,
     };
 
     try {
-      const res = await axiosinstance.post( `/test`, payload);
+      const res = await axiosinstance.post(`/test`, payload);
       toast.success("Test created successfully!");
       console.log("Response:", res.data);
     } catch (error) {
@@ -63,7 +66,7 @@ const Test = () => {
   <h4 className="text-2xl font-bold">Create Test</h4>
   
   <button  className="flex items-center gap-2 px-4 py-2 rounded font-semibold text-white bg-teal-700 hover:bg-teal-800"
-    onClick={() => Navigate(-1)} >
+    onClick={() => navigate(-1)} >
     <FaArrowLeft className="text-lg" /> Back to Courses </button></div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

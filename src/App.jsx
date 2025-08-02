@@ -33,7 +33,6 @@ import CourseComments from "./components/InstructorPanel/CourseComments";
 import Setting from "./components/InstructorPanel/Setting";
 import ProductDetails from "./components/InstructorPanel/ProductDetails";
 import CertificatesPage from "./components/StudentPanal/Certificate";
-import Assignments from "./components/StudentPanal/Assignments";
 import Descussiontrending from "./components/StudentPanal/Discussiontrending";
 import DescussionNew from "./components/StudentPanal/DiscussionNew";
 import Dis_unanswered from "./components/StudentPanal/DiscussionUnanswered";
@@ -91,6 +90,8 @@ import LaunchNow from "./components/AdminPanal/LaunchNow";
 import Test from "./components/AdminPanal/Test";
 import StudentTest from "./components/Courses/StudentTest";
 import ReviewManager from "./components/AdminPanal/ReviewManager";
+import TestResults from "./components/StudentPanal/TestResults";
+import ReadCource from "./components/Courses/ReadCource";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -200,7 +201,7 @@ const App = () => {
         <Route  path="/RolePermission"  element={<RolePermission></RolePermission>}></Route>
       
         <Route path="/student-details/:id" element={<StudentDetails />} />
-        <Route path="/assignment" element={<Assignments></Assignments>}></Route>
+        <Route path="/Test-Results" element={<TestResults></TestResults>}></Route>
         <Route path="/setting" element={<Setting></Setting>}></Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/digital" element={<MyDigital />} />
@@ -210,6 +211,7 @@ const App = () => {
         <Route path="/add-test/:id" element={<Test />} />
         <Route path="/StudentTest/:id" element={<StudentTest />} />
         <Route path="/ReviewManager" element={<ReviewManager />} />
+        <Route path="/Read/:id" element={<ReadCource />} />
 
           <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
           <Route path="/CertificateTemplate" element={<CertificateTemplates></CertificateTemplates>}></Route>
@@ -219,7 +221,6 @@ const App = () => {
           <Route path="/RolePermission" element={<RolePermission></RolePermission>}></Route>
         
           <Route path="/student-details/:id" element={<StudentDetails />} />
-          <Route path="/assignment" element={<Assignments></Assignments>}></Route>
           <Route path="/setting" element={<Setting></Setting>}></Route>
           <Route path="/signup" element={<Signup />} />
           <Route path="/digital" element={<MyDigital />} />
@@ -244,7 +245,6 @@ const App = () => {
           <Route path="/plan-request" element={<PlanRequest />} />
           <Route path="/user-info" element={<UserInfo />} />
           <Route path="/superadmin-profile" element={<SuperAdminProfile />} />
-
         </Routes>
       </BrowserRouter>
 

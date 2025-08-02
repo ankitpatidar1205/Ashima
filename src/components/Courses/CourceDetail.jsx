@@ -27,6 +27,7 @@ const CourceDetail = () => {
     const fetchCourse = async () => {
       try {
         const res = await axiosInstance.get(`/course/?id=${id}`);
+        console.log(res.data.data)
         setCourseData(res.data.data);
       } catch (error) {
         console.error("Error fetching course:", error);
@@ -151,7 +152,7 @@ const CourceDetail = () => {
     <button
       onClick={() => {
         if (role === "student") {
-          navigate(`/StudentTest/${id}`);
+          navigate(`/read/${id}`);
         } else {
           toast.error("⚠️ Please login with your student account to take the test.", {
             position: "top-center",
