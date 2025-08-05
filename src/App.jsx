@@ -92,6 +92,7 @@ import StudentTest from "./components/Courses/StudentTest";
 import ReviewManager from "./components/AdminPanal/ReviewManager";
 import TestResults from "./components/StudentPanal/TestResults";
 import ReadCource from "./components/Courses/ReadCource";
+import CourseSyllabusContent from "./components/AdminPanal/CourseSyllabusContent";
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -212,6 +213,7 @@ const App = () => {
         <Route path="/StudentTest/:id" element={<StudentTest />} />
         <Route path="/ReviewManager" element={<ReviewManager />} />
         <Route path="/Read/:id" element={<ReadCource />} />
+        <Route path="/CourseSyllabusContent/:id" element={<CourseSyllabusContent />} />
 
           <Route path="/assessment-details/:id" element={<AssessmentDetails />} />
           <Route path="/CertificateTemplate" element={<CertificateTemplates></CertificateTemplates>}></Route>

@@ -148,7 +148,7 @@ const CourceDetail = () => {
           setTimeout(() => navigate("/login"), 2000);
         }
       }} className="px-6 py-2 text-white bg-[#047670] rounded-lg font-bold" > Test</button>)}
-      {courseData?.tests?.length > 0 && (
+     
     <button
       onClick={() => {
         if (role === "student") {
@@ -159,7 +159,7 @@ const CourceDetail = () => {
           });
           setTimeout(() => navigate("/login"), 2000);
         }
-      }} className="px-6 py-2 text-white bg-[#047670] rounded-lg font-bold" >Read</button>)}
+      }} className="px-6 py-2 text-white bg-[#047670] rounded-lg font-bold" >Read</button>
 </div>
 </div>
                 </div>
@@ -172,7 +172,7 @@ const CourceDetail = () => {
        {showLesson && (
   <div className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50">
     <div className="bg-black w-full h-full relative">
-      <button    onClick={() => setShowLesson(false)}    className="absolute top-4 right-4 text-white text-2xl font-bold z-50" >   ✖ </button>
+      <button   onClick={() => setShowLesson(false)}    className="absolute top-4 right-4 text-white text-2xl font-bold z-50" >   ✖ </button>
       <iframe  src={courseData?.course_content_video_link}  title="Lesson Video"  className="w-full h-full"    allowFullScreen ></iframe>
     </div>
   </div>
@@ -205,6 +205,43 @@ const CourceDetail = () => {
     </div>
   )}
   </div>
+
+{/* Course Syllabus */}
+{Array.isArray(courseData?.course_syllabus) && courseData.course_syllabus.length > 0 ? (
+  <div className="w-full sm:w-[850px] ml-4 sm:ml-20 mt-16">
+    <div className="bg-[#ffffff] border rounded shadow p-4">
+      <h2 className="text-[36px] font-semibold font-jost text-[#1e1e1e] mb-6">
+        Course Syllabus
+      </h2>
+      <ul className="space-y-6">
+        {courseData.course_syllabus.map((module, index) => (
+          <li key={module.id || index} className="flex items-start">
+            <input
+              type="checkbox"
+              className="mt-1 mr-3 w-[20px] h-[20px] accent-[#047670]"
+              defaultChecked={index === 0}
+            />
+            <div>
+              <p className="font-roboto text-[20px] font-bold">
+                {module.module_title || "Untitled Module"}
+              </p>
+              <p className="text-[16px] font-robotp text-[#1E1E1ECC]">
+                {module.module_syllabus || "No details available"}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+) : (
+  <div className="w-full sm:w-[850px] ml-4 sm:ml-20 mt-16">
+    <div className="bg-[#ffffff] border rounded shadow p-4 text-center">
+      <p className="text-[18px] text-[#1E1E1ECC]">No syllabus available for this course.</p>
+    </div>
+  </div>
+)}
+
 
         {/* FAQ */}
         <div className="w-full sm:w-[850px] ml-4 sm:ml-20 mt-16">

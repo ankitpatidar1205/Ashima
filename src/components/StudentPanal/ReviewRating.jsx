@@ -37,18 +37,15 @@ const ReviewsRating = () => {
           {/* Write Review */}
           <div className="border border-gray-200 rounded p-5 space-y-4">
             <h4 className="font-semibold text-gray-900">Write Your Review</h4>
-
             <div className="flex items-center gap-1 text-yellow-500">
               {[...Array(5)].map((_, idx) => (
                 <FaStar key={idx} />
               ))}
             </div>
 
-            <input
-              type="text"
+            <input type="text"
               placeholder="Summarize your experience"
-              className="border border-gray-300 rounded w-full px-3 py-2 text-sm"
-            />
+              className="border border-gray-300 rounded w-full px-3 py-2 text-sm"/>
 
             <textarea
               placeholder="Share your experience with this course..."

@@ -7,7 +7,6 @@ import Header from "../../Layout/Header";
 import useCurrency from "../../utils/useCurrency";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import axiosInstance from "../../utils/axiosInstance";
-import axios from "axios";
 
 const Cart = () => {
   const userId = localStorage.getItem("is_id");
@@ -31,6 +30,25 @@ const Cart = () => {
       console.error("Failed to delete item:", err);
     }
   };
+
+const handleSavePurchase = async (details) => {
+  try {
+    const purchaseData = {
+      studentId: userId,
+      cart_items: cartItems,   // poora cart bhej rahe hain
+      paypal_details: details, // PayPal ka complete object
+      amount: totalPrice,
+    };
+
+    const res = await axiosInstance.post("/payment", purchaseData);
+    console.log("Purchase Saved:", res.data);
+    alert("✅ Purchase successful and saved to your account!");
+  } catch (error) {
+    console.error("Error saving purchase:", error);
+    alert("⚠️ Payment succeeded but saving failed. Please contact support.");
+  }
+};
+
 
   return (
     <>
@@ -92,32 +110,29 @@ const Cart = () => {
               </p>
 
               <PayPalScriptProvider options={{
-                  "client-id":"AfOC2wR18Ro8ob2bgI9vz4tC4vdWfgIfe9OXeu9_clQ8Kw4xXM37Vcg4XWKCzqwUC8SbUUn0FUA0DkAg", currency: "USD",  }}>
+                "client-id": "AfOC2wR18Ro8ob2bgI9vz4tC4vdWfgIfe9OXeu9_clQ8Kw4xXM37Vcg4XWKCzqwUC8SbUUn0FUA0DkAg",
+                currency: "USD",
+              }}>
                 <PayPalButtons
                   style={{ layout: "vertical" }}
                   createOrder={(data, actions) => {
                     return actions.order.create({
                       purchase_units: [
                         {
-                          amount: {
-                            value: totalPrice.toString(), // PayPal expects string
-                          },
+                          amount: { value: totalPrice.toString() },
                         },
                       ],
                     });
                   }}
                   onApprove={(data, actions) => {
                     return actions.order.capture().then((details) => {
-                      alert(
-                        "Transaction completed by " +
-                          details.payer.name.given_name
-                      );
                       console.log("Payment Details:", details);
+                      handleSavePurchase(details);
                     });
                   }}
                   onError={(err) => {
                     console.error("PayPal Checkout Error", err);
-                    alert("Payment failed. Please try again.");
+                    alert("⚠️ Payment failed. Please try again.");
                   }}
                 />
               </PayPalScriptProvider>

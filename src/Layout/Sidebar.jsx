@@ -122,11 +122,11 @@ const RoleBasedSidebar = ({isCollapsed = false, setIsCollapsed = () => { },}) =>
           label: "Manage Transactions",
           path: "/viewTranscation",
         },
-        {
-          icon: iconWrapper(<FaCog />, "bg-gray-500"),
-          label: "Settings",
-          path: "/adminSettings",
-        },
+        // {
+        //   icon: iconWrapper(<FaCog />, "bg-gray-500"),
+        //   label: "Settings",
+        //   path: "/adminSettings",
+        // },
       ];
 
     case "student":

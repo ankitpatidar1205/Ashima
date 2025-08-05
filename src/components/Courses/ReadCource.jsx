@@ -7,11 +7,12 @@ import Footer from "../../Layout/Footer";
 const ReadCourse = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
-  const [selectedModule, setSelectedModule] = useState(null);
-  const [moduleContents, setModuleContents] = useState([]);
+  const [moduleContents, setModuleContents] = useState({});
+  const [mainContent, setMainContent] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loadingContent, setLoadingContent] = useState(false);
+  const [loadingMain, setLoadingMain] = useState(false);
 
+  // ✅ Fetch Course + Modules
   useEffect(() => {
     const fetchCourse = async () => {
       try {
@@ -19,10 +20,11 @@ const ReadCourse = () => {
         const courseRes = await axiosInstance.get(`/course/?id=${id}`);
         const courseData = courseRes.data.data;
         setCourse(courseData);
+
         if (courseData?.course_syllabus?.length > 0) {
-          const firstModule = courseData.course_syllabus[0];
-          setSelectedModule(firstModule);
-          fetchModuleContents(firstModule.id);
+          courseData.course_syllabus.forEach((mod) => {
+            fetchModuleContents(mod.id);
+          });
         }
       } catch (err) {
         console.error("Error fetching course:", err);
@@ -33,37 +35,46 @@ const ReadCourse = () => {
     if (id) fetchCourse();
   }, [id]);
 
+  // ✅ Fetch subtitles for module
   const fetchModuleContents = async (moduleId) => {
     try {
-      setLoadingContent(true);
       const res = await axiosInstance.get(`/courseSyllabusCont/${moduleId}`);
-      console.log(res)
-      if (res?.data?.data) {
-        setModuleContents(res.data.data);
-      } else {
-        setModuleContents([]);
-      }
+      setModuleContents((prev) => ({
+        ...prev,
+        [moduleId]: res?.data?.data || [],
+      }));
     } catch (err) {
       console.error("Error fetching module contents:", err);
-      setModuleContents([]);
-    } finally {
-      setLoadingContent(false);
+      setModuleContents((prev) => ({ ...prev, [moduleId]: [] }));
     }
   };
 
-  const handleModuleClick = (module) => {
-    setSelectedModule(module);
-    fetchModuleContents(module.id);
+  // ✅ Fetch Content for a subtitle
+  const fetchMainContent = async (subTitleId) => {
+    try {
+      setLoadingMain(true);
+      const res = await axiosInstance.get(
+        `/course-syllabus-content?subTitle_id=${subTitleId}`
+      );
+      const contentArray = res?.data?.data || [];
+      setMainContent(contentArray);
+    } catch (err) {
+      console.error("Error fetching main content:", err);
+      setMainContent([]);
+    } finally {
+      setLoadingMain(false);
+    }
   };
 
   return (
     <>
       <Header />
 
-      <div className="flex min-h-screen bg-gray-50">
+      {/* Wrapper with padding below header */}
+      <div className="pt-20 flex flex-col md:flex-row bg-gray-50 min-h-screen">
         {/* Sidebar */}
-        <aside className="w-72 bg-white shadow-lg border-r overflow-y-auto">
-          <h3 className="text-lg font-bold p-5 border-b bg-green-700 text-white">
+        <aside className="w-full md:w-72 bg-white shadow-lg border-r overflow-y-auto h-[calc(100vh-5rem)]">
+          <h3 className="text-lg font-bold p-2 border-b bg-green-700 text-white py-2">
             {course?.course_title || "Loading Course..."}
           </h3>
 
@@ -75,16 +86,37 @@ const ReadCourse = () => {
             <ul className="divide-y">
               {course.course_syllabus.map((module) => (
                 <li key={module.id}>
-                  <button
-                    onClick={() => handleModuleClick(module)}
-                    className={`w-full text-left px-5 py-3 block transition-all ${
-                      selectedModule?.id === module.id
-                        ? "bg-green-100 text-green-700 font-semibold border-l-4 border-green-600"
-                        : "hover:bg-gray-100 text-gray-700"
-                    }`}
-                  >
+                  {/* Module Title */}
+                  <div className="w-full text-left px-2 py-3 font-semibold text-green-700 border-l-4 border-green-600">
                     {module.module_title}
-                  </button>
+                  </div>
+
+                  {/* Subtitles */}
+                  <div className="pl-7 pr-4 py-2">
+                    {moduleContents[module.id] ? (
+                      moduleContents[module.id].length > 0 ? (
+                        <ul className="list-disc pl-4 space-y-2">
+                          {moduleContents[module.id].map((content) => (
+                            <li
+                              key={content.id}
+                              className="text-gray-700 text-sm cursor-pointer hover:text-green-700"
+                              onClick={() => fetchMainContent(content.id)}
+                            >
+                              {content.title || content.name}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-gray-500 text-sm">
+                          ⚠️ No contents found
+                        </p>
+                      )
+                    ) : (
+                      <p className="text-gray-500 text-sm">
+                        ⏳ Loading contents...
+                      </p>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
@@ -92,39 +124,38 @@ const ReadCourse = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-10 overflow-y-auto">
-          {selectedModule ? (
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-green-800 mb-4">
-                {selectedModule.module_title}
-              </h2>
-              <p className="text-gray-700 mb-6">
-                {selectedModule.module_syllabus || "No syllabus content available."}
-              </p>
-
-              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                  Module Contents
-                </h3>
-                {loadingContent ? (
-                  <p className="text-gray-500">⏳ Loading contents...</p>
-                ) : moduleContents.length === 0 ? (
-                  <p className="text-gray-500">⚠️ No contents found for this module.</p>
-                ) : (
-                  <ul className="list-disc pl-6 space-y-2">
-                    {moduleContents.map((content) => (
-                      <li key={content.id} className="text-gray-700">
-                        {content?.title}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+        <main className="flex-1 overflow-y-auto h-[calc(100vh-5rem)] p-6 md:p-12">
+          {loadingMain ? (
+            <p className="text-gray-500 text-center mt-5">⏳ Loading content...</p>
+          ) : mainContent && mainContent.length > 0 ? (
+            <div className="max-w-4xl mx-auto space-y-6">
+              {mainContent.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-white shadow-md p-6 rounded-lg border border-gray-200"
+                >
+                  <h2 className="text-2xl font-bold text-green-800 mb-3">
+                    {item.name}
+                  </h2>
+                  <p className="text-gray-700 text-base mb-4">
+                    {item.description}
+                  </p>
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full max-w-md rounded-lg shadow-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-500 italic"></p>
+                  )}
+                </div>
+              ))}
             </div>
           ) : (
-            <div className="text-center text-gray-600 mt-20">
-              <p className="text-lg">📘 Select a module from the left menu to view its content.</p>
-            </div>
+            <p className="text-gray-600 text-lg text-center">
+              👈 Select a subtitle from the left to view content.
+            </p>
           )}
         </main>
       </div>

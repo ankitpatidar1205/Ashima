@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Modal, Button, Form, Table } from "react-bootstrap";
 import DashboardLayout from "../../Layout/DashboardLayout";
-import { FaArrowLeft, FaTrash } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import { FaArrowLeft, FaEye, FaTrash } from "react-icons/fa";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createContent,
@@ -103,12 +103,11 @@ const CourseContent = () => {
                     <td className="fw-medium">{item?.title}</td>
                     {role !== "student" && (
                       <td>
-                        <button
-                          onClick={() => handleDelete(item?.id)}
-                          className="btn btn-sm btn-outline-danger"
-                        >
-                          <FaTrash /> 
-                        </button>
+                        <button  onClick={() => handleDelete(item?.id)}  className="btn btn-sm btn-outline-danger" >
+                          <FaTrash /></button>
+                        <Link to={`/CourseSyllabusContent/${item.id}`}> <button  className="btn btn-sm btn-outline-info ms-2">
+                          < FaEye /> 
+                        </button></Link>
                       </td>
                     )}
                   </tr>
@@ -123,11 +122,7 @@ const CourseContent = () => {
         )}
 
         {/* Add Content Modal */}
-        <Modal
-          show={showContentModal}
-          onHide={() => setShowContentModal(false)}
-          centered
-        >
+        <Modal  show={showContentModal} onHide={() => setShowContentModal(false)} centered>
           <Modal.Header closeButton>
             <Modal.Title>Add New Content</Modal.Title>
           </Modal.Header>
@@ -140,8 +135,7 @@ const CourseContent = () => {
                   placeholder="Enter title"
                   name="title"
                   value={newContent.title}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
               </Form.Group>
             </Form>
           </Modal.Body>

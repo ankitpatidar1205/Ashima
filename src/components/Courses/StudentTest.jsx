@@ -98,11 +98,11 @@ const StudentTest = () => {
       <Header />
       <ToastContainer position="top-center" />
 
-      <div className="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen flex justify-center items-start py-12">
+      <div className="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen flex justify-center items-start py-24">
         <div className="w-full max-w-5xl bg-white shadow-2xl rounded-2xl p-10 relative min-h-[80vh]">
           <button
             onClick={() => navigate(-1)}
-            className="absolute -top-5 -left-5 text-white rounded-full p-2 shadow-lg"
+            className="absolute -top-5 -left-20 text-white rounded-full p-1 mt-4  shadow-lg"
             style={{
               backgroundColor: "rgb(4 118 112)",
               fontSize: "2rem",
