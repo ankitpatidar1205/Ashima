@@ -4,6 +4,7 @@ import DashboardLayout from "../../Layout/DashboardLayout";
 import { FaPaperPlane } from "react-icons/fa";
 
 const Socket_URL = "https://aiskiilsbackend-production.up.railway.app";
+// const Socket_URL = "http://localhost:4000";
 
 const Messages = () => {
   const [users, setUsers] = useState([]);
@@ -95,6 +96,33 @@ const Messages = () => {
       setNewMessage("");
     }
   };
+  const groupMessagesByDate = (messages) => {
+    const groups = {};
+
+    messages.forEach((msg) => {
+      const date = new Date(msg.created_at).toDateString();
+      if (!groups[date]) groups[date] = [];
+      groups[date].push(msg);
+    });
+
+    return groups;
+  };
+  const getFormattedDateLabel = (dateStr) => {
+    const today = new Date();
+    const date = new Date(dateStr);
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) return "Today";
+    if (date.toDateString() === yesterday.toDateString()) return "Yesterday";
+
+    return date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
 
   return (
     <DashboardLayout>
@@ -143,7 +171,7 @@ const Messages = () => {
                       </span>
                     </div>
                     <p className={`text-sm truncate ${isSelected ? "text-gray-200" : "text-gray-100"}`}>
-                      {user.lastMessage || "No recent message"}
+                      Previous Message: {user?.lastMessage?.message || "No recent message"}
                     </p>
                   </div>
                 </div>
@@ -163,49 +191,59 @@ const Messages = () => {
           </div>
 
           <div className="flex-1 px-6 py-4 overflow-y-auto">
-            <div className="space-y-4">
-              {messages.length === 0 && (
-                <div className="text-center text-gray-400 pt-24">No messages yet.</div>
-              )}
-              {messages.map((message, index) => {
-                const isSender = message.isOwn;
-                const initial = selectedUser?.name?.[0]?.toUpperCase() || selectedUser?.email?.[0]?.toUpperCase() || "U";
-
-                return (
-                  <div
-                    key={index}
-                    className={`flex items-start ${isSender ? "justify-end" : "justify-start"}`}
-                  >
-                    {!isSender &&
-                      (selectedUser?.avatar ? (
-                        <img
-                          src={selectedUser.avatar}
-                          className="w-8 h-8 rounded-full mr-3"
-                          alt={selectedUser?.name}
-                        />
-                      ) : (
-                        <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-teal-700 text-white font-bold text-sm">
-                          {initial}
-                        </div>
-                      ))}
-
-                    <div
-                      className={`rounded-xl p-3 max-w-xs md:max-w-md shadow-sm 
-                        ${isSender ? "bg-teal-700 text-white" : "bg-white text-gray-900"}`}
-                    >
-                      <p className="whitespace-pre-wrap">{message.message}</p>
-                      <span className="text-xs text-gray-300 mt-1 block text-right">
-                        {new Date(message.created_at).toLocaleTimeString("en-US", {
-                          hour: "numeric",
-                          minute: "2-digit",
-                        })}
-                      </span>
-                    </div>
+            <div className="space-y-6">
+              {Object.entries(groupMessagesByDate(messages)).map(([date, msgs], i) => (
+                <div key={i}>
+                  {/* 📅 Date Label */}
+                  <div className="text-center text-sm text-gray-500 mb-4">
+                    {getFormattedDateLabel(date)}
                   </div>
-                );
-              })}
+
+                  {/* 💬 Messages under this date */}
+                  <div className="space-y-4">
+                    {msgs.map((message, index) => {
+                      const isSender = message.isOwn;
+                      const initial = selectedUser?.name?.[0]?.toUpperCase() || selectedUser?.email?.[0]?.toUpperCase() || "U";
+
+                      return (
+                        <div
+                          key={index}
+                          className={`flex items-start ${isSender ? "justify-end" : "justify-start"}`}
+                        >
+                          {!isSender &&
+                            (selectedUser?.avatar ? (
+                              <img
+                                src={selectedUser.avatar}
+                                className="w-8 h-8 rounded-full mr-3"
+                                alt={selectedUser?.name}
+                              />
+                            ) : (
+                              <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-teal-700 text-white font-bold text-sm">
+                                {initial}
+                              </div>
+                            ))}
+
+                          <div
+                            className={`rounded-xl p-3 max-w-xs md:max-w-md shadow-sm 
+                  ${isSender ? "bg-teal-700 text-white" : "bg-white text-gray-900"}`}
+                          >
+                            <p className="whitespace-pre-wrap">{message.message}</p>
+                            <span className="text-xs text-gray-300 mt-1 block text-right">
+                              {new Date(message.created_at).toLocaleTimeString("en-US", {
+                                hour: "numeric",
+                                minute: "2-digit",
+                              })}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
               <div ref={messagesEndRef}></div>
             </div>
+
           </div>
 
           <div className="px-4 py-3 bg-white border-t border-gray-300">
